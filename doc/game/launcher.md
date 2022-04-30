@@ -1,0 +1,3 @@
+# Launcher Protocol
+
+TODO

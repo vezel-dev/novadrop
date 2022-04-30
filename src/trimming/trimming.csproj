@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <!--
+    This project exists solely so that we can get full trimming analysis of the
+    library projects when running dotnet publish.
+    -->
+
+    <PropertyGroup>
+        <AssemblyName>trimming</AssemblyName>
+        <IsPublishable>true</IsPublishable>
+        <OutputType>Exe</OutputType>
+        <PublishTrimmed>true</PublishTrimmed>
+        <RootNamespace>Vezel.Novadrop.Trimming</RootNamespace>
+        <TrimmerDefaultAction>link</TrimmerDefaultAction>
+        <UseCurrentRuntimeIdentifier>true</UseCurrentRuntimeIdentifier>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <TrimmerRootAssembly Include="Vezel.Novadrop.Data" />
+        <TrimmerRootAssembly Include="Vezel.Novadrop.Launcher" />
+        <TrimmerRootAssembly Include="Vezel.Novadrop.Net" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="../data/data.csproj" />
+        <ProjectReference Include="../launcher/launcher.csproj" />
+        <ProjectReference Include="../net/net.csproj" />
+    </ItemGroup>
+</Project>

@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <AssemblyName>Vezel.Novadrop.Data</AssemblyName>
+        <IsPackable>true</IsPackable>
+        <PackageDescription>$(PackageDescription)
+
+This package provides support for creating, reading, modifying, and writing
+TERA's data center files.</PackageDescription>
+        <PackageId>Vezel.Novadrop.Data</PackageId>
+        <RootNamespace>Vezel.Novadrop.Data</RootNamespace>
+    </PropertyGroup>
+</Project>

@@ -1,0 +1,6 @@
+CloseHandle
+OpenProcess
+ReadProcessMemory
+WriteProcessMemory
+
+WIN32_ERROR

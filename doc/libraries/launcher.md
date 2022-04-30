@@ -1,0 +1,3 @@
+# Vezel.Novadrop.Launcher
+
+TODO

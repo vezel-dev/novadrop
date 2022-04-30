@@ -1,0 +1,20 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": ".NET: Attach",
+      "presentation": {
+        "group": "novadrop"
+      },
+      "type": "coreclr",
+      "request": "attach",
+      "suppressJITOptimizations": true,
+      "justMyCode": false,
+      "symbolOptions": {
+        "searchMicrosoftSymbolServer": true,
+        "searchNuGetOrgSymbolServer": true
+      },
+      "processId": "${command:pickProcess}"
+    }
+  ]
+}

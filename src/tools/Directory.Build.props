@@ -1,0 +1,11 @@
+<Project>
+    <Import Project="$([MSBuild]::GetPathOfFileAbove('$(MSBuildThisFile)', '$(MSBuildThisFileDirectory)..'))" />
+
+    <PropertyGroup>
+        <IsPackable>true</IsPackable>
+        <OutputType>Exe</OutputType>
+        <PackAsTool>true</PackAsTool>
+        <RollForward>LatestMajor</RollForward>
+        <RootNamespace>Vezel.Novadrop</RootNamespace>
+    </PropertyGroup>
+</Project>
