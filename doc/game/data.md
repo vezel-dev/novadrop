@@ -115,7 +115,7 @@ struct DataCenterSimpleRegion<typename T, bool off_by_one>
     T elements[off_by_one ? count - 1 : count];
 };
 
-struct DataCenterSegmentedSimpleRegion<typename T, uint32 count>
+struct DataCenterSegmentedSimpleRegion<typename T, uint32_t count>
 {
     DataCenterSimpleRegion<T, false> segments[count];
 };
@@ -165,7 +165,7 @@ which are effectively used as hash tables by the game. A string table has the
 form:
 
 ```cpp
-struct DataCenterStringTable<uint32 count>
+struct DataCenterStringTable<uint32_t count>
 {
     DataCenterSegmentedRegion<char16_t> data;
     DataCenterSegmentedSimpleRegion<DataCenterString, count> table;
@@ -218,7 +218,8 @@ and `values` must both have valid `addresses` regions.
 
 ### String Hash
 
-The `data_center_string_hash` function is defined as follows:
+The `data_center_string_hash` function is a variant of CRC32 and is defined as
+follows:
 
 ```cpp
 const uint32_t string_hash_table[256] =
@@ -272,6 +273,8 @@ uint32_t data_center_string_hash(char16_t *string)
     return hash;
 }
 ```
+
+(Note that `string_hash_table` is the same as [`value_hash_table`](#value-hash).)
 
 ## Data Tree
 
@@ -427,7 +430,8 @@ and child elements, such as `Foo` in this example:
 
 #### Value Hash
 
-The `data_center_value_hash` function is defined as follows:
+The `data_center_value_hash` function is a bizarre variant of CRC32 and is
+defined as follows:
 
 ```cpp
 const uint32_t value_hash_table[256] =
@@ -490,3 +494,5 @@ uint16_t data_center_value_hash(char16_t *string)
     return hash & 0x3fff;
 }
 ```
+
+(Note that `value_hash_table` is the same as [`string_hash_table`](#string-hash).)
