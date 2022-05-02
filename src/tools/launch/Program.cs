@@ -2,7 +2,7 @@ namespace Vezel.Novadrop;
 
 static class Program
 {
-    static async Task<int> Main(string[] args)
+    static async Task<int> Main()
     {
         // TODO: Logic.
         await Task.Yield();
