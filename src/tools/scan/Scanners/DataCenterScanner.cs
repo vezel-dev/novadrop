@@ -1,0 +1,72 @@
+namespace Vezel.Novadrop.Scanners;
+
+sealed class DataCenterScanner : IScanner
+{
+    static readonly ReadOnlyMemory<byte?> _pattern = new byte?[]
+    {
+        0x41, 0xc7, 0x43, null, null, null, null, null, // mov dword ptr [r11 - <offset>], <value>
+        0x41, 0xc7, 0x43, null, null, null, null, null, // mov dword ptr [r11 - <offset>], <value>
+        0x41, 0xc7, 0x43, null, null, null, null, null, // mov dword ptr [r11 - <offset>], <value>
+        0x41, 0xc7, 0x43, null, null, null, null, null, // mov dword ptr [r11 - <offset>], <value>
+        0x41, 0xc7, 0x43, null, null, null, null, null, // mov dword ptr [r11 - <offset>], <value>
+        0x41, 0xc7, 0x43, null, null, null, null, null, // mov dword ptr [r11 - <offset>], <value>
+        0x41, 0xc7, 0x43, null, null, null, null, null, // mov dword ptr [r11 - <offset>], <value>
+        0x41, 0xc7, 0x43, null, null, null, null, null, // mov dword ptr [r11 - <offset>], <value>
+    };
+
+    public void Run(ScanContext context)
+    {
+        var module = context.Process.MainModule;
+
+        Console.WriteLine("Searching for data center decryption function...");
+
+        var o = module.Search(_pattern).Cast<nuint?>().FirstOrDefault();
+
+        if (o is not nuint off)
+            throw new ApplicationException("Could not find data center decryption function.");
+
+        var decoder = Iced.Intel.Decoder.Create(64, new MemoryWindowCodeReader(module.Slice(off)));
+
+        byte[]? ReadKey()
+        {
+            using var stream = new MemoryStream(16);
+            using var writer = new BinaryWriter(stream);
+
+            for (var i = 0; i < 4; i++)
+            {
+                decoder.Decode(out var insn);
+
+                if (insn.Code != Code.Mov_rm32_imm32 || insn.MemoryBase != Register.R11)
+                    return null;
+
+                writer.Write(insn.Immediate32);
+            }
+
+            return stream.ToArray();
+        }
+
+        var key = ReadKey();
+
+        if (key == null)
+            throw new ApplicationException("Could not find data center key.");
+
+        var iv = ReadKey();
+
+        if (iv == null)
+            throw new ApplicationException("Could not find data center IV.");
+
+        static string StringizeKey(byte[] key)
+        {
+            return string.Join(" ", key.Select(x => x.ToString("x2", CultureInfo.InvariantCulture)));
+        }
+
+        Console.WriteLine($"Found data center key: {StringizeKey(key)}");
+        Console.WriteLine($"Found data center IV: {StringizeKey(iv)}");
+
+        File.WriteAllLines(Path.Combine(context.Output.FullName, "DataCenterKeys.txt"), new[]
+        {
+            string.Join(", ", key.Select(x => $"0x{x:x2}")),
+            string.Join(", ", iv.Select(x => $"0x{x:x2}")),
+        });
+    }
+}

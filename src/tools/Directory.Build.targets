@@ -1,5 +1,9 @@
 <Project>
     <ItemGroup>
+        <Using Include="System.CommandLine" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="System.CommandLine" />
     </ItemGroup>
 

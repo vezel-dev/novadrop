@@ -5,7 +5,15 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <Using Include="System.ComponentModel" />
+        <Using Include="System.Diagnostics" />
+        <Using Include="System.Diagnostics.CodeAnalysis" />
+        <Using Include="System.Globalization" />
         <Using Include="System.IO.Compression" />
+        <Using Include="System.Runtime.CompilerServices" />
+        <Using Include="System.Runtime.InteropServices" />
+        <Using Include="System.Security.Cryptography" />
+        <Using Include="System.Text" />
     </ItemGroup>
 
     <Choose>

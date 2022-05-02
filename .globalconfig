@@ -102,8 +102,21 @@ dotnet_style_require_accessibility_modifiers = omit_if_default : error
 
 dotnet_diagnostic.CA1014.severity = none
 dotnet_diagnostic.CA1303.severity = none
+dotnet_diagnostic.CA1416.severity = none
 
 dotnet_diagnostic.SA0001.severity = none
+dotnet_diagnostic.SA1101.severity = none
+dotnet_diagnostic.SA1200.severity = none
+dotnet_diagnostic.SA1201.severity = none
+dotnet_diagnostic.SA1202.severity = none
+dotnet_diagnostic.SA1309.severity = none
 dotnet_diagnostic.SA1400.severity = none
+dotnet_diagnostic.SA1404.severity = none
+dotnet_diagnostic.SA1407.severity = none
+dotnet_diagnostic.SA1503.severity = none
+dotnet_diagnostic.SA1509.severity = none
+dotnet_diagnostic.SA1512.severity = none
+dotnet_diagnostic.SA1519.severity = none
 dotnet_diagnostic.SA1600.severity = none
+dotnet_diagnostic.SA1602.severity = none
 dotnet_diagnostic.SA1633.severity = none

@@ -1,0 +1,13 @@
+CreateRemoteThread
+FlushInstructionCache
+GetExitCodeThread
+OpenProcess
+ReadProcessMemory
+VirtualAllocEx
+VirtualFreeEx
+VirtualProtectEx
+WaitForSingleObject
+WriteProcessMemory
+
+INFINITE
+WAIT_OBJECT_0
