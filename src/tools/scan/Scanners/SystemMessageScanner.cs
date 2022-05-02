@@ -88,8 +88,6 @@ sealed class SystemMessageScanner : IScanner
 
                 var ret = code.Call(args);
 
-                process.Free(args);
-
                 if (ret != 42)
                     throw new ApplicationException($"Could not remotely retrieve system message table ({ret}).");
 
