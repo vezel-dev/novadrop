@@ -25,8 +25,9 @@ sealed class ClientVersionScanner : IScanner
 
         int? ReadVersion(nuint offset)
         {
-            // Note that we are using RIP-relative addressing.
-            return module.TryGetOffset(module.ToAddress(offset) + module.Read<uint>(offset), out var verOff)
+            return module.TryGetOffset(
+                module.ToAddress(offset + sizeof(uint)) + module.Read<uint>(offset),
+                out var verOff)
                 ? module.Read<int>(verOff)
                 : null;
         }
