@@ -161,7 +161,7 @@ segmented region, while `element_index` is a **zero-based** index into the
 ## String Tables
 
 All strings, whether they are names or values, are arranged into string tables,
-which are effectively used as hash tables by the game. A string table has the
+which are effectively used as hash tables by the client. A string table has the
 form:
 
 ```cpp
@@ -197,7 +197,10 @@ address at this index must match the `address` field exactly.
 
 `address` is an address into the string table's `data` region. This address
 points to the actual string data. All strings are `NUL`-terminated. The string
-read from this address must have the same length as the `length` field.
+read from this address must have the same length as the `length` field. Notably,
+only the first character of the string has to be directly addressable; the
+remaining characters (including the `NUL` terminator) are allowed to reside
+outside the addressable bounds of the segment.
 
 A string entry must be placed in the correct `table` segment based on its `hash`
 field. The segment index is given by the expression
@@ -321,7 +324,7 @@ must be sorted by their name index in ascending order.
 
 `child_address` is an address into the `elements` region. `child_count` elements
 should be read at this address. These children must be sorted first by their
-name index, then by name indices of keys (if any), in ascending order.
+name index, then by name indexes of keys (if any), in ascending order.
 
 `padding_1` and `padding_2` are always zero. They were added in the 64-bit data
 center format.
@@ -347,7 +350,7 @@ struct DataCenterKey
 };
 ```
 
-`name_index_1` and friends are **one-based** indices into the `addresses` region
+`name_index_1` and friends are **one-based** indexes into the `addresses` region
 of the `names` table. A value of `0` indicates that the field does not define a
 key. A key definition can specify between zero and four keys.
 
