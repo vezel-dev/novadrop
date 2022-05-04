@@ -1,9 +1,11 @@
 # Support
 
-The project has a [GitHub Discussions](https://docs.github.com/en/discussions) forum:
-[![GitHub Discussions](https://img.shields.io/github/discussions/vezel-dev/novadrop)](https://github.com/vezel-dev/novadrop/discussions)
+Please use of the following channels for support requests:
 
-Please do *not* use the
+[![Discussions](https://img.shields.io/github/discussions/vezel-dev/novadrop?color=teal)](https://github.com/vezel-dev/novadrop/discussions/categories/questions)
+[![Discord](https://img.shields.io/discord/960716713136095232?color=peru&label=discord)](https://discord.gg/SdBCrRuNxY)
+
+Do *not* use the
 [issue tracker](https://github.com/vezel-dev/novadrop/issues) for support
 requests.
 
