@@ -16,10 +16,7 @@ various, seemingly random places.
 ## Encryption
 
 Data center files are encrypted with the Rijndael algorithm in CFB mode, using
-zero-padding, and with block/key sizes both set to 128 bits. Note that the final
-block is often smaller than the block size and not correctly padded with zeros
-as it should be, thus requiring some special processing when using most
-cryptography libraries.
+zero-padding, and with block, key, and feedback sizes all set to 128 bits.
 
 The encryption key and initialization vector can both be extracted from a
 running TERA client, e.g. with the [novadrop-scan](../tools/scan.md) tool. These
@@ -50,7 +47,7 @@ After decryption, there is a small header of the form:
 ```cpp
 struct DataCenterPackedHeader
 {
-    uint32_t decompressed_size;
+    uint32_t uncompressed_size;
     uint16_t zlib_header;
 };
 ```
@@ -58,10 +55,11 @@ struct DataCenterPackedHeader
 All data immediately following this header is compressed with the Deflate
 algorithm.
 
-`decompressed_size` is the size of the data center file once inflated.
+`uncompressed_size` is the size of the data center file once inflated.
 
-`zlib_header` is a [zlib](https://tools.ietf.org/html/rfc1950) (§2.2) header. It
-is usually of the form `0x9c78`.
+`zlib_header` is a [zlib](https://tools.ietf.org/html/rfc1950) (§2.2) header. In
+official data center files, it is usually of the form `0x9c78`, but it can be
+any valid zlib header.
 
 ### File Header
 
@@ -71,24 +69,22 @@ After decompression, a data center file starts with this header:
 struct DataCenterHeader
 {
     uint32_t file_version;
-    int32_t unknown1;
-    int16_t unknown2;
-    int16_t unknown3;
+    double timestamp;
     uint32_t client_version;
+    int32_t unknown1;
+    int32_t unknown2;
+    int32_t unknown3;
     int32_t unknown4;
-    int32_t unknown5;
-    int32_t unknown6;
-    int32_t unknown7;
 };
 ```
 
 `file_version` is currently `6`.
 
-`unknown1`, `unknown2`, `unknown4`, `unknown5`, `unknown6`, and `unknown7` are
-all always `0`. Some of them are actually part of more complex tree
-structures, but released data centers never include them.
+`timestamp` is a Unix timestamp indicating when the file was produced.
 
-`unknown3` is always `-16400`.
+`unknown1`, `unknown2`, `unknown3`, and `unknown4` are all always `0`. They are
+actually part of a tree structure describing the types of the data tree, but
+official data centers never include the type tree.
 
 `client_version` is usually (but not always) the value sent by the client in the
 `C_CHECK_VERSION` packet.
@@ -100,11 +96,11 @@ A data center file ends with this footer:
 ```cpp
 struct DataCenterFooter
 {
-    int32_t unknown1;
-};
+    int32_t marker;
+}
 ```
 
-`unknown1` is always `0`.
+`marker` is always `0` and has no known purpose in the client.
 
 ### Regions
 
@@ -273,7 +269,7 @@ uint32_t data_center_string_hash(char16_t *string)
         char16_t value = htole16(*current);
 
         for (size_t i = 0; i < 2; i++)
-            hash = string_hash_table[(hash ^ ((uint8_t *)&value)[i]) & 0xff] ^ (hash >> 8);
+            hash = string_hash_table[(uint8_t)(hash ^ ((uint8_t *)&value)[i])] ^ hash >> 8;
     }
 
     return hash;
@@ -330,8 +326,8 @@ must be sorted by their name index in ascending order.
 be read at this address. These children must be sorted first by their name
 index, then by name indexes of keys (if any), in ascending order.
 
-`padding_1` and `padding_2` are always zero. They were added in the 64-bit data
-center format.
+`padding_1` and `padding_2` are should be considered undefined. They were added
+in the 64-bit data center format.
 
 The root node of the data tree must be located at the address `0:0` and must
 have the name `__root__`.
@@ -418,7 +414,8 @@ field holds an address into the `data` region of the `values` table. For other
 type codes, the value is written directly and is accessed through the `i`, `b`,
 or `f` fields.
 
-`padding_1` is always zero. It was added in the 64-bit data center format.
+`padding_1` is should be considered undefined. It was added in the 64-bit data
+center format.
 
 Some nodes will have a special attribute named `__value__`. In XML terms, this
 represents the text of a node. For example, `<Foo>bar</Foo>` would be serialized
@@ -486,17 +483,20 @@ uint16_t data_center_value_hash(char16_t *string)
     {
         char16_t value = *current;
 
-        if (value == u'\xff')
-            value = u'\x9f';
-        else if (value == u'\x9c')
+        if (value == u'\x9c')
             value = u'\x8c';
-        else if ((value >= u'a' && value <= u'z') || value - u'\xe0' <= u'\x1e')
+        else if (value == u'\xff')
+            value = u'\x9f';
+        else if (value == u'\x151')
+            value = u'\x151';
+        else if (((value >= u'a' && value <= u'z') || (value >= u'\xe0' && value <= u'\xfe')) &&
+            !(value == u'\xf0' || value == u'\xf7'))
             value = c - u' ';
 
         value = htole16(value);
 
         for (size_t i = 0; i < 2; i++)
-            hash = value_hash_table[(hash ^ ((uint8_t *)&value)[i]) & 0xff] ^ (hash >> 8);
+            hash = value_hash_table[(uint8_t)(hash ^ ((uint8_t *)&value)[i])] ^ hash >> 8;
     }
 
     return hash & 0x3fff;
