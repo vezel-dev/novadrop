@@ -211,7 +211,7 @@ abstract class DataCenterReader
                 await _names.ReadAsync(strict, reader, cancellationToken).ConfigureAwait(false);
                 await _footer.ReadAsync(strict, reader, cancellationToken).ConfigureAwait(false);
 
-                if (reader.Progress != size)
+                if (strict && reader.Progress != size)
                     throw new InvalidDataException(
                         $"Uncompressed data center size {size} does not match actual size {reader.Progress}.");
             }
