@@ -1,12 +1,19 @@
+using Vezel.Novadrop.Commands;
+
 namespace Vezel.Novadrop;
 
 static class Program
 {
-    static async Task<int> Main()
+    static Task<int> Main(string[] args)
     {
-        // TODO: Logic.
-        await Task.Yield();
+        var root = new RootCommand("Manipulate TERA's data center files.")
+        {
+            new PackCommand(),
+            new UnpackCommand(),
+            new RepackCommand(),
+            new VerifyCommand(),
+        };
 
-        return 0;
+        return root.InvokeAsync(args);
     }
 }

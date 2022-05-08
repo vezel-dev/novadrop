@@ -45,14 +45,10 @@ sealed class DataCenterScanner : IScanner
             return stream.ToArray();
         }
 
-        var key = ReadKey();
-
-        if (key == null)
+        if (ReadKey() is not byte[] key)
             throw new ApplicationException("Could not find data center key.");
 
-        var iv = ReadKey();
-
-        if (iv == null)
+        if (ReadKey() is not byte[] iv)
             throw new ApplicationException("Could not find data center IV.");
 
         static string StringizeKey(byte[] key)

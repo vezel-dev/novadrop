@@ -6,7 +6,12 @@
 This package provides the .NET global tool for manipulating TERA's data center
 files.</PackageDescription>
         <PackageId>novadrop-dc</PackageId>
+        <ServerGarbageCollection>true</ServerGarbageCollection>
     </PropertyGroup>
+
+    <ItemGroup>
+        <Using Include="Vezel.Novadrop.Data" />
+    </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="../../data/data.csproj" />
