@@ -8,7 +8,7 @@ sealed class UserDataCenterNode : MutableDataCenterNode
     public override List<DataCenterNode> Children { get; } = new();
 
     public UserDataCenterNode(object parent, string name)
-        : base(parent, name, DataCenterKeys.None)
+        : base(parent, name, default, DataCenterKeys.None)
     {
     }
 }

@@ -13,34 +13,44 @@ public sealed class DataCenterKeys
 
     public string? AttributeName4 { get; }
 
+    public IEnumerable<string> AttributeNames
+    {
+        get
+        {
+            if (AttributeName1 is string n1)
+                yield return n1;
+
+            if (AttributeName2 is string n2)
+                yield return n2;
+
+            if (AttributeName3 is string n3)
+                yield return n3;
+
+            if (AttributeName4 is string n4)
+                yield return n4;
+        }
+    }
+
     public DataCenterKeys(
         string? attributeName1 = null,
         string? attributeName2 = null,
         string? attributeName3 = null,
         string? attributeName4 = null)
     {
+        static void CheckName(string? name, [CallerArgumentExpression("name")] string? paramName = null)
+        {
+            _ = name != DataCenterConstants.ValueAttributeName ? true : throw new ArgumentException(null, paramName);
+        }
+
+        CheckName(attributeName1);
+        CheckName(attributeName2);
+        CheckName(attributeName3);
+        CheckName(attributeName4);
+
         AttributeName1 = attributeName1;
         AttributeName2 = attributeName2;
         AttributeName3 = attributeName3;
         AttributeName4 = attributeName4;
-    }
-
-    public IEnumerable<string> AttributeNames
-    {
-        get
-        {
-            if (AttributeName1 != null)
-                yield return AttributeName1;
-
-            if (AttributeName2 != null)
-                yield return AttributeName2;
-
-            if (AttributeName3 != null)
-                yield return AttributeName3;
-
-            if (AttributeName4 != null)
-                yield return AttributeName4;
-        }
     }
 
     public DataCenterKeys WithAttributeName1(string attributeName1)

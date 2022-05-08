@@ -11,9 +11,14 @@ sealed class EagerMutableDataCenterReader : DataCenterReader
     }
 
     protected override EagerMutableDataCenterNode AllocateNode(
-        DataCenterAddress address, DataCenterRawNode raw, object parent, string name, DataCenterKeys keys)
+        DataCenterAddress address,
+        DataCenterRawNode raw,
+        object parent,
+        string name,
+        DataCenterValue value,
+        DataCenterKeys keys)
     {
-        var node = new EagerMutableDataCenterNode(parent, name, keys, raw.AttributeCount, raw.ChildCount);
+        var node = new EagerMutableDataCenterNode(parent, name, value, keys, raw.AttributeCount, raw.ChildCount);
 
         ForEachAttribute(raw, node.Attributes, static (dict, name, value) =>
         {

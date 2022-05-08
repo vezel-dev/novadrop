@@ -10,10 +10,11 @@ sealed class EagerMutableDataCenterNode : MutableDataCenterNode
     public EagerMutableDataCenterNode(
         object parent,
         string name,
+        DataCenterValue value,
         DataCenterKeys keys,
         int attributeCount,
         int childCount)
-        : base(parent, name, keys)
+        : base(parent, name, value, keys)
     {
         Attributes = new(attributeCount);
         Children = new(childCount);

@@ -9,8 +9,8 @@ abstract class MutableDataCenterNode : DataCenterNode
 
     public abstract override List<DataCenterNode> Children { get; }
 
-    public MutableDataCenterNode(object parent, string name, DataCenterKeys keys)
-        : base(parent, name, keys)
+    public MutableDataCenterNode(object parent, string name, DataCenterValue value, DataCenterKeys keys)
+        : base(parent, name, value, keys)
     {
     }
 
@@ -43,6 +43,7 @@ abstract class MutableDataCenterNode : DataCenterNode
 
     public override sealed void AddAttribute(string name, DataCenterValue value)
     {
+        _ = name != DataCenterConstants.ValueAttributeName ? true : throw new ArgumentException(null, nameof(name));
         _ = !value.IsNull ? true : throw new ArgumentException(null, nameof(value));
         _ = Attributes.Count != DataCenterAddress.MaxValue.ElementIndex + 1 ?
             true : throw new InvalidOperationException();
@@ -52,6 +53,7 @@ abstract class MutableDataCenterNode : DataCenterNode
 
     public override sealed void SetAttribute(string name, DataCenterValue value)
     {
+        _ = name != DataCenterConstants.ValueAttributeName ? true : throw new ArgumentException(null, nameof(name));
         _ = !value.IsNull ? true : throw new ArgumentException(null, nameof(value));
 
         ref var entry = ref CollectionsMarshal.GetValueRefOrAddDefault(Attributes, name, out var exists);
@@ -68,6 +70,8 @@ abstract class MutableDataCenterNode : DataCenterNode
 
     public override sealed bool RemoveAttribute(string name)
     {
+        _ = name != DataCenterConstants.ValueAttributeName ? true : throw new ArgumentException(null, nameof(name));
+
         return Attributes.Remove(name);
     }
 

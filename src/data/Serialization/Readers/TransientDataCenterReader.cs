@@ -11,13 +11,19 @@ sealed class TransientDataCenterReader : DataCenterReader
     }
 
     protected override DataCenterNode AllocateNode(
-        DataCenterAddress address, DataCenterRawNode raw, object parent, string name, DataCenterKeys keys)
+        DataCenterAddress address,
+        DataCenterRawNode raw,
+        object parent,
+        string name,
+        DataCenterValue value,
+        DataCenterKeys keys)
     {
         TransientDataCenterNode node = null!;
 
         return node = new TransientDataCenterNode(
             parent,
             name,
+            value,
             keys,
             () =>
             {

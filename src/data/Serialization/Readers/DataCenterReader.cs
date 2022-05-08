@@ -30,7 +30,12 @@ abstract class DataCenterReader
     }
 
     protected abstract DataCenterNode AllocateNode(
-        DataCenterAddress address, DataCenterRawNode raw, object parent, string name, DataCenterKeys keys);
+        DataCenterAddress address,
+        DataCenterRawNode raw,
+        object parent,
+        string name,
+        DataCenterValue value,
+        DataCenterKeys keys);
 
     protected abstract DataCenterNode? ResolveNode(DataCenterAddress address, object parent);
 
@@ -40,66 +45,12 @@ abstract class DataCenterReader
 
         for (var i = 0; i < raw.AttributeCount; i++)
         {
-            var rawAttr = _attributes.GetElement(
+            var (name, value) = CreateAttribute(
                 new DataCenterAddress(addr.SegmentIndex, (ushort)(addr.ElementIndex + i)));
 
-            var typeCode = rawAttr.TypeInfo & 0b0000000000000011;
-            var extCode = (rawAttr.TypeInfo & 0b1111111111111100) >> 2;
-
-            var result = typeCode switch
-            {
-                1 => extCode switch
-                {
-                    0 => rawAttr.Value,
-                    1 => rawAttr.Value switch
-                    {
-                        0 => false,
-                        1 => true,
-                        var v when _options.Strict =>
-                            throw new InvalidDataException($"Attribute has invalid Boolean value {v}."),
-                        _ => true,
-                    },
-                    var e => throw new InvalidDataException($"Attribute has invalid extended type code {e}."),
-                },
-                2 => extCode switch
-                {
-                    not 0 and var e when _options.Strict =>
-                        throw new InvalidDataException($"Attribute has invalid extended type code {e}."),
-                    _ => Unsafe.As<int, float>(ref rawAttr.Value),
-                },
-                3 => default(DataCenterValue), // Handled below.
-                var t => throw new InvalidDataException($"Attribute has invalid type code {t}."),
-            };
-
-            // String addresses need some extra work to handle endianness properly.
-            if (result.IsNull)
-            {
-                var segIdx = (ushort)rawAttr.Value;
-                var elemIdx = (ushort)((rawAttr.Value & 0b11111111111111110000000000000000) >> 16);
-
-                if (!BitConverter.IsLittleEndian)
-                {
-                    segIdx = BinaryPrimitives.ReverseEndianness(segIdx);
-                    elemIdx = BinaryPrimitives.ReverseEndianness(elemIdx);
-                }
-
-                var str = _values.GetString(new DataCenterAddress(segIdx, elemIdx));
-
-                result = new(str);
-
-                if (_options.Strict)
-                {
-                    var hash = DataCenterHash.ComputeValueHash(str);
-
-                    if (extCode != hash)
-                        throw new InvalidDataException(
-                            $"Value hash 0x{extCode:x8} does not match expected hash 0x{hash:x8}.");
-                }
-            }
-
-            // Note: Padding1 is allowed to contain garbage. Do not check.
-
-            action(state, _names.GetString(rawAttr.NameIndex - 1), result);
+            // Node value attributes are handled in CreateNode.
+            if (name != DataCenterConstants.ValueAttributeName)
+                action(state, name, value);
         }
     }
 
@@ -115,6 +66,69 @@ abstract class DataCenterReader
             if (child != null)
                 action(state, child);
         }
+    }
+
+    (string Name, DataCenterValue Value) CreateAttribute(DataCenterAddress address)
+    {
+        var rawAttr = _attributes.GetElement(address);
+
+        var typeCode = rawAttr.TypeInfo & 0b0000000000000011;
+        var extCode = (rawAttr.TypeInfo & 0b1111111111111100) >> 2;
+
+        var result = typeCode switch
+        {
+            1 => extCode switch
+            {
+                0 => rawAttr.Value,
+                1 => rawAttr.Value switch
+                {
+                    0 => false,
+                    1 => true,
+                    var v when _options.Strict =>
+                        throw new InvalidDataException($"Attribute has invalid Boolean value {v}."),
+                    _ => true,
+                },
+                var e => throw new InvalidDataException($"Attribute has invalid extended type code {e}."),
+            },
+            2 => extCode switch
+            {
+                not 0 and var e when _options.Strict =>
+                    throw new InvalidDataException($"Attribute has invalid extended type code {e}."),
+                _ => Unsafe.As<int, float>(ref rawAttr.Value),
+            },
+            3 => default(DataCenterValue), // Handled below.
+            var t => throw new InvalidDataException($"Attribute has invalid type code {t}."),
+        };
+
+        // String addresses need some extra work to handle endianness properly.
+        if (result.IsNull)
+        {
+            var segIdx = (ushort)rawAttr.Value;
+            var elemIdx = (ushort)((rawAttr.Value & 0b11111111111111110000000000000000) >> 16);
+
+            if (!BitConverter.IsLittleEndian)
+            {
+                segIdx = BinaryPrimitives.ReverseEndianness(segIdx);
+                elemIdx = BinaryPrimitives.ReverseEndianness(elemIdx);
+            }
+
+            var str = _values.GetString(new DataCenterAddress(segIdx, elemIdx));
+
+            result = new(str);
+
+            if (_options.Strict)
+            {
+                var hash = DataCenterHash.ComputeValueHash(str);
+
+                if (extCode != hash)
+                    throw new InvalidDataException(
+                        $"Value hash 0x{extCode:x8} does not match expected hash 0x{hash:x8}.");
+            }
+        }
+
+        // Note: Padding1 is allowed to contain garbage. Do not check.
+
+        return (_names.GetString(rawAttr.NameIndex - 1), result);
     }
 
     protected DataCenterNode? CreateNode(DataCenterAddress address, object parent)
@@ -153,7 +167,19 @@ abstract class DataCenterReader
 
         // Note: Padding1 and Padding2 are allowed to contain garbage. Do not check.
 
-        return AllocateNode(address, raw, parent, name, _keys.GetKeys((keysInfo & 0b1111111111110000) >> 4));
+        var value = default(DataCenterValue);
+
+        // The node value attribute, if present, is always last.
+        if (attrCount != 0)
+        {
+            var (attrName, attrValue) = CreateAttribute(
+                new(attrAddr.SegmentIndex, (ushort)(attrAddr.ElementIndex + attrCount - 1)));
+
+            if (attrName == DataCenterConstants.ValueAttributeName)
+                value = attrValue;
+        }
+
+        return AllocateNode(address, raw, parent, name, value, _keys.GetKeys((keysInfo & 0b1111111111110000) >> 4));
     }
 
     public async Task<DataCenterNode> ReadAsync(Stream stream, DataCenter center, CancellationToken cancellationToken)

@@ -356,7 +356,8 @@ struct DataCenterKey
 
 `name_index_1` and friends are **one-based** indexes into the `addresses` region
 of the `names` table. A value of `0` indicates that the field does not define a
-key. A key definition can specify between zero and four keys.
+key. A key definition can specify between zero and four keys. These fields may
+not refer to the special `__value__` attribute.
 
 There need not be any keys defined in a data center file at all, but the client
 will be *very slow* without certain key definitions. At minimum, a data center

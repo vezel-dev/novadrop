@@ -11,13 +11,19 @@ sealed class LazyMutableDataCenterReader : DataCenterReader
     }
 
     protected override LazyMutableDataCenterNode AllocateNode(
-        DataCenterAddress address, DataCenterRawNode raw, object parent, string name, DataCenterKeys keys)
+        DataCenterAddress address,
+        DataCenterRawNode raw,
+        object parent,
+        string name,
+        DataCenterValue value,
+        DataCenterKeys keys)
     {
         LazyMutableDataCenterNode node = null!;
 
         return node = new LazyMutableDataCenterNode(
             parent,
             name,
+            value,
             keys,
             () =>
             {

@@ -14,10 +14,11 @@ sealed class LazyMutableDataCenterNode : MutableDataCenterNode
     public LazyMutableDataCenterNode(
         object parent,
         string name,
+        DataCenterValue value,
         DataCenterKeys keys,
         Func<Dictionary<string, DataCenterValue>> getAttributes,
         Func<List<DataCenterNode>> getChildren)
-        : base(parent, name, keys)
+        : base(parent, name, value, keys)
     {
         _attributes = new(getAttributes, false);
         _children = new(getChildren, false);

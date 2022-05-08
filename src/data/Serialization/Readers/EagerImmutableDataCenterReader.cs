@@ -13,9 +13,14 @@ sealed class EagerImmutableDataCenterReader : DataCenterReader
     }
 
     protected override EagerImmutableDataCenterNode AllocateNode(
-        DataCenterAddress address, DataCenterRawNode raw, object parent, string name, DataCenterKeys keys)
+        DataCenterAddress address,
+        DataCenterRawNode raw,
+        object parent,
+        string name,
+        DataCenterValue value,
+        DataCenterKeys keys)
     {
-        var node = new EagerImmutableDataCenterNode(parent, name, keys);
+        var node = new EagerImmutableDataCenterNode(parent, name, value, keys);
 
         _cache.Add(address, node);
 

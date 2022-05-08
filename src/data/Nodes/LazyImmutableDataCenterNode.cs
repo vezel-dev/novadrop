@@ -14,10 +14,11 @@ sealed class LazyImmutableDataCenterNode : ImmutableDataCenterNode
     public LazyImmutableDataCenterNode(
         object parent,
         string name,
+        DataCenterValue value,
         DataCenterKeys keys,
         Func<IReadOnlyDictionary<string, DataCenterValue>> getAttributes,
         Func<IReadOnlyCollection<DataCenterNode>> getChildren)
-        : base(parent, name, keys)
+        : base(parent, name, value, keys)
     {
         _attributes = new(getAttributes, false);
         _children = new(getChildren, false);

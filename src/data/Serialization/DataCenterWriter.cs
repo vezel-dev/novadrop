@@ -30,11 +30,13 @@ sealed class DataCenterWriter
         _keys = new(_names);
         _comparer = Comparer<DataCenterNode>.Create((a, b) =>
         {
+            // Note that the node value attribute cannot be a key.
+            var attrsA = new Dictionary<string, DataCenterValue>(a.Attributes);
+            var attrsB = new Dictionary<string, DataCenterValue>(b.Attributes);
+
             int CompareBy(string? name)
             {
-                return name != null
-                    ? a.Attributes.GetValueOrDefault(name).CompareTo(b.Attributes.GetValueOrDefault(name))
-                    : 0;
+                return name != null ? attrsA.GetValueOrDefault(name).CompareTo(attrsB.GetValueOrDefault(name)) : 0;
             }
 
             var cmp = _names.GetString(a.Name).Index.CompareTo(_names.GetString(b.Name).Index);
@@ -134,7 +136,12 @@ sealed class DataCenterWriter
 
         void EmitTree(DataCenterNode node, DataCenterAddress address)
         {
-            var rawAttributes = node.Attributes
+            var attributes = new Dictionary<string, DataCenterValue>(node.Attributes);
+
+            if (node.Value is { IsNull: false } val)
+                attributes.Add(DataCenterConstants.ValueAttributeName, val);
+
+            var rawAttributes = attributes
                 .Select(kvp => (_names.GetString(kvp.Key).Index, kvp.Value))
                 .OrderBy(tup => tup.Index)
                 .Select(tup =>
@@ -204,7 +211,7 @@ sealed class DataCenterWriter
                     keys.AttributeName2,
                     keys.AttributeName3,
                     keys.AttributeName4) << 4),
-                AttributeCount = (ushort)node.Attributes.Count,
+                AttributeCount = (ushort)attributes.Count,
                 ChildCount = (ushort)children.Count,
                 AttributeAddress = InsertElements(_attributes, rawAttributes, "Attribute"),
                 ChildAddress = caddr,

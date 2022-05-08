@@ -24,11 +24,10 @@ public abstract class DataCenterNode
 
     public abstract IReadOnlyCollection<DataCenterNode> Children { get; }
 
-    // TODO: Treat this specially; filter it from Attributes?
-    public DataCenterValue Value
+    public virtual DataCenterValue Value
     {
-        get => this[DataCenterConstants.ValueAttributeName];
-        set => this[DataCenterConstants.ValueAttributeName] = value;
+        get => _value;
+        set => _value = value;
     }
 
     public DataCenterValue this[string name]
@@ -39,12 +38,15 @@ public abstract class DataCenterNode
 
     readonly object _parent;
 
+    DataCenterValue _value;
+
     DataCenterKeys _keys;
 
-    private protected DataCenterNode(object parent, string name, DataCenterKeys keys)
+    private protected DataCenterNode(object parent, string name, DataCenterValue value, DataCenterKeys keys)
     {
         _parent = parent;
         Name = name;
+        _value = value;
         _keys = keys;
     }
 

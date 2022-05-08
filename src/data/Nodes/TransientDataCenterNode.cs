@@ -14,10 +14,11 @@ sealed class TransientDataCenterNode : ImmutableDataCenterNode
     public TransientDataCenterNode(
         object parent,
         string name,
+        DataCenterValue value,
         DataCenterKeys keys,
         Func<IReadOnlyDictionary<string, DataCenterValue>> getAttributes,
         Func<IReadOnlyCollection<DataCenterNode>> getChildren)
-        : base(parent, name, keys)
+        : base(parent, name, value, keys)
     {
         _getAttributes = getAttributes;
         _getChildren = getChildren;

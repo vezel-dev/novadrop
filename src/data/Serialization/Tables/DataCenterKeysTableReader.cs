@@ -34,7 +34,14 @@ sealed class DataCenterKeysTableReader
         {
             var nameIdx = index - 1;
 
-            return nameIdx != -1 ? _names.GetString(nameIdx) : null;
+            if (nameIdx == -1)
+                return null;
+
+            var name = _names.GetString(nameIdx);
+
+            return name != DataCenterConstants.ValueAttributeName
+                ? name
+                : throw new InvalidDataException($"Key entry refers to illegal attribute name '{name}'.");
         }
 
         if (_cache[index] is DataCenterKeys keys)
