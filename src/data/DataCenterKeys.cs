@@ -103,7 +103,7 @@ public sealed class DataCenterKeys : IEquatable<DataCenterKeys>
 
     public override string ToString()
     {
-        var sb = new StringBuilder("[");
+        var sb = new StringBuilder("{");
         var attrs = AttributeNames.ToArray();
 
         for (var i = 0; i < attrs.Length; i++)
@@ -114,6 +114,6 @@ public sealed class DataCenterKeys : IEquatable<DataCenterKeys>
                 _ = sb.Append(", ");
         }
 
-        return sb.Append(']').ToString();
+        return sb.Append('}').ToString();
     }
 }
