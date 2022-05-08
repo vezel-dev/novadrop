@@ -4,18 +4,18 @@ namespace Vezel.Novadrop.Data.Serialization;
 
 sealed class DataCenterFooter
 {
-    public int Unknown1 { get; set; }
+    public int Marker { get; private set; }
 
     public async ValueTask ReadAsync(bool strict, DataCenterBinaryReader reader, CancellationToken cancellationToken)
     {
-        Unknown1 = await reader.ReadInt32Async(cancellationToken).ConfigureAwait(false);
+        Marker = await reader.ReadInt32Async(cancellationToken).ConfigureAwait(false);
 
-        if (strict && Unknown1 != 0)
-            throw new InvalidDataException($"Unexpected data center footer value {Unknown1}.");
+        if (strict && Marker != 0)
+            throw new InvalidDataException($"Unexpected data center footer marker {Marker}.");
     }
 
     public async ValueTask WriteAsync(DataCenterBinaryWriter writer, CancellationToken cancellationToken)
     {
-        await writer.WriteInt32Async(Unknown1, cancellationToken).ConfigureAwait(false);
+        await writer.WriteInt32Async(Marker, cancellationToken).ConfigureAwait(false);
     }
 }

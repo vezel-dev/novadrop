@@ -4,7 +4,7 @@ sealed class DataCenterBinaryWriter
 {
     readonly Stream _stream;
 
-    readonly Memory<byte> _buffer = new byte[sizeof(uint)];
+    readonly Memory<byte> _buffer = new byte[sizeof(double)];
 
     public DataCenterBinaryWriter(Stream stream)
     {
@@ -33,5 +33,12 @@ sealed class DataCenterBinaryWriter
     public async ValueTask WriteInt32Async(int value, CancellationToken cancellationToken)
     {
         await WriteUInt32Async((uint)value, cancellationToken).ConfigureAwait(false);
+    }
+
+    public async ValueTask WriteDoubleAsync(double value, CancellationToken cancellationToken)
+    {
+        BinaryPrimitives.WriteDoubleLittleEndian(_buffer.Span, value);
+
+        await WriteAsync(_buffer[..sizeof(double)], cancellationToken).ConfigureAwait(false);
     }
 }

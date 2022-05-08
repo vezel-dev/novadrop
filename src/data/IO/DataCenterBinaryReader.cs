@@ -6,7 +6,7 @@ sealed class DataCenterBinaryReader
 
     readonly Stream _stream;
 
-    readonly Memory<byte> _buffer = new byte[sizeof(uint)];
+    readonly Memory<byte> _buffer = new byte[sizeof(double)];
 
     public DataCenterBinaryReader(Stream stream)
     {
@@ -47,5 +47,12 @@ sealed class DataCenterBinaryReader
     public async ValueTask<int> ReadInt32Async(CancellationToken cancellationToken)
     {
         return (int)await ReadUInt32Async(cancellationToken).ConfigureAwait(false);
+    }
+
+    public async ValueTask<double> ReadDoubleAsync(CancellationToken cancellationToken)
+    {
+        await ReadAsync(_buffer[..sizeof(double)], cancellationToken).ConfigureAwait(false);
+
+        return BinaryPrimitives.ReadDoubleLittleEndian(_buffer.Span);
     }
 }
