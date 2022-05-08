@@ -10,6 +10,9 @@ This page describes the packed `.dat` data center format used by TERA.
 * Characters (i.e. `char16_t`) are UTF-16 and little endian.
 * Fields are laid out in the declared order with no implied padding anywhere.
 
+Please note that the format uses both zero-based and one-based array indexes in
+various, seemingly random places.
+
 ## Encryption
 
 Data center files are encrypted with the Rijndael algorithm in CFB mode, using
@@ -33,7 +36,7 @@ struct DataCenterFile
     DataCenterHeader header;
     DataCenterSimpleRegion<DataCenterKey, false> keys;
     DataCenterSegmentedRegion<DataCenterAttribute> attributes;
-    DataCenterSegmentedRegion<DataCenterElement> elements;
+    DataCenterSegmentedRegion<DataCenterNode> nodes;
     DataCenterStringTable<1024> values;
     DataCenterStringTable<512> names;
     DataCenterFooter footer;
@@ -196,11 +199,11 @@ character.
 address at this index must match the `address` field exactly.
 
 `address` is an address into the string table's `data` region. This address
-points to the actual string data. All strings are `NUL`-terminated. The string
-read from this address must have the same length as the `length` field. Notably,
-only the first character of the string has to be directly addressable; the
-remaining characters (including the `NUL` terminator) are allowed to reside
-outside the addressable bounds of the segment.
+points to the actual string data. The string read from this address must have
+the same length as the `length` field. Notably, if the string data straddles the
+end of its segment, the `NUL` character may be omitted. Readers should therefore
+not rely exclusively on the presence of a `NUL` character, but also check the
+segment bounds.
 
 A string entry must be placed in the correct `table` segment based on its `hash`
 field. The segment index is given by the expression
@@ -285,15 +288,15 @@ The actual content in a data center file is stored as a sort of tree structure,
 which is essentially [XML](https://www.w3.org/TR/xml) serialized to a binary
 format.
 
-### Elements
+### Nodes
 
-Each element is of the form:
+Each node is of the form:
 
 ```cpp
-struct DataCenterElement
+struct DataCenterNode
 {
     uint16_t name_index;
-    uint8_t unknown1 : 4;
+    uint8_t key_flags : 4;
     uint16_t key_index : 12;
     uint16_t attribute_count;
     uint16_t child_count;
@@ -305,40 +308,41 @@ struct DataCenterElement
 ```
 
 `name_index` is a **one-based** index into the `addresses` region of the `names`
-table. If this value is `0`, it indicates that this element has no name or
+table. If this value is `0`, it indicates that this node has no name or
 associated data of any kind, and should be disregarded; in this case, all other
-integer fields of the element will be `0`. Such elements are usually incidental
-leftovers in official data center files and need not be present.
+fields of the node should be considered undefined. Such nodes are usually
+incidental leftovers in official data center files and need not be present.
 
-`unknown1` is currently `0`.
+`key_flags` must be `0`.
 
 `key_index` is a **zero-based** index into the `keys` region.
 
 `attribute_count` and `child_count` indicate how many attributes and child
-elements should be read for this element, respectively. If a count field is `0`,
-then the corresponding address field is `65535:65535`.
+nodes should be read for this node, respectively. If a count field is `0`, then
+the corresponding address field should be considered undefined, though it will
+usually be `65535:65535` in official data center files.
 
 `attribute_address` is an address into the `attributes` region.
 `attribute_count` attributes should be read at this address. These attributes
 must be sorted by their name index in ascending order.
 
-`child_address` is an address into the `elements` region. `child_count` elements
-should be read at this address. These children must be sorted first by their
-name index, then by name indexes of keys (if any), in ascending order.
+`child_address` is an address into the `node` region. `child_count` nodes should
+be read at this address. These children must be sorted first by their name
+index, then by name indexes of keys (if any), in ascending order.
 
 `padding_1` and `padding_2` are always zero. They were added in the 64-bit data
 center format.
 
-The root element of the data tree must be located at the address `0:0` and must
+The root node of the data tree must be located at the address `0:0` and must
 have the name `__root__`.
 
 ### Keys
 
 Keys are used to signal to a data center reading layer (e.g. in the client) that
-certain attributes of an element will be used frequently for lookups. The
-reading layer can then decide to construct an optimized lookup table for those
-specific paths in the tree, transparently making those lookups faster. It is
-effectively a trade-off between speed and memory usage.
+certain attributes of a node will be used frequently for lookups. The reading
+layer can then decide to construct an optimized lookup table for those specific
+paths in the tree, transparently making those lookups faster. It is effectively
+a trade-off between speed and memory usage.
 
 ```cpp
 struct DataCenterKey
@@ -357,11 +361,11 @@ key. A key definition can specify between zero and four keys.
 There need not be any keys defined in a data center file at all, but the client
 will be *very slow* without certain key definitions. At minimum, a data center
 file must contain a key definition at index `0` with all fields `0` (i.e. with
-no keys) which all elements can point to by default.
+no keys) which all nodes can point to by default.
 
 ### Attributes
 
-Each element in the data tree has zero or more attributes, which are name/value
+Each node in the data tree has zero or more attributes, which are name/value
 pairs. They are of the form:
 
 ```cpp
@@ -415,11 +419,11 @@ or `f` fields.
 
 `padding_1` is always zero. It was added in the 64-bit data center format.
 
-Some elements will have a special attribute named `__value__`. In XML terms,
-this represents the text of a node. For example, `<Foo>bar</Foo>` would be
-serialized to an element called `Foo` containing an attribute named `__value__`
-with the value `"bar"`. It is worth noting that an element can have both text
-and child elements, such as `Foo` in this example:
+Some nodes will have a special attribute named `__value__`. In XML terms, this
+represents the text of a node. For example, `<Foo>bar</Foo>` would be serialized
+to a node called `Foo` containing an attribute named `__value__` with the string
+value `"bar"`. It is worth noting that a node can have both text and child
+nodes, such as `Foo` in this example:
 
 ```xml
 <Foo>
