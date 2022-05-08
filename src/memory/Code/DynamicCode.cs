@@ -30,12 +30,12 @@ public sealed class DynamicCode : IDisposable
         Window.Process.Free(Window.Address);
     }
 
-    public static DynamicCode Create(NativeProcess process, Action<Assembler> assembler)
+    public static unsafe DynamicCode Create(NativeProcess process, Action<Assembler> assembler)
     {
         ArgumentNullException.ThrowIfNull(process);
         ArgumentNullException.ThrowIfNull(assembler);
 
-        var asm = new Assembler(64);
+        var asm = new Assembler(sizeof(nuint) * 8);
 
         assembler(asm);
 
