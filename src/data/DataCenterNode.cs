@@ -104,6 +104,7 @@ public abstract class DataCenterNode
 
     public override string ToString()
     {
-        return $"{{Name: {Name}, Value: {Value}, Attributes: [{Attributes.Count}], Children: [{Children.Count}]}}";
+        return $"{{Name: {Name}, Value: {Value}, Keys: {Keys}, " +
+            $"Attributes: [{Attributes.Count}], Children: [{Children.Count}]}}";
     }
 }

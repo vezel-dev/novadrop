@@ -1,7 +1,7 @@
 namespace Vezel.Novadrop.Data;
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
-public sealed class DataCenterKeys
+public sealed class DataCenterKeys : IEquatable<DataCenterKeys>
 {
     public static DataCenterKeys None { get; } = new();
 
@@ -53,6 +53,16 @@ public sealed class DataCenterKeys
         AttributeName4 = attributeName4;
     }
 
+    public static bool operator ==(DataCenterKeys left, DataCenterKeys right)
+    {
+        return left.Equals(right);
+    }
+
+    public static bool operator !=(DataCenterKeys left, DataCenterKeys right)
+    {
+        return !left.Equals(right);
+    }
+
     public DataCenterKeys WithAttributeName1(string attributeName1)
     {
         return new(attributeName1, AttributeName2, AttributeName3, AttributeName4);
@@ -71,5 +81,39 @@ public sealed class DataCenterKeys
     public DataCenterKeys WithAttributeName4(string attributeName4)
     {
         return new(AttributeName1, AttributeName2, AttributeName3, attributeName4);
+    }
+
+    public bool Equals(DataCenterKeys? other)
+    {
+        return AttributeName1 == other?.AttributeName1 &&
+            AttributeName2 == other?.AttributeName2 &&
+            AttributeName3 == other?.AttributeName3 &&
+            AttributeName4 == other?.AttributeName4;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is DataCenterKeys k && Equals(k);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(AttributeName1, AttributeName2, AttributeName3, AttributeName4);
+    }
+
+    public override string ToString()
+    {
+        var sb = new StringBuilder("[");
+        var attrs = AttributeNames.ToArray();
+
+        for (var i = 0; i < attrs.Length; i++)
+        {
+            _ = sb.Append(attrs[i]);
+
+            if (i != attrs.Length - 1)
+                _ = sb.Append(", ");
+        }
+
+        return sb.Append(']').ToString();
     }
 }

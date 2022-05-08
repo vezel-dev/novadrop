@@ -1,7 +1,7 @@
 namespace Vezel.Novadrop.Data;
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
-public readonly struct DataCenterValue : IEquatable<DataCenterValue>, IComparable<DataCenterValue>
+public readonly struct DataCenterValue : IComparable<DataCenterValue>, IEquatable<DataCenterValue>
 {
     public DataCenterTypeCode TypeCode { get; }
 
@@ -158,30 +158,6 @@ public readonly struct DataCenterValue : IEquatable<DataCenterValue>, IComparabl
         return Unsafe.As<int, T>(ref Unsafe.AsRef(_primitiveValue));
     }
 
-    public bool Equals(DataCenterValue other)
-    {
-        return TypeCode == other.TypeCode && TypeCode switch
-        {
-            DataCenterTypeCode.Int32 => As<int>() == other.As<int>(),
-            DataCenterTypeCode.Single => As<float>() == other.As<float>(),
-            DataCenterTypeCode.String => _stringValue == other._stringValue,
-            DataCenterTypeCode.Boolean => As<bool>() == other.As<bool>(),
-            _ => true,
-        };
-    }
-
-    public int CompareTo(DataCenterValue other)
-    {
-        return TypeCode != other.TypeCode ? TypeCode.CompareTo(other.TypeCode) : TypeCode switch
-        {
-            DataCenterTypeCode.Int32 => As<int>().CompareTo(other.As<int>()),
-            DataCenterTypeCode.Single => As<float>().CompareTo(other.As<float>()),
-            DataCenterTypeCode.String => string.CompareOrdinal(_stringValue, other._stringValue),
-            DataCenterTypeCode.Boolean => As<bool>().CompareTo(other.As<bool>()),
-            _ => 0,
-        };
-    }
-
     public int ToInt32(int? fallback = null)
     {
         return TypeCode switch
@@ -220,6 +196,30 @@ public readonly struct DataCenterValue : IEquatable<DataCenterValue>, IComparabl
                     : fallback ?? throw new InvalidCastException(),
             DataCenterTypeCode.Boolean => As<bool>(),
             var t => throw new InvalidCastException($"Cannot cast value of type {t} to {typeof(bool)}."),
+        };
+    }
+
+    public int CompareTo(DataCenterValue other)
+    {
+        return TypeCode != other.TypeCode ? TypeCode.CompareTo(other.TypeCode) : TypeCode switch
+        {
+            DataCenterTypeCode.Int32 => As<int>().CompareTo(other.As<int>()),
+            DataCenterTypeCode.Single => As<float>().CompareTo(other.As<float>()),
+            DataCenterTypeCode.String => string.CompareOrdinal(_stringValue, other._stringValue),
+            DataCenterTypeCode.Boolean => As<bool>().CompareTo(other.As<bool>()),
+            _ => 0,
+        };
+    }
+
+    public bool Equals(DataCenterValue other)
+    {
+        return TypeCode == other.TypeCode && TypeCode switch
+        {
+            DataCenterTypeCode.Int32 => As<int>() == other.As<int>(),
+            DataCenterTypeCode.Single => As<float>() == other.As<float>(),
+            DataCenterTypeCode.String => _stringValue == other._stringValue,
+            DataCenterTypeCode.Boolean => As<bool>() == other.As<bool>(),
+            _ => true,
         };
     }
 
