@@ -1,7 +1,6 @@
 namespace Vezel.Novadrop.Memory;
 
-[SuppressMessage("", "CA1815")]
-public readonly struct MemoryWindow
+public readonly struct MemoryWindow : IEquatable<MemoryWindow>
 {
     public NativeProcess Process { get; }
 
@@ -18,6 +17,16 @@ public readonly struct MemoryWindow
         Process = process;
         Address = address;
         Length = length;
+    }
+
+    public static bool operator ==(MemoryWindow left, MemoryWindow right)
+    {
+        return left.Equals(right);
+    }
+
+    public static bool operator !=(MemoryWindow left, MemoryWindow right)
+    {
+        return !left.Equals(right);
     }
 
     public bool ContainsAddress(nuint address)
@@ -141,5 +150,25 @@ public readonly struct MemoryWindow
         where T : unmanaged
     {
         Write(offset, new(&value, sizeof(T)));
+    }
+
+    public bool Equals(MemoryWindow other)
+    {
+        return Process == other.Process && Address == other.Address && Length == other.Length;
+    }
+
+    public override bool Equals([NotNullWhen(true)] object? obj)
+    {
+        return obj is MemoryWindow w && Equals(w);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Process, Address, Length);
+    }
+
+    public override string ToString()
+    {
+        return $"{{Process: {Process}, Address: 0x{Address:x}, Length: {Length}}}";
     }
 }

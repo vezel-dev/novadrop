@@ -94,4 +94,9 @@ public sealed class NativeProcess
         if (!FlushInstructionCache(Handle, (void*)address, length))
             throw new Win32Exception();
     }
+
+    public override string ToString()
+    {
+        return $"{{Id: {Process.Id}, Name: {Process.ProcessName}}}";
+    }
 }

@@ -93,4 +93,9 @@ public sealed class DynamicCode : IDisposable
                 : throw new Win32Exception()
             : throw new Win32Exception();
     }
+
+    public override string ToString()
+    {
+        return $"{{Window: {Window}, Length: {Length}}}";
+    }
 }
