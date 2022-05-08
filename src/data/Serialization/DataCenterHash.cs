@@ -68,8 +68,10 @@ static class DataCenterHash
                 ch switch
                 {
                     '\x9c' => '\x8c',
+                    ('\xf0' or '\xf7') and var c => c,
                     '\xff' => '\x9f',
-                    var c when (c >= 'a' && c <= 'z') || (ushort)(c - '\xe0') <= '\x1e' => (char)(c - ' '),
+                    '\x151' => '\x150',
+                    ((>= 'a' and <= 'z') or (>= '\xe0' and <= '\xfe')) and var c => (char)(c - ' '),
                     var c => c,
                 });
 
