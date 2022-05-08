@@ -53,7 +53,7 @@ readonly struct DataCenterAddress : IEquatable<DataCenterAddress>
         return SegmentIndex == other.SegmentIndex && ElementIndex == other.ElementIndex;
     }
 
-    public override bool Equals(object? obj)
+    public override bool Equals([NotNullWhen(true)] object? obj)
     {
         return obj is DataCenterAddress a && Equals(a);
     }

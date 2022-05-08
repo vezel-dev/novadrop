@@ -223,7 +223,7 @@ public readonly struct DataCenterValue : IComparable<DataCenterValue>, IEquatabl
         };
     }
 
-    public override bool Equals(object? obj)
+    public override bool Equals([NotNullWhen(true)] object? obj)
     {
         return obj is DataCenterValue v && Equals(v);
     }
