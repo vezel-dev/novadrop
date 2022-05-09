@@ -142,29 +142,36 @@ abstract class DataCenterReader
             return null;
 
         var name = _names.GetString(nameIdx);
-
-        if (_options.Strict && name == DataCenterConstants.RootNodeName && parent is not DataCenter)
-            throw new InvalidDataException($"Node name '{name}' is only valid for the root node.");
-
         var keysInfo = raw.KeysInfo;
         var keyFlags = keysInfo & 0b0000000000001111;
-
-        // TODO: Should we allow setting 0b0001 in the API?
-        if (_options.Strict && keyFlags is not 0b0000 or 0b0001)
-            throw new InvalidDataException($"Node has invalid key flags 0x{keyFlags:x1}.");
-
-        var max = DataCenterAddress.MaxValue;
         var attrCount = raw.AttributeCount;
-        var attrAddr = raw.AttributeAddress;
-
-        if (_options.Strict && attrAddr.ElementIndex + attrCount > max.ElementIndex + 1)
-            throw new InvalidDataException($"Cannot read {attrCount} contiguous attributes at {attrAddr}.");
-
         var childCount = raw.ChildCount;
+        var attrAddr = raw.AttributeAddress;
         var childAddr = raw.ChildAddress;
 
-        if (_options.Strict && childAddr.ElementIndex + childCount > max.ElementIndex + 1)
-            throw new InvalidDataException($"Cannot read {childCount} contiguous nodes at {childAddr}.");
+        if (_options.Strict)
+        {
+            if (name == DataCenterConstants.RootNodeName)
+            {
+                if (parent is not DataCenter)
+                    throw new InvalidDataException($"Node name '{name}' is only valid for the root node.");
+
+                if (attrCount != 0)
+                    throw new InvalidDataException($"Root node has {attrCount} attributes (expected 0).");
+            }
+
+            // TODO: Should we allow setting 0b0001 in the API?
+            if (keyFlags is not 0b0000 or 0b0001)
+                throw new InvalidDataException($"Node has invalid key flags 0x{keyFlags:x1}.");
+
+            var max = DataCenterAddress.MaxValue;
+
+            if (attrAddr.ElementIndex + attrCount > max.ElementIndex + 1)
+                throw new InvalidDataException($"Cannot read {attrCount} contiguous attributes at {attrAddr}.");
+
+            if (childAddr.ElementIndex + childCount > max.ElementIndex + 1)
+                throw new InvalidDataException($"Cannot read {childCount} contiguous nodes at {childAddr}.");
+        }
 
         // Note: Padding1 and Padding2 are allowed to contain garbage. Do not check.
 
