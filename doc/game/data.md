@@ -309,7 +309,19 @@ associated data of any kind, and should be disregarded; in this case, all other
 fields of the node should be considered undefined. Such nodes are usually
 incidental leftovers in official data center files and need not be present.
 
-`key_flags` must be `0`.
+`key_flags` is `0` in official data center files. It may have a combination of
+the following values:
+
+```cpp
+enum DataCenterKeyFlags : uint8_t
+{
+    DATA_CENTER_KEY_FLAGS_NONE = 0b0000,
+    DATA_CENTER_KEY_FLAGS_UNCACHED = 0b0001,
+};
+```
+
+If `DATA_CENTER_KEY_FLAGS_UNCACHED` is set, the results of a query against this
+node will not be cached by the client.
 
 `key_index` is a **zero-based** index into the `keys` region.
 
