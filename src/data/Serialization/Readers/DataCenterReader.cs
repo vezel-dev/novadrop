@@ -143,14 +143,14 @@ abstract class DataCenterReader
 
         var name = _names.GetString(nameIdx);
 
-        if (name == DataCenterConstants.RootNodeName && parent is not DataCenter)
+        if (_options.Strict && name == DataCenterConstants.RootNodeName && parent is not DataCenter)
             throw new InvalidDataException($"Node name '{name}' is only valid for the root node.");
 
         var keysInfo = raw.KeysInfo;
         var keyFlags = keysInfo & 0b0000000000001111;
 
         // TODO: Should we allow setting 0b0001 in the API?
-        if (keyFlags is not 0b0000 or 0b0001)
+        if (_options.Strict && keyFlags is not 0b0000 or 0b0001)
             throw new InvalidDataException($"Node has invalid key flags 0x{keyFlags:x1}.");
 
         var max = DataCenterAddress.MaxValue;
@@ -221,7 +221,7 @@ abstract class DataCenterReader
         var root = CreateNode(DataCenterAddress.MinValue, center);
 
         return root != null
-            ? root.Name == DataCenterConstants.RootNodeName
+            ? _options.Strict && root.Name == DataCenterConstants.RootNodeName
                 ? root
                 : throw new InvalidDataException(
                     $"Root node name '{root.Name}' does not match expected '{DataCenterConstants.RootNodeName}'.")
