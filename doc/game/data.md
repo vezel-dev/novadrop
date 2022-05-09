@@ -326,8 +326,8 @@ must be sorted by their name index in ascending order.
 be read at this address. These children must be sorted first by their name
 index, then by name indexes of keys (if any), in ascending order.
 
-`padding_1` and `padding_2` are should be considered undefined. They were added
-in the 64-bit data center format.
+`padding_1` and `padding_2` should be considered undefined. They were added in
+the 64-bit data center format.
 
 The root node of the data tree must be located at the address `0:0` and must
 have the name `__root__`.
@@ -414,7 +414,7 @@ field holds an address into the `data` region of the `values` table. For other
 type codes, the value is written directly and is accessed through the `i`, `b`,
 or `f` fields.
 
-`padding_1` is should be considered undefined. It was added in the 64-bit data
+`padding_1` should be considered undefined. It was added in the 64-bit data
 center format.
 
 Some nodes will have a special attribute named `__value__`. In XML terms, this
