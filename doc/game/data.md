@@ -341,8 +341,8 @@ index, then by name indexes of keys (if any), in ascending order.
 `padding_1` and `padding_2` should be considered undefined. They were added in
 the 64-bit data center format.
 
-The root node of the data tree must be located at the address `0:0` and must
-have the name `__root__`.
+The root node of the data tree must be located at the address `0:0`. It must
+have the name `__root__` and have zero attributes.
 
 ### Keys
 
