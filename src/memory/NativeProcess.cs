@@ -28,19 +28,20 @@ public sealed class NativeProcess
             throw new Win32Exception();
     }
 
-    static PAGE_PROTECTION_FLAGS TranslateFlags(MemoryFlags flags)
+    static PAGE_PROTECTION_FLAGS TranslateProtection(MemoryProtection protection)
     {
-        return flags switch
+        return protection switch
         {
-            MemoryFlags.None => PAGE_PROTECTION_FLAGS.PAGE_NOACCESS,
-            MemoryFlags.Read => PAGE_PROTECTION_FLAGS.PAGE_READONLY,
-            MemoryFlags.Read | MemoryFlags.Write => PAGE_PROTECTION_FLAGS.PAGE_READWRITE,
-            MemoryFlags.Read | MemoryFlags.Execute => PAGE_PROTECTION_FLAGS.PAGE_EXECUTE_READ,
-            MemoryFlags.Read | MemoryFlags.Write | MemoryFlags.Execute => PAGE_PROTECTION_FLAGS.PAGE_EXECUTE_READWRITE,
-            MemoryFlags.Write => PAGE_PROTECTION_FLAGS.PAGE_READWRITE,
-            MemoryFlags.Write | MemoryFlags.Execute => PAGE_PROTECTION_FLAGS.PAGE_EXECUTE_READWRITE,
-            MemoryFlags.Execute => PAGE_PROTECTION_FLAGS.PAGE_EXECUTE,
-            _ => throw new ArgumentOutOfRangeException(nameof(flags)),
+            MemoryProtection.None => PAGE_PROTECTION_FLAGS.PAGE_NOACCESS,
+            MemoryProtection.Read => PAGE_PROTECTION_FLAGS.PAGE_READONLY,
+            MemoryProtection.Read | MemoryProtection.Write => PAGE_PROTECTION_FLAGS.PAGE_READWRITE,
+            MemoryProtection.Read | MemoryProtection.Execute => PAGE_PROTECTION_FLAGS.PAGE_EXECUTE_READ,
+            MemoryProtection.Read | MemoryProtection.Write | MemoryProtection.Execute =>
+                PAGE_PROTECTION_FLAGS.PAGE_EXECUTE_READWRITE,
+            MemoryProtection.Write => PAGE_PROTECTION_FLAGS.PAGE_READWRITE,
+            MemoryProtection.Write | MemoryProtection.Execute => PAGE_PROTECTION_FLAGS.PAGE_EXECUTE_READWRITE,
+            MemoryProtection.Execute => PAGE_PROTECTION_FLAGS.PAGE_EXECUTE,
+            _ => throw new ArgumentOutOfRangeException(nameof(protection)),
         };
     }
 
@@ -49,14 +50,14 @@ public sealed class NativeProcess
         return new(this, (nuint)(nint)module.BaseAddress, (nuint)module.ModuleMemorySize);
     }
 
-    public unsafe nuint Alloc(nuint length, MemoryFlags flags)
+    public unsafe nuint Alloc(nuint length, MemoryProtection protection)
     {
         return VirtualAllocEx(
             Handle,
             null,
             length,
             VIRTUAL_ALLOCATION_TYPE.MEM_COMMIT | VIRTUAL_ALLOCATION_TYPE.MEM_RESERVE,
-            TranslateFlags(flags)) is var ptr && ptr != null
+            TranslateProtection(protection)) is var ptr && ptr != null
             ? (nuint)ptr
             : throw new Win32Exception();
     }
@@ -67,9 +68,9 @@ public sealed class NativeProcess
             throw new Win32Exception();
     }
 
-    public unsafe void Protect(nuint address, nuint length, MemoryFlags flags)
+    public unsafe void Protect(nuint address, nuint length, MemoryProtection protection)
     {
-        if (!VirtualProtectEx(Handle, (void*)address, length, TranslateFlags(flags), out _))
+        if (!VirtualProtectEx(Handle, (void*)address, length, TranslateProtection(protection), out _))
             throw new Win32Exception();
     }
 

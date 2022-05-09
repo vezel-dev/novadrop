@@ -47,7 +47,7 @@ public sealed class DynamicCode : IDisposable
 
         // Allocate space for the code. This is a huge overestimation but should always be correct.
         var len = (nuint)stream.Length * 2;
-        var ptr = process.Alloc(len, MemoryFlags.Read | MemoryFlags.Write);
+        var ptr = process.Alloc(len, MemoryProtection.Read | MemoryProtection.Write);
 
         var window = new MemoryWindow(process, ptr, len);
         var windowWriter = new MemoryWindowCodeWriter(window);
@@ -61,7 +61,7 @@ public sealed class DynamicCode : IDisposable
             for (nuint i = 0; i < windowWriter.CurrentWindow.Length; i++)
                 windowWriter.WriteByte(0xcc);
 
-            process.Protect(ptr, len, MemoryFlags.Read | MemoryFlags.Execute);
+            process.Protect(ptr, len, MemoryProtection.Read | MemoryProtection.Execute);
             process.Flush(ptr, len);
         }
         catch (Exception)

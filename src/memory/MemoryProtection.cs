@@ -1,8 +1,7 @@
 namespace Vezel.Novadrop.Memory;
 
 [Flags]
-[SuppressMessage("", "CA1711")]
-public enum MemoryFlags
+public enum MemoryProtection
 {
     None = 0b000,
     Read = 0b001,

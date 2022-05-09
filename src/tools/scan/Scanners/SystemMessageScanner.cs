@@ -36,11 +36,11 @@ sealed class SystemMessageScanner : IScanner
         if (count < 4000)
             throw new ApplicationException("Could not read system message count.");
 
-        var results = process.Alloc((nuint)sizeof(nuint) * count, MemoryFlags.Read | MemoryFlags.Write);
+        var results = process.Alloc((nuint)sizeof(nuint) * count, MemoryProtection.Read | MemoryProtection.Write);
 
         try
         {
-            var args = process.Alloc((nuint)sizeof(ThreadArgs), MemoryFlags.Read | MemoryFlags.Write);
+            var args = process.Alloc((nuint)sizeof(ThreadArgs), MemoryProtection.Read | MemoryProtection.Write);
 
             try
             {
