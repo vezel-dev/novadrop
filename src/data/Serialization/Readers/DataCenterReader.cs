@@ -149,8 +149,9 @@ abstract class DataCenterReader
         var keysInfo = raw.KeysInfo;
         var keyFlags = keysInfo & 0b0000000000001111;
 
-        if (keyFlags != 0)
-            throw new InvalidDataException($"Node has invalid key flags 0x{keyFlags:x2}.");
+        // TODO: Should we allow setting 0b0001 in the API?
+        if (keyFlags is not 0b0000 or 0b0001)
+            throw new InvalidDataException($"Node has invalid key flags 0x{keyFlags:x1}.");
 
         var max = DataCenterAddress.MaxValue;
         var attrCount = raw.AttributeCount;
