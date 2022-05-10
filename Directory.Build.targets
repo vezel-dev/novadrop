@@ -14,10 +14,14 @@
         <Using Include="System.Diagnostics.CodeAnalysis" />
         <Using Include="System.Globalization" />
         <Using Include="System.IO.Compression" />
+        <Using Include="System.Reflection" />
         <Using Include="System.Runtime.CompilerServices" />
         <Using Include="System.Runtime.InteropServices" />
         <Using Include="System.Security.Cryptography" />
         <Using Include="System.Text" />
+        <Using Include="System.Xml" />
+        <Using Include="System.Xml.Linq" />
+        <Using Include="System.Xml.Schema" />
     </ItemGroup>
 
     <Choose>

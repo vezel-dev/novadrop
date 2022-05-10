@@ -1,0 +1,14 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="https://vezel.dev/novadrop/dc"
+            attributeFormDefault="qualified">
+    <xsd:attribute name="keys">
+        <xsd:simpleType>
+            <xsd:restriction>
+                <xsd:simpleType>
+                    <xsd:list itemType="xsd:NCName" />
+                </xsd:simpleType>
+                <xsd:maxLength value="4" />
+            </xsd:restriction>
+        </xsd:simpleType>
+    </xsd:attribute>
+</xsd:schema>

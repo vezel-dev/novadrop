@@ -28,10 +28,10 @@ sealed class RepackCommand : Command
             {
                 Console.WriteLine($"Repacking {input} to {output}...");
 
+                var sw = Stopwatch.StartNew();
+
                 await using var inStream = input.OpenRead();
                 await using var outStream = output.Open(FileMode.Create, FileAccess.Write);
-
-                var sw = Stopwatch.StartNew();
 
                 var dc = await DataCenter.LoadAsync(
                     inStream,

@@ -16,9 +16,106 @@ sealed class UnpackCommand : Command
         this.SetHandler(
             async (FileInfo input, DirectoryInfo output, bool strict, CancellationToken cancellationToken) =>
             {
-                // TODO: Implement.
-                await Task.Yield();
-                await Task.Yield();
+                Console.WriteLine($"Unpacking {input} to {output}...");
+
+                var sw = Stopwatch.StartNew();
+
+                await using var stream = input.OpenRead();
+
+                // TODO: Switch to Transient when data center code can fully handle concurrent reads.
+                var dc = await DataCenter.LoadAsync(
+                    stream,
+                    new DataCenterLoadOptions()
+                        .WithLoaderMode(DataCenterLoaderMode.Eager)
+                        .WithStrict(strict)
+                        .WithMutability(DataCenterMutability.Immutable),
+                    cancellationToken);
+
+                output.Create();
+
+                async ValueTask WriteSchemaAsync(DirectoryInfo directory, string name)
+                {
+                    await using var inXsd = Assembly.GetExecutingAssembly().GetManifestResourceStream(name);
+
+                    // TODO: Remove this when we finish all XSDs.
+                    if (inXsd == null)
+                        return;
+
+                    await using var outXsd = File.Open(
+                        Path.Combine(directory.FullName, name), FileMode.Create, FileAccess.Write);
+
+                    await inXsd.CopyToAsync(outXsd, cancellationToken);
+                }
+
+                await WriteSchemaAsync(output, "DataCenter.xsd");
+
+                var sheets = dc.Root.Children;
+
+                await Parallel.ForEachAsync(
+                    sheets.Select(n => n.Name).Distinct(),
+                    cancellationToken,
+                    async (name, cancellationToken) =>
+                        await WriteSchemaAsync(output.CreateSubdirectory(name), $"{name}.xsd"));
+
+                var settings = new XmlWriterSettings
+                {
+                    OmitXmlDeclaration = true,
+                    Indent = true,
+                    IndentChars = "    ",
+                    NewLineHandling = NewLineHandling.Entitize,
+                    Async = true,
+                };
+
+                var count = 0;
+
+                await Parallel.ForEachAsync(
+                    sheets
+                        .GroupBy(n => n.Name, (name, elems) => elems.Select((n, i) => (Node: n, Index: i)))
+                        .SelectMany(elems => elems),
+                    cancellationToken,
+                    async (item, cancellationToken) =>
+                    {
+                        var node = item.Node;
+
+                        await using var writer = XmlWriter.Create(
+                            Path.Combine(
+                                output.CreateSubdirectory(node.Name).FullName, $"{node.Name}-{item.Index}.xml"),
+                            settings);
+
+                        async ValueTask WriteSheetAsync(DataCenterNode current, bool top)
+                        {
+                            var uri = $"https://vezel.dev/novadrop/dc/{node.Name}";
+
+                            await writer.WriteStartElementAsync(null, current.Name, top ? uri : null);
+
+                            if (top)
+                            {
+                                await writer.WriteAttributeStringAsync(
+                                    "xmlns", "xsi", null, "http://www.w3.org/2001/XMLSchema-instance");
+                                await writer.WriteAttributeStringAsync(
+                                    "xsi", "schemaLocation", null, $"{uri} {node.Name}.xsd");
+                            }
+
+                            foreach (var (name, attr) in current.Attributes)
+                                await writer.WriteAttributeStringAsync(null, name, null, attr.ToString());
+
+                            if (current.Value is { IsNull: false } v)
+                                await writer.WriteStringAsync(v.ToString());
+
+                            foreach (var child in current.Children)
+                                await WriteSheetAsync(child, false);
+
+                            await writer.WriteEndElementAsync();
+                        }
+
+                        await WriteSheetAsync(node, true);
+
+                        _ = Interlocked.Increment(ref count);
+                    });
+
+                sw.Stop();
+
+                Console.WriteLine($"Unpacked {count} data sheets in {sw.Elapsed}.");
             },
             inputArg,
             outputArg,

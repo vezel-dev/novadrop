@@ -17,6 +17,8 @@ sealed class VerifyCommand : Command
             {
                 Console.WriteLine($"Verifying {input}...");
 
+                var sw = Stopwatch.StartNew();
+
                 await using var stream = input.OpenRead();
 
                 void PrintHash(string name, HashAlgorithm algorithm)
@@ -41,8 +43,6 @@ sealed class VerifyCommand : Command
                 PrintHash("SHA-256", sha256);
                 PrintHash("SHA-384", sha384);
                 PrintHash("SHA-512", sha512);
-
-                var sw = Stopwatch.StartNew();
 
                 var dc = await DataCenter.LoadAsync(
                     stream,

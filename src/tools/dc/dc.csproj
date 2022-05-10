@@ -14,6 +14,11 @@ files.</PackageDescription>
     </ItemGroup>
 
     <ItemGroup>
+        <EmbeddedResource Include="../../../xsd/**"
+                          LogicalName="%(Filename)%(Extension)" />
+    </ItemGroup>
+
+    <ItemGroup>
         <ProjectReference Include="../../data/data.csproj" />
     </ItemGroup>
 </Project>
