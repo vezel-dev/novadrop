@@ -15,7 +15,7 @@ sealed class VerifyCommand : Command
         this.SetHandler(
             async (FileInfo input, bool strict, CancellationToken cancellationToken) =>
             {
-                Console.WriteLine($"Verifying {input}...");
+                Console.WriteLine($"Verifying '{input}'...");
 
                 var sw = Stopwatch.StartNew();
 

@@ -9,7 +9,7 @@ sealed class PackCommand : Command
         var outputArg = new Argument<FileInfo>("output", "Output file");
         var levelOpt = new Option<CompressionLevel>(
             "--compression",
-            () => CompressionLevel.Fastest,
+            () => CompressionLevel.Optimal,
             "Set compression level");
 
         Add(inputArg);
@@ -17,15 +17,27 @@ sealed class PackCommand : Command
         Add(levelOpt);
 
         this.SetHandler(
-            async (DirectoryInfo input, FileInfo output, CompressionLevel level, CancellationToken cancellationToken) =>
+            async (
+                InvocationContext context,
+                DirectoryInfo input,
+                FileInfo output,
+                CompressionLevel level,
+                CancellationToken cancellationToken) =>
             {
+                Console.WriteLine($"Packing '{input}' to '{output}'...");
+
+                var sw = Stopwatch.StartNew();
+
                 var dc = DataCenter.Create();
                 var root = dc.Root;
 
+                var files = input.EnumerateFiles("?*-?*.xml", SearchOption.AllDirectories).ToArray();
                 var problems = new List<(string Name, FileInfo File, ValidationEventArgs Args)>();
 
+                var xsi = (XNamespace)"http://www.w3.org/2001/XMLSchema-instance";
+
                 await Parallel.ForEachAsync(
-                    input.EnumerateFiles("?*-?*.xml", SearchOption.AllDirectories),
+                    files,
                     cancellationToken,
                     async (file, cancellationToken) =>
                     {
@@ -90,10 +102,7 @@ sealed class PackCommand : Command
                                 info,
                                 null,
                                 null,
-                                top
-                                    ? (string?)element.Attribute(
-                                        (XNamespace)"http://www.w3.org/2001/XMLSchema-instance" + "schemaLocation")
-                                    : null,
+                                top ? (string?)element.Attribute(xsi + "schemaLocation") : null,
                                 null);
 
                             DataCenterNode current;
@@ -180,7 +189,7 @@ sealed class PackCommand : Command
                         {
                             var shownProblems = fileGroup.Take(10).ToArray();
 
-                            Console.WriteLine($"  {fileGroup.Key}/");
+                            Console.WriteLine($"  {fileGroup.Key}:");
 
                             foreach (var problem in shownProblems)
                             {
@@ -204,9 +213,9 @@ sealed class PackCommand : Command
                         }
                     }
 
-                    Console.WriteLine();
+                    context.ExitCode = 1;
 
-                    throw new ApplicationException("Cannot pack data center due to validation problems.");
+                    return;
                 }
 
                 await using var stream = File.Open(output.FullName, FileMode.Create, FileAccess.Write);
@@ -215,6 +224,10 @@ sealed class PackCommand : Command
                     stream,
                     new DataCenterSaveOptions().WithCompressionLevel(level),
                     cancellationToken);
+
+                sw.Stop();
+
+                Console.WriteLine($"Packed {files.Length} data sheets in {sw.Elapsed}.");
             },
             inputArg,
             outputArg,

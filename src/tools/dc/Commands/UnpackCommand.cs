@@ -16,7 +16,7 @@ sealed class UnpackCommand : Command
         this.SetHandler(
             async (FileInfo input, DirectoryInfo output, bool strict, CancellationToken cancellationToken) =>
             {
-                Console.WriteLine($"Unpacking {input} to {output}...");
+                Console.WriteLine($"Unpacking '{input}' to '{output}'...");
 
                 var sw = Stopwatch.StartNew();
 
@@ -66,8 +66,6 @@ sealed class UnpackCommand : Command
                     Async = true,
                 };
 
-                var count = 0;
-
                 await Parallel.ForEachAsync(
                     sheets
                         .GroupBy(n => n.Name, (name, elems) => elems.Select((n, i) => (Node: n, Index: i)))
@@ -77,45 +75,46 @@ sealed class UnpackCommand : Command
                     {
                         var node = item.Node;
 
-                        await using var writer = XmlWriter.Create(
-                            Path.Combine(
-                                output.CreateSubdirectory(node.Name).FullName, $"{node.Name}-{item.Index}.xml"),
-                            settings);
+                        await using var textWriter = new StreamWriter(Path.Combine(
+                            output.CreateSubdirectory(node.Name).FullName, $"{node.Name}-{item.Index}.xml"));
 
-                        async ValueTask WriteSheetAsync(DataCenterNode current, bool top)
+                        await using (var xmlWriter = XmlWriter.Create(textWriter, settings))
                         {
-                            var uri = $"https://vezel.dev/novadrop/dc/{node.Name}";
-
-                            await writer.WriteStartElementAsync(null, current.Name, top ? uri : null);
-
-                            if (top)
+                            async ValueTask WriteSheetAsync(DataCenterNode current, bool top)
                             {
-                                await writer.WriteAttributeStringAsync(
-                                    "xmlns", "xsi", null, "http://www.w3.org/2001/XMLSchema-instance");
-                                await writer.WriteAttributeStringAsync(
-                                    "xsi", "schemaLocation", null, $"{uri} {node.Name}.xsd");
+                                var uri = $"https://vezel.dev/novadrop/dc/{node.Name}";
+
+                                await xmlWriter.WriteStartElementAsync(null, current.Name, top ? uri : null);
+
+                                if (top)
+                                {
+                                    await xmlWriter.WriteAttributeStringAsync(
+                                        "xmlns", "xsi", null, "http://www.w3.org/2001/XMLSchema-instance");
+                                    await xmlWriter.WriteAttributeStringAsync(
+                                        "xsi", "schemaLocation", null, $"{uri} {node.Name}.xsd");
+                                }
+
+                                foreach (var (name, attr) in current.Attributes)
+                                    await xmlWriter.WriteAttributeStringAsync(null, name, null, attr.ToString());
+
+                                if (current.Value is { IsNull: false } v)
+                                    await xmlWriter.WriteStringAsync(v.ToString());
+
+                                foreach (var child in current.Children)
+                                    await WriteSheetAsync(child, false);
+
+                                await xmlWriter.WriteEndElementAsync();
                             }
 
-                            foreach (var (name, attr) in current.Attributes)
-                                await writer.WriteAttributeStringAsync(null, name, null, attr.ToString());
-
-                            if (current.Value is { IsNull: false } v)
-                                await writer.WriteStringAsync(v.ToString());
-
-                            foreach (var child in current.Children)
-                                await WriteSheetAsync(child, false);
-
-                            await writer.WriteEndElementAsync();
+                            await WriteSheetAsync(node, true);
                         }
 
-                        await WriteSheetAsync(node, true);
-
-                        _ = Interlocked.Increment(ref count);
+                        await textWriter.WriteLineAsync();
                     });
 
                 sw.Stop();
 
-                Console.WriteLine($"Unpacked {count} data sheets in {sw.Elapsed}.");
+                Console.WriteLine($"Unpacked {sheets.Count} data sheets in {sw.Elapsed}.");
             },
             inputArg,
             outputArg,

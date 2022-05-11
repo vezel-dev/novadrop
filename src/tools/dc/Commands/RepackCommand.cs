@@ -26,12 +26,11 @@ sealed class RepackCommand : Command
                 CompressionLevel level,
                 CancellationToken cancellationToken) =>
             {
-                Console.WriteLine($"Repacking {input} to {output}...");
+                Console.WriteLine($"Repacking '{input}' to '{output}'...");
 
                 var sw = Stopwatch.StartNew();
 
                 await using var inStream = input.OpenRead();
-                await using var outStream = output.Open(FileMode.Create, FileAccess.Write);
 
                 var dc = await DataCenter.LoadAsync(
                     inStream,
@@ -41,6 +40,8 @@ sealed class RepackCommand : Command
                         .WithMutability(DataCenterMutability.Immutable),
                     cancellationToken);
 
+                await using var outStream = output.Open(FileMode.Create, FileAccess.Write);
+
                 await dc.SaveAsync(
                     outStream,
                     new DataCenterSaveOptions().WithCompressionLevel(level),
@@ -48,7 +49,7 @@ sealed class RepackCommand : Command
 
                 sw.Stop();
 
-                Console.WriteLine($"Done in {sw.Elapsed}.");
+                Console.WriteLine($"Repacked {dc.Root.Children.Count} data sheets in {sw.Elapsed}.");
             },
             inputArg,
             outputArg,
