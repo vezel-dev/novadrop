@@ -8,6 +8,7 @@
         <Using Include="System.Buffers" />
         <Using Include="System.Buffers.Binary" />
         <Using Include="System.Collections" />
+        <Using Include="System.Collections.Concurrent" />
         <Using Include="System.Collections.Immutable" />
         <Using Include="System.ComponentModel" />
         <Using Include="System.Diagnostics" />
