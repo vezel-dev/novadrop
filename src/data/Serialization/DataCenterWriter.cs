@@ -231,48 +231,50 @@ sealed class DataCenterWriter
         EmitTree(root, InsertElements(_nodes, new DataCenterRawNode[1], "Node"));
     }
 
-    [SuppressMessage("", "CA2000")]
     [SuppressMessage("", "CA5401")]
-    public async Task WriteAsync(Stream stream, DataCenter center, CancellationToken cancellationToken)
+    public Task WriteAsync(Stream stream, DataCenter center, CancellationToken cancellationToken)
     {
-        await Task.Yield();
-
-        ProcessTree(center.Root);
-
-        // Write the uncompressed data center into memory first so that we can write the uncompressed size before we
-        // write the zlib header. Sadness.
-        using var memoryStream = new MemoryStream();
-
-        var writer = new DataCenterBinaryWriter(memoryStream);
-
-        await _header.WriteAsync(writer, cancellationToken).ConfigureAwait(false);
-        await _keys.WriteAsync(writer, cancellationToken).ConfigureAwait(false);
-        await _attributes.WriteAsync(writer, cancellationToken).ConfigureAwait(false);
-        await _nodes.WriteAsync(writer, cancellationToken).ConfigureAwait(false);
-        await _values.WriteAsync(writer, cancellationToken).ConfigureAwait(false);
-        await _names.WriteAsync(writer, cancellationToken).ConfigureAwait(false);
-        await _footer.WriteAsync(writer, cancellationToken).ConfigureAwait(false);
-
-        await memoryStream.FlushAsync(cancellationToken).ConfigureAwait(false);
-
-        using var aes = DataCenter.CreateCipher(_options.Key, _options.IV);
-        using var encryptor = aes.CreateEncryptor();
-        var cryptoStream = new CryptoStream(stream, encryptor, CryptoStreamMode.Write, true);
-
-        await using (cryptoStream.ConfigureAwait(false))
-        {
-            await new DataCenterBinaryWriter(cryptoStream)
-                .WriteUInt32Async((uint)memoryStream.Length, cancellationToken)
-                .ConfigureAwait(false);
-
-            var zlibStream = new ZLibStream(cryptoStream, _options.CompressionLevel, true);
-
-            await using (zlibStream.ConfigureAwait(false))
+        return Task.Run(
+            async () =>
             {
-                memoryStream.Position = 0;
+                ProcessTree(center.Root);
 
-                await memoryStream.CopyToAsync(zlibStream, cancellationToken).ConfigureAwait(false);
-            }
-        }
+                // Write the uncompressed data center into memory first so that we can write the uncompressed size
+                // before we write the zlib header. Sadness.
+                using var memoryStream = new MemoryStream();
+
+                var writer = new DataCenterBinaryWriter(memoryStream);
+
+                await _header.WriteAsync(writer, cancellationToken).ConfigureAwait(false);
+                await _keys.WriteAsync(writer, cancellationToken).ConfigureAwait(false);
+                await _attributes.WriteAsync(writer, cancellationToken).ConfigureAwait(false);
+                await _nodes.WriteAsync(writer, cancellationToken).ConfigureAwait(false);
+                await _values.WriteAsync(writer, cancellationToken).ConfigureAwait(false);
+                await _names.WriteAsync(writer, cancellationToken).ConfigureAwait(false);
+                await _footer.WriteAsync(writer, cancellationToken).ConfigureAwait(false);
+
+                await memoryStream.FlushAsync(cancellationToken).ConfigureAwait(false);
+
+                using var aes = DataCenter.CreateCipher(_options.Key, _options.IV);
+                using var encryptor = aes.CreateEncryptor();
+                var cryptoStream = new CryptoStream(stream, encryptor, CryptoStreamMode.Write, true);
+
+                await using (cryptoStream.ConfigureAwait(false))
+                {
+                    await new DataCenterBinaryWriter(cryptoStream)
+                        .WriteUInt32Async((uint)memoryStream.Length, cancellationToken)
+                        .ConfigureAwait(false);
+
+                    var zlibStream = new ZLibStream(cryptoStream, _options.CompressionLevel, true);
+
+                    await using (zlibStream.ConfigureAwait(false))
+                    {
+                        memoryStream.Position = 0;
+
+                        await memoryStream.CopyToAsync(zlibStream, cancellationToken).ConfigureAwait(false);
+                    }
+                }
+            },
+            cancellationToken);
     }
 }

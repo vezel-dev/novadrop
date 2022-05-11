@@ -190,48 +190,54 @@ abstract class DataCenterReader
         return AllocateNode(address, raw, parent, name, value, _keys.GetKeys((keysInfo & 0b1111111111110000) >> 4));
     }
 
-    public async Task<DataCenterNode> ReadAsync(Stream stream, DataCenter center, CancellationToken cancellationToken)
+    public Task<DataCenterNode> ReadAsync(Stream stream, DataCenter center, CancellationToken cancellationToken)
     {
-        await Task.Yield();
-
-        using var aes = DataCenter.CreateCipher(_options.Key, _options.IV);
-        using var decryptor = aes.CreateDecryptor();
-        var cryptoStream = new CryptoStream(stream, decryptor, CryptoStreamMode.Read, true);
-
-        await using (cryptoStream.ConfigureAwait(false))
-        {
-            var size = await new DataCenterBinaryReader(cryptoStream)
-                .ReadUInt32Async(cancellationToken)
-                .ConfigureAwait(false);
-
-            var zlibStream = new ZLibStream(cryptoStream, CompressionMode.Decompress, true);
-
-            await using (zlibStream.ConfigureAwait(false))
+        return Task.Run(
+            async () =>
             {
-                var reader = new DataCenterBinaryReader(zlibStream);
-                var strict = _options.Strict;
+                using var aes = DataCenter.CreateCipher(_options.Key, _options.IV);
+                using var decryptor = aes.CreateDecryptor();
+                var cryptoStream = new CryptoStream(stream, decryptor, CryptoStreamMode.Read, true);
 
-                await _header.ReadAsync(strict, reader, cancellationToken).ConfigureAwait(false);
-                await _keys.ReadAsync(reader, cancellationToken).ConfigureAwait(false);
-                await _attributes.ReadAsync(strict, reader, cancellationToken).ConfigureAwait(false);
-                await _nodes.ReadAsync(strict, reader, cancellationToken).ConfigureAwait(false);
-                await _values.ReadAsync(strict, reader, cancellationToken).ConfigureAwait(false);
-                await _names.ReadAsync(strict, reader, cancellationToken).ConfigureAwait(false);
-                await _footer.ReadAsync(strict, reader, cancellationToken).ConfigureAwait(false);
+                await using (cryptoStream.ConfigureAwait(false))
+                {
+                    var size = await new DataCenterBinaryReader(cryptoStream)
+                        .ReadUInt32Async(cancellationToken)
+                        .ConfigureAwait(false);
 
-                if (strict && reader.Progress != size)
-                    throw new InvalidDataException(
-                        $"Uncompressed data center size {size} does not match actual size {reader.Progress}.");
-            }
-        }
+                    var zlibStream = new ZLibStream(cryptoStream, CompressionMode.Decompress, true);
 
-        var root = CreateNode(DataCenterAddress.MinValue, center);
+                    await using (zlibStream.ConfigureAwait(false))
+                    {
+                        var reader = new DataCenterBinaryReader(zlibStream);
+                        var strict = _options.Strict;
 
-        return root != null
-            ? _options.Strict && root.Name == DataCenterConstants.RootNodeName
-                ? root
-                : throw new InvalidDataException(
-                    $"Root node name '{root.Name}' does not match expected '{DataCenterConstants.RootNodeName}'.")
-            : throw new InvalidDataException("Root node is empty.");
+                        await _header.ReadAsync(strict, reader, cancellationToken).ConfigureAwait(false);
+                        await _keys.ReadAsync(reader, cancellationToken).ConfigureAwait(false);
+                        await _attributes.ReadAsync(strict, reader, cancellationToken).ConfigureAwait(false);
+                        await _nodes.ReadAsync(strict, reader, cancellationToken).ConfigureAwait(false);
+                        await _values.ReadAsync(strict, reader, cancellationToken).ConfigureAwait(false);
+                        await _names.ReadAsync(strict, reader, cancellationToken).ConfigureAwait(false);
+                        await _footer.ReadAsync(strict, reader, cancellationToken).ConfigureAwait(false);
+
+                        if (strict && reader.Progress != size)
+                            throw new InvalidDataException(
+                                $"Uncompressed data center size {size} does not match actual size {reader.Progress}.");
+                    }
+                }
+
+                var root = CreateNode(DataCenterAddress.MinValue, center);
+
+                return root switch
+                {
+                    null => throw new InvalidDataException("Root node is empty."),
+                    { Name: not DataCenterConstants.RootNodeName } when _options.Strict =>
+                        throw new InvalidDataException(
+                            $"Root node name '{root.Name}' does not match expected " +
+                            $"'{DataCenterConstants.RootNodeName}'."),
+                    _ => root,
+                };
+            },
+            cancellationToken);
     }
 }
