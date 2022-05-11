@@ -11,6 +11,7 @@ static class Program
             new PackCommand(),
             new UnpackCommand(),
             new RepackCommand(),
+            new ValidateCommand(),
             new VerifyCommand(),
         };
 
