@@ -28,19 +28,23 @@ sealed class DataCenterWriter
     public DataCenterWriter(DataCenterSaveOptions options)
     {
         _keys = new(_names);
-        _comparer = Comparer<DataCenterNode>.Create((a, b) =>
+        _comparer = Comparer<DataCenterNode>.Create((x, y) =>
         {
+            var cmp = _names.GetString(x.Name).Index.CompareTo(_names.GetString(y.Name).Index);
+
+            if (!(x.HasAttributes || y.HasAttributes))
+                return cmp;
+
             // Note that the node value attribute cannot be a key.
-            var attrsA = new Dictionary<string, DataCenterValue>(a.Attributes);
-            var attrsB = new Dictionary<string, DataCenterValue>(b.Attributes);
+            var attrsA = x.Attributes;
+            var attrsB = y.Attributes;
 
             int CompareBy(string? name)
             {
                 return name != null ? attrsA.GetValueOrDefault(name).CompareTo(attrsB.GetValueOrDefault(name)) : 0;
             }
 
-            var cmp = _names.GetString(a.Name).Index.CompareTo(_names.GetString(b.Name).Index);
-            var keys = a.Keys;
+            var keys = x.Keys;
 
             if (cmp == 0)
                 cmp = CompareBy(keys.AttributeName1);
