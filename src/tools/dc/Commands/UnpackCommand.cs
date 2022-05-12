@@ -22,11 +22,10 @@ sealed class UnpackCommand : Command
 
                 await using var stream = input.OpenRead();
 
-                // TODO: Switch to Transient when data center code can fully handle concurrent reads.
                 var dc = await DataCenter.LoadAsync(
                     stream,
                     new DataCenterLoadOptions()
-                        .WithLoaderMode(DataCenterLoaderMode.Eager)
+                        .WithLoaderMode(DataCenterLoaderMode.Transient)
                         .WithStrict(strict)
                         .WithMutability(DataCenterMutability.Immutable),
                     cancellationToken);
@@ -94,14 +93,16 @@ sealed class UnpackCommand : Command
                                         "xsi", "schemaLocation", null, $"{uri} {node.Name}.xsd");
                                 }
 
-                                foreach (var (name, attr) in current.Attributes)
-                                    await xmlWriter.WriteAttributeStringAsync(null, name, null, attr.ToString());
+                                if (current.HasAttributes)
+                                    foreach (var (name, attr) in current.Attributes)
+                                        await xmlWriter.WriteAttributeStringAsync(null, name, null, attr.ToString());
 
                                 if (current.Value is { IsNull: false } v)
                                     await xmlWriter.WriteStringAsync(v.ToString());
 
-                                foreach (var child in current.Children)
-                                    await WriteSheetAsync(child, false);
+                                if (current.HasChildren)
+                                    foreach (var child in current.Children)
+                                        await WriteSheetAsync(child, false);
 
                                 await xmlWriter.WriteEndElementAsync();
                             }

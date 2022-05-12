@@ -166,6 +166,7 @@ sealed class PackCommand : Command
                                 }
                             }
 
+                            // TODO: This is wrong; we should only support string and mixed content.
                             current.Value = validator.ValidateEndElement(null) switch
                             {
                                 int i => i,
