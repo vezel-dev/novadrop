@@ -1,0 +1,23 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ChangeColorData"
+            targetNamespace="https://vezel.dev/novadrop/dc/ChangeColorData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ChangeColorData">
+        <xsd:sequence>
+            <xsd:element name="Color" type="ChangeColorData_Color" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="brightnessFactor" type="xsd:float" use="required" />
+        <xsd:attribute name="maxBrightnessFactor" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ChangeColorData_Color">
+        <xsd:attribute name="colorVar" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ChangeColorData" type="ChangeColorData" />
+</xsd:schema>

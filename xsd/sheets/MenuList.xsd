@@ -1,0 +1,23 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/MenuList"
+            targetNamespace="https://vezel.dev/novadrop/dc/MenuList"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="MenuList">
+        <xsd:sequence>
+            <xsd:element name="Menu" type="MenuList_Menu" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="MenuList_Menu">
+        <xsd:attribute name="filterId" type="xsd:int" />
+        <xsd:attribute name="guideStringId" type="xsd:int" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="startPreview" type="xsd:boolean" />
+        <xsd:attribute name="stringId" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:element name="MenuList" type="MenuList" />
+</xsd:schema>

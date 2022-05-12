@@ -1,0 +1,31 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ActPoint"
+            targetNamespace="https://vezel.dev/novadrop/dc/ActPoint"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ActPoint">
+        <xsd:sequence>
+            <xsd:element name="ActPointSystem" type="ActPoint_ActPointSystem" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ActPoint_ActPointSystem">
+        <xsd:sequence>
+            <xsd:element name="ActPointData" type="ActPoint_ActPointSystem_ActPointData" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ActPoint_ActPointSystem_ActPointData">
+        <xsd:attribute name="level" type="xsd:int" use="required" />
+        <xsd:attribute name="maxActPoint" type="xsd:int" use="required" />
+        <xsd:attribute name="maxActPointForAccountTrait" type="xsd:int" use="required" />
+        <xsd:attribute name="pointRecoveryRate" type="xsd:int" use="required" />
+        <xsd:attribute name="pointRecoveryRateForAccountTrait" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ActPoint" type="ActPoint" />
+</xsd:schema>

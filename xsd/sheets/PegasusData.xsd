@@ -1,0 +1,58 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/PegasusData"
+            targetNamespace="https://vezel.dev/novadrop/dc/PegasusData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="PegasusData">
+        <xsd:sequence>
+            <xsd:element name="Pegasus" type="PegasusData_Pegasus" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PegasusData_Pegasus">
+        <xsd:sequence>
+            <xsd:element name="RaceOverride" type="PegasusData_Pegasus_RaceOverride" maxOccurs="unbounded" />
+            <xsd:element name="State" type="PegasusData_Pegasus_State" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="basicActionId" type="xsd:int" use="required" />
+        <xsd:attribute name="cameraOffsetZ" type="xsd:float" />
+        <xsd:attribute name="defaultAnim" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="saddle" type="xsd:string" use="required" />
+        <xsd:attribute name="scale" type="xsd:float" use="required" />
+        <xsd:attribute name="shapeId" type="xsd:int" use="required" />
+        <xsd:attribute name="spawnEffectId" type="xsd:int" use="required" />
+        <xsd:attribute name="warpAnim" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PegasusData_Pegasus_RaceOverride">
+        <xsd:attribute name="gender" type="xsd:string" use="required" />
+        <xsd:attribute name="race" type="xsd:string" use="required" />
+        <xsd:attribute name="scale" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PegasusData_Pegasus_State">
+        <xsd:attribute name="anim" type="xsd:string" use="required" />
+        <xsd:attribute name="animLooping" type="xsd:boolean" use="required" />
+        <xsd:attribute name="animNotPending" type="xsd:boolean" />
+        <xsd:attribute name="effectId" type="xsd:string" use="required" />
+        <xsd:attribute name="effectOnRider" type="xsd:boolean" />
+        <xsd:attribute name="hideRider" type="xsd:boolean" />
+        <xsd:attribute name="highwayEnd" type="xsd:boolean" use="required" />
+        <xsd:attribute name="highwayStart" type="xsd:boolean" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="lockCameraRotation" type="xsd:boolean" />
+        <xsd:attribute name="micParam" type="xsd:string" use="required" />
+        <xsd:attribute name="micValue" type="xsd:float" use="required" />
+        <xsd:attribute name="onlyOtherUser" type="xsd:boolean" use="required" />
+        <xsd:attribute name="setCameraFOV" type="xsd:float" />
+        <xsd:attribute name="showPegasus" type="xsd:boolean" />
+        <xsd:attribute name="showRider" type="xsd:boolean" />
+        <xsd:attribute name="unlockCameraRotation" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:element name="PegasusData" type="PegasusData" />
+</xsd:schema>

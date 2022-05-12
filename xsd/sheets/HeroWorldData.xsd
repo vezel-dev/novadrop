@@ -1,0 +1,128 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/HeroWorldData"
+            targetNamespace="https://vezel.dev/novadrop/dc/HeroWorldData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="HeroWorldData">
+        <xsd:sequence>
+            <xsd:element name="AccountExp" type="HeroWorldData_AccountExp" />
+            <xsd:element name="CombatItemTypeStringData" type="HeroWorldData_CombatItemTypeStringData" />
+            <xsd:element name="DefaultTownSpwanLocation" type="HeroWorldData_DefaultTownSpwanLocation" />
+            <xsd:element name="GachaBoxOpen" type="HeroWorldData_GachaBoxOpen" />
+            <xsd:element name="HeroBattleFieldList" type="HeroWorldData_HeroBattleFieldList" />
+            <xsd:element name="HeroBattleSystemMessageDefine" type="HeroWorldData_HeroBattleSystemMessageDefine" />
+            <xsd:element name="HeroTypeStringData" type="HeroWorldData_HeroTypeStringData" />
+            <xsd:element name="LevelExpressionOption" type="HeroWorldData_LevelExpressionOption" />
+            <xsd:element name="RuneTypeStringData" type="HeroWorldData_RuneTypeStringData" />
+            <xsd:element name="SelectBattlefieldHeroTime" type="HeroWorldData_SelectBattlefieldHeroTime" />
+            <xsd:element name="TCatStore" type="HeroWorldData_TCatStore" />
+            <xsd:element name="UserVisibleState" type="HeroWorldData_UserVisibleState" />
+        </xsd:sequence>
+
+        <xsd:attribute name="isTBAModeAvailable" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroWorldData_AccountExp">
+        <xsd:sequence>
+            <xsd:element name="Exp" type="HeroWorldData_AccountExp_Exp" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroWorldData_AccountExp_Exp">
+        <xsd:attribute name="expNeeded" type="xsd:string" use="required" />
+        <xsd:attribute name="level" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroWorldData_CombatItemTypeStringData">
+        <xsd:sequence>
+            <xsd:element name="CombatItemType" type="HeroWorldData_CombatItemTypeStringData_CombatItemType" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroWorldData_CombatItemTypeStringData_CombatItemType">
+        <xsd:attribute name="combatItemType" type="xsd:string" use="required" />
+        <xsd:attribute name="stringId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroWorldData_DefaultTownSpwanLocation">
+        <xsd:attribute name="continent" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroWorldData_GachaBoxOpen">
+        <xsd:attribute name="bulkOpenCount" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroWorldData_HeroBattleFieldList">
+        <xsd:sequence>
+            <xsd:element name="HeroBattleField" type="HeroWorldData_HeroBattleFieldList_HeroBattleField" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroWorldData_HeroBattleFieldList_HeroBattleField">
+        <xsd:attribute name="desc" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroWorldData_HeroBattleSystemMessageDefine">
+        <xsd:sequence>
+            <xsd:element name="Color" type="HeroWorldData_HeroBattleSystemMessageDefine_Color" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroWorldData_HeroBattleSystemMessageDefine_Color">
+        <xsd:attribute name="ally" type="xsd:string" use="required" />
+        <xsd:attribute name="default" type="xsd:string" use="required" />
+        <xsd:attribute name="enemy" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroWorldData_HeroTypeStringData">
+        <xsd:sequence>
+            <xsd:element name="HeroClassType" type="HeroWorldData_HeroTypeStringData_HeroClassType" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroWorldData_HeroTypeStringData_HeroClassType">
+        <xsd:attribute name="classType" type="xsd:int" use="required" />
+        <xsd:attribute name="stringId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroWorldData_LevelExpressionOption">
+        <xsd:sequence>
+            <xsd:element name="AttachOption" type="HeroWorldData_LevelExpressionOption_AttachOption" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroWorldData_LevelExpressionOption_AttachOption">
+        <xsd:attribute name="postStringId" type="xsd:string" use="required" />
+        <xsd:attribute name="preStringId" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroWorldData_RuneTypeStringData">
+        <xsd:sequence>
+            <xsd:element name="RuneType" type="HeroWorldData_RuneTypeStringData_RuneType" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroWorldData_RuneTypeStringData_RuneType">
+        <xsd:attribute name="stringId" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroWorldData_SelectBattlefieldHeroTime">
+        <xsd:attribute name="beforeEnterBattlefieldCountSecondTime" type="xsd:int" use="required" />
+        <xsd:attribute name="selectHeroSecondTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroWorldData_TCatStore">
+        <xsd:attribute name="openStoreInClient" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroWorldData_UserVisibleState">
+        <xsd:attribute name="transparentShaderName" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="HeroWorldData" type="HeroWorldData" />
+</xsd:schema>

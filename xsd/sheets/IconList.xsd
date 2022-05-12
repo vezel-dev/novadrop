@@ -1,0 +1,24 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/IconList"
+            targetNamespace="https://vezel.dev/novadrop/dc/IconList"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="IconList">
+        <xsd:sequence>
+            <xsd:element name="Icon" type="IconList_Icon" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="IconList_Icon">
+        <xsd:attribute name="adjustZ" type="xsd:float" />
+        <xsd:attribute name="animSet" type="xsd:string" use="required" />
+        <xsd:attribute name="animTree" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="mesh" type="xsd:string" use="required" />
+        <xsd:attribute name="scale" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="IconList" type="IconList" />
+</xsd:schema>

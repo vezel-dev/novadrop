@@ -1,0 +1,40 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/HitSoundData"
+            targetNamespace="https://vezel.dev/novadrop/dc/HitSoundData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="HitSoundData">
+        <xsd:sequence>
+            <xsd:element name="CriticalHitSound" type="HitSoundData_CriticalHitSound" />
+            <xsd:element name="HitSoundList" type="HitSoundData_HitSoundList" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HitSoundData_CriticalHitSound">
+        <xsd:sequence>
+            <xsd:element name="HitSound" type="HitSoundData_CriticalHitSound_HitSound" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HitSoundData_CriticalHitSound_HitSound">
+        <xsd:attribute name="class" type="xsd:string" use="required" />
+        <xsd:attribute name="cue" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HitSoundData_HitSoundList">
+        <xsd:sequence>
+            <xsd:element name="HitSound" type="HitSoundData_HitSoundList_HitSound" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="attacker" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HitSoundData_HitSoundList_HitSound">
+        <xsd:attribute name="cue" type="xsd:string" use="required" />
+        <xsd:attribute name="target" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="HitSoundData" type="HitSoundData" />
+</xsd:schema>

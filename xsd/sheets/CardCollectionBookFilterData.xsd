@@ -1,0 +1,69 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/CardCollectionBookFilterData"
+            targetNamespace="https://vezel.dev/novadrop/dc/CardCollectionBookFilterData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="CardCollectionBookFilterData">
+        <xsd:sequence>
+            <xsd:element name="CardStatDefine" type="CardCollectionBookFilterData_CardStatDefine" />
+            <xsd:element name="CollectionBookFilter" type="CardCollectionBookFilterData_CollectionBookFilter" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CardCollectionBookFilterData_CardStatDefine">
+        <xsd:sequence>
+            <xsd:element name="Stat" type="CardCollectionBookFilterData_CardStatDefine_Stat" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CardCollectionBookFilterData_CardStatDefine_Stat">
+        <xsd:attribute name="statRefId" type="xsd:string" use="required" />
+        <xsd:attribute name="typeId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CardCollectionBookFilterData_CollectionBookFilter">
+        <xsd:sequence>
+            <xsd:element name="CheckBoxFilter" type="CardCollectionBookFilterData_CollectionBookFilter_CheckBoxFilter" minOccurs="0" />
+            <xsd:element name="DropBoxFilter" type="CardCollectionBookFilterData_CollectionBookFilter_DropBoxFilter" />
+        </xsd:sequence>
+
+        <xsd:attribute name="mainTab" type="xsd:string" use="required" />
+        <xsd:attribute name="subTab" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CardCollectionBookFilterData_CollectionBookFilter_CheckBoxFilter">
+        <xsd:sequence>
+            <xsd:element name="Filter" type="CardCollectionBookFilterData_CollectionBookFilter_CheckBoxFilter_Filter" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CardCollectionBookFilterData_CollectionBookFilter_CheckBoxFilter_Filter">
+        <xsd:sequence>
+            <xsd:element name="ChildFilter" type="CardCollectionBookFilterData_CollectionBookFilter_CheckBoxFilter_Filter_ChildFilter" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="labelStringId" type="xsd:string" use="required" />
+        <xsd:attribute name="readableId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CardCollectionBookFilterData_CollectionBookFilter_CheckBoxFilter_Filter_ChildFilter">
+        <xsd:attribute name="labelStringId" type="xsd:string" use="required" />
+        <xsd:attribute name="refId" type="xsd:int" />
+        <xsd:attribute name="refIdRange" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CardCollectionBookFilterData_CollectionBookFilter_DropBoxFilter">
+        <xsd:sequence>
+            <xsd:element name="Filter" type="CardCollectionBookFilterData_CollectionBookFilter_DropBoxFilter_Filter" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CardCollectionBookFilterData_CollectionBookFilter_DropBoxFilter_Filter">
+        <xsd:attribute name="labelStringId" type="xsd:string" use="required" />
+        <xsd:attribute name="readableId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="CardCollectionBookFilterData" type="CardCollectionBookFilterData" />
+</xsd:schema>

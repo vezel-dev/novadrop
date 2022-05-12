@@ -1,0 +1,98 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/PassiveStatsDefine"
+            targetNamespace="https://vezel.dev/novadrop/dc/PassiveStatsDefine"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="PassiveStatsDefine">
+        <xsd:sequence>
+            <xsd:element name="AbnormalTooltipType" type="PassiveStatsDefine_AbnormalTooltipType" />
+            <xsd:element name="AddableType" type="PassiveStatsDefine_AddableType" />
+            <xsd:element name="ConditionStringDefine" type="PassiveStatsDefine_ConditionStringDefine" />
+            <xsd:element name="ConditionValueAsPercent" type="PassiveStatsDefine_ConditionValueAsPercent" />
+            <xsd:element name="MainStringDefine" type="PassiveStatsDefine_MainStringDefine" />
+            <xsd:element name="TargetStringDefine" type="PassiveStatsDefine_TargetStringDefine" />
+            <xsd:element name="ValueColorDefine" type="PassiveStatsDefine_ValueColorDefine" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PassiveStatsDefine_AbnormalTooltipType">
+        <xsd:sequence>
+            <xsd:element name="Type" type="PassiveStatsDefine_AbnormalTooltipType_Type" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PassiveStatsDefine_AbnormalTooltipType_Type">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PassiveStatsDefine_AddableType">
+        <xsd:sequence>
+            <xsd:element name="Type" type="PassiveStatsDefine_AddableType_Type" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PassiveStatsDefine_AddableType_Type">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PassiveStatsDefine_ConditionStringDefine">
+        <xsd:sequence>
+            <xsd:element name="String" type="PassiveStatsDefine_ConditionStringDefine_String" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PassiveStatsDefine_ConditionStringDefine_String">
+        <xsd:attribute name="conditionId" type="xsd:int" use="required" />
+        <xsd:attribute name="conditionValue" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PassiveStatsDefine_ConditionValueAsPercent">
+        <xsd:sequence>
+            <xsd:element name="Condition" type="PassiveStatsDefine_ConditionValueAsPercent_Condition" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PassiveStatsDefine_ConditionValueAsPercent_Condition">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PassiveStatsDefine_MainStringDefine">
+        <xsd:sequence>
+            <xsd:element name="MainString" type="PassiveStatsDefine_MainStringDefine_MainString" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PassiveStatsDefine_MainStringDefine_MainString">
+        <xsd:attribute name="conditionId" type="xsd:int" use="required" />
+        <xsd:attribute name="mainStringId" type="xsd:int" use="required" />
+        <xsd:attribute name="typeId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PassiveStatsDefine_TargetStringDefine">
+        <xsd:sequence>
+            <xsd:element name="String" type="PassiveStatsDefine_TargetStringDefine_String" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PassiveStatsDefine_TargetStringDefine_String">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="mobSize" type="xsd:string" use="required" />
+        <xsd:attribute name="state" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PassiveStatsDefine_ValueColorDefine">
+        <xsd:sequence>
+            <xsd:element name="ValueColor" type="PassiveStatsDefine_ValueColorDefine_ValueColor" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PassiveStatsDefine_ValueColorDefine_ValueColor">
+        <xsd:attribute name="typeId" type="xsd:int" use="required" />
+        <xsd:attribute name="valueType" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="PassiveStatsDefine" type="PassiveStatsDefine" />
+</xsd:schema>

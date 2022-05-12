@@ -1,0 +1,95 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/GuildConfig"
+            targetNamespace="https://vezel.dev/novadrop/dc/GuildConfig"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="GuildConfig">
+        <xsd:sequence>
+            <xsd:element name="CreateGuild" type="GuildConfig_CreateGuild" />
+            <xsd:element name="GuildBannerLevelDefine" type="GuildConfig_GuildBannerLevelDefine" />
+            <xsd:element name="GuildDeclareReset" type="GuildConfig_GuildDeclareReset" />
+            <xsd:element name="GuildIncentiveRate" type="GuildConfig_GuildIncentiveRate" />
+            <xsd:element name="GuildLevelTable" type="GuildConfig_GuildLevelTable" />
+            <xsd:element name="GuildSizeTable" type="GuildConfig_GuildSizeTable" />
+            <xsd:element name="GuildWarConfig" type="GuildConfig_GuildWarConfig" />
+            <xsd:element name="GuildWarTime" type="GuildConfig_GuildWarTime" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildConfig_CreateGuild">
+        <xsd:attribute name="requiredCharLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="requiredMoney" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildConfig_GuildBannerLevelDefine">
+        <xsd:sequence>
+            <xsd:element name="GuildBannerLevel" type="GuildConfig_GuildBannerLevelDefine_GuildBannerLevel" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildConfig_GuildBannerLevelDefine_GuildBannerLevel"
+                     dc:keys="rank">
+        <xsd:attribute name="level" type="xsd:int" use="required" />
+        <xsd:attribute name="rank" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildConfig_GuildDeclareReset">
+        <xsd:sequence>
+            <xsd:element name="DeclareReset" type="GuildConfig_GuildDeclareReset_DeclareReset" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildConfig_GuildDeclareReset_DeclareReset">
+        <xsd:attribute name="resetDay" type="xsd:string" use="required" />
+        <xsd:attribute name="resetTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildConfig_GuildIncentiveRate">
+        <xsd:sequence>
+            <xsd:element name="Incentive" type="GuildConfig_GuildIncentiveRate_Incentive" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="commission" type="xsd:float" use="required" />
+        <xsd:attribute name="coolTimeDay" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildConfig_GuildIncentiveRate_Incentive">
+        <xsd:attribute name="guildSize" type="xsd:int" use="required" />
+        <xsd:attribute name="maxRate" type="xsd:float" use="required" />
+        <xsd:attribute name="minRate" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildConfig_GuildLevelTable">
+        <xsd:sequence>
+            <xsd:element name="GuildLevel" type="GuildConfig_GuildLevelTable_GuildLevel" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildConfig_GuildLevelTable_GuildLevel">
+        <xsd:attribute name="guildExpNeeded" type="xsd:string" use="required" />
+        <xsd:attribute name="level" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildConfig_GuildSizeTable">
+        <xsd:sequence>
+            <xsd:element name="GuildSize" type="GuildConfig_GuildSizeTable_GuildSize" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildConfig_GuildSizeTable_GuildSize">
+        <xsd:attribute name="accountNumOver" type="xsd:int" use="required" />
+        <xsd:attribute name="rank" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildConfig_GuildWarConfig">
+        <xsd:attribute name="maxDeclareCount" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildConfig_GuildWarTime">
+        <xsd:attribute name="protectiMin" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="GuildConfig" type="GuildConfig" />
+</xsd:schema>

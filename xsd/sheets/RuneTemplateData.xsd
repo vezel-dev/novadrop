@@ -1,0 +1,36 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/RuneTemplateData"
+            targetNamespace="https://vezel.dev/novadrop/dc/RuneTemplateData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="RuneTemplateData">
+        <xsd:sequence>
+            <xsd:element name="RuneTemplate" type="RuneTemplateData_RuneTemplate" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="RuneTemplateData_RuneTemplate">
+        <xsd:sequence>
+            <xsd:element name="RunePassive" type="RuneTemplateData_RuneTemplate_RunePassive" />
+        </xsd:sequence>
+
+        <xsd:attribute name="grade" type="xsd:int" use="required" />
+        <xsd:attribute name="icon" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="RuneTemplateData_RuneTemplate_RunePassive">
+        <xsd:sequence>
+            <xsd:element name="Passivity" type="RuneTemplateData_RuneTemplate_RunePassive_Passivity" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="RuneTemplateData_RuneTemplate_RunePassive_Passivity">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="RuneTemplateData" type="RuneTemplateData" />
+</xsd:schema>

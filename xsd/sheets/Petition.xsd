@@ -1,0 +1,55 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/Petition"
+            targetNamespace="https://vezel.dev/novadrop/dc/Petition"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="Petition">
+        <xsd:sequence>
+            <xsd:element name="CategoryInfo" type="Petition_CategoryInfo" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Petition_CategoryInfo">
+        <xsd:sequence>
+            <xsd:element name="MainCategory" type="Petition_CategoryInfo_MainCategory" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="detail" type="xsd:string" />
+        <xsd:attribute name="localize" type="xsd:string" use="required" />
+        <xsd:attribute name="useLocalize" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="Petition_CategoryInfo_MainCategory">
+        <xsd:sequence>
+            <xsd:element name="SubCategory" type="Petition_CategoryInfo_MainCategory_SubCategory" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="contentStringId" type="xsd:int" use="required" />
+        <xsd:attribute name="nameStringId" type="xsd:int" use="required" />
+        <xsd:attribute name="useTerapidea" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:complexType name="Petition_CategoryInfo_MainCategory_SubCategory">
+        <xsd:sequence>
+            <xsd:element name="InputList" type="Petition_CategoryInfo_MainCategory_SubCategory_InputList" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="contentStringId" type="xsd:int" use="required" />
+        <xsd:attribute name="nameStringId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="Petition_CategoryInfo_MainCategory_SubCategory_InputList">
+        <xsd:sequence>
+            <xsd:element name="Input" type="Petition_CategoryInfo_MainCategory_SubCategory_InputList_Input" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Petition_CategoryInfo_MainCategory_SubCategory_InputList_Input">
+        <xsd:attribute name="length" type="xsd:int" use="required" />
+        <xsd:attribute name="stringId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="Petition" type="Petition" />
+</xsd:schema>

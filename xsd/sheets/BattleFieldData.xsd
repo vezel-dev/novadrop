@@ -1,0 +1,539 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/BattleFieldData"
+            targetNamespace="https://vezel.dev/novadrop/dc/BattleFieldData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="BattleFieldData">
+        <xsd:sequence>
+            <xsd:element name="BattleField" type="BattleFieldData_BattleField" maxOccurs="unbounded" />
+            <xsd:element name="BattleFieldGlobalData" type="BattleFieldData_BattleFieldGlobalData" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField">
+        <xsd:sequence>
+            <xsd:element name="AvailableItems" type="BattleFieldData_BattleField_AvailableItems" />
+            <xsd:element name="BGM" type="BattleFieldData_BattleField_BGM" />
+            <xsd:element name="BuffUIData" type="BattleFieldData_BattleField_BuffUIData" minOccurs="0" />
+            <xsd:element name="CommanderSkillList" type="BattleFieldData_BattleField_CommanderSkillList" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="CommonData" type="BattleFieldData_BattleField_CommonData" />
+            <xsd:element name="CommonUIData" type="BattleFieldData_BattleField_CommonUIData" minOccurs="0" />
+            <xsd:element name="CompetitionPoint" type="BattleFieldData_BattleField_CompetitionPoint" minOccurs="0" />
+            <xsd:element name="EnableTimeList" type="BattleFieldData_BattleField_EnableTimeList" />
+            <xsd:element name="OverrideSkillSet" type="BattleFieldData_BattleField_OverrideSkillSet" minOccurs="0" />
+            <xsd:element name="RankAroundUIData" type="BattleFieldData_BattleField_RankAroundUIData" minOccurs="0" />
+            <xsd:element name="RankingCompetition" type="BattleFieldData_BattleField_RankingCompetition" minOccurs="0" />
+            <xsd:element name="Resource" type="BattleFieldData_BattleField_Resource" minOccurs="0" />
+            <xsd:element name="ResultComment" type="BattleFieldData_BattleField_ResultComment" minOccurs="0" />
+            <xsd:element name="Revision" type="BattleFieldData_BattleField_Revision" minOccurs="0" />
+            <xsd:element name="Reward" type="BattleFieldData_BattleField_Reward" />
+            <xsd:element name="Rivive" type="BattleFieldData_BattleField_Rivive" />
+            <xsd:element name="RuleData" type="BattleFieldData_BattleField_RuleData" />
+            <xsd:element name="SpecificData" type="BattleFieldData_BattleField_SpecificData" />
+            <xsd:element name="StrongholdEffect" type="BattleFieldData_BattleField_StrongholdEffect" minOccurs="0" />
+            <xsd:element name="WarPoint" type="BattleFieldData_BattleField_WarPoint" />
+            <xsd:element name="WinCondition" type="BattleFieldData_BattleField_WinCondition" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="blueTeamName" type="xsd:int" />
+        <xsd:attribute name="guideText" type="xsd:int" />
+        <xsd:attribute name="helpDataId" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:int" use="required" />
+        <xsd:attribute name="redTeamName" type="xsd:int" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_AvailableItems">
+        <xsd:sequence>
+            <xsd:element name="CombatItemType" type="BattleFieldData_BattleField_AvailableItems_CombatItemType" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Item" type="BattleFieldData_BattleField_AvailableItems_Item" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_AvailableItems_CombatItemType">
+        <xsd:attribute name="id" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_AvailableItems_Item">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_BGM">
+        <xsd:attribute name="enter" type="xsd:string" use="required" />
+        <xsd:attribute name="fadeTime" type="xsd:float" use="required" />
+        <xsd:attribute name="finish" type="xsd:string" />
+        <xsd:attribute name="start" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_BuffUIData">
+        <xsd:sequence>
+            <xsd:element name="BuffData" type="BattleFieldData_BattleField_BuffUIData_BuffData" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_BuffUIData_BuffData">
+        <xsd:attribute name="abnormalId" type="xsd:int" use="required" />
+        <xsd:attribute name="imgPath" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_CommanderSkillList">
+        <xsd:sequence>
+            <xsd:element name="Skill" type="BattleFieldData_BattleField_CommanderSkillList_Skill" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="team" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_CommanderSkillList_Skill">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_CommonData">
+        <xsd:sequence>
+            <xsd:element name="Team" type="BattleFieldData_BattleField_CommonData_Team" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="desertionAbnormalityId" type="xsd:int" use="required" />
+        <xsd:attribute name="maxLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="maxTeamMember" type="xsd:int" use="required" />
+        <xsd:attribute name="minChatbanEnableMemberCount" type="xsd:int" />
+        <xsd:attribute name="minLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="minTeamMember" type="xsd:int" use="required" />
+        <xsd:attribute name="observerViewDistance" type="xsd:float" />
+        <xsd:attribute name="preCombatSec" type="xsd:int" use="required" />
+        <xsd:attribute name="useObserverMode" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_CommonData_Team">
+        <xsd:attribute name="bfTeamNamePlateColorId" type="xsd:int" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="spawnPos" type="xsd:string" use="required" />
+        <xsd:attribute name="stringId" type="xsd:int" />
+        <xsd:attribute name="teamColorSet" type="xsd:string" />
+        <xsd:attribute name="teamMarkerImagePath" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_CommonUIData">
+        <xsd:attribute name="attackGuideImage" type="xsd:int" />
+        <xsd:attribute name="attackGuideString" type="xsd:int" />
+        <xsd:attribute name="checkBoxType" type="xsd:int" use="required" />
+        <xsd:attribute name="defenceGuideImage" type="xsd:int" />
+        <xsd:attribute name="defenceGuideString" type="xsd:int" />
+        <xsd:attribute name="desc" type="xsd:int" use="required" />
+        <xsd:attribute name="mapImgName" type="xsd:string" use="required" />
+        <xsd:attribute name="useGuideImage" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_CompetitionPoint">
+        <xsd:attribute name="winReward" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_EnableTimeList">
+        <xsd:sequence>
+            <xsd:element name="EnableTime" type="BattleFieldData_BattleField_EnableTimeList_EnableTime" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_EnableTimeList_EnableTime">
+        <xsd:attribute name="closeHour" type="xsd:int" use="required" />
+        <xsd:attribute name="competitionPointReward" type="xsd:boolean" use="required" />
+        <xsd:attribute name="day" type="xsd:string" use="required" />
+        <xsd:attribute name="openHour" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_OverrideSkillSet">
+        <xsd:attribute name="skillSetId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_RankAroundUIData">
+        <xsd:attribute name="dealPoint" type="xsd:int" use="required" />
+        <xsd:attribute name="healPoint" type="xsd:int" use="required" />
+        <xsd:attribute name="killPoint" type="xsd:int" use="required" />
+        <xsd:attribute name="techPoint" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_RankingCompetition">
+        <xsd:attribute name="classCompetition" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_Resource">
+        <xsd:attribute name="assistMagneticEffectId" type="xsd:int" />
+        <xsd:attribute name="killMagneticEffectId" type="xsd:int" />
+        <xsd:attribute name="nStrongholdPackageName" type="xsd:string" use="required" />
+        <xsd:attribute name="tombPackageName" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_ResultComment">
+        <xsd:sequence>
+            <xsd:element name="Comment" type="BattleFieldData_BattleField_ResultComment_Comment" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_ResultComment_Comment">
+        <xsd:attribute name="drawMessage" type="xsd:int" use="required" />
+        <xsd:attribute name="loseMessage" type="xsd:int" use="required" />
+        <xsd:attribute name="reason" type="xsd:string" use="required" />
+        <xsd:attribute name="winMessage" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_Revision">
+        <xsd:sequence>
+            <xsd:element name="LevelRevision" type="BattleFieldData_BattleField_Revision_LevelRevision" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_Revision_LevelRevision">
+        <xsd:attribute name="isLevelRevision" type="xsd:boolean" use="required" />
+        <xsd:attribute name="maxRevisionLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="revisionLevel" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_Reward">
+        <xsd:sequence>
+            <xsd:element name="RankingData" type="BattleFieldData_BattleField_Reward_RankingData" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="minWarPointForReward" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_Reward_RankingData">
+        <xsd:attribute name="rank" type="xsd:int" use="required" />
+        <xsd:attribute name="rewardAmount" type="xsd:int" />
+        <xsd:attribute name="rewardId" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_Rivive">
+        <xsd:sequence>
+            <xsd:element name="RevivePosList" type="BattleFieldData_BattleField_Rivive_RevivePosList" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_Rivive_RevivePosList">
+        <xsd:sequence>
+            <xsd:element name="RevivePos" type="BattleFieldData_BattleField_Rivive_RevivePosList_RevivePos" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_Rivive_RevivePosList_RevivePos">
+        <xsd:attribute name="dir" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="pos" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_RuleData">
+        <xsd:attribute name="ruleId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_SpecificData">
+        <xsd:sequence>
+            <xsd:element name="AeroData" type="BattleFieldData_BattleField_SpecificData_AeroData" minOccurs="0" />
+            <xsd:element name="AirShipRespawnList" type="BattleFieldData_BattleField_SpecificData_AirShipRespawnList" minOccurs="0" />
+            <xsd:element name="BFTreasureOfKumas" type="BattleFieldData_BattleField_SpecificData_BFTreasureOfKumas" minOccurs="0" />
+            <xsd:element name="CastleDoor" type="BattleFieldData_BattleField_SpecificData_CastleDoor" minOccurs="0" />
+            <xsd:element name="GateList" type="BattleFieldData_BattleField_SpecificData_GateList" minOccurs="0" />
+            <xsd:element name="GuardTower" type="BattleFieldData_BattleField_SpecificData_GuardTower" minOccurs="0" />
+            <xsd:element name="GuardTowerList" type="BattleFieldData_BattleField_SpecificData_GuardTowerList" minOccurs="0" />
+            <xsd:element name="IrregularRound" type="BattleFieldData_BattleField_SpecificData_IrregularRound" minOccurs="0" />
+            <xsd:element name="NodePointList" type="BattleFieldData_BattleField_SpecificData_NodePointList" minOccurs="0" />
+            <xsd:element name="PveSkillList" type="BattleFieldData_BattleField_SpecificData_PveSkillList" minOccurs="0" />
+            <xsd:element name="Round" type="BattleFieldData_BattleField_SpecificData_Round" minOccurs="0" />
+            <xsd:element name="Score" type="BattleFieldData_BattleField_SpecificData_Score" minOccurs="0" />
+            <xsd:element name="StrongholdList" type="BattleFieldData_BattleField_SpecificData_StrongholdList" minOccurs="0" />
+            <xsd:element name="SystemMessage" type="BattleFieldData_BattleField_SpecificData_SystemMessage" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="autoReviveSec" type="xsd:int" />
+        <xsd:attribute name="baseAttackShowInterval" type="xsd:float" />
+        <xsd:attribute name="baseAttackShowSec" type="xsd:float" />
+        <xsd:attribute name="shareAlarmSec" type="xsd:float" />
+        <xsd:attribute name="toAttackSec" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_SpecificData_AeroData">
+        <xsd:sequence>
+            <xsd:element name="LoseAero" type="BattleFieldData_BattleField_SpecificData_AeroData_LoseAero" />
+            <xsd:element name="WinAero" type="BattleFieldData_BattleField_SpecificData_AeroData_WinAero" />
+        </xsd:sequence>
+
+        <xsd:attribute name="scoreDifferenceMax" type="xsd:int" use="required" />
+        <xsd:attribute name="scoreDifferenceMin" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_SpecificData_AeroData_LoseAero">
+        <xsd:attribute name="aero" type="xsd:string" use="required" />
+        <xsd:attribute name="blendTime" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_SpecificData_AeroData_WinAero">
+        <xsd:attribute name="aero" type="xsd:string" use="required" />
+        <xsd:attribute name="blendTime" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_SpecificData_AirShipRespawnList">
+        <xsd:sequence>
+            <xsd:element name="AirShipRespawn" type="BattleFieldData_BattleField_SpecificData_AirShipRespawnList_AirShipRespawn" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_SpecificData_AirShipRespawnList_AirShipRespawn">
+        <xsd:attribute name="continentId" type="xsd:int" use="required" />
+        <xsd:attribute name="objectNpcId" type="xsd:int" use="required" />
+        <xsd:attribute name="pos" type="xsd:string" use="required" />
+        <xsd:attribute name="whichSide" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_SpecificData_BFTreasureOfKumas">
+        <xsd:attribute name="name" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_SpecificData_CastleDoor">
+        <xsd:attribute name="bigObjectNpcId" type="xsd:int" use="required" />
+        <xsd:attribute name="continentId" type="xsd:int" use="required" />
+        <xsd:attribute name="smallObjectNpcId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_SpecificData_GateList">
+        <xsd:sequence>
+            <xsd:element name="Gate" type="BattleFieldData_BattleField_SpecificData_GateList_Gate" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_SpecificData_GateList_Gate">
+        <xsd:attribute name="alarmCoolTime" type="xsd:float" use="required" />
+        <xsd:attribute name="alarmWhenHpBelow" type="xsd:string" use="required" />
+        <xsd:attribute name="continentId" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="pos" type="xsd:string" use="required" />
+        <xsd:attribute name="posDir" type="xsd:int" use="required" />
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_SpecificData_GuardTower">
+        <xsd:attribute name="continentId" type="xsd:int" use="required" />
+        <xsd:attribute name="objectNpcId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_SpecificData_GuardTowerList">
+        <xsd:sequence>
+            <xsd:element name="GuardTower" type="BattleFieldData_BattleField_SpecificData_GuardTowerList_GuardTower" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_SpecificData_GuardTowerList_GuardTower">
+        <xsd:attribute name="alarmCoolTime" type="xsd:float" use="required" />
+        <xsd:attribute name="alarmWhenHpBelow" type="xsd:string" use="required" />
+        <xsd:attribute name="continentId" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="pos" type="xsd:string" use="required" />
+        <xsd:attribute name="posDir" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_SpecificData_IrregularRound">
+        <xsd:sequence>
+            <xsd:element name="RoundSet" type="BattleFieldData_BattleField_SpecificData_IrregularRound_RoundSet" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="maxRound" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_SpecificData_IrregularRound_RoundSet">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="roundTimeSec" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_SpecificData_NodePointList">
+        <xsd:sequence>
+            <xsd:element name="NodePoint" type="BattleFieldData_BattleField_SpecificData_NodePointList_NodePoint" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_SpecificData_NodePointList_NodePoint">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="pos" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_SpecificData_PveSkillList">
+        <xsd:sequence>
+            <xsd:element name="SkillList" type="BattleFieldData_BattleField_SpecificData_PveSkillList_SkillList" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_SpecificData_PveSkillList_SkillList">
+        <xsd:sequence>
+            <xsd:element name="Skill" type="BattleFieldData_BattleField_SpecificData_PveSkillList_SkillList_Skill" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="typeName" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_SpecificData_PveSkillList_SkillList_Skill">
+        <xsd:attribute name="desc" type="xsd:string" use="required" />
+        <xsd:attribute name="icon" type="xsd:string" use="required" />
+        <xsd:attribute name="index" type="xsd:int" use="required" />
+        <xsd:attribute name="maxCount" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="targetType" type="xsd:string" use="required" />
+        <xsd:attribute name="usePlayPoint" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_SpecificData_Round">
+        <xsd:attribute name="maxRound" type="xsd:int" />
+        <xsd:attribute name="roundMinCountDown" type="xsd:int" use="required" />
+        <xsd:attribute name="victoryRound" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_SpecificData_Score">
+        <xsd:attribute name="blueTeamStartScore" type="xsd:int" />
+        <xsd:attribute name="redTeamStartScore" type="xsd:int" />
+        <xsd:attribute name="tensionScore" type="xsd:int" />
+        <xsd:attribute name="victoryScore" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_SpecificData_StrongholdList">
+        <xsd:sequence>
+            <xsd:element name="Stronghold" type="BattleFieldData_BattleField_SpecificData_StrongholdList_Stronghold" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_SpecificData_StrongholdList_Stronghold">
+        <xsd:attribute name="guideEffectId" type="xsd:int" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:int" use="required" />
+        <xsd:attribute name="pos" type="xsd:string" use="required" />
+        <xsd:attribute name="posDir" type="xsd:int" use="required" />
+        <xsd:attribute name="reviveSelectable" type="xsd:boolean" />
+        <xsd:attribute name="tombDir" type="xsd:int" use="required" />
+        <xsd:attribute name="tombPos" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_SpecificData_SystemMessage">
+        <xsd:sequence>
+            <xsd:element name="RoundTimeRemainList" type="BattleFieldData_BattleField_SpecificData_SystemMessage_RoundTimeRemainList" minOccurs="0" />
+            <xsd:element name="TimeRemainList" type="BattleFieldData_BattleField_SpecificData_SystemMessage_TimeRemainList" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_SpecificData_SystemMessage_RoundTimeRemainList">
+        <xsd:sequence>
+            <xsd:element name="RoundTimeRemain" type="BattleFieldData_BattleField_SpecificData_SystemMessage_RoundTimeRemainList_RoundTimeRemain" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_SpecificData_SystemMessage_RoundTimeRemainList_RoundTimeRemain">
+        <xsd:attribute name="roundTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_SpecificData_SystemMessage_TimeRemainList">
+        <xsd:sequence>
+            <xsd:element name="TimeRemain" type="BattleFieldData_BattleField_SpecificData_SystemMessage_TimeRemainList_TimeRemain" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_SpecificData_SystemMessage_TimeRemainList_TimeRemain">
+        <xsd:attribute name="minuteLeft" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_StrongholdEffect">
+        <xsd:attribute name="blue" type="xsd:string" use="required" />
+        <xsd:attribute name="blueOccupation" type="xsd:int" use="required" />
+        <xsd:attribute name="blueToRed" type="xsd:int" use="required" />
+        <xsd:attribute name="neutToBlue" type="xsd:int" use="required" />
+        <xsd:attribute name="neutToRed" type="xsd:int" use="required" />
+        <xsd:attribute name="occupiedGauge" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:string" use="required" />
+        <xsd:attribute name="redOccupation" type="xsd:int" use="required" />
+        <xsd:attribute name="redToBlue" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_WarPoint">
+        <xsd:attribute name="finalBlowHelperWP" type="xsd:int" />
+        <xsd:attribute name="finalBlowWP" type="xsd:int" />
+        <xsd:attribute name="minWarPointForRank" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleField_WinCondition">
+        <xsd:attribute name="feverGaugePosX" type="xsd:int" use="required" />
+        <xsd:attribute name="feverGaugePosY" type="xsd:int" use="required" />
+        <xsd:attribute name="feverTime" type="xsd:int" use="required" />
+        <xsd:attribute name="stackCount" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleFieldGlobalData">
+        <xsd:sequence>
+            <xsd:element name="ActionKeyEffect" type="BattleFieldData_BattleFieldGlobalData_ActionKeyEffect" />
+            <xsd:element name="BFMatchingUISortPriority" type="BattleFieldData_BattleFieldGlobalData_BFMatchingUISortPriority" />
+            <xsd:element name="BattleFieldBuyMenuList" type="BattleFieldData_BattleFieldGlobalData_BattleFieldBuyMenuList" />
+            <xsd:element name="BattleFieldRankingWindow" type="BattleFieldData_BattleFieldGlobalData_BattleFieldRankingWindow" />
+            <xsd:element name="MatchingStateDisplay" type="BattleFieldData_BattleFieldGlobalData_MatchingStateDisplay" />
+            <xsd:element name="MatchingTimeDisplay" type="BattleFieldData_BattleFieldGlobalData_MatchingTimeDisplay" />
+            <xsd:element name="Observer" type="BattleFieldData_BattleFieldGlobalData_Observer" />
+            <xsd:element name="RankingRule" type="BattleFieldData_BattleFieldGlobalData_RankingRule" />
+            <xsd:element name="SpecialConditionMessage" type="BattleFieldData_BattleFieldGlobalData_SpecialConditionMessage" />
+            <xsd:element name="VehicleExEffect" type="BattleFieldData_BattleFieldGlobalData_VehicleExEffect" />
+        </xsd:sequence>
+
+        <xsd:attribute name="matchingInSameWorldServer" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleFieldGlobalData_ActionKeyEffect">
+        <xsd:attribute name="resourceSize" type="xsd:int" use="required" />
+        <xsd:attribute name="resourceType" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleFieldGlobalData_BFMatchingUISortPriority">
+        <xsd:attribute name="battleFieldId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleFieldGlobalData_BattleFieldBuyMenuList">
+        <xsd:sequence>
+            <xsd:element name="ListInfo" type="BattleFieldData_BattleFieldGlobalData_BattleFieldBuyMenuList_ListInfo" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleFieldGlobalData_BattleFieldBuyMenuList_ListInfo">
+        <xsd:attribute name="BuyMenuId" type="xsd:int" use="required" />
+        <xsd:attribute name="npcGuildId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleFieldGlobalData_BattleFieldRankingWindow">
+        <xsd:attribute name="allServerName" type="xsd:int" use="required" />
+        <xsd:attribute name="myServerName" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleFieldGlobalData_MatchingStateDisplay">
+        <xsd:attribute name="refreshTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleFieldGlobalData_MatchingTimeDisplay">
+        <xsd:attribute name="refreshTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleFieldGlobalData_Observer">
+        <xsd:attribute name="observerKey" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleFieldGlobalData_RankingRule">
+        <xsd:attribute name="basicGradePoint" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleFieldGlobalData_SpecialConditionMessage">
+        <xsd:sequence>
+            <xsd:element name="PUBGEventMessage" type="BattleFieldData_BattleFieldGlobalData_SpecialConditionMessage_PUBGEventMessage" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleFieldGlobalData_SpecialConditionMessage_PUBGEventMessage">
+        <xsd:attribute name="on" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleFieldData_BattleFieldGlobalData_VehicleExEffect">
+        <xsd:attribute name="blueTeamFixEffectId" type="xsd:int" use="required" />
+        <xsd:attribute name="redTeamFixEffectId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="BattleFieldData" type="BattleFieldData" />
+</xsd:schema>

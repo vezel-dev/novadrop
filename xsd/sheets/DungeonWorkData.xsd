@@ -1,0 +1,87 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/DungeonWorkData"
+            targetNamespace="https://vezel.dev/novadrop/dc/DungeonWorkData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="DungeonWorkData">
+        <xsd:sequence>
+            <xsd:element name="DungeonWorkFont" type="DungeonWorkData_DungeonWorkFont" />
+            <xsd:element name="GradeList" type="DungeonWorkData_GradeList" />
+            <xsd:element name="RankList" type="DungeonWorkData_RankList" maxOccurs="unbounded" />
+            <xsd:element name="WorkDungeonListUISortPriority" type="DungeonWorkData_WorkDungeonListUISortPriority" />
+            <xsd:element name="WorkList" type="DungeonWorkData_WorkList" maxOccurs="unbounded" />
+            <xsd:element name="WorkType" type="DungeonWorkData_WorkType" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonWorkData_DungeonWorkFont">
+        <xsd:attribute name="confirmBtnTooltip" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonWorkData_GradeList">
+        <xsd:sequence>
+            <xsd:element name="Grade" type="DungeonWorkData_GradeList_Grade" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="numOfGrade" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonWorkData_GradeList_Grade">
+        <xsd:attribute name="grade" type="xsd:int" use="required" />
+        <xsd:attribute name="medal" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonWorkData_RankList">
+        <xsd:sequence>
+            <xsd:element name="Rank" type="DungeonWorkData_RankList_Rank" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonWorkData_RankList_Rank">
+        <xsd:attribute name="grade" type="xsd:int" use="required" />
+        <xsd:attribute name="isDummy" type="xsd:boolean" />
+        <xsd:attribute name="value" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonWorkData_WorkDungeonListUISortPriority">
+        <xsd:attribute name="dungeonIds" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonWorkData_WorkList">
+        <xsd:sequence>
+            <xsd:element name="DungeonWork" type="DungeonWorkData_WorkList_DungeonWork" maxOccurs="unbounded" />
+            <xsd:element name="Random" type="DungeonWorkData_WorkList_Random" />
+        </xsd:sequence>
+
+        <xsd:attribute name="dungeonId" type="xsd:int" use="required" />
+        <xsd:attribute name="dungeonLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="maxWorkCount" type="xsd:int" use="required" />
+        <xsd:attribute name="minWorkCount" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonWorkData_WorkList_DungeonWork">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="innerText" type="xsd:string" use="required" />
+        <xsd:attribute name="title" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+        <xsd:attribute name="useRankId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonWorkData_WorkList_Random">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="randomBonusRate" type="xsd:float" use="required" />
+        <xsd:attribute name="tooltip" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonWorkData_WorkType">
+        <xsd:attribute name="tooltipText" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+        <xsd:attribute name="workTooltip" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="DungeonWorkData" type="DungeonWorkData" />
+</xsd:schema>

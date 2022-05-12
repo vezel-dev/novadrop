@@ -1,0 +1,233 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/NpcData"
+            targetNamespace="https://vezel.dev/novadrop/dc/NpcData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="NpcData"
+                     dc:keys="huntingZoneId">
+        <xsd:sequence>
+            <xsd:element name="Template" type="NpcData_Template" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="huntingZoneId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcData_Template"
+                     dc:keys="id">
+        <xsd:sequence>
+            <xsd:element name="AbnormalityResistanceOverride" type="NpcData_Template_AbnormalityResistanceOverride" minOccurs="0" />
+            <xsd:element name="Aggro" type="NpcData_Template_Aggro" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="AltAnimation" type="NpcData_Template_AltAnimation" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Anger" type="NpcData_Template_Anger" maxOccurs="unbounded" />
+            <xsd:element name="BalanceRef" type="NpcData_Template_BalanceRef" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Balloon" type="NpcData_Template_Balloon" minOccurs="0" />
+            <xsd:element name="BattleFieldOnly" type="NpcData_Template_BattleFieldOnly" minOccurs="0" />
+            <xsd:element name="DeathEffect" type="NpcData_Template_DeathEffect" minOccurs="0" />
+            <xsd:element name="Emoticon" type="NpcData_Template_Emoticon" minOccurs="0" />
+            <xsd:element name="NamePlate" type="NpcData_Template_NamePlate" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="ObjectNpcAiParam" type="NpcData_Template_ObjectNpcAiParam" minOccurs="0" />
+            <xsd:element name="Reaction" type="NpcData_Template_Reaction" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="SeatList" type="NpcData_Template_SeatList" minOccurs="0" />
+            <xsd:element name="Shader" type="NpcData_Template_Shader" minOccurs="0" />
+            <xsd:element name="Stat" type="NpcData_Template_Stat" />
+            <xsd:element name="VehicleEx" type="NpcData_Template_VehicleEx" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="allyShapeId" type="xsd:int" />
+        <xsd:attribute name="balanceType" type="xsd:string" />
+        <xsd:attribute name="basicActionId" type="xsd:int" use="required" />
+        <xsd:attribute name="cameraPenetratable" type="xsd:boolean" />
+        <xsd:attribute name="cannotPassThrough" type="xsd:boolean" />
+        <xsd:attribute name="class" type="xsd:string" />
+        <xsd:attribute name="collideOnMove" type="xsd:boolean" />
+        <xsd:attribute name="deathShapeId" type="xsd:int" />
+        <xsd:attribute name="despawnFadeInTime" type="xsd:float" />
+        <xsd:attribute name="despawnScriptId" type="xsd:int" />
+        <xsd:attribute name="dontTurn" type="xsd:boolean" />
+        <xsd:attribute name="elite" type="xsd:boolean" />
+        <xsd:attribute name="enemyShapeId" type="xsd:int" />
+        <xsd:attribute name="forceDisplayMarker" type="xsd:boolean" />
+        <xsd:attribute name="gender" type="xsd:string" />
+        <xsd:attribute name="guideEffectId" type="xsd:int" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="invincible" type="xsd:boolean" />
+        <xsd:attribute name="invincibleVillager" type="xsd:boolean" />
+        <xsd:attribute name="invisible" type="xsd:boolean" />
+        <xsd:attribute name="isAggressiveMonster" type="xsd:boolean" />
+        <xsd:attribute name="isDiceNpc" type="xsd:boolean" />
+        <xsd:attribute name="isFlyingNpc" type="xsd:boolean" />
+        <xsd:attribute name="isFreeNamed" type="xsd:boolean" />
+        <xsd:attribute name="isHomunculus" type="xsd:boolean" />
+        <xsd:attribute name="isIgnoreSelect" type="xsd:boolean" />
+        <xsd:attribute name="isNotLocationOnFloor" type="xsd:boolean" />
+        <xsd:attribute name="isObjectNpc" type="xsd:boolean" />
+        <xsd:attribute name="isRepairableSpirit" type="xsd:boolean" />
+        <xsd:attribute name="isSpirit" type="xsd:boolean" />
+        <xsd:attribute name="isVehicleEx" type="xsd:boolean" />
+        <xsd:attribute name="isWideBroadcaster" type="xsd:boolean" />
+        <xsd:attribute name="judgeByCylinder" type="xsd:boolean" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="noNamePlate" type="xsd:boolean" />
+        <xsd:attribute name="npcType" type="xsd:string" />
+        <xsd:attribute name="parentId" type="xsd:int" />
+        <xsd:attribute name="partyMember" type="xsd:int" />
+        <xsd:attribute name="pushedByNpc" type="xsd:boolean" />
+        <xsd:attribute name="questCameraOff" type="xsd:boolean" />
+        <xsd:attribute name="race" type="xsd:string" />
+        <xsd:attribute name="resourceSize" type="xsd:int" />
+        <xsd:attribute name="resourceType" type="xsd:string" />
+        <xsd:attribute name="scale" type="xsd:float" />
+        <xsd:attribute name="servantType" type="xsd:string" />
+        <xsd:attribute name="shapeId" type="xsd:int" use="required" />
+        <xsd:attribute name="showAggroTarget" type="xsd:boolean" />
+        <xsd:attribute name="showBalloonAlways" type="xsd:boolean" />
+        <xsd:attribute name="showMapIconId" type="xsd:int" />
+        <xsd:attribute name="showShorttermTarget" type="xsd:boolean" />
+        <xsd:attribute name="showTargetInfo" type="xsd:boolean" />
+        <xsd:attribute name="size" type="xsd:string" use="required" />
+        <xsd:attribute name="smoothTurn" type="xsd:boolean" />
+        <xsd:attribute name="smoothTurnTime" type="xsd:float" />
+        <xsd:attribute name="spawnFadeInTime" type="xsd:float" />
+        <xsd:attribute name="spawnScriptId" type="xsd:int" />
+        <xsd:attribute name="speciesId" type="xsd:int" />
+        <xsd:attribute name="stopAfterOneSecond" type="xsd:boolean" />
+        <xsd:attribute name="stopAtDestination" type="xsd:boolean" />
+        <xsd:attribute name="unionElite" type="xsd:boolean" />
+        <xsd:attribute name="unionGuard" type="xsd:boolean" />
+        <xsd:attribute name="unionId" type="xsd:int" />
+        <xsd:attribute name="useAutoTurnTime" type="xsd:boolean" />
+        <xsd:attribute name="villager" type="xsd:boolean" />
+        <xsd:attribute name="villagerVolumeActiveRange" type="xsd:float" />
+        <xsd:attribute name="villagerVolumeHalfHeight" type="xsd:float" />
+        <xsd:attribute name="villagerVolumeInteractionDist" type="xsd:float" />
+        <xsd:attribute name="villagerVolumeOffset" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcData_Template_AbnormalityResistanceOverride">
+        <xsd:sequence>
+            <xsd:element name="Abnormality" type="NpcData_Template_AbnormalityResistanceOverride_Abnormality" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcData_Template_AbnormalityResistanceOverride_Abnormality">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                <xsd:attribute name="resetTime" type="xsd:int" />
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcData_Template_Aggro">
+        <xsd:attribute name="immuneCategory" type="xsd:string" />
+        <xsd:attribute name="spawnScriptId" type="xsd:int" />
+        <xsd:attribute name="useAdditionalAggroEffect" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcData_Template_AltAnimation">
+        <xsd:sequence>
+            <xsd:element name="AltAnim" type="NpcData_Template_AltAnimation_AltAnim" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcData_Template_AltAnimation_AltAnim">
+        <xsd:attribute name="altAnimName" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcData_Template_Anger">
+        <xsd:attribute name="gaugeSize" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcData_Template_BalanceRef">
+        <xsd:attribute name="ignoreAttr" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcData_Template_Balloon">
+        <xsd:attribute name="balloonHeightOffset" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcData_Template_BattleFieldOnly">
+        <xsd:attribute name="abnormalId" type="xsd:string" />
+        <xsd:attribute name="addPoint" type="xsd:int" />
+        <xsd:attribute name="applyTarget" type="xsd:string" />
+        <xsd:attribute name="bossMarker" type="xsd:boolean" />
+        <xsd:attribute name="hideMarker" type="xsd:boolean" />
+        <xsd:attribute name="isLastHit" type="xsd:boolean" />
+        <xsd:attribute name="markerStyle" type="xsd:string" />
+        <xsd:attribute name="pingDurationTime" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcData_Template_DeathEffect">
+        <xsd:attribute name="override" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcData_Template_Emoticon">
+        <xsd:attribute name="forceHidden" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcData_Template_NamePlate">
+        <xsd:attribute name="deathNameplateHeight" type="xsd:int" />
+        <xsd:attribute name="hideNameplate" type="xsd:boolean" />
+        <xsd:attribute name="nameplateHeight" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcData_Template_ObjectNpcAiParam">
+        <xsd:sequence>
+            <xsd:element name="RepeatSkill" type="NpcData_Template_ObjectNpcAiParam_RepeatSkill" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcData_Template_ObjectNpcAiParam_RepeatSkill" />
+
+    <xsd:complexType name="NpcData_Template_Reaction">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                <xsd:attribute name="maxAdditionalGauge" type="xsd:int" use="required" />
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcData_Template_SeatList">
+        <xsd:sequence>
+            <xsd:element name="Seat" type="NpcData_Template_SeatList_Seat" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcData_Template_SeatList_Seat">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcData_Template_Shader">
+        <xsd:attribute name="override" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcData_Template_Stat">
+        <xsd:attribute name="atk" type="xsd:int" />
+        <xsd:attribute name="def" type="xsd:int" use="required" />
+        <xsd:attribute name="level" type="xsd:int" />
+        <xsd:attribute name="maxHp" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcData_Template_VehicleEx">
+        <xsd:attribute name="battleType" type="xsd:string" use="required" />
+        <xsd:attribute name="enemyTeamEffectId" type="xsd:string" />
+        <xsd:attribute name="firstTaskId" type="xsd:int" />
+        <xsd:attribute name="fixable" type="xsd:boolean" />
+        <xsd:attribute name="gravity" type="xsd:float" />
+        <xsd:attribute name="headToCameraDir" type="xsd:boolean" />
+        <xsd:attribute name="isForQuestId" type="xsd:int" />
+        <xsd:attribute name="isRider" type="xsd:boolean" />
+        <xsd:attribute name="kind" type="xsd:string" use="required" />
+        <xsd:attribute name="lastTaskId" type="xsd:int" />
+        <xsd:attribute name="moveType" type="xsd:string" use="required" />
+        <xsd:attribute name="oneUserRepairPerSec" type="xsd:int" />
+        <xsd:attribute name="ourTeamEffectId" type="xsd:string" />
+        <xsd:attribute name="repairGage" type="xsd:int" />
+        <xsd:attribute name="repairTryLimitUser" type="xsd:int" />
+        <xsd:attribute name="showFixGage" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:element name="NpcData" type="NpcData" />
+</xsd:schema>

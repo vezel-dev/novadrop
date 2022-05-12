@@ -1,0 +1,22 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/TBARankData"
+            targetNamespace="https://vezel.dev/novadrop/dc/TBARankData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="TBARankData">
+        <xsd:sequence>
+            <xsd:element name="RankData" type="TBARankData_RankData" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TBARankData_RankData">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="minPoint" type="xsd:int" use="required" />
+        <xsd:attribute name="rewardItemTemplate" type="xsd:int" use="required" />
+        <xsd:attribute name="rewardItemTemplateAmount" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="TBARankData" type="TBARankData" />
+</xsd:schema>

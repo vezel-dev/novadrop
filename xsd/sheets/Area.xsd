@@ -1,0 +1,97 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/Area"
+            targetNamespace="https://vezel.dev/novadrop/dc/Area"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="Area">
+        <xsd:sequence>
+            <xsd:element name="FlySection" type="Area_FlySection" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Section" type="Area_Section" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="areaName" type="xsd:string" use="required" />
+        <xsd:attribute name="continentId" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="nameId" type="xsd:int" use="required" />
+        <xsd:attribute name="pcMoveCylinder" type="xsd:boolean" use="required" />
+        <xsd:attribute name="protect" type="xsd:boolean" use="required" />
+        <xsd:attribute name="pvp" type="xsd:boolean" />
+        <xsd:attribute name="recallReviveContinentIdB" type="xsd:int" />
+        <xsd:attribute name="recallReviveContinentIdC" type="xsd:int" />
+        <xsd:attribute name="ride" type="xsd:boolean" use="required" />
+        <xsd:attribute name="worldMapGuardId" type="xsd:int" use="required" />
+        <xsd:attribute name="worldMapWorldId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="Area_FlySection">
+        <xsd:sequence>
+            <xsd:element name="Fence" type="Area_FlySection_Fence" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="FlyLicense" type="Area_FlySection_FlyLicense" minOccurs="0" />
+            <xsd:element name="FlySection" type="Area_FlySection" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="addMaxZ" type="xsd:float" use="required" />
+        <xsd:attribute name="flyHeightLimit" type="xsd:float" use="required" />
+        <xsd:attribute name="flyType" type="xsd:string" use="required" />
+        <xsd:attribute name="priority" type="xsd:int" use="required" />
+        <xsd:attribute name="subtractMinZ" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="Area_FlySection_Fence">
+        <xsd:attribute name="pos" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="Area_FlySection_FlyLicense">
+        <xsd:sequence>
+            <xsd:element name="License" type="Area_FlySection_FlyLicense_License" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Area_FlySection_FlyLicense_License">
+        <xsd:attribute name="licenseAbnormality" type="xsd:string" use="required" />
+        <xsd:attribute name="licenseAbnormalityOperator" type="xsd:string" use="required" />
+        <xsd:attribute name="licenseAchievement" type="xsd:int" use="required" />
+        <xsd:attribute name="licenseHeightLimit" type="xsd:float" use="required" />
+        <xsd:attribute name="licenseLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="licensePriority" type="xsd:int" use="required" />
+        <xsd:attribute name="licenseQuest" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="Area_Section">
+        <xsd:sequence>
+            <xsd:element name="Fence" type="Area_Section_Fence" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Section" type="Area_Section" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="addMaxZ" type="xsd:float" use="required" />
+        <xsd:attribute name="campId" type="xsd:int" use="required" />
+        <xsd:attribute name="desTex" type="xsd:boolean" use="required" />
+        <xsd:attribute name="disableItemId" type="xsd:string" />
+        <xsd:attribute name="fishing" type="xsd:boolean" />
+        <xsd:attribute name="floor" type="xsd:int" use="required" />
+        <xsd:attribute name="huntingZoneId" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="ignoreObstacleShortTel" type="xsd:boolean" />
+        <xsd:attribute name="maze" type="xsd:boolean" />
+        <xsd:attribute name="nameId" type="xsd:int" use="required" />
+        <xsd:attribute name="optimizeOption" type="xsd:int" />
+        <xsd:attribute name="pcMoveCylinder" type="xsd:boolean" use="required" />
+        <xsd:attribute name="pk" type="xsd:string" use="required" />
+        <xsd:attribute name="priority" type="xsd:int" use="required" />
+        <xsd:attribute name="protect" type="xsd:boolean" use="required" />
+        <xsd:attribute name="pvp" type="xsd:boolean" />
+        <xsd:attribute name="restBonus" type="xsd:boolean" />
+        <xsd:attribute name="ride" type="xsd:boolean" use="required" />
+        <xsd:attribute name="subtractMinZ" type="xsd:float" use="required" />
+        <xsd:attribute name="vender" type="xsd:boolean" use="required" />
+        <xsd:attribute name="worldMapSectionId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="Area_Section_Fence">
+        <xsd:attribute name="pos" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="Area" type="Area" />
+</xsd:schema>

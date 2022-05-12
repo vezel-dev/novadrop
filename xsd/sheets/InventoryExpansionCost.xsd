@@ -1,0 +1,83 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/InventoryExpansionCost"
+            targetNamespace="https://vezel.dev/novadrop/dc/InventoryExpansionCost"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="InventoryExpansionCost">
+        <xsd:sequence>
+            <xsd:element name="InventoryCostList" type="InventoryExpansionCost_InventoryCostList" />
+            <xsd:element name="PocketAddCostList" type="InventoryExpansionCost_PocketAddCostList" />
+            <xsd:element name="PocketCostList" type="InventoryExpansionCost_PocketCostList" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="InventoryExpansionCost_InventoryCostList">
+        <xsd:sequence>
+            <xsd:element name="GoldCostList" type="InventoryExpansionCost_InventoryCostList_GoldCostList" />
+            <xsd:element name="TicketCostList" type="InventoryExpansionCost_InventoryCostList_TicketCostList" />
+        </xsd:sequence>
+
+        <xsd:attribute name="expansionItemType" type="xsd:string" use="required" />
+        <xsd:attribute name="representItemTemplateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="InventoryExpansionCost_InventoryCostList_GoldCostList">
+        <xsd:sequence>
+            <xsd:element name="GoldCost" type="InventoryExpansionCost_InventoryCostList_GoldCostList_GoldCost" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="InventoryExpansionCost_InventoryCostList_GoldCostList_GoldCost">
+        <xsd:attribute name="cost" type="xsd:string" use="required" />
+        <xsd:attribute name="level" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="InventoryExpansionCost_InventoryCostList_TicketCostList">
+        <xsd:sequence>
+            <xsd:element name="TicketCost" type="InventoryExpansionCost_InventoryCostList_TicketCostList_TicketCost" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="InventoryExpansionCost_InventoryCostList_TicketCostList_TicketCost">
+        <xsd:attribute name="cost" type="xsd:int" use="required" />
+        <xsd:attribute name="level" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="InventoryExpansionCost_PocketAddCostList">
+        <xsd:sequence>
+            <xsd:element name="PocketAddCost" type="InventoryExpansionCost_PocketAddCostList_PocketAddCost" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="expansionItemType" type="xsd:string" use="required" />
+        <xsd:attribute name="representItemTemplateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="InventoryExpansionCost_PocketAddCostList_PocketAddCost">
+        <xsd:attribute name="cost" type="xsd:int" use="required" />
+        <xsd:attribute name="level" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="InventoryExpansionCost_PocketCostList">
+        <xsd:sequence>
+            <xsd:element name="TicketCostList" type="InventoryExpansionCost_PocketCostList_TicketCostList" />
+        </xsd:sequence>
+
+        <xsd:attribute name="expansionItemType" type="xsd:string" use="required" />
+        <xsd:attribute name="representItemTemplateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="InventoryExpansionCost_PocketCostList_TicketCostList">
+        <xsd:sequence>
+            <xsd:element name="TicketCost" type="InventoryExpansionCost_PocketCostList_TicketCostList_TicketCost" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="InventoryExpansionCost_PocketCostList_TicketCostList_TicketCost">
+        <xsd:attribute name="cost" type="xsd:int" use="required" />
+        <xsd:attribute name="level" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="InventoryExpansionCost" type="InventoryExpansionCost" />
+</xsd:schema>

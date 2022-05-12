@@ -1,0 +1,28 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/VoiceCustomize"
+            targetNamespace="https://vezel.dev/novadrop/dc/VoiceCustomize"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="VoiceCustomize">
+        <xsd:sequence>
+            <xsd:element name="Voice" type="VoiceCustomize_Voice" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="VoiceCustomize_Voice"
+                     dc:keys="index">
+        <xsd:attribute name="class" type="xsd:string" use="required" />
+        <xsd:attribute name="extra" type="xsd:boolean" use="required" />
+        <xsd:attribute name="gender" type="xsd:string" use="required" />
+        <xsd:attribute name="index" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="priority" type="xsd:int" use="required" />
+        <xsd:attribute name="race" type="xsd:string" use="required" />
+        <xsd:attribute name="sample" type="xsd:string" use="required" />
+        <xsd:attribute name="useItemTemplateId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="VoiceCustomize" type="VoiceCustomize" />
+</xsd:schema>

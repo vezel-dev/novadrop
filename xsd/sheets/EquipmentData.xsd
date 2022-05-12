@@ -1,0 +1,41 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/EquipmentData"
+            targetNamespace="https://vezel.dev/novadrop/dc/EquipmentData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="EquipmentData">
+        <xsd:sequence>
+            <xsd:element name="Equipment" type="EquipmentData_Equipment" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EquipmentData_Equipment"
+                     dc:keys="equipmentId">
+        <xsd:attribute name="atkRate" type="xsd:float" />
+        <xsd:attribute name="balance" type="xsd:string" />
+        <xsd:attribute name="balanceRate" type="xsd:float" />
+        <xsd:attribute name="countOfSlot" type="xsd:int" />
+        <xsd:attribute name="def" type="xsd:int" />
+        <xsd:attribute name="defRate" type="xsd:float" />
+        <xsd:attribute name="equipmentId" type="xsd:int" use="required" />
+        <xsd:attribute name="grade" type="xsd:int" />
+        <xsd:attribute name="impact" type="xsd:string" />
+        <xsd:attribute name="impactRate" type="xsd:float" />
+        <xsd:attribute name="level" type="xsd:int" />
+        <xsd:attribute name="lock" type="xsd:string" />
+        <xsd:attribute name="magicalAttackMax" type="xsd:int" />
+        <xsd:attribute name="magicalAttackMin" type="xsd:int" />
+        <xsd:attribute name="magicalDefence" type="xsd:int" />
+        <xsd:attribute name="maxAtk" type="xsd:int" />
+        <xsd:attribute name="minAtk" type="xsd:int" />
+        <xsd:attribute name="part" type="xsd:string" />
+        <xsd:attribute name="physicalAttackMax" type="xsd:int" />
+        <xsd:attribute name="physicalAttackMin" type="xsd:int" />
+        <xsd:attribute name="physicalDefence" type="xsd:int" />
+        <xsd:attribute name="type" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:element name="EquipmentData" type="EquipmentData" />
+</xsd:schema>

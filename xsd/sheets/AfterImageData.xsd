@@ -1,0 +1,44 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/AfterImageData"
+            targetNamespace="https://vezel.dev/novadrop/dc/AfterImageData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="AfterImageData">
+        <xsd:sequence>
+            <xsd:element name="AfterImageList" type="AfterImageData_AfterImageList" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AfterImageData_AfterImageList">
+        <xsd:sequence>
+            <xsd:element name="AfterImage" type="AfterImageData_AfterImageList_AfterImage" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AfterImageData_AfterImageList_AfterImage">
+        <xsd:attribute name="animName" type="xsd:string" use="required" />
+        <xsd:attribute name="animRate" type="xsd:float" use="required" />
+        <xsd:attribute name="blendOutTime" type="xsd:int" use="required" />
+        <xsd:attribute name="condition" type="xsd:string" use="required" />
+        <xsd:attribute name="despawnDelayTime" type="xsd:int" use="required" />
+        <xsd:attribute name="frameDelay" type="xsd:int" use="required" />
+        <xsd:attribute name="lifeTime" type="xsd:int" use="required" />
+        <xsd:attribute name="overlayFx" type="xsd:int" use="required" />
+        <xsd:attribute name="posX" type="xsd:float" use="required" />
+        <xsd:attribute name="posY" type="xsd:float" use="required" />
+        <xsd:attribute name="posZ" type="xsd:float" use="required" />
+        <xsd:attribute name="rotX" type="xsd:float" use="required" />
+        <xsd:attribute name="rotY" type="xsd:float" use="required" />
+        <xsd:attribute name="rotZ" type="xsd:float" use="required" />
+        <xsd:attribute name="scale" type="xsd:float" use="required" />
+        <xsd:attribute name="shaderStrength" type="xsd:float" use="required" />
+        <xsd:attribute name="startTime" type="xsd:int" use="required" />
+        <xsd:attribute name="updatePeriod" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="AfterImageData" type="AfterImageData" />
+</xsd:schema>

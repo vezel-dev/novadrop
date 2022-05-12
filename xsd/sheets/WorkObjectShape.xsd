@@ -1,0 +1,41 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/WorkObjectShape"
+            targetNamespace="https://vezel.dev/novadrop/dc/WorkObjectShape"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="WorkObjectShape">
+        <xsd:sequence>
+            <xsd:element name="Shape" type="WorkObjectShape_Shape" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorkObjectShape_Shape">
+        <xsd:sequence>
+            <xsd:element name="Cylinder" type="WorkObjectShape_Shape_Cylinder" />
+            <xsd:element name="State" type="WorkObjectShape_Shape_State" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="animSet" type="xsd:string" use="required" />
+        <xsd:attribute name="animTree" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="mesh" type="xsd:string" use="required" />
+        <xsd:attribute name="resourceSize" type="xsd:int" use="required" />
+        <xsd:attribute name="resourceType" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorkObjectShape_Shape_Cylinder">
+        <xsd:attribute name="height" type="xsd:float" use="required" />
+        <xsd:attribute name="radius" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorkObjectShape_Shape_State">
+        <xsd:attribute name="effect" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="transitionAnim" type="xsd:string" use="required" />
+        <xsd:attribute name="waitAnim" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="WorkObjectShape" type="WorkObjectShape" />
+</xsd:schema>

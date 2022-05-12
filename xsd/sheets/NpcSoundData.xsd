@@ -1,0 +1,27 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/NpcSoundData"
+            targetNamespace="https://vezel.dev/novadrop/dc/NpcSoundData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="NpcSoundData">
+        <xsd:sequence>
+            <xsd:element name="NpcSound" type="NpcSoundData_NpcSound" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="huntingZoneId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcSoundData_NpcSound">
+        <xsd:attribute name="hitRadius" type="xsd:float" />
+        <xsd:attribute name="hitVolume" type="xsd:float" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="monArmorType" type="xsd:string" />
+        <xsd:attribute name="monHitDamageVoice" type="xsd:string" />
+        <xsd:attribute name="radius" type="xsd:float" />
+        <xsd:attribute name="volume" type="xsd:float" />
+    </xsd:complexType>
+
+    <xsd:element name="NpcSoundData" type="NpcSoundData" />
+</xsd:schema>

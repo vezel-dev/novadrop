@@ -1,0 +1,23 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/HpGaugeColorSetting"
+            targetNamespace="https://vezel.dev/novadrop/dc/HpGaugeColorSetting"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="HpGaugeColorSetting">
+        <xsd:sequence>
+            <xsd:element name="HpGauge" type="HpGaugeColorSetting_HpGauge" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HpGaugeColorSetting_HpGauge">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="priority" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+        <xsd:attribute name="stringId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="HpGaugeColorSetting" type="HpGaugeColorSetting" />
+</xsd:schema>

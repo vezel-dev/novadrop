@@ -1,0 +1,38 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/EnvCaseData"
+            targetNamespace="https://vezel.dev/novadrop/dc/EnvCaseData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="EnvCaseData">
+        <xsd:sequence>
+            <xsd:element name="Effect" type="EnvCaseData_Effect" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EnvCaseData_Effect">
+        <xsd:attribute name="blessed" type="xsd:string" />
+        <xsd:attribute name="carpet" type="xsd:string" use="required" />
+        <xsd:attribute name="cursed" type="xsd:string" />
+        <xsd:attribute name="dirt" type="xsd:string" use="required" />
+        <xsd:attribute name="gold" type="xsd:string" />
+        <xsd:attribute name="grass" type="xsd:string" use="required" />
+        <xsd:attribute name="grass_yellow" type="xsd:string" use="required" />
+        <xsd:attribute name="gravel" type="xsd:string" use="required" />
+        <xsd:attribute name="inWater" type="xsd:string" use="required" />
+        <xsd:attribute name="inWater_height" type="xsd:float" use="required" />
+        <xsd:attribute name="metal" type="xsd:string" />
+        <xsd:attribute name="onWater" type="xsd:string" use="required" />
+        <xsd:attribute name="reed" type="xsd:string" use="required" />
+        <xsd:attribute name="rock" type="xsd:string" use="required" />
+        <xsd:attribute name="sand" type="xsd:string" use="required" />
+        <xsd:attribute name="shapeId" type="xsd:int" use="required" />
+        <xsd:attribute name="snow" type="xsd:string" use="required" />
+        <xsd:attribute name="swamp" type="xsd:string" use="required" />
+        <xsd:attribute name="swimming" type="xsd:string" use="required" />
+        <xsd:attribute name="wood" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:element name="EnvCaseData" type="EnvCaseData" />
+</xsd:schema>

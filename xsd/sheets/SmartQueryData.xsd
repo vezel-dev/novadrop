@@ -1,0 +1,46 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/SmartQueryData"
+            targetNamespace="https://vezel.dev/novadrop/dc/SmartQueryData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="SmartQueryData">
+        <xsd:sequence>
+            <xsd:element name="SmartQuery" type="SmartQueryData_SmartQuery" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SmartQueryData_SmartQuery">
+        <xsd:sequence>
+            <xsd:element name="ItemList" type="SmartQueryData_SmartQuery_ItemList" minOccurs="0" />
+            <xsd:element name="SearchCondition" type="SmartQueryData_SmartQuery_SearchCondition" minOccurs="0" />
+            <xsd:element name="SmartCondition" type="SmartQueryData_SmartQuery_SmartCondition" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SmartQueryData_SmartQuery_ItemList">
+        <xsd:attribute name="templateId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SmartQueryData_SmartQuery_SearchCondition">
+        <xsd:attribute name="wearable" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SmartQueryData_SmartQuery_SmartCondition">
+        <xsd:attribute name="body" type="xsd:boolean" use="required" />
+        <xsd:attribute name="compare" type="xsd:int" use="required" />
+        <xsd:attribute name="earring" type="xsd:boolean" use="required" />
+        <xsd:attribute name="extractLevel" type="xsd:boolean" use="required" />
+        <xsd:attribute name="feet" type="xsd:boolean" use="required" />
+        <xsd:attribute name="hand" type="xsd:boolean" use="required" />
+        <xsd:attribute name="itemLevel" type="xsd:boolean" use="required" />
+        <xsd:attribute name="necklace" type="xsd:boolean" use="required" />
+        <xsd:attribute name="ring" type="xsd:boolean" use="required" />
+        <xsd:attribute name="weapon" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="SmartQueryData" type="SmartQueryData" />
+</xsd:schema>

@@ -1,0 +1,79 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ArtisanConfig"
+            targetNamespace="https://vezel.dev/novadrop/dc/ArtisanConfig"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ArtisanConfig">
+        <xsd:sequence>
+            <xsd:element name="ArtisanAdditiveItem" type="ArtisanConfig_ArtisanAdditiveItem" />
+            <xsd:element name="ArtisanString" type="ArtisanConfig_ArtisanString" />
+            <xsd:element name="EnchantScroll" type="ArtisanConfig_EnchantScroll" />
+            <xsd:element name="ItemProduceConfig" type="ArtisanConfig_ItemProduceConfig" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtisanConfig_ArtisanAdditiveItem">
+        <xsd:sequence>
+            <xsd:element name="ItemTemplate" type="ArtisanConfig_ArtisanAdditiveItem_ItemTemplate" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtisanConfig_ArtisanAdditiveItem_ItemTemplate">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="produceSkillId" type="xsd:string" use="required" />
+        <xsd:attribute name="value" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtisanConfig_ArtisanString">
+        <xsd:sequence>
+            <xsd:element name="ItemProduceGradeString" type="ArtisanConfig_ArtisanString_ItemProduceGradeString" />
+            <xsd:element name="SuccessPopup" type="ArtisanConfig_ArtisanString_SuccessPopup" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtisanConfig_ArtisanString_ItemProduceGradeString">
+        <xsd:sequence>
+            <xsd:element name="String" type="ArtisanConfig_ArtisanString_ItemProduceGradeString_String" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtisanConfig_ArtisanString_ItemProduceGradeString_String">
+        <xsd:attribute name="grade" type="xsd:int" use="required" />
+        <xsd:attribute name="stringId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtisanConfig_ArtisanString_SuccessPopup">
+        <xsd:attribute name="nameStrColor" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtisanConfig_EnchantScroll">
+        <xsd:attribute name="successDelayTime" type="xsd:float" use="required" />
+        <xsd:attribute name="successSoundId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtisanConfig_ItemProduceConfig">
+        <xsd:sequence>
+            <xsd:element name="ProduceSkill" type="ArtisanConfig_ItemProduceConfig_ProduceSkill" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtisanConfig_ItemProduceConfig_ProduceSkill">
+        <xsd:sequence>
+            <xsd:element name="Category" type="ArtisanConfig_ItemProduceConfig_ProduceSkill_Category" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="iconPackageName" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="masterIcon" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtisanConfig_ItemProduceConfig_ProduceSkill_Category">
+        <xsd:attribute name="grade" type="xsd:int" use="required" />
+        <xsd:attribute name="maxSkillProf" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ArtisanConfig" type="ArtisanConfig" />
+</xsd:schema>

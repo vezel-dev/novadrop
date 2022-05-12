@@ -1,0 +1,13 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/MovieDataLocalized"
+            targetNamespace="https://vezel.dev/novadrop/dc/MovieDataLocalized"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="MovieDataLocalized">
+        <xsd:attribute name="logoMovie" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="MovieDataLocalized" type="MovieDataLocalized" />
+</xsd:schema>

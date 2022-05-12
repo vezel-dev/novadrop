@@ -1,0 +1,129 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/InputRestrictionData"
+            targetNamespace="https://vezel.dev/novadrop/dc/InputRestrictionData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="InputRestrictionData">
+        <xsd:sequence>
+            <xsd:element name="CharacterSetRestriction" type="InputRestrictionData_CharacterSetRestriction" />
+            <xsd:element name="Enabled" type="InputRestrictionData_Enabled" />
+            <xsd:element name="RegularExpressions" type="InputRestrictionData_RegularExpressions" />
+            <xsd:element name="RestrictionContents" type="InputRestrictionData_RestrictionContents" />
+            <xsd:element name="RuleCategory" type="InputRestrictionData_RuleCategory" />
+            <xsd:element name="UrlEncode" type="InputRestrictionData_UrlEncode" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="InputRestrictionData_CharacterSetRestriction">
+        <xsd:sequence>
+            <xsd:element name="CharacterSet" type="InputRestrictionData_CharacterSetRestriction_CharacterSet" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="InputRestrictionData_CharacterSetRestriction_CharacterSet">
+        <xsd:sequence>
+            <xsd:element name="Range" type="InputRestrictionData_CharacterSetRestriction_CharacterSet_Range" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="InputRestrictionData_CharacterSetRestriction_CharacterSet_Range">
+        <xsd:attribute name="from" type="xsd:string" use="required" />
+        <xsd:attribute name="to" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="InputRestrictionData_Enabled">
+        <xsd:attribute name="client" type="xsd:boolean" use="required" />
+        <xsd:attribute name="server" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="InputRestrictionData_RegularExpressions">
+        <xsd:sequence>
+            <xsd:element name="RegularExpression" type="InputRestrictionData_RegularExpressions_RegularExpression" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="InputRestrictionData_RegularExpressions_RegularExpression">
+        <xsd:sequence>
+            <xsd:element name="Check" type="InputRestrictionData_RegularExpressions_RegularExpression_Check" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="InputRestrictionData_RegularExpressions_RegularExpression_Check">
+        <xsd:sequence>
+            <xsd:element name="Check" type="InputRestrictionData_RegularExpressions_RegularExpression_Check" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="if" type="xsd:string" />
+        <xsd:attribute name="max" type="xsd:int" />
+        <xsd:attribute name="repeat" type="xsd:boolean" />
+        <xsd:attribute name="replace" type="xsd:string" />
+        <xsd:attribute name="target" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="InputRestrictionData_RestrictionContents">
+        <xsd:sequence>
+            <xsd:element name="Content" type="InputRestrictionData_RestrictionContents_Content" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="InputRestrictionData_RestrictionContents_Content">
+        <xsd:sequence>
+            <xsd:element name="Rule" type="InputRestrictionData_RestrictionContents_Content_Rule" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="readableId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="InputRestrictionData_RestrictionContents_Content_Rule">
+        <xsd:attribute name="awareNarrowWord" type="xsd:boolean" />
+        <xsd:attribute name="exact" type="xsd:boolean" />
+        <xsd:attribute name="exclude" type="xsd:string" />
+        <xsd:attribute name="include" type="xsd:string" />
+        <xsd:attribute name="max" type="xsd:int" />
+        <xsd:attribute name="min" type="xsd:int" />
+        <xsd:attribute name="onFail" type="xsd:string" use="required" />
+        <xsd:attribute name="replace" type="xsd:boolean" />
+        <xsd:attribute name="table" type="xsd:string" />
+        <xsd:attribute name="target" type="xsd:string" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="InputRestrictionData_RuleCategory">
+        <xsd:sequence>
+            <xsd:element name="Rule" type="InputRestrictionData_RuleCategory_Rule" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="InputRestrictionData_RuleCategory_Rule">
+        <xsd:attribute name="awareNarrowWord" type="xsd:boolean" />
+        <xsd:attribute name="exact" type="xsd:boolean" />
+        <xsd:attribute name="exclude" type="xsd:string" />
+        <xsd:attribute name="include" type="xsd:string" />
+        <xsd:attribute name="max" type="xsd:int" />
+        <xsd:attribute name="min" type="xsd:int" />
+        <xsd:attribute name="onFail" type="xsd:string" use="required" />
+        <xsd:attribute name="replace" type="xsd:boolean" />
+        <xsd:attribute name="table" type="xsd:string" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="InputRestrictionData_UrlEncode">
+        <xsd:sequence>
+            <xsd:element name="Char" type="InputRestrictionData_UrlEncode_Char" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="InputRestrictionData_UrlEncode_Char">
+        <xsd:attribute name="from" type="xsd:string" use="required" />
+        <xsd:attribute name="to" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="InputRestrictionData" type="InputRestrictionData" />
+</xsd:schema>

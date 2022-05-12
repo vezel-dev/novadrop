@@ -1,0 +1,52 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/DecompositionData"
+            targetNamespace="https://vezel.dev/novadrop/dc/DecompositionData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="DecompositionData">
+        <xsd:sequence>
+            <xsd:element name="Decomposition" type="DecompositionData_Decomposition" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="progressTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DecompositionData_Decomposition">
+        <xsd:sequence>
+            <xsd:element name="FixedOutput" type="DecompositionData_Decomposition_FixedOutput" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="RandomOutput" type="DecompositionData_Decomposition_RandomOutput" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="onlyBoundedPc" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DecompositionData_Decomposition_FixedOutput">
+        <xsd:sequence>
+            <xsd:element name="Output" type="DecompositionData_Decomposition_FixedOutput_Output" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="enchantStep" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DecompositionData_Decomposition_FixedOutput_Output">
+        <xsd:attribute name="amount" type="xsd:int" use="required" />
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DecompositionData_Decomposition_RandomOutput">
+        <xsd:sequence>
+            <xsd:element name="Output" type="DecompositionData_Decomposition_RandomOutput_Output" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="enchantStep" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DecompositionData_Decomposition_RandomOutput_Output">
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="DecompositionData" type="DecompositionData" />
+</xsd:schema>

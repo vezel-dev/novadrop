@@ -1,0 +1,80 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/FieldEvent"
+            targetNamespace="https://vezel.dev/novadrop/dc/FieldEvent"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="FieldEvent">
+        <xsd:sequence>
+            <xsd:element name="FieldEventBanTime" type="FieldEvent_FieldEventBanTime" />
+            <xsd:element name="FieldEventClearReward" type="FieldEvent_FieldEventClearReward" />
+            <xsd:element name="FieldEventFontColor" type="FieldEvent_FieldEventFontColor" />
+            <xsd:element name="FieldEventReward" type="FieldEvent_FieldEventReward" />
+            <xsd:element name="FieldEventSize" type="FieldEvent_FieldEventSize" />
+            <xsd:element name="FieldEventTime" type="FieldEvent_FieldEventTime" />
+            <xsd:element name="FieldEventWMapUI" type="FieldEvent_FieldEventWMapUI" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="FieldEvent_FieldEventBanTime">
+        <xsd:attribute name="banGuideRemainTime" type="xsd:string" use="required" />
+        <xsd:attribute name="banTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="FieldEvent_FieldEventClearReward">
+        <xsd:sequence>
+            <xsd:element name="ClearReward" type="FieldEvent_FieldEventClearReward_ClearReward" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="FieldEvent_FieldEventClearReward_ClearReward">
+        <xsd:sequence>
+            <xsd:element name="ShowRewardList" type="FieldEvent_FieldEventClearReward_ClearReward_ShowRewardList" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="FieldEvent_FieldEventClearReward_ClearReward_ShowRewardList">
+        <xsd:attribute name="itemTemplateIdList" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="FieldEvent_FieldEventFontColor">
+        <xsd:sequence>
+            <xsd:element name="ColorNode" type="FieldEvent_FieldEventFontColor_ColorNode" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="FieldEvent_FieldEventFontColor_ColorNode">
+        <xsd:attribute name="color" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="FieldEvent_FieldEventReward" />
+
+    <xsd:complexType name="FieldEvent_FieldEventSize">
+        <xsd:sequence>
+            <xsd:element name="EventSize" type="FieldEvent_FieldEventSize_EventSize" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="FieldEvent_FieldEventSize_EventSize">
+        <xsd:attribute name="icon" type="xsd:string" use="required" />
+        <xsd:attribute name="sizeStrId" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="FieldEvent_FieldEventTime">
+        <xsd:attribute name="channelFullGuidePopupTime" type="xsd:int" use="required" />
+        <xsd:attribute name="limitTimeSec" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="FieldEvent_FieldEventWMapUI">
+        <xsd:attribute name="bottomUITitleStrId" type="xsd:int" use="required" />
+        <xsd:attribute name="showMaxLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="showMinLevel" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="FieldEvent" type="FieldEvent" />
+</xsd:schema>

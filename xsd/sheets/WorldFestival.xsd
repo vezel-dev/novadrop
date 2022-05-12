@@ -1,0 +1,25 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/WorldFestival"
+            targetNamespace="https://vezel.dev/novadrop/dc/WorldFestival"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="WorldFestival">
+        <xsd:sequence>
+            <xsd:element name="EventObject" type="WorldFestival_EventObject" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldFestival_EventObject">
+        <xsd:sequence>
+            <xsd:element name="SpawnEvent" type="WorldFestival_EventObject_SpawnEvent" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldFestival_EventObject_SpawnEvent">
+        <xsd:attribute name="lifeTime" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:element name="WorldFestival" type="WorldFestival" />
+</xsd:schema>

@@ -1,0 +1,83 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/PcFigureExDefine"
+            targetNamespace="https://vezel.dev/novadrop/dc/PcFigureExDefine"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="PcFigureExDefine">
+        <xsd:sequence>
+            <xsd:element name="FigureBase" type="PcFigureExDefine_FigureBase" maxOccurs="unbounded" />
+            <xsd:element name="Transform" type="PcFigureExDefine_Transform" />
+        </xsd:sequence>
+
+        <xsd:attribute name="use" type="xsd:boolean" use="required" />
+        <xsd:attribute name="version" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PcFigureExDefine_FigureBase">
+        <xsd:sequence>
+            <xsd:element name="FigureSlider" type="PcFigureExDefine_FigureBase_FigureSlider" maxOccurs="unbounded" />
+            <xsd:element name="FigureSliderGroup" type="PcFigureExDefine_FigureBase_FigureSliderGroup" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="gender" type="xsd:string" use="required" />
+        <xsd:attribute name="race" type="xsd:string" use="required" />
+        <xsd:attribute name="strIdBase" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PcFigureExDefine_FigureBase_FigureSlider">
+        <xsd:sequence>
+            <xsd:element name="OnBody" type="PcFigureExDefine_FigureBase_FigureSlider_OnBody" />
+        </xsd:sequence>
+
+        <xsd:attribute name="sliderId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PcFigureExDefine_FigureBase_FigureSlider_OnBody">
+        <xsd:sequence>
+            <xsd:element name="OnBone" type="PcFigureExDefine_FigureBase_FigureSlider_OnBody_OnBone" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="default" type="xsd:float" use="required" />
+        <xsd:attribute name="partId" type="xsd:int" use="required" />
+        <xsd:attribute name="val0" type="xsd:float" use="required" />
+        <xsd:attribute name="val1" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PcFigureExDefine_FigureBase_FigureSlider_OnBody_OnBone">
+        <xsd:attribute name="boneName" type="xsd:string" use="required" />
+        <xsd:attribute name="onPosX" type="xsd:float" />
+        <xsd:attribute name="onPosY" type="xsd:float" />
+        <xsd:attribute name="onPosZ" type="xsd:float" />
+        <xsd:attribute name="onScaleX" type="xsd:float" />
+        <xsd:attribute name="onScaleY" type="xsd:float" />
+        <xsd:attribute name="onScaleZ" type="xsd:float" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PcFigureExDefine_FigureBase_FigureSliderGroup">
+        <xsd:sequence>
+            <xsd:element name="Slider" type="PcFigureExDefine_FigureBase_FigureSliderGroup_Slider" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="groupId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PcFigureExDefine_FigureBase_FigureSliderGroup_Slider">
+        <xsd:attribute name="sliderId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PcFigureExDefine_Transform">
+        <xsd:attribute name="invertPosX" type="xsd:boolean" use="required" />
+        <xsd:attribute name="invertPosY" type="xsd:boolean" use="required" />
+        <xsd:attribute name="invertPosZ" type="xsd:boolean" use="required" />
+        <xsd:attribute name="invertRotX" type="xsd:boolean" use="required" />
+        <xsd:attribute name="invertRotY" type="xsd:boolean" use="required" />
+        <xsd:attribute name="invertRotZ" type="xsd:boolean" use="required" />
+        <xsd:attribute name="invertScaleX" type="xsd:boolean" use="required" />
+        <xsd:attribute name="invertScaleY" type="xsd:boolean" use="required" />
+        <xsd:attribute name="invertScaleZ" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="PcFigureExDefine" type="PcFigureExDefine" />
+</xsd:schema>

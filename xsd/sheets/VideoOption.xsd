@@ -1,0 +1,244 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/VideoOption"
+            targetNamespace="https://vezel.dev/novadrop/dc/VideoOption"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="VideoOption">
+        <xsd:sequence>
+            <xsd:element name="BgDetail" type="VideoOption_BgDetail" />
+            <xsd:element name="BgDistance" type="VideoOption_BgDistance" />
+            <xsd:element name="BgFxDetail" type="VideoOption_BgFxDetail" />
+            <xsd:element name="BgFxDist" type="VideoOption_BgFxDist" />
+            <xsd:element name="ChDetail" type="VideoOption_ChDetail" />
+            <xsd:element name="ChDistance" type="VideoOption_ChDistance" />
+            <xsd:element name="ChNumLimit" type="VideoOption_ChNumLimit" />
+            <xsd:element name="ChShadow" type="VideoOption_ChShadow" />
+            <xsd:element name="FxMasterOpacity" type="VideoOption_FxMasterOpacity" />
+            <xsd:element name="GameFxDist" type="VideoOption_GameFxDist" />
+            <xsd:element name="OverallQuality" type="VideoOption_OverallQuality" />
+            <xsd:element name="Postprocess" type="VideoOption_Postprocess" />
+            <xsd:element name="RealtimeOptimize" type="VideoOption_RealtimeOptimize" />
+            <xsd:element name="SkyDetail" type="VideoOption_SkyDetail" />
+            <xsd:element name="TextureResolution" type="VideoOption_TextureResolution" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_BgDetail">
+        <xsd:sequence>
+            <xsd:element name="Set" type="VideoOption_BgDetail_Set" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_BgDetail_Set">
+        <xsd:attribute name="idx" type="xsd:int" use="required" />
+        <xsd:attribute name="radiusRatio" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_BgDistance">
+        <xsd:sequence>
+            <xsd:element name="Set" type="VideoOption_BgDistance_Set" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_BgDistance_Set">
+        <xsd:attribute name="distRatio" type="xsd:float" use="required" />
+        <xsd:attribute name="idx" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_BgFxDetail">
+        <xsd:sequence>
+            <xsd:element name="Set" type="VideoOption_BgFxDetail_Set" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_BgFxDetail_Set">
+        <xsd:attribute name="idx" type="xsd:int" use="required" />
+        <xsd:attribute name="lodBias" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_BgFxDist">
+        <xsd:sequence>
+            <xsd:element name="Set" type="VideoOption_BgFxDist_Set" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_BgFxDist_Set">
+        <xsd:attribute name="distRatio" type="xsd:float" use="required" />
+        <xsd:attribute name="idx" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_ChDetail">
+        <xsd:sequence>
+            <xsd:element name="CharacterLOD" type="VideoOption_ChDetail_CharacterLOD" />
+            <xsd:element name="Set" type="VideoOption_ChDetail_Set" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_ChDetail_CharacterLOD">
+        <xsd:attribute name="d1" type="xsd:int" use="required" />
+        <xsd:attribute name="d2" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_ChDetail_Set">
+        <xsd:attribute name="idx" type="xsd:int" use="required" />
+        <xsd:attribute name="lodBias" type="xsd:int" use="required" />
+        <xsd:attribute name="lodDistRatio" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_ChDistance">
+        <xsd:sequence>
+            <xsd:element name="Set" type="VideoOption_ChDistance_Set" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_ChDistance_Set">
+        <xsd:attribute name="cullDist" type="xsd:int" use="required" />
+        <xsd:attribute name="idx" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_ChNumLimit">
+        <xsd:sequence>
+            <xsd:element name="Set" type="VideoOption_ChNumLimit_Set" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_ChNumLimit_Set">
+        <xsd:attribute name="idx" type="xsd:int" use="required" />
+        <xsd:attribute name="numLimit" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_ChShadow">
+        <xsd:sequence>
+            <xsd:element name="CharacterShadow" type="VideoOption_ChShadow_CharacterShadow" />
+            <xsd:element name="Set" type="VideoOption_ChShadow_Set" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_ChShadow_CharacterShadow">
+        <xsd:attribute name="d1" type="xsd:int" use="required" />
+        <xsd:attribute name="d2" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_ChShadow_Set">
+        <xsd:attribute name="fakeShInD1" type="xsd:boolean" use="required" />
+        <xsd:attribute name="fakeShInD2" type="xsd:boolean" use="required" />
+        <xsd:attribute name="idx" type="xsd:int" use="required" />
+        <xsd:attribute name="realSh" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_FxMasterOpacity">
+        <xsd:sequence>
+            <xsd:element name="PartyCompensation" type="VideoOption_FxMasterOpacity_PartyCompensation" />
+            <xsd:element name="UserControl" type="VideoOption_FxMasterOpacity_UserControl" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_FxMasterOpacity_PartyCompensation">
+        <xsd:sequence>
+            <xsd:element name="Party" type="VideoOption_FxMasterOpacity_PartyCompensation_Party" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_FxMasterOpacity_PartyCompensation_Party">
+        <xsd:attribute name="opacity" type="xsd:float" use="required" />
+        <xsd:attribute name="person" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_FxMasterOpacity_UserControl">
+        <xsd:attribute name="opacityMax" type="xsd:float" use="required" />
+        <xsd:attribute name="opacityMin" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_GameFxDist">
+        <xsd:sequence>
+            <xsd:element name="Set" type="VideoOption_GameFxDist_Set" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_GameFxDist_Set">
+        <xsd:attribute name="distRatio" type="xsd:float" use="required" />
+        <xsd:attribute name="idx" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_OverallQuality">
+        <xsd:sequence>
+            <xsd:element name="Set" type="VideoOption_OverallQuality_Set" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_OverallQuality_Set">
+        <xsd:attribute name="bEnvCaseEffect" type="xsd:boolean" use="required" />
+        <xsd:attribute name="bLowEndLighting" type="xsd:boolean" use="required" />
+        <xsd:attribute name="bgDetail" type="xsd:int" use="required" />
+        <xsd:attribute name="bgDistance" type="xsd:int" use="required" />
+        <xsd:attribute name="bgFxDetail" type="xsd:int" use="required" />
+        <xsd:attribute name="bgFxDist" type="xsd:int" use="required" />
+        <xsd:attribute name="chDetail" type="xsd:int" use="required" />
+        <xsd:attribute name="chDistance" type="xsd:int" use="required" />
+        <xsd:attribute name="chNumLimit" type="xsd:int" use="required" />
+        <xsd:attribute name="chShadow" type="xsd:int" use="required" />
+        <xsd:attribute name="clientLOD" type="xsd:int" use="required" />
+        <xsd:attribute name="clientLODInDungeon" type="xsd:int" use="required" />
+        <xsd:attribute name="gameFxDist" type="xsd:int" use="required" />
+        <xsd:attribute name="idx" type="xsd:int" use="required" />
+        <xsd:attribute name="postprocess" type="xsd:int" use="required" />
+        <xsd:attribute name="realtimeOptimize" type="xsd:int" use="required" />
+        <xsd:attribute name="skyDetail" type="xsd:int" use="required" />
+        <xsd:attribute name="textureResolution" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_Postprocess">
+        <xsd:sequence>
+            <xsd:element name="Set" type="VideoOption_Postprocess_Set" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_Postprocess_Set">
+        <xsd:attribute name="bShowPostprocess" type="xsd:boolean" use="required" />
+        <xsd:attribute name="bUseFXAA" type="xsd:boolean" use="required" />
+        <xsd:attribute name="idx" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_RealtimeOptimize">
+        <xsd:sequence>
+            <xsd:element name="Set" type="VideoOption_RealtimeOptimize_Set" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_RealtimeOptimize_Set">
+        <xsd:attribute name="bUseFrameRateOptimize" type="xsd:boolean" use="required" />
+        <xsd:attribute name="bUseWeaponEnchantOptimize" type="xsd:boolean" use="required" />
+        <xsd:attribute name="idx" type="xsd:int" use="required" />
+        <xsd:attribute name="nEffectCountLimitNum" type="xsd:int" use="required" />
+        <xsd:attribute name="nNPCCountLimitNum" type="xsd:int" use="required" />
+        <xsd:attribute name="nShadowLimitCharNum" type="xsd:int" use="required" />
+        <xsd:attribute name="nUserSpawnLimitNum" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_SkyDetail">
+        <xsd:sequence>
+            <xsd:element name="Set" type="VideoOption_SkyDetail_Set" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_SkyDetail_Set">
+        <xsd:attribute name="bDrawCloud" type="xsd:boolean" use="required" />
+        <xsd:attribute name="bDrawSkyMesh" type="xsd:boolean" use="required" />
+        <xsd:attribute name="idx" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_TextureResolution">
+        <xsd:sequence>
+            <xsd:element name="Set" type="VideoOption_TextureResolution_Set" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="VideoOption_TextureResolution_Set">
+        <xsd:attribute name="idx" type="xsd:int" use="required" />
+        <xsd:attribute name="lodBias" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="VideoOption" type="VideoOption" />
+</xsd:schema>

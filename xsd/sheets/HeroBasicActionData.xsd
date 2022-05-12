@@ -1,0 +1,205 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/HeroBasicActionData"
+            targetNamespace="https://vezel.dev/novadrop/dc/HeroBasicActionData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="HeroBasicActionData">
+        <xsd:sequence>
+            <xsd:element name="BasicActions" type="HeroBasicActionData_BasicActions" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="isNpc" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroBasicActionData_BasicActions"
+                     dc:keys="id">
+        <xsd:sequence>
+            <xsd:element name="AnimMotionList" type="HeroBasicActionData_BasicActions_AnimMotionList" maxOccurs="unbounded" />
+            <xsd:element name="Death" type="HeroBasicActionData_BasicActions_Death" />
+            <xsd:element name="DeathWait" type="HeroBasicActionData_BasicActions_DeathWait" />
+            <xsd:element name="ModeList" type="HeroBasicActionData_BasicActions_ModeList" />
+            <xsd:element name="PickSkillList" type="HeroBasicActionData_BasicActions_PickSkillList" />
+            <xsd:element name="ReactionMotionList" type="HeroBasicActionData_BasicActions_ReactionMotionList" />
+            <xsd:element name="Run" type="HeroBasicActionData_BasicActions_Run" />
+            <xsd:element name="SocialAction" type="HeroBasicActionData_BasicActions_SocialAction" />
+            <xsd:element name="SocialMotionList" type="HeroBasicActionData_BasicActions_SocialMotionList" />
+            <xsd:element name="Wait" type="HeroBasicActionData_BasicActions_Wait" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroBasicActionData_BasicActions_AnimMotionList">
+        <xsd:sequence>
+            <xsd:element name="AnimMotion" type="HeroBasicActionData_BasicActions_AnimMotionList_AnimMotion" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroBasicActionData_BasicActions_AnimMotionList_AnimMotion">
+        <xsd:attribute name="animName" type="xsd:string" use="required" />
+        <xsd:attribute name="animSet" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroBasicActionData_BasicActions_Death">
+        <xsd:attribute name="animSet" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroBasicActionData_BasicActions_DeathWait">
+        <xsd:sequence>
+            <xsd:element name="HitCylinder" type="HeroBasicActionData_BasicActions_DeathWait_HitCylinder" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroBasicActionData_BasicActions_DeathWait_HitCylinder">
+        <xsd:sequence>
+            <xsd:element name="Cylinder" type="HeroBasicActionData_BasicActions_DeathWait_HitCylinder_Cylinder" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroBasicActionData_BasicActions_DeathWait_HitCylinder_Cylinder">
+        <xsd:attribute name="height" type="xsd:float" use="required" />
+        <xsd:attribute name="locAngle" type="xsd:float" use="required" />
+        <xsd:attribute name="locDistance" type="xsd:float" use="required" />
+        <xsd:attribute name="locZ" type="xsd:float" use="required" />
+        <xsd:attribute name="radius" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroBasicActionData_BasicActions_ModeList">
+        <xsd:sequence>
+            <xsd:element name="Mode" type="HeroBasicActionData_BasicActions_ModeList_Mode" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroBasicActionData_BasicActions_ModeList_Mode">
+        <xsd:attribute name="blockMove" type="xsd:boolean" use="required" />
+        <xsd:attribute name="blockRotate" type="xsd:boolean" use="required" />
+        <xsd:attribute name="cameraHeightExp" type="xsd:float" />
+        <xsd:attribute name="cameraHeightRate" type="xsd:float" use="required" />
+        <xsd:attribute name="cameraHeightRateNear" type="xsd:float" />
+        <xsd:attribute name="cameraHeightTransitionDist" type="xsd:float" />
+        <xsd:attribute name="cameraOffsetExp" type="xsd:float" use="required" />
+        <xsd:attribute name="cameraOffsetInwardSpeed" type="xsd:float" use="required" />
+        <xsd:attribute name="cameraOffsetLeftSide" type="xsd:boolean" use="required" />
+        <xsd:attribute name="cameraOffsetMaxMinSpeed" type="xsd:int" use="required" />
+        <xsd:attribute name="cameraOffsetMaxOffset" type="xsd:float" use="required" />
+        <xsd:attribute name="cameraOffsetMaxSpeed" type="xsd:int" use="required" />
+        <xsd:attribute name="cameraOffsetMinMaxSpeed" type="xsd:int" use="required" />
+        <xsd:attribute name="cameraOffsetMinOffset" type="xsd:float" use="required" />
+        <xsd:attribute name="cameraOffsetMinSpeed" type="xsd:int" use="required" />
+        <xsd:attribute name="cameraOffsetOutwardSpeed" type="xsd:float" use="required" />
+        <xsd:attribute name="cameraPitchMax" type="xsd:float" use="required" />
+        <xsd:attribute name="cameraPitchMin" type="xsd:float" use="required" />
+        <xsd:attribute name="cameraZoomMax" type="xsd:float" use="required" />
+        <xsd:attribute name="cameraZoomMin" type="xsd:float" use="required" />
+        <xsd:attribute name="cameraZoomSpeed" type="xsd:int" use="required" />
+        <xsd:attribute name="crosshair" type="xsd:string" use="required" />
+        <xsd:attribute name="crosshairXPos" type="xsd:int" />
+        <xsd:attribute name="crosshairXPosOnHorse" type="xsd:int" />
+        <xsd:attribute name="crosshairYPos" type="xsd:int" />
+        <xsd:attribute name="crosshairYPosOnHorse" type="xsd:int" />
+        <xsd:attribute name="decalDirection" type="xsd:int" />
+        <xsd:attribute name="decalDistance" type="xsd:int" />
+        <xsd:attribute name="decalEffect" type="xsd:int" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="modeInAnim" type="xsd:string" use="required" />
+        <xsd:attribute name="modeInEffect" type="xsd:int" use="required" />
+        <xsd:attribute name="modeLoopEffect" type="xsd:int" use="required" />
+        <xsd:attribute name="modeOutAnim" type="xsd:string" use="required" />
+        <xsd:attribute name="modeOutEffect" type="xsd:int" use="required" />
+        <xsd:attribute name="modeRunAnim" type="xsd:string" use="required" />
+        <xsd:attribute name="modeWaitAnim" type="xsd:string" use="required" />
+        <xsd:attribute name="modeWalkAnim" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroBasicActionData_BasicActions_PickSkillList">
+        <xsd:sequence>
+            <xsd:element name="PickSkill" type="HeroBasicActionData_BasicActions_PickSkillList_PickSkill" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroBasicActionData_BasicActions_PickSkillList_PickSkill">
+        <xsd:attribute name="anim" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroBasicActionData_BasicActions_ReactionMotionList">
+        <xsd:sequence>
+            <xsd:element name="ReactionMotion" type="HeroBasicActionData_BasicActions_ReactionMotionList_ReactionMotion" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroBasicActionData_BasicActions_ReactionMotionList_ReactionMotion">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="reaction" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroBasicActionData_BasicActions_Run">
+        <xsd:sequence>
+            <xsd:element name="HitCylinder" type="HeroBasicActionData_BasicActions_Run_HitCylinder" />
+            <xsd:element name="MoveCylinder" type="HeroBasicActionData_BasicActions_Run_MoveCylinder" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroBasicActionData_BasicActions_Run_HitCylinder">
+        <xsd:sequence>
+            <xsd:element name="Cylinder" type="HeroBasicActionData_BasicActions_Run_HitCylinder_Cylinder" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroBasicActionData_BasicActions_Run_HitCylinder_Cylinder" />
+
+    <xsd:complexType name="HeroBasicActionData_BasicActions_Run_MoveCylinder">
+        <xsd:sequence>
+            <xsd:element name="Cylinder" type="HeroBasicActionData_BasicActions_Run_MoveCylinder_Cylinder" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroBasicActionData_BasicActions_Run_MoveCylinder_Cylinder" />
+
+    <xsd:complexType name="HeroBasicActionData_BasicActions_SocialAction">
+        <xsd:attribute name="socialMotionIdWhenAngerEnd" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroBasicActionData_BasicActions_SocialMotionList" />
+
+    <xsd:complexType name="HeroBasicActionData_BasicActions_Wait">
+        <xsd:sequence>
+            <xsd:element name="HitCylinder" type="HeroBasicActionData_BasicActions_Wait_HitCylinder" />
+            <xsd:element name="MoveCylinder" type="HeroBasicActionData_BasicActions_Wait_MoveCylinder" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroBasicActionData_BasicActions_Wait_HitCylinder">
+        <xsd:sequence>
+            <xsd:element name="Cylinder" type="HeroBasicActionData_BasicActions_Wait_HitCylinder_Cylinder" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroBasicActionData_BasicActions_Wait_HitCylinder_Cylinder">
+        <xsd:attribute name="height" type="xsd:float" use="required" />
+        <xsd:attribute name="locAngle" type="xsd:float" use="required" />
+        <xsd:attribute name="locDistance" type="xsd:float" use="required" />
+        <xsd:attribute name="locZ" type="xsd:float" use="required" />
+        <xsd:attribute name="radius" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroBasicActionData_BasicActions_Wait_MoveCylinder">
+        <xsd:sequence>
+            <xsd:element name="Cylinder" type="HeroBasicActionData_BasicActions_Wait_MoveCylinder_Cylinder" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroBasicActionData_BasicActions_Wait_MoveCylinder_Cylinder">
+        <xsd:attribute name="height" type="xsd:float" use="required" />
+        <xsd:attribute name="locAngle" type="xsd:float" use="required" />
+        <xsd:attribute name="locDistance" type="xsd:float" use="required" />
+        <xsd:attribute name="locZ" type="xsd:float" use="required" />
+        <xsd:attribute name="radius" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="HeroBasicActionData" type="HeroBasicActionData" />
+</xsd:schema>

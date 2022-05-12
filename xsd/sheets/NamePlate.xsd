@@ -1,0 +1,782 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/NamePlate"
+            targetNamespace="https://vezel.dev/novadrop/dc/NamePlate"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="NamePlate">
+        <xsd:sequence>
+            <xsd:element name="AccountTraitIcon" type="NamePlate_AccountTraitIcon" />
+            <xsd:element name="AchievementTitleReward" type="NamePlate_AchievementTitleReward" />
+            <xsd:element name="DefaultValue" type="NamePlate_DefaultValue" />
+            <xsd:element name="FontColor" type="NamePlate_FontColor" />
+            <xsd:element name="HPGauge" type="NamePlate_HPGauge" />
+            <xsd:element name="HPGaugeCustomList" type="NamePlate_HPGaugeCustomList" maxOccurs="unbounded" />
+            <xsd:element name="MonsterColorByLevelDiff" type="NamePlate_MonsterColorByLevelDiff" />
+            <xsd:element name="NamePosition" type="NamePlate_NamePosition" />
+            <xsd:element name="NameSize" type="NamePlate_NameSize" />
+            <xsd:element name="Resource" type="NamePlate_Resource" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_AccountTraitIcon">
+        <xsd:sequence>
+            <xsd:element name="AccountTrait" type="NamePlate_AccountTraitIcon_AccountTrait" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_AccountTraitIcon_AccountTrait">
+        <xsd:attribute name="address" type="xsd:string" use="required" />
+        <xsd:attribute name="packageId" type="xsd:int" use="required" />
+        <xsd:attribute name="traitIconStringId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_AchievementTitleReward">
+        <xsd:sequence>
+            <xsd:element name="Icons" type="NamePlate_AchievementTitleReward_Icons" />
+            <xsd:element name="Template" type="NamePlate_AchievementTitleReward_Template" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_AchievementTitleReward_Icons">
+        <xsd:sequence>
+            <xsd:element name="Icon" type="NamePlate_AchievementTitleReward_Icons_Icon" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_AchievementTitleReward_Icons_Icon">
+        <xsd:attribute name="grade" type="xsd:int" use="required" />
+        <xsd:attribute name="icon" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_AchievementTitleReward_Template">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_DefaultValue">
+        <xsd:attribute name="battleFieldCommanderIcon" type="xsd:string" use="required" />
+        <xsd:attribute name="collectionDistance" type="xsd:int" use="required" />
+        <xsd:attribute name="deathDistance" type="xsd:int" use="required" />
+        <xsd:attribute name="defaultDistance" type="xsd:int" use="required" />
+        <xsd:attribute name="defaultOffset" type="xsd:int" use="required" />
+        <xsd:attribute name="eliteIcon" type="xsd:string" use="required" />
+        <xsd:attribute name="freeNamedIcon" type="xsd:string" use="required" />
+        <xsd:attribute name="hpOffsetPos" type="xsd:float" use="required" />
+        <xsd:attribute name="itemDistance" type="xsd:int" use="required" />
+        <xsd:attribute name="minPos" type="xsd:float" use="required" />
+        <xsd:attribute name="nameViewRange" type="xsd:int" use="required" />
+        <xsd:attribute name="unionEliteIcon" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor">
+        <xsd:sequence>
+            <xsd:element name="AchievementTitle" type="NamePlate_FontColor_AchievementTitle" />
+            <xsd:element name="BattleFieldAlly" type="NamePlate_FontColor_BattleFieldAlly" />
+            <xsd:element name="BattleFieldEnemy" type="NamePlate_FontColor_BattleFieldEnemy" />
+            <xsd:element name="Collection" type="NamePlate_FontColor_Collection" />
+            <xsd:element name="DeadPlayer" type="NamePlate_FontColor_DeadPlayer" />
+            <xsd:element name="DuelEnemy" type="NamePlate_FontColor_DuelEnemy" />
+            <xsd:element name="DungeonDeadPlayer" type="NamePlate_FontColor_DungeonDeadPlayer" />
+            <xsd:element name="FloatingCastle" type="NamePlate_FontColor_FloatingCastle" />
+            <xsd:element name="GameMaster" type="NamePlate_FontColor_GameMaster" />
+            <xsd:element name="Guild" type="NamePlate_FontColor_Guild" />
+            <xsd:element name="GuildEnemy" type="NamePlate_FontColor_GuildEnemy" />
+            <xsd:element name="GuildMember" type="NamePlate_FontColor_GuildMember" />
+            <xsd:element name="GuildTowerEnemy" type="NamePlate_FontColor_GuildTowerEnemy" />
+            <xsd:element name="GuildTowerOur" type="NamePlate_FontColor_GuildTowerOur" />
+            <xsd:element name="GuildWar" type="NamePlate_FontColor_GuildWar" />
+            <xsd:element name="HighLevelMonster" type="NamePlate_FontColor_HighLevelMonster" />
+            <xsd:element name="HigherLevelMonster" type="NamePlate_FontColor_HigherLevelMonster" />
+            <xsd:element name="Item0" type="NamePlate_FontColor_Item0" />
+            <xsd:element name="Item1" type="NamePlate_FontColor_Item1" />
+            <xsd:element name="Item2" type="NamePlate_FontColor_Item2" />
+            <xsd:element name="Item3" type="NamePlate_FontColor_Item3" />
+            <xsd:element name="Item4" type="NamePlate_FontColor_Item4" />
+            <xsd:element name="ItemBidding" type="NamePlate_FontColor_ItemBidding" />
+            <xsd:element name="LowLevelMonster" type="NamePlate_FontColor_LowLevelMonster" />
+            <xsd:element name="LowerLevelMonster" type="NamePlate_FontColor_LowerLevelMonster" />
+            <xsd:element name="MonsterNotMine" type="NamePlate_FontColor_MonsterNotMine" />
+            <xsd:element name="MonsterSpecies" type="NamePlate_FontColor_MonsterSpecies" />
+            <xsd:element name="MonsterTitle" type="NamePlate_FontColor_MonsterTitle" />
+            <xsd:element name="NoAuthority" type="NamePlate_FontColor_NoAuthority" />
+            <xsd:element name="NpcVillager" type="NamePlate_FontColor_NpcVillager" />
+            <xsd:element name="ObjectNpc" type="NamePlate_FontColor_ObjectNpc" />
+            <xsd:element name="PVPEnemy" type="NamePlate_FontColor_PVPEnemy" />
+            <xsd:element name="Party" type="NamePlate_FontColor_Party" />
+            <xsd:element name="Pet" type="NamePlate_FontColor_Pet" />
+            <xsd:element name="PkEnemy" type="NamePlate_FontColor_PkEnemy" />
+            <xsd:element name="PkInWar" type="NamePlate_FontColor_PkInWar" />
+            <xsd:element name="Player" type="NamePlate_FontColor_Player" />
+            <xsd:element name="ProperLevelMonster" type="NamePlate_FontColor_ProperLevelMonster" />
+            <xsd:element name="Raid" type="NamePlate_FontColor_Raid" />
+            <xsd:element name="Self" type="NamePlate_FontColor_Self" />
+            <xsd:element name="ServantName" type="NamePlate_FontColor_ServantName" />
+            <xsd:element name="SignBoard" type="NamePlate_FontColor_SignBoard" />
+            <xsd:element name="SignBoardBuy" type="NamePlate_FontColor_SignBoardBuy" />
+            <xsd:element name="SignBoardSell" type="NamePlate_FontColor_SignBoardSell" />
+            <xsd:element name="Union" type="NamePlate_FontColor_Union" />
+            <xsd:element name="VillagerJob" type="NamePlate_FontColor_VillagerJob" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_AchievementTitle">
+        <xsd:sequence>
+            <xsd:element name="Title" type="NamePlate_FontColor_AchievementTitle_Title" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_AchievementTitle_Title">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="grade" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_BattleFieldAlly">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_BattleFieldEnemy">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_Collection">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_DeadPlayer">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_DuelEnemy">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_DungeonDeadPlayer">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_FloatingCastle">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_GameMaster">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_Guild">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_GuildEnemy">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_GuildMember">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_GuildTowerEnemy">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_GuildTowerOur">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_GuildWar">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_HighLevelMonster">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_HigherLevelMonster">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_Item0">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_Item1">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_Item2">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_Item3">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_Item4">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_ItemBidding">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_LowLevelMonster">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_LowerLevelMonster">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_MonsterNotMine">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_MonsterSpecies">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_MonsterTitle">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_NoAuthority">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_NpcVillager">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_ObjectNpc">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_PVPEnemy">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_Party">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_Pet">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_PkEnemy">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_PkInWar">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_Player">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_ProperLevelMonster">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_Raid">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_Self">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_ServantName">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_SignBoard">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_SignBoardBuy">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_SignBoardSell">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_Union">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_FontColor_VillagerJob">
+        <xsd:attribute name="blue" type="xsd:int" use="required" />
+        <xsd:attribute name="green" type="xsd:int" use="required" />
+        <xsd:attribute name="red" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_HPGauge">
+        <xsd:sequence>
+            <xsd:element name="BasisModifier" type="NamePlate_HPGauge_BasisModifier" />
+            <xsd:element name="Height" type="NamePlate_HPGauge_Height" />
+            <xsd:element name="ScaleModifier" type="NamePlate_HPGauge_ScaleModifier" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_HPGauge_BasisModifier">
+        <xsd:attribute name="value" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_HPGauge_Height">
+        <xsd:attribute name="value" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_HPGauge_ScaleModifier">
+        <xsd:attribute name="value" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_HPGaugeCustomList">
+        <xsd:sequence>
+            <xsd:element name="HPGaugeCustom" type="NamePlate_HPGaugeCustomList_HPGaugeCustom" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_HPGaugeCustomList_HPGaugeCustom">
+        <xsd:sequence>
+            <xsd:element name="BasisModifier" type="NamePlate_HPGaugeCustomList_HPGaugeCustom_BasisModifier" />
+            <xsd:element name="Height" type="NamePlate_HPGaugeCustomList_HPGaugeCustom_Height" />
+            <xsd:element name="ScaleModifier" type="NamePlate_HPGaugeCustomList_HPGaugeCustom_ScaleModifier" />
+        </xsd:sequence>
+
+        <xsd:attribute name="huntingZoneId" type="xsd:int" use="required" />
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_HPGaugeCustomList_HPGaugeCustom_BasisModifier">
+        <xsd:attribute name="value" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_HPGaugeCustomList_HPGaugeCustom_Height">
+        <xsd:attribute name="value" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_HPGaugeCustomList_HPGaugeCustom_ScaleModifier">
+        <xsd:attribute name="value" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_MonsterColorByLevelDiff">
+        <xsd:attribute name="highMax" type="xsd:int" use="required" />
+        <xsd:attribute name="lowMax" type="xsd:int" use="required" />
+        <xsd:attribute name="lowerMax" type="xsd:int" use="required" />
+        <xsd:attribute name="properMax" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_NamePosition">
+        <xsd:sequence>
+            <xsd:element name="Data" type="NamePlate_NamePosition_Data" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_NamePosition_Data">
+        <xsd:attribute name="basePos" type="xsd:float" use="required" />
+        <xsd:attribute name="genderId" type="xsd:int" use="required" />
+        <xsd:attribute name="offsetPos" type="xsd:float" use="required" />
+        <xsd:attribute name="raceId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_NameSize">
+        <xsd:sequence>
+            <xsd:element name="BuildObject" type="NamePlate_NameSize_BuildObject" />
+            <xsd:element name="Collection" type="NamePlate_NameSize_Collection" />
+            <xsd:element name="FloatingCastle" type="NamePlate_NameSize_FloatingCastle" />
+            <xsd:element name="Hero" type="NamePlate_NameSize_Hero" />
+            <xsd:element name="Item" type="NamePlate_NameSize_Item" />
+            <xsd:element name="LargeNpc" type="NamePlate_NameSize_LargeNpc" />
+            <xsd:element name="MediumNpc" type="NamePlate_NameSize_MediumNpc" />
+            <xsd:element name="MonsterSpecies" type="NamePlate_NameSize_MonsterSpecies" />
+            <xsd:element name="Pet" type="NamePlate_NameSize_Pet" />
+            <xsd:element name="Servant" type="NamePlate_NameSize_Servant" />
+            <xsd:element name="SignBoard" type="NamePlate_NameSize_SignBoard" />
+            <xsd:element name="SmallNpc" type="NamePlate_NameSize_SmallNpc" />
+            <xsd:element name="User" type="NamePlate_NameSize_User" />
+            <xsd:element name="Villager" type="NamePlate_NameSize_Villager" />
+            <xsd:element name="WorkObject" type="NamePlate_NameSize_WorkObject" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_NameSize_BuildObject">
+        <xsd:attribute name="defaultSize" type="xsd:float" use="required" />
+        <xsd:attribute name="slope" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_NameSize_Collection">
+        <xsd:attribute name="defaultSize" type="xsd:float" use="required" />
+        <xsd:attribute name="slope" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_NameSize_FloatingCastle">
+        <xsd:attribute name="defaultSize" type="xsd:float" use="required" />
+        <xsd:attribute name="slope" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_NameSize_Hero">
+        <xsd:attribute name="defaultSize" type="xsd:float" use="required" />
+        <xsd:attribute name="slope" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_NameSize_Item">
+        <xsd:attribute name="defaultSize" type="xsd:float" use="required" />
+        <xsd:attribute name="slope" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_NameSize_LargeNpc">
+        <xsd:attribute name="defaultSize" type="xsd:float" use="required" />
+        <xsd:attribute name="slope" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_NameSize_MediumNpc">
+        <xsd:attribute name="defaultSize" type="xsd:float" use="required" />
+        <xsd:attribute name="slope" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_NameSize_MonsterSpecies">
+        <xsd:attribute name="fontSize" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_NameSize_Pet">
+        <xsd:attribute name="defaultSize" type="xsd:float" use="required" />
+        <xsd:attribute name="slope" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_NameSize_Servant">
+        <xsd:attribute name="defaultSize" type="xsd:float" use="required" />
+        <xsd:attribute name="slope" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_NameSize_SignBoard">
+        <xsd:attribute name="defaultSize" type="xsd:float" use="required" />
+        <xsd:attribute name="slope" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_NameSize_SmallNpc">
+        <xsd:attribute name="defaultSize" type="xsd:float" use="required" />
+        <xsd:attribute name="slope" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_NameSize_User">
+        <xsd:attribute name="defaultSize" type="xsd:float" use="required" />
+        <xsd:attribute name="slope" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_NameSize_Villager">
+        <xsd:attribute name="defaultSize" type="xsd:float" use="required" />
+        <xsd:attribute name="slope" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_NameSize_WorkObject">
+        <xsd:attribute name="defaultSize" type="xsd:float" use="required" />
+        <xsd:attribute name="slope" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_Resource">
+        <xsd:sequence>
+            <xsd:element name="FloatingCastle" type="NamePlate_Resource_FloatingCastle" />
+            <xsd:element name="HeroName" type="NamePlate_Resource_HeroName" />
+            <xsd:element name="ItemMsg" type="NamePlate_Resource_ItemMsg" />
+            <xsd:element name="Money" type="NamePlate_Resource_Money" />
+            <xsd:element name="Name" type="NamePlate_Resource_Name" />
+            <xsd:element name="Notice" type="NamePlate_Resource_Notice" />
+            <xsd:element name="SignBoard" type="NamePlate_Resource_SignBoard" />
+            <xsd:element name="StatueDaisNickName" type="NamePlate_Resource_StatueDaisNickName" />
+            <xsd:element name="UserName" type="NamePlate_Resource_UserName" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_Resource_FloatingCastle">
+        <xsd:sequence>
+            <xsd:element name="GFX" type="NamePlate_Resource_FloatingCastle_GFX" />
+            <xsd:element name="Unreal" type="NamePlate_Resource_FloatingCastle_Unreal" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_Resource_FloatingCastle_GFX">
+        <xsd:attribute name="gfxMovie" type="xsd:string" use="required" />
+        <xsd:attribute name="textureSizeX" type="xsd:int" use="required" />
+        <xsd:attribute name="textureSizeY" type="xsd:int" use="required" />
+        <xsd:attribute name="uiFunc" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_Resource_FloatingCastle_Unreal">
+        <xsd:attribute name="materialInstanceConstant" type="xsd:string" use="required" />
+        <xsd:attribute name="materialInstanceConstant2" type="xsd:string" use="required" />
+        <xsd:attribute name="particleSystem" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_Resource_HeroName">
+        <xsd:sequence>
+            <xsd:element name="GFX" type="NamePlate_Resource_HeroName_GFX" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_Resource_HeroName_GFX">
+        <xsd:attribute name="gfxMovie" type="xsd:string" use="required" />
+        <xsd:attribute name="materialInstanceConstant" type="xsd:string" use="required" />
+        <xsd:attribute name="particleSystem" type="xsd:string" use="required" />
+        <xsd:attribute name="textureSizeX" type="xsd:int" use="required" />
+        <xsd:attribute name="textureSizeY" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_Resource_ItemMsg">
+        <xsd:sequence>
+            <xsd:element name="GFX" type="NamePlate_Resource_ItemMsg_GFX" />
+            <xsd:element name="Unreal" type="NamePlate_Resource_ItemMsg_Unreal" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_Resource_ItemMsg_GFX">
+        <xsd:attribute name="gfxMovie" type="xsd:string" use="required" />
+        <xsd:attribute name="textureSizeX" type="xsd:int" use="required" />
+        <xsd:attribute name="textureSizeY" type="xsd:int" use="required" />
+        <xsd:attribute name="uiFunc" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_Resource_ItemMsg_Unreal">
+        <xsd:attribute name="materialInstanceConstant" type="xsd:string" use="required" />
+        <xsd:attribute name="particleSystem" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_Resource_Money">
+        <xsd:sequence>
+            <xsd:element name="Copper" type="NamePlate_Resource_Money_Copper" />
+            <xsd:element name="Gold" type="NamePlate_Resource_Money_Gold" />
+            <xsd:element name="NoAuthorityMoney" type="NamePlate_Resource_Money_NoAuthorityMoney" />
+            <xsd:element name="Silver" type="NamePlate_Resource_Money_Silver" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_Resource_Money_Copper">
+        <xsd:attribute name="img" type="xsd:string" use="required" />
+        <xsd:attribute name="numColor" type="xsd:string" use="required" />
+        <xsd:attribute name="textColor" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_Resource_Money_Gold">
+        <xsd:attribute name="img" type="xsd:string" use="required" />
+        <xsd:attribute name="numColor" type="xsd:string" use="required" />
+        <xsd:attribute name="textColor" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_Resource_Money_NoAuthorityMoney">
+        <xsd:attribute name="numColor" type="xsd:string" use="required" />
+        <xsd:attribute name="textColor" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_Resource_Money_Silver">
+        <xsd:attribute name="img" type="xsd:string" use="required" />
+        <xsd:attribute name="numColor" type="xsd:string" use="required" />
+        <xsd:attribute name="textColor" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_Resource_Name">
+        <xsd:sequence>
+            <xsd:element name="GFX" type="NamePlate_Resource_Name_GFX" />
+            <xsd:element name="Unreal" type="NamePlate_Resource_Name_Unreal" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_Resource_Name_GFX">
+        <xsd:attribute name="gfxMovie" type="xsd:string" use="required" />
+        <xsd:attribute name="textureSizeX" type="xsd:int" use="required" />
+        <xsd:attribute name="textureSizeY" type="xsd:int" use="required" />
+        <xsd:attribute name="uiFunc" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_Resource_Name_Unreal">
+        <xsd:attribute name="materialInstanceConstant" type="xsd:string" use="required" />
+        <xsd:attribute name="particleSystem" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_Resource_Notice">
+        <xsd:sequence>
+            <xsd:element name="GFX" type="NamePlate_Resource_Notice_GFX" />
+            <xsd:element name="Unreal" type="NamePlate_Resource_Notice_Unreal" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_Resource_Notice_GFX">
+        <xsd:attribute name="gfxMovie" type="xsd:string" use="required" />
+        <xsd:attribute name="textureSizeX" type="xsd:int" use="required" />
+        <xsd:attribute name="textureSizeY" type="xsd:int" use="required" />
+        <xsd:attribute name="uiFunc" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_Resource_Notice_Unreal">
+        <xsd:attribute name="materialInstanceConstant" type="xsd:string" use="required" />
+        <xsd:attribute name="particleSystem" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_Resource_SignBoard">
+        <xsd:sequence>
+            <xsd:element name="GFX" type="NamePlate_Resource_SignBoard_GFX" />
+            <xsd:element name="Unreal" type="NamePlate_Resource_SignBoard_Unreal" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_Resource_SignBoard_GFX">
+        <xsd:attribute name="gfxMovie" type="xsd:string" use="required" />
+        <xsd:attribute name="textureSizeX" type="xsd:int" use="required" />
+        <xsd:attribute name="textureSizeY" type="xsd:int" use="required" />
+        <xsd:attribute name="uiFunc" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_Resource_SignBoard_Unreal">
+        <xsd:attribute name="materialInstanceConstant" type="xsd:string" use="required" />
+        <xsd:attribute name="particleSystem" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_Resource_StatueDaisNickName">
+        <xsd:sequence>
+            <xsd:element name="GFX" type="NamePlate_Resource_StatueDaisNickName_GFX" />
+            <xsd:element name="Unreal" type="NamePlate_Resource_StatueDaisNickName_Unreal" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_Resource_StatueDaisNickName_GFX">
+        <xsd:attribute name="gfxMovie" type="xsd:string" use="required" />
+        <xsd:attribute name="textureSizeX" type="xsd:int" use="required" />
+        <xsd:attribute name="textureSizeY" type="xsd:int" use="required" />
+        <xsd:attribute name="uiFunc" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_Resource_StatueDaisNickName_Unreal">
+        <xsd:attribute name="materialInstanceConstant" type="xsd:string" use="required" />
+        <xsd:attribute name="particleSystem" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_Resource_UserName">
+        <xsd:sequence>
+            <xsd:element name="GFX" type="NamePlate_Resource_UserName_GFX" />
+            <xsd:element name="SpecificEffect" type="NamePlate_Resource_UserName_SpecificEffect" />
+            <xsd:element name="Unreal" type="NamePlate_Resource_UserName_Unreal" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_Resource_UserName_GFX">
+        <xsd:attribute name="gfxMovie" type="xsd:string" use="required" />
+        <xsd:attribute name="textureSizeX" type="xsd:int" use="required" />
+        <xsd:attribute name="textureSizeY" type="xsd:int" use="required" />
+        <xsd:attribute name="uiFunc" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_Resource_UserName_SpecificEffect">
+        <xsd:sequence>
+            <xsd:element name="Effect" type="NamePlate_Resource_UserName_SpecificEffect_Effect" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_Resource_UserName_SpecificEffect_Effect">
+        <xsd:attribute name="additionalParticleSystem" type="xsd:string" />
+        <xsd:attribute name="attachParticle" type="xsd:boolean" />
+        <xsd:attribute name="grade" type="xsd:int" use="required" />
+        <xsd:attribute name="materialInstanceConstant" type="xsd:string" use="required" />
+        <xsd:attribute name="offsetY" type="xsd:int" />
+        <xsd:attribute name="particleSystem" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NamePlate_Resource_UserName_Unreal">
+        <xsd:attribute name="materialInstanceConstant" type="xsd:string" use="required" />
+        <xsd:attribute name="particleSystem" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="NamePlate" type="NamePlate" />
+</xsd:schema>

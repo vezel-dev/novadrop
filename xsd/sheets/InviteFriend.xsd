@@ -1,0 +1,62 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/InviteFriend"
+            targetNamespace="https://vezel.dev/novadrop/dc/InviteFriend"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="InviteFriend">
+        <xsd:sequence>
+            <xsd:element name="CompensationRecipient" type="InviteFriend_CompensationRecipient" maxOccurs="unbounded" />
+            <xsd:element name="GuideString" type="InviteFriend_GuideString" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="codeUseCountMax" type="xsd:int" use="required" />
+        <xsd:attribute name="functionState" type="xsd:boolean" use="required" />
+        <xsd:attribute name="hostUserMinLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="newUserMaxLevel" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="InviteFriend_CompensationRecipient">
+        <xsd:sequence>
+            <xsd:element name="Condition" type="InviteFriend_CompensationRecipient_Condition" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="InviteFriend_CompensationRecipient_Condition">
+        <xsd:sequence>
+            <xsd:element name="Compensation" type="InviteFriend_CompensationRecipient_Condition_Compensation" />
+        </xsd:sequence>
+
+        <xsd:attribute name="newUserLevel" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="InviteFriend_CompensationRecipient_Condition_Compensation">
+        <xsd:attribute name="amount" type="xsd:int" use="required" />
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="InviteFriend_GuideString"
+                     dc:keys="id">
+        <xsd:sequence>
+            <xsd:element name="Text" type="InviteFriend_GuideString_Text" />
+            <xsd:element name="Title" type="InviteFriend_GuideString_Title" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="InviteFriend_GuideString_Text">
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="InviteFriend_GuideString_Title">
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="InviteFriend" type="InviteFriend" />
+</xsd:schema>

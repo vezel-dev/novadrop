@@ -1,0 +1,1253 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/TooltipFormat"
+            targetNamespace="https://vezel.dev/novadrop/dc/TooltipFormat"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="TooltipFormat">
+        <xsd:sequence>
+            <xsd:element name="Abnormality" type="TooltipFormat_Abnormality" />
+            <xsd:element name="AccountBenefit" type="TooltipFormat_AccountBenefit" />
+            <xsd:element name="AchievementAbility" type="TooltipFormat_AchievementAbility" />
+            <xsd:element name="CastleParts" type="TooltipFormat_CastleParts" />
+            <xsd:element name="Crest" type="TooltipFormat_Crest" />
+            <xsd:element name="DisableCrest" type="TooltipFormat_DisableCrest" />
+            <xsd:element name="EnchantRecommend" type="TooltipFormat_EnchantRecommend" />
+            <xsd:element name="GuildAuthority" type="TooltipFormat_GuildAuthority" />
+            <xsd:element name="GuildPerk" type="TooltipFormat_GuildPerk" />
+            <xsd:element name="Header" type="TooltipFormat_Header" />
+            <xsd:element name="HuntingZoneEvent" type="TooltipFormat_HuntingZoneEvent" />
+            <xsd:element name="Item" type="TooltipFormat_Item" />
+            <xsd:element name="NPCGuildInfo" type="TooltipFormat_NPCGuildInfo" />
+            <xsd:element name="PVESkill" type="TooltipFormat_PVESkill" />
+            <xsd:element name="PartyMemberCharmStatus" type="TooltipFormat_PartyMemberCharmStatus" />
+            <xsd:element name="PartyMemberStatus" type="TooltipFormat_PartyMemberStatus" />
+            <xsd:element name="PlayerCharmStatus" type="TooltipFormat_PlayerCharmStatus" />
+            <xsd:element name="SealedCrest" type="TooltipFormat_SealedCrest" />
+            <xsd:element name="ServantExAbility" type="TooltipFormat_ServantExAbility" />
+            <xsd:element name="ServantExSkill" type="TooltipFormat_ServantExSkill" />
+            <xsd:element name="Skill" type="TooltipFormat_Skill" />
+            <xsd:element name="Social" type="TooltipFormat_Social" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Abnormality">
+        <xsd:sequence>
+            <xsd:element name="Description" type="TooltipFormat_Abnormality_Description" />
+            <xsd:element name="Name" type="TooltipFormat_Abnormality_Name" />
+            <xsd:element name="Type" type="TooltipFormat_Abnormality_Type" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Abnormality_Description">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Abnormality_Name">
+        <xsd:attribute name="boundaryBar" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Abnormality_Type">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_AccountBenefit">
+        <xsd:sequence>
+            <xsd:element name="Description" type="TooltipFormat_AccountBenefit_Description" />
+            <xsd:element name="ExpirationTime" type="TooltipFormat_AccountBenefit_ExpirationTime" />
+            <xsd:element name="Name" type="TooltipFormat_AccountBenefit_Name" />
+            <xsd:element name="Type" type="TooltipFormat_AccountBenefit_Type" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_AccountBenefit_Description">
+        <xsd:attribute name="boundaryBar" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_AccountBenefit_ExpirationTime">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_AccountBenefit_Name">
+        <xsd:attribute name="boundaryBar" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_AccountBenefit_Type">
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_AchievementAbility">
+        <xsd:sequence>
+            <xsd:element name="Achievement" type="TooltipFormat_AchievementAbility_Achievement" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_AchievementAbility_Achievement">
+        <xsd:attribute name="accomplishedTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="disableStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="unAccomplishedTextId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_CastleParts">
+        <xsd:sequence>
+            <xsd:element name="Description" type="TooltipFormat_CastleParts_Description" />
+            <xsd:element name="Name" type="TooltipFormat_CastleParts_Name" />
+            <xsd:element name="Position" type="TooltipFormat_CastleParts_Position" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_CastleParts_Description">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_CastleParts_Name">
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_CastleParts_Position">
+        <xsd:attribute name="bottomId" type="xsd:int" use="required" />
+        <xsd:attribute name="boundaryBar" type="xsd:string" use="required" />
+        <xsd:attribute name="castleId" type="xsd:int" use="required" />
+        <xsd:attribute name="middleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="wallId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Crest">
+        <xsd:sequence>
+            <xsd:element name="CostPoint" type="TooltipFormat_Crest_CostPoint" />
+            <xsd:element name="Description" type="TooltipFormat_Crest_Description" />
+            <xsd:element name="Grade" type="TooltipFormat_Crest_Grade" />
+            <xsd:element name="Name" type="TooltipFormat_Crest_Name" />
+            <xsd:element name="State" type="TooltipFormat_Crest_State" />
+            <xsd:element name="TargetSkill" type="TooltipFormat_Crest_TargetSkill" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Crest_CostPoint">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Crest_Description">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Crest_Grade">
+        <xsd:attribute name="gradeTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Crest_Name">
+        <xsd:attribute name="boundaryBar" type="xsd:string" use="required" />
+        <xsd:attribute name="rareGradeStyle0" type="xsd:string" use="required" />
+        <xsd:attribute name="rareGradeStyle1" type="xsd:string" use="required" />
+        <xsd:attribute name="rareGradeStyle2" type="xsd:string" use="required" />
+        <xsd:attribute name="rareGradeStyle3" type="xsd:string" use="required" />
+        <xsd:attribute name="rareGradeStyle9" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Crest_State">
+        <xsd:attribute name="equipedStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="equipedTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="sealedStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="sealedTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="unequipedStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="unequipedTextId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Crest_TargetSkill">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_DisableCrest">
+        <xsd:sequence>
+            <xsd:element name="CostPoint" type="TooltipFormat_DisableCrest_CostPoint" />
+            <xsd:element name="Description" type="TooltipFormat_DisableCrest_Description" />
+            <xsd:element name="Grade" type="TooltipFormat_DisableCrest_Grade" />
+            <xsd:element name="Name" type="TooltipFormat_DisableCrest_Name" />
+            <xsd:element name="State" type="TooltipFormat_DisableCrest_State" />
+            <xsd:element name="TargetSkill" type="TooltipFormat_DisableCrest_TargetSkill" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_DisableCrest_CostPoint">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_DisableCrest_Description">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_DisableCrest_Grade">
+        <xsd:attribute name="gradeTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_DisableCrest_Name">
+        <xsd:attribute name="boundaryBar" type="xsd:string" use="required" />
+        <xsd:attribute name="rareGradeStyle0" type="xsd:string" use="required" />
+        <xsd:attribute name="rareGradeStyle1" type="xsd:string" use="required" />
+        <xsd:attribute name="rareGradeStyle2" type="xsd:string" use="required" />
+        <xsd:attribute name="rareGradeStyle3" type="xsd:string" use="required" />
+        <xsd:attribute name="rareGradeStyle9" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_DisableCrest_State">
+        <xsd:attribute name="equipedStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="equipedTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="sealedStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="sealedTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="unequipedStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="unequipedTextId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_DisableCrest_TargetSkill">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_EnchantRecommend">
+        <xsd:sequence>
+            <xsd:element name="Description" type="TooltipFormat_EnchantRecommend_Description" />
+            <xsd:element name="Name" type="TooltipFormat_EnchantRecommend_Name" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_EnchantRecommend_Description">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_EnchantRecommend_Name">
+        <xsd:attribute name="boundaryBar" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_GuildAuthority">
+        <xsd:sequence>
+            <xsd:element name="GuildQuest" type="TooltipFormat_GuildAuthority_GuildQuest" />
+            <xsd:element name="GuildStore" type="TooltipFormat_GuildAuthority_GuildStore" />
+            <xsd:element name="GuildWar" type="TooltipFormat_GuildAuthority_GuildWar" />
+            <xsd:element name="Join" type="TooltipFormat_GuildAuthority_Join" />
+            <xsd:element name="Notice" type="TooltipFormat_GuildAuthority_Notice" />
+            <xsd:element name="Promotion" type="TooltipFormat_GuildAuthority_Promotion" />
+            <xsd:element name="Warehouse" type="TooltipFormat_GuildAuthority_Warehouse" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_GuildAuthority_GuildQuest">
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_GuildAuthority_GuildStore">
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_GuildAuthority_GuildWar">
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_GuildAuthority_Join">
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_GuildAuthority_Notice">
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_GuildAuthority_Promotion">
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_GuildAuthority_Warehouse">
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_GuildPerk">
+        <xsd:sequence>
+            <xsd:element name="ActiveHowToUse" type="TooltipFormat_GuildPerk_ActiveHowToUse" />
+            <xsd:element name="DescLearned" type="TooltipFormat_GuildPerk_DescLearned" />
+            <xsd:element name="DescUnlearned" type="TooltipFormat_GuildPerk_DescUnlearned" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_GuildPerk_ActiveHowToUse">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_GuildPerk_DescLearned">
+        <xsd:attribute name="level" type="xsd:string" use="required" />
+        <xsd:attribute name="point" type="xsd:string" use="required" />
+        <xsd:attribute name="text" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_GuildPerk_DescUnlearned">
+        <xsd:attribute name="level" type="xsd:string" use="required" />
+        <xsd:attribute name="point" type="xsd:string" use="required" />
+        <xsd:attribute name="text" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Header">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_HuntingZoneEvent">
+        <xsd:sequence>
+            <xsd:element name="Description" type="TooltipFormat_HuntingZoneEvent_Description" />
+            <xsd:element name="Name" type="TooltipFormat_HuntingZoneEvent_Name" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_HuntingZoneEvent_Description">
+        <xsd:attribute name="boundaryBar" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_HuntingZoneEvent_Name">
+        <xsd:attribute name="boundaryBar" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item">
+        <xsd:sequence>
+            <xsd:element name="ArtisanProduceFatigue" type="TooltipFormat_Item_ArtisanProduceFatigue" />
+            <xsd:element name="CollectionCard" type="TooltipFormat_Item_CollectionCard" />
+            <xsd:element name="CombinationPassivity" type="TooltipFormat_Item_CombinationPassivity" />
+            <xsd:element name="CompareStat" type="TooltipFormat_Item_CompareStat" />
+            <xsd:element name="CompoundRecipe" type="TooltipFormat_Item_CompoundRecipe" />
+            <xsd:element name="Cooltime" type="TooltipFormat_Item_Cooltime" />
+            <xsd:element name="Customizing" type="TooltipFormat_Item_Customizing" />
+            <xsd:element name="CustomizingUseCondition" type="TooltipFormat_Item_CustomizingUseCondition" />
+            <xsd:element name="DecompositionResult" type="TooltipFormat_Item_DecompositionResult" />
+            <xsd:element name="Description" type="TooltipFormat_Item_Description" />
+            <xsd:element name="Dext" type="TooltipFormat_Item_Dext" />
+            <xsd:element name="EconomicLimit" type="TooltipFormat_Item_EconomicLimit" />
+            <xsd:element name="EggGrade" type="TooltipFormat_Item_EggGrade" />
+            <xsd:element name="EnchantPassivity" type="TooltipFormat_Item_EnchantPassivity" />
+            <xsd:element name="EquipmentExp" type="TooltipFormat_Item_EquipmentExp" />
+            <xsd:element name="EquipmentSupExp" type="TooltipFormat_Item_EquipmentSupExp" />
+            <xsd:element name="Ex" type="TooltipFormat_Item_Ex" />
+            <xsd:element name="GachaFeaturedProducts" type="TooltipFormat_Item_GachaFeaturedProducts" />
+            <xsd:element name="GeneralLimit" type="TooltipFormat_Item_GeneralLimit" />
+            <xsd:element name="GradeAndType" type="TooltipFormat_Item_GradeAndType" />
+            <xsd:element name="HomunDurability" type="TooltipFormat_Item_HomunDurability" />
+            <xsd:element name="HomunGrade" type="TooltipFormat_Item_HomunGrade" />
+            <xsd:element name="HomunHp" type="TooltipFormat_Item_HomunHp" />
+            <xsd:element name="ItemLevel" type="TooltipFormat_Item_ItemLevel" />
+            <xsd:element name="LinkedSkillLevelLimit" type="TooltipFormat_Item_LinkedSkillLevelLimit" />
+            <xsd:element name="Maker" type="TooltipFormat_Item_Maker" />
+            <xsd:element name="Name" type="TooltipFormat_Item_Name" />
+            <xsd:element name="OptionCategory" type="TooltipFormat_Item_OptionCategory" />
+            <xsd:element name="OrbGrade" type="TooltipFormat_Item_OrbGrade" />
+            <xsd:element name="PerformanceAttack" type="TooltipFormat_Item_PerformanceAttack" />
+            <xsd:element name="PerformanceBalance" type="TooltipFormat_Item_PerformanceBalance" />
+            <xsd:element name="PerformanceCrosshairType" type="TooltipFormat_Item_PerformanceCrosshairType" />
+            <xsd:element name="PerformanceDefence" type="TooltipFormat_Item_PerformanceDefence" />
+            <xsd:element name="PerformanceImpact" type="TooltipFormat_Item_PerformanceImpact" />
+            <xsd:element name="PerformanceMagicalAttack" type="TooltipFormat_Item_PerformanceMagicalAttack" />
+            <xsd:element name="PerformanceMagicalDefence" type="TooltipFormat_Item_PerformanceMagicalDefence" />
+            <xsd:element name="PerformancePassivity" type="TooltipFormat_Item_PerformancePassivity" />
+            <xsd:element name="PerformancePassivityLinkG" type="TooltipFormat_Item_PerformancePassivityLinkG" />
+            <xsd:element name="PerformancePhysicalAttack" type="TooltipFormat_Item_PerformancePhysicalAttack" />
+            <xsd:element name="PerformancePhysicalDefence" type="TooltipFormat_Item_PerformancePhysicalDefence" />
+            <xsd:element name="PerformanceResonanceSeal" type="TooltipFormat_Item_PerformanceResonanceSeal" />
+            <xsd:element name="Period" type="TooltipFormat_Item_Period" />
+            <xsd:element name="Price" type="TooltipFormat_Item_Price" />
+            <xsd:element name="RandomEquipmentNondbOption" type="TooltipFormat_Item_RandomEquipmentNondbOption" />
+            <xsd:element name="Recipe" type="TooltipFormat_Item_Recipe" />
+            <xsd:element name="ReputationInfo" type="TooltipFormat_Item_ReputationInfo" />
+            <xsd:element name="RequiredLevel" type="TooltipFormat_Item_RequiredLevel" />
+            <xsd:element name="RequiredRank" type="TooltipFormat_Item_RequiredRank" />
+            <xsd:element name="SetItem" type="TooltipFormat_Item_SetItem" />
+            <xsd:element name="Strength" type="TooltipFormat_Item_Strength" />
+            <xsd:element name="TalismanInfo" type="TooltipFormat_Item_TalismanInfo" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_ArtisanProduceFatigue">
+        <xsd:attribute name="textId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_CollectionCard">
+        <xsd:sequence>
+            <xsd:element name="Cost" type="TooltipFormat_Item_CollectionCard_Cost" />
+            <xsd:element name="EquipPassivity" type="TooltipFormat_Item_CollectionCard_EquipPassivity" />
+            <xsd:element name="Grade" type="TooltipFormat_Item_CollectionCard_Grade" />
+            <xsd:element name="Name" type="TooltipFormat_Item_CollectionCard_Name" />
+            <xsd:element name="Property" type="TooltipFormat_Item_CollectionCard_Property" />
+            <xsd:element name="RequiredCard" type="TooltipFormat_Item_CollectionCard_RequiredCard" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_CollectionCard_Cost">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_CollectionCard_EquipPassivity">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_CollectionCard_Grade">
+        <xsd:attribute name="rareGrade0_StrId" type="xsd:string" use="required" />
+        <xsd:attribute name="rareGrade0_Style" type="xsd:string" use="required" />
+        <xsd:attribute name="rareGrade1_StrId" type="xsd:string" use="required" />
+        <xsd:attribute name="rareGrade1_Style" type="xsd:string" use="required" />
+        <xsd:attribute name="rareGrade2_StrId" type="xsd:string" use="required" />
+        <xsd:attribute name="rareGrade2_Style" type="xsd:string" use="required" />
+        <xsd:attribute name="rareGrade3_StrId" type="xsd:string" use="required" />
+        <xsd:attribute name="rareGrade3_Style" type="xsd:string" use="required" />
+        <xsd:attribute name="rareGrade4_StrId" type="xsd:string" use="required" />
+        <xsd:attribute name="rareGrade4_Style" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_CollectionCard_Name">
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_CollectionCard_Property">
+        <xsd:attribute name="characterTypeStrId" type="xsd:string" use="required" />
+        <xsd:attribute name="collectionTypeStrId" type="xsd:string" use="required" />
+        <xsd:attribute name="fishingTypeStrId" type="xsd:string" use="required" />
+        <xsd:attribute name="monsterTypeStrId" type="xsd:string" use="required" />
+        <xsd:attribute name="panoramaTypeStrId" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="vehicleTypeStrId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_CollectionCard_RequiredCard">
+        <xsd:attribute name="requireCountStrId" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_CombinationPassivity">
+        <xsd:attribute name="goodOptionStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="noDataMsgId" type="xsd:int" use="required" />
+        <xsd:attribute name="optionStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_CompareStat">
+        <xsd:attribute name="abnormalAResId" type="xsd:int" use="required" />
+        <xsd:attribute name="abnormalBResId" type="xsd:int" use="required" />
+        <xsd:attribute name="abnormalCResId" type="xsd:int" use="required" />
+        <xsd:attribute name="attackSpeedId" type="xsd:int" use="required" />
+        <xsd:attribute name="balanceId" type="xsd:int" use="required" />
+        <xsd:attribute name="criticalPowerRateId" type="xsd:int" use="required" />
+        <xsd:attribute name="criticalRegisterId" type="xsd:int" use="required" />
+        <xsd:attribute name="criticalStrId" type="xsd:int" use="required" />
+        <xsd:attribute name="defenceId" type="xsd:int" use="required" />
+        <xsd:attribute name="equalStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="impactId" type="xsd:int" use="required" />
+        <xsd:attribute name="itemLevelId" type="xsd:int" use="required" />
+        <xsd:attribute name="lessThanStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="maxAttackId" type="xsd:int" use="required" />
+        <xsd:attribute name="moreThanStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="reactionRegistId" type="xsd:int" use="required" />
+        <xsd:attribute name="reactionStrId" type="xsd:int" use="required" />
+        <xsd:attribute name="runSpeedId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_CompoundRecipe">
+        <xsd:attribute name="boundaryBar" type="xsd:string" use="required" />
+        <xsd:attribute name="disableStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_Cooltime">
+        <xsd:attribute name="remainTimeId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="totalTimeId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_Customizing">
+        <xsd:attribute name="nullCristalResource" type="xsd:string" use="required" />
+        <xsd:attribute name="nullOrbResource" type="xsd:string" use="required" />
+        <xsd:attribute name="subTitleStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_CustomizingUseCondition">
+        <xsd:attribute name="textId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_DecompositionResult">
+        <xsd:attribute name="fixedOutputTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="randomOutputTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="undecomposableTextId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_Description">
+        <xsd:attribute name="buttonGuideStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_Dext">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="wrongConditionStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_EconomicLimit">
+        <xsd:attribute name="belongingItemTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="belongingItemToEquipTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="belongingStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="breastTransformTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="changeLookTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="coloringRemainDayTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="coloringRemainHourTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="coloringRemainMinuteTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="coloringTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="coloringUnlimitTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="disableColoringByLookChangedTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="disableMediateTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="disableTradeBrokerTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="disapprovalStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="enableCountTradeBrokerTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="enableTradeBrokerTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="enablecarveTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="enchantAdjustmentTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="enchantAwakenTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="enchantBoosterAdjustmentTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="enchantCompleteTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="enchantMasterpieceTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="enchantTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="extractLookTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="lookChangedTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="onlyForPCBangTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="pcBangStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="rankTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="sealItemOnLootTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="sealItemToEquipTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="sealwithIdentifyTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="sellStoreTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="storeOnGuildWarehouseTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="storeOnUserWarehouseTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="storeOnWarehouseTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="unbindCountTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="untradableTextId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_EggGrade">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_EnchantPassivity">
+        <xsd:attribute name="decreasePassivityStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="enchantPassivityStringId" type="xsd:int" use="required" />
+        <xsd:attribute name="increasePassivityStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="invalidTermStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="validTermStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_EquipmentExp">
+        <xsd:attribute name="textId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_EquipmentSupExp">
+        <xsd:attribute name="textId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_Ex">
+        <xsd:attribute name="hpTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="mpTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="subTitleStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_GachaFeaturedProducts">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_GeneralLimit">
+        <xsd:attribute name="canEquipOverlappedId" type="xsd:int" use="required" />
+        <xsd:attribute name="cannotEquipOverlappedId" type="xsd:int" use="required" />
+        <xsd:attribute name="classKeywordId" type="xsd:int" use="required" />
+        <xsd:attribute name="destroyOnDeadKeywordId" type="xsd:int" use="required" />
+        <xsd:attribute name="genderKeywordId" type="xsd:int" use="required" />
+        <xsd:attribute name="maxSlotId" type="xsd:int" use="required" />
+        <xsd:attribute name="raceKeywordId" type="xsd:int" use="required" />
+        <xsd:attribute name="secondCharId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="unidentifiedLimitTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="uniqueEquipLimitTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="wrongConditionStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_GradeAndType">
+        <xsd:attribute name="gradeTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="rankTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_HomunDurability">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_HomunGrade">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_HomunHp">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_ItemLevel">
+        <xsd:attribute name="defaultTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_LinkedSkillLevelLimit">
+        <xsd:attribute name="disableStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="maxLevelTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="maxMaxLevelTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="minLevelTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_Maker">
+        <xsd:attribute name="boundaryBar" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_Name">
+        <xsd:attribute name="enchantStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="masterpieceTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="rareGradeStyle0" type="xsd:string" use="required" />
+        <xsd:attribute name="rareGradeStyle1" type="xsd:string" use="required" />
+        <xsd:attribute name="rareGradeStyle2" type="xsd:string" use="required" />
+        <xsd:attribute name="rareGradeStyle3" type="xsd:string" use="required" />
+        <xsd:attribute name="rareGradeStyle4" type="xsd:string" use="required" />
+        <xsd:attribute name="rareGradeStyle9" type="xsd:string" use="required" />
+        <xsd:attribute name="setItemStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="unidentifiedTextId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_OptionCategory">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_OrbGrade">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_PerformanceAttack">
+        <xsd:attribute name="strengthStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_PerformanceBalance">
+        <xsd:attribute name="strengthStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_PerformanceCrosshairType">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_PerformanceDefence">
+        <xsd:attribute name="strengthStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_PerformanceImpact">
+        <xsd:attribute name="strengthStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_PerformanceMagicalAttack">
+        <xsd:attribute name="strengthStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_PerformanceMagicalDefence">
+        <xsd:attribute name="strengthStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_PerformancePassivity">
+        <xsd:attribute name="disableGoodOptionStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="disableOptionStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="goodOptionStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="noDataMsgId" type="xsd:int" use="required" />
+        <xsd:attribute name="optionStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="unidentifiedMsgId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_PerformancePassivityLinkG">
+        <xsd:attribute name="axeDefId" type="xsd:int" use="required" />
+        <xsd:attribute name="hpIncreaseId" type="xsd:int" use="required" />
+        <xsd:attribute name="mpAbsorbId" type="xsd:int" use="required" />
+        <xsd:attribute name="mpIncreaseId" type="xsd:int" use="required" />
+        <xsd:attribute name="rangeId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_PerformancePhysicalAttack">
+        <xsd:attribute name="strengthStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_PerformancePhysicalDefence">
+        <xsd:attribute name="strengthStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_PerformanceResonanceSeal">
+        <xsd:attribute name="strengthStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_Period">
+        <xsd:attribute name="infiniteItemInfoId" type="xsd:int" use="required" />
+        <xsd:attribute name="infiniteItemTitleId" type="xsd:int" use="required" />
+        <xsd:attribute name="mergeInfoId" type="xsd:int" use="required" />
+        <xsd:attribute name="normalTitleId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_Price">
+        <xsd:attribute name="sellPriceTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="tradePriceTextId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_RandomEquipmentNondbOption">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_Recipe">
+        <xsd:attribute name="boundaryBar" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_ReputationInfo">
+        <xsd:attribute name="defaultTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="personalGradeTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_RequiredLevel">
+        <xsd:attribute name="accessoryTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="armorTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="defaultTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="weaponTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="wrongConditionStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_RequiredRank">
+        <xsd:attribute name="alreadyLearnedId" type="xsd:int" use="required" />
+        <xsd:attribute name="enableToLearnId" type="xsd:int" use="required" />
+        <xsd:attribute name="textId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_SetItem">
+        <xsd:attribute name="disableStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="setTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="unidentifiedMsgId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_Strength">
+        <xsd:attribute name="disableGoodOptionStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="disableOptionStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="goodOptionStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="optionStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="strengthId" type="xsd:int" use="required" />
+        <xsd:attribute name="unidentifiedMsgId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Item_TalismanInfo">
+        <xsd:attribute name="rankTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_NPCGuildInfo">
+        <xsd:sequence>
+            <xsd:element name="Description" type="TooltipFormat_NPCGuildInfo_Description" />
+            <xsd:element name="Name" type="TooltipFormat_NPCGuildInfo_Name" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_NPCGuildInfo_Description">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_NPCGuildInfo_Name">
+        <xsd:attribute name="boundaryBar" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_PVESkill">
+        <xsd:sequence>
+            <xsd:element name="Description" type="TooltipFormat_PVESkill_Description" />
+            <xsd:element name="Name" type="TooltipFormat_PVESkill_Name" />
+            <xsd:element name="Point" type="TooltipFormat_PVESkill_Point" />
+            <xsd:element name="Stack" type="TooltipFormat_PVESkill_Stack" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_PVESkill_Description">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_PVESkill_Name">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_PVESkill_Point">
+        <xsd:attribute name="textId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_PVESkill_Stack">
+        <xsd:attribute name="ableStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="ableTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="countAbleStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="countAbleTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="disableStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="disableTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_PartyMemberCharmStatus">
+        <xsd:sequence>
+            <xsd:element name="Applied" type="TooltipFormat_PartyMemberCharmStatus_Applied" />
+            <xsd:element name="Description" type="TooltipFormat_PartyMemberCharmStatus_Description" />
+            <xsd:element name="Name" type="TooltipFormat_PartyMemberCharmStatus_Name" />
+            <xsd:element name="Type" type="TooltipFormat_PartyMemberCharmStatus_Type" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_PartyMemberCharmStatus_Applied">
+        <xsd:attribute name="appliedTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="registeredTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_PartyMemberCharmStatus_Description">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_PartyMemberCharmStatus_Name">
+        <xsd:attribute name="boundaryBar" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_PartyMemberCharmStatus_Type">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_PartyMemberStatus">
+        <xsd:sequence>
+            <xsd:element name="Channel" type="TooltipFormat_PartyMemberStatus_Channel" />
+            <xsd:element name="Offline" type="TooltipFormat_PartyMemberStatus_Offline" />
+            <xsd:element name="Section" type="TooltipFormat_PartyMemberStatus_Section" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_PartyMemberStatus_Channel">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_PartyMemberStatus_Offline">
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_PartyMemberStatus_Section">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_PlayerCharmStatus">
+        <xsd:sequence>
+            <xsd:element name="Applied" type="TooltipFormat_PlayerCharmStatus_Applied" />
+            <xsd:element name="Description" type="TooltipFormat_PlayerCharmStatus_Description" />
+            <xsd:element name="Name" type="TooltipFormat_PlayerCharmStatus_Name" />
+            <xsd:element name="Type" type="TooltipFormat_PlayerCharmStatus_Type" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_PlayerCharmStatus_Applied">
+        <xsd:attribute name="appliedTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="registeredTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_PlayerCharmStatus_Description">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_PlayerCharmStatus_Name">
+        <xsd:attribute name="boundaryBar" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_PlayerCharmStatus_Type">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_SealedCrest">
+        <xsd:sequence>
+            <xsd:element name="State" type="TooltipFormat_SealedCrest_State" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_SealedCrest_State">
+        <xsd:attribute name="sealedStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="sealedTextId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_ServantExAbility">
+        <xsd:sequence>
+            <xsd:element name="Description" type="TooltipFormat_ServantExAbility_Description" />
+            <xsd:element name="Name" type="TooltipFormat_ServantExAbility_Name" />
+            <xsd:element name="TransferCheck" type="TooltipFormat_ServantExAbility_TransferCheck" />
+            <xsd:element name="TransferPrice" type="TooltipFormat_ServantExAbility_TransferPrice" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_ServantExAbility_Description">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_ServantExAbility_Name">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_ServantExAbility_TransferCheck">
+        <xsd:attribute name="textId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_ServantExAbility_TransferPrice">
+        <xsd:attribute name="textId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_ServantExSkill">
+        <xsd:sequence>
+            <xsd:element name="Description" type="TooltipFormat_ServantExSkill_Description" />
+            <xsd:element name="Name" type="TooltipFormat_ServantExSkill_Name" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_ServantExSkill_Description">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_ServantExSkill_Name">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Skill">
+        <xsd:sequence>
+            <xsd:element name="Chain" type="TooltipFormat_Skill_Chain" />
+            <xsd:element name="CoolTime" type="TooltipFormat_Skill_CoolTime" />
+            <xsd:element name="CostAc" type="TooltipFormat_Skill_CostAc" />
+            <xsd:element name="CostChakra" type="TooltipFormat_Skill_CostChakra" />
+            <xsd:element name="CostFury" type="TooltipFormat_Skill_CostFury" />
+            <xsd:element name="CostHp" type="TooltipFormat_Skill_CostHp" />
+            <xsd:element name="CostMoonLight" type="TooltipFormat_Skill_CostMoonLight" />
+            <xsd:element name="CostMp" type="TooltipFormat_Skill_CostMp" />
+            <xsd:element name="CostSt" type="TooltipFormat_Skill_CostSt" />
+            <xsd:element name="Crest" type="TooltipFormat_Skill_Crest" />
+            <xsd:element name="DamageDesc" type="TooltipFormat_Skill_DamageDesc" />
+            <xsd:element name="Description" type="TooltipFormat_Skill_Description" />
+            <xsd:element name="LearnCondition" type="TooltipFormat_Skill_LearnCondition" />
+            <xsd:element name="LevelLimit" type="TooltipFormat_Skill_LevelLimit" />
+            <xsd:element name="MagicalFactor" type="TooltipFormat_Skill_MagicalFactor" />
+            <xsd:element name="Name" type="TooltipFormat_Skill_Name" />
+            <xsd:element name="NocTan" type="TooltipFormat_Skill_NocTan" />
+            <xsd:element name="PhysicalFactor" type="TooltipFormat_Skill_PhysicalFactor" />
+            <xsd:element name="Power" type="TooltipFormat_Skill_Power" />
+            <xsd:element name="Stack" type="TooltipFormat_Skill_Stack" />
+            <xsd:element name="StackPvp" type="TooltipFormat_Skill_StackPvp" />
+            <xsd:element name="SummonNpcAtk" type="TooltipFormat_Skill_SummonNpcAtk" />
+            <xsd:element name="SummonNpcDef" type="TooltipFormat_Skill_SummonNpcDef" />
+            <xsd:element name="SummonNpcMaxHp" type="TooltipFormat_Skill_SummonNpcMaxHp" />
+            <xsd:element name="SummonNpcName" type="TooltipFormat_Skill_SummonNpcName" />
+            <xsd:element name="TargetingTime" type="TooltipFormat_Skill_TargetingTime" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Skill_Chain">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Skill_CoolTime">
+        <xsd:attribute name="crestTextStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="crestTextStyleEx" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Skill_CostAc">
+        <xsd:attribute name="crestTextStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Skill_CostChakra">
+        <xsd:attribute name="crestTextStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Skill_CostFury">
+        <xsd:attribute name="crestTextStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Skill_CostHp">
+        <xsd:attribute name="crestTextStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Skill_CostMoonLight">
+        <xsd:attribute name="crestTextStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Skill_CostMp">
+        <xsd:attribute name="crestTextStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Skill_CostSt">
+        <xsd:attribute name="crestTextStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Skill_Crest">
+        <xsd:attribute name="disableStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Skill_DamageDesc">
+        <xsd:attribute name="descTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="magicalTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="physicalTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Skill_Description">
+        <xsd:attribute name="boundaryBar" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Skill_LearnCondition">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Skill_LevelLimit">
+        <xsd:attribute name="disableStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="minLevelTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Skill_MagicalFactor">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Skill_Name">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Skill_NocTan">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Skill_PhysicalFactor">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Skill_Power">
+        <xsd:attribute name="crestTextStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Skill_Stack">
+        <xsd:attribute name="crestTextStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Skill_StackPvp">
+        <xsd:attribute name="crestTextStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Skill_SummonNpcAtk">
+        <xsd:attribute name="crestTextStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Skill_SummonNpcDef">
+        <xsd:attribute name="crestTextStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Skill_SummonNpcMaxHp">
+        <xsd:attribute name="crestTextStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Skill_SummonNpcName">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Skill_TargetingTime">
+        <xsd:attribute name="instantCastId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="unitId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Social">
+        <xsd:sequence>
+            <xsd:element name="Description" type="TooltipFormat_Social_Description" />
+            <xsd:element name="Limit" type="TooltipFormat_Social_Limit" />
+            <xsd:element name="Name" type="TooltipFormat_Social_Name" />
+            <xsd:element name="RegisterWord" type="TooltipFormat_Social_RegisterWord" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Social_Description">
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Social_Limit">
+        <xsd:attribute name="categoryTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="disableStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="limitTextId" type="xsd:int" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Social_Name">
+        <xsd:attribute name="boundaryBar" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TooltipFormat_Social_RegisterWord">
+        <xsd:attribute name="boundaryBar" type="xsd:string" use="required" />
+        <xsd:attribute name="textStyle" type="xsd:string" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStyle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="TooltipFormat" type="TooltipFormat" />
+</xsd:schema>

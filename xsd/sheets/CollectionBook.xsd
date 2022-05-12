@@ -1,0 +1,54 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/CollectionBook"
+            targetNamespace="https://vezel.dev/novadrop/dc/CollectionBook"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="CollectionBook">
+        <xsd:sequence>
+            <xsd:element name="BookTypeList" type="CollectionBook_BookTypeList" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CollectionBook_BookTypeList">
+        <xsd:sequence>
+            <xsd:element name="BookLevelData" type="CollectionBook_BookTypeList_BookLevelData" />
+            <xsd:element name="BookRewardData" type="CollectionBook_BookTypeList_BookRewardData" />
+        </xsd:sequence>
+
+        <xsd:attribute name="subTabStrId" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+        <xsd:attribute name="typeStrId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CollectionBook_BookTypeList_BookLevelData">
+        <xsd:sequence>
+            <xsd:element name="LevelData" type="CollectionBook_BookTypeList_BookLevelData_LevelData" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CollectionBook_BookTypeList_BookLevelData_LevelData">
+        <xsd:attribute name="combineListSelectAmount" type="xsd:int" use="required" />
+        <xsd:attribute name="duplicateEquipableCardPropertyAmount" type="xsd:int" use="required" />
+        <xsd:attribute name="equipableCardAmount" type="xsd:int" use="required" />
+        <xsd:attribute name="level" type="xsd:int" use="required" />
+        <xsd:attribute name="maxCost" type="xsd:int" use="required" />
+        <xsd:attribute name="needPoint" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CollectionBook_BookTypeList_BookRewardData">
+        <xsd:sequence>
+            <xsd:element name="RewardData" type="CollectionBook_BookTypeList_BookRewardData_RewardData" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CollectionBook_BookTypeList_BookRewardData_RewardData">
+        <xsd:attribute name="amount" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="needPoint" type="xsd:int" use="required" />
+        <xsd:attribute name="rewardItemId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="CollectionBook" type="CollectionBook" />
+</xsd:schema>

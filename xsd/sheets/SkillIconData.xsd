@@ -1,0 +1,25 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/SkillIconData"
+            targetNamespace="https://vezel.dev/novadrop/dc/SkillIconData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="SkillIconData">
+        <xsd:sequence>
+            <xsd:element name="Icon" type="SkillIconData_Icon" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillIconData_Icon"
+                     dc:keys="skillId">
+        <xsd:attribute name="class" type="xsd:string" use="required" />
+        <xsd:attribute name="gender" type="xsd:string" use="required" />
+        <xsd:attribute name="iconName" type="xsd:string" use="required" />
+        <xsd:attribute name="race" type="xsd:string" use="required" />
+        <xsd:attribute name="skillId" type="xsd:int" use="required" />
+        <xsd:attribute name="toolTip" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="SkillIconData" type="SkillIconData" />
+</xsd:schema>

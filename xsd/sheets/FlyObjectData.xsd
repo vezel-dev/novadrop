@@ -1,0 +1,30 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/FlyObjectData"
+            targetNamespace="https://vezel.dev/novadrop/dc/FlyObjectData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="FlyObjectData">
+        <xsd:sequence>
+            <xsd:element name="FlyMoveSequence" type="FlyObjectData_FlyMoveSequence" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="FlyObjectData_FlyMoveSequence">
+        <xsd:sequence>
+            <xsd:element name="FlyMove" type="FlyObjectData_FlyMoveSequence_FlyMove" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="loop" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="FlyObjectData_FlyMoveSequence_FlyMove">
+        <xsd:attribute name="accel" type="xsd:string" use="required" />
+        <xsd:attribute name="moveInterval" type="xsd:int" use="required" />
+        <xsd:attribute name="speedLimit" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="FlyObjectData" type="FlyObjectData" />
+</xsd:schema>

@@ -1,0 +1,28 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/StrSheet_BrokerageOptionCategory"
+            targetNamespace="https://vezel.dev/novadrop/dc/StrSheet_BrokerageOptionCategory"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="StrSheet_BrokerageOptionCategory">
+        <xsd:sequence>
+            <xsd:element name="StringGroup" type="StrSheet_BrokerageOptionCategory_StringGroup" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="StrSheet_BrokerageOptionCategory_StringGroup">
+        <xsd:sequence>
+            <xsd:element name="String" type="StrSheet_BrokerageOptionCategory_StringGroup_String" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="StrSheet_BrokerageOptionCategory_StringGroup_String">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="StrSheet_BrokerageOptionCategory" type="StrSheet_BrokerageOptionCategory" />
+</xsd:schema>

@@ -1,0 +1,34 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/InventoryInfo"
+            targetNamespace="https://vezel.dev/novadrop/dc/InventoryInfo"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="InventoryInfo">
+        <xsd:sequence>
+            <xsd:element name="InventoryStringInfo" type="InventoryInfo_InventoryStringInfo" />
+            <xsd:element name="PocketNameChangeInfo" type="InventoryInfo_PocketNameChangeInfo" />
+            <xsd:element name="PocketOpenInfo" type="InventoryInfo_PocketOpenInfo" />
+        </xsd:sequence>
+
+        <xsd:attribute name="isTeraShopOpen" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="InventoryInfo_InventoryStringInfo">
+        <xsd:attribute name="defaultPocketNameId" type="xsd:int" use="required" />
+        <xsd:attribute name="noneFilterNameId" type="xsd:int" use="required" />
+        <xsd:attribute name="separatorFilterNameId" type="xsd:int" use="required" />
+        <xsd:attribute name="totalFilterNameId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="InventoryInfo_PocketNameChangeInfo">
+        <xsd:attribute name="nameChangeMoney" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="InventoryInfo_PocketOpenInfo">
+        <xsd:attribute name="pocketOpenAchievementId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="InventoryInfo" type="InventoryInfo" />
+</xsd:schema>

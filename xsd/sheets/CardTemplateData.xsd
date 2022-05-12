@@ -1,0 +1,42 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/CardTemplateData"
+            targetNamespace="https://vezel.dev/novadrop/dc/CardTemplateData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="CardTemplateData">
+        <xsd:sequence>
+            <xsd:element name="CardTemplate" type="CardTemplateData_CardTemplate" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CardTemplateData_CardTemplate">
+        <xsd:sequence>
+            <xsd:element name="CardPassive" type="CardTemplateData_CardTemplate_CardPassive" />
+        </xsd:sequence>
+
+        <xsd:attribute name="category" type="xsd:int" use="required" />
+        <xsd:attribute name="collectionBookPoint" type="xsd:int" use="required" />
+        <xsd:attribute name="cost" type="xsd:int" use="required" />
+        <xsd:attribute name="effect" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="image" type="xsd:string" use="required" />
+        <xsd:attribute name="level" type="xsd:int" use="required" />
+        <xsd:attribute name="needAmountForActivation" type="xsd:int" use="required" />
+        <xsd:attribute name="property" type="xsd:int" use="required" />
+        <xsd:attribute name="superiorCardItemId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CardTemplateData_CardTemplate_CardPassive">
+        <xsd:sequence>
+            <xsd:element name="Passivity" type="CardTemplateData_CardTemplate_CardPassive_Passivity" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CardTemplateData_CardTemplate_CardPassive_Passivity">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="CardTemplateData" type="CardTemplateData" />
+</xsd:schema>

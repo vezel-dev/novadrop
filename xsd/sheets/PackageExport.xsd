@@ -1,0 +1,102 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/PackageExport"
+            targetNamespace="https://vezel.dev/novadrop/dc/PackageExport"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="PackageExport">
+        <xsd:sequence>
+            <xsd:element name="BackgroundColor" type="PackageExport_BackgroundColor" />
+            <xsd:element name="Light" type="PackageExport_Light" />
+            <xsd:element name="Parameter" type="PackageExport_Parameter" />
+            <xsd:element name="PathInfo" type="PackageExport_PathInfo" />
+            <xsd:element name="Texture" type="PackageExport_Texture" />
+            <xsd:element name="Transforms" type="PackageExport_Transforms" />
+            <xsd:element name="Views" type="PackageExport_Views" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PackageExport_BackgroundColor">
+        <xsd:attribute name="b" type="xsd:int" use="required" />
+        <xsd:attribute name="g" type="xsd:int" use="required" />
+        <xsd:attribute name="r" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PackageExport_Light">
+        <xsd:sequence>
+            <xsd:element name="ForSkeletalMesh" type="PackageExport_Light_ForSkeletalMesh" />
+            <xsd:element name="ForStaticMesh" type="PackageExport_Light_ForStaticMesh" />
+        </xsd:sequence>
+
+        <xsd:attribute name="pitch" type="xsd:float" use="required" />
+        <xsd:attribute name="yaw" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PackageExport_Light_ForSkeletalMesh">
+        <xsd:attribute name="dirLight" type="xsd:float" use="required" />
+        <xsd:attribute name="skyLight" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PackageExport_Light_ForStaticMesh">
+        <xsd:attribute name="dirLight" type="xsd:float" use="required" />
+        <xsd:attribute name="skyLight" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PackageExport_Parameter">
+        <xsd:attribute name="marginPercent" type="xsd:float" use="required" />
+        <xsd:attribute name="sampleCount" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PackageExport_PathInfo">
+        <xsd:sequence>
+            <xsd:element name="PackagePath" type="PackageExport_PathInfo_PackagePath" />
+        </xsd:sequence>
+
+        <xsd:attribute name="applyPackagePath" type="xsd:boolean" use="required" />
+        <xsd:attribute name="path" type="xsd:string" use="required" />
+        <xsd:attribute name="seperatePackagePath" type="xsd:boolean" use="required" />
+        <xsd:attribute name="skeletalMesh" type="xsd:string" use="required" />
+        <xsd:attribute name="staticMesh" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PackageExport_PathInfo_PackagePath">
+        <xsd:attribute name="exportSkeletalMesh" type="xsd:boolean" use="required" />
+        <xsd:attribute name="exportStaticMesh" type="xsd:boolean" use="required" />
+        <xsd:attribute name="exportTextureTGA" type="xsd:boolean" use="required" />
+        <xsd:attribute name="path" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PackageExport_Texture">
+        <xsd:attribute name="height" type="xsd:int" use="required" />
+        <xsd:attribute name="width" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PackageExport_Transforms">
+        <xsd:sequence>
+            <xsd:element name="Transform" type="PackageExport_Transforms_Transform" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PackageExport_Transforms_Transform">
+        <xsd:attribute name="filter" type="xsd:string" use="required" />
+        <xsd:attribute name="pitch" type="xsd:float" use="required" />
+        <xsd:attribute name="roll" type="xsd:float" use="required" />
+        <xsd:attribute name="yaw" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PackageExport_Views">
+        <xsd:sequence>
+            <xsd:element name="View" type="PackageExport_Views_View" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PackageExport_Views_View">
+        <xsd:attribute name="fov" type="xsd:float" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="pitch" type="xsd:float" use="required" />
+        <xsd:attribute name="yaw" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="PackageExport" type="PackageExport" />
+</xsd:schema>

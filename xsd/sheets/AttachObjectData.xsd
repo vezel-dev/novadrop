@@ -1,0 +1,39 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/AttachObjectData"
+            targetNamespace="https://vezel.dev/novadrop/dc/AttachObjectData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="AttachObjectData">
+        <xsd:sequence>
+            <xsd:element name="AttachObject" type="AttachObjectData_AttachObject" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AttachObjectData_AttachObject">
+        <xsd:sequence>
+            <xsd:element name="Condition" type="AttachObjectData_AttachObject_Condition" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="despawnTime" type="xsd:float" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="spawnAnim" type="xsd:string" use="required" />
+        <xsd:attribute name="spawnScriptId" type="xsd:int" use="required" />
+        <xsd:attribute name="spawnTime" type="xsd:float" use="required" />
+        <xsd:attribute name="waitAnim" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AttachObjectData_AttachObject_Condition">
+        <xsd:attribute name="attachBone" type="xsd:string" use="required" />
+        <xsd:attribute name="attachShapeId" type="xsd:int" use="required" />
+        <xsd:attribute name="gender" type="xsd:string" use="required" />
+        <xsd:attribute name="location" type="xsd:string" use="required" />
+        <xsd:attribute name="race" type="xsd:string" use="required" />
+        <xsd:attribute name="rotation" type="xsd:string" use="required" />
+        <xsd:attribute name="scale" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="AttachObjectData" type="AttachObjectData" />
+</xsd:schema>

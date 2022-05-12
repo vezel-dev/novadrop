@@ -1,0 +1,52 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ServantAdventureCompensation"
+            targetNamespace="https://vezel.dev/novadrop/dc/ServantAdventureCompensation"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ServantAdventureCompensation">
+        <xsd:sequence>
+            <xsd:element name="AdventureCompensation" type="ServantAdventureCompensation_AdventureCompensation" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantAdventureCompensation_AdventureCompensation">
+        <xsd:sequence>
+            <xsd:element name="Compensation" type="ServantAdventureCompensation_AdventureCompensation_Compensation" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="memo" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantAdventureCompensation_AdventureCompensation_Compensation">
+        <xsd:sequence>
+            <xsd:element name="Itembag" type="ServantAdventureCompensation_AdventureCompensation_Compensation_Itembag" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="bagName" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="itembagGrade" type="xsd:int" use="required" />
+        <xsd:attribute name="probability" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantAdventureCompensation_AdventureCompensation_Compensation_Itembag">
+        <xsd:sequence>
+            <xsd:element name="Item" type="ServantAdventureCompensation_AdventureCompensation_Compensation_Itembag_Item" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="memo" type="xsd:string" use="required" />
+        <xsd:attribute name="probability" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantAdventureCompensation_AdventureCompensation_Compensation_Itembag_Item">
+        <xsd:attribute name="max" type="xsd:int" use="required" />
+        <xsd:attribute name="min" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ServantAdventureCompensation" type="ServantAdventureCompensation" />
+</xsd:schema>

@@ -1,0 +1,42 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/NocTanData"
+            targetNamespace="https://vezel.dev/novadrop/dc/NocTanData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="NocTanData">
+        <xsd:sequence>
+            <xsd:element name="NocTanPostProcessSetting" type="NocTanData_NocTanPostProcessSetting" />
+            <xsd:element name="NocTanVariation" type="NocTanData_NocTanVariation" />
+            <xsd:element name="NoctanPerformanceSet" type="NocTanData_NoctanPerformanceSet" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="skillIdList" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NocTanData_NocTanPostProcessSetting">
+        <xsd:attribute name="playTime" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NocTanData_NocTanVariation">
+        <xsd:attribute name="fontGrade" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NocTanData_NoctanPerformanceSet">
+        <xsd:sequence>
+            <xsd:element name="NocTanSkillData" type="NocTanData_NoctanPerformanceSet_NocTanSkillData" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NocTanData_NoctanPerformanceSet_NocTanSkillData">
+        <xsd:attribute name="class" type="xsd:string" use="required" />
+        <xsd:attribute name="cost" type="xsd:int" use="required" />
+        <xsd:attribute name="effectRate" type="xsd:string" use="required" />
+        <xsd:attribute name="effectType" type="xsd:int" use="required" />
+        <xsd:attribute name="skillId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="NocTanData" type="NocTanData" />
+</xsd:schema>

@@ -1,0 +1,26 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/SerenException"
+            targetNamespace="https://vezel.dev/novadrop/dc/SerenException"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="SerenException">
+        <xsd:sequence>
+            <xsd:element name="ExceptionList" type="SerenException_ExceptionList" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SerenException_ExceptionList">
+        <xsd:sequence>
+            <xsd:element name="Except" type="SerenException_ExceptionList_Except" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SerenException_ExceptionList_Except">
+        <xsd:attribute name="arg1" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="SerenException" type="SerenException" />
+</xsd:schema>

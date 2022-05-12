@@ -1,0 +1,21 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/StrSheet_CollectionLoc"
+            targetNamespace="https://vezel.dev/novadrop/dc/StrSheet_CollectionLoc"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="StrSheet_CollectionLoc">
+        <xsd:sequence>
+            <xsd:element name="String" type="StrSheet_CollectionLoc_String" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="StrSheet_CollectionLoc_String"
+                     dc:keys="templateId">
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="StrSheet_CollectionLoc" type="StrSheet_CollectionLoc" />
+</xsd:schema>

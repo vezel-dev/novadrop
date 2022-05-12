@@ -1,0 +1,33 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/VIPSystem"
+            targetNamespace="https://vezel.dev/novadrop/dc/VIPSystem"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="VIPSystem">
+        <xsd:sequence>
+            <xsd:element name="VIPSetting" type="VIPSystem_VIPSetting" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="VIPSystem_VIPSetting">
+        <xsd:sequence>
+            <xsd:element name="Grade" type="VIPSystem_VIPSetting_Grade" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="dungeonOpenLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="maxGrade" type="xsd:int" use="required" />
+        <xsd:attribute name="rewardOpenLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="shopOpenLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="vipDungeon" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="VIPSystem_VIPSetting_Grade">
+        <xsd:attribute name="iconGrade" type="xsd:int" use="required" />
+        <xsd:attribute name="level" type="xsd:int" use="required" />
+        <xsd:attribute name="totalExp" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="VIPSystem" type="VIPSystem" />
+</xsd:schema>

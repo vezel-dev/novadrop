@@ -1,0 +1,38 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/FluidInfluence"
+            targetNamespace="https://vezel.dev/novadrop/dc/FluidInfluence"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="FluidInfluence">
+        <xsd:sequence>
+            <xsd:element name="Influence" type="FluidInfluence_Influence" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="FluidInfluence_Influence">
+        <xsd:attribute name="flowFrequency" type="xsd:float" />
+        <xsd:attribute name="flowNumRipples" type="xsd:int" />
+        <xsd:attribute name="flowSideMotionRadius" type="xsd:float" />
+        <xsd:attribute name="flowSpeed" type="xsd:float" />
+        <xsd:attribute name="flowStrength" type="xsd:float" />
+        <xsd:attribute name="flowWaveRadius" type="xsd:float" />
+        <xsd:attribute name="raindropAreaRadius" type="xsd:float" />
+        <xsd:attribute name="raindropFillEntireFluid" type="xsd:boolean" />
+        <xsd:attribute name="raindropRadius" type="xsd:float" />
+        <xsd:attribute name="raindropRate" type="xsd:float" />
+        <xsd:attribute name="raindropStrength" type="xsd:float" />
+        <xsd:attribute name="shapeId" type="xsd:int" use="required" />
+        <xsd:attribute name="sphereInnerRadius" type="xsd:float" />
+        <xsd:attribute name="sphereOuterRadius" type="xsd:float" />
+        <xsd:attribute name="sphereStrength" type="xsd:float" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+        <xsd:attribute name="waveFrequency" type="xsd:float" />
+        <xsd:attribute name="wavePhase" type="xsd:float" />
+        <xsd:attribute name="waveRadius" type="xsd:float" />
+        <xsd:attribute name="waveStrength" type="xsd:float" />
+    </xsd:complexType>
+
+    <xsd:element name="FluidInfluence" type="FluidInfluence" />
+</xsd:schema>

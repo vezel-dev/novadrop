@@ -1,0 +1,91 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/EnchantData"
+            targetNamespace="https://vezel.dev/novadrop/dc/EnchantData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="EnchantData">
+        <xsd:sequence>
+            <xsd:element name="AwakenData" type="EnchantData_AwakenData" maxOccurs="unbounded" />
+            <xsd:element name="EnchantDecompositionData" type="EnchantData_EnchantDecompositionData" />
+            <xsd:element name="EnchantRate" type="EnchantData_EnchantRate" />
+            <xsd:element name="EnchantSuccessRating" type="EnchantData_EnchantSuccessRating" />
+            <xsd:element name="MaterialData" type="EnchantData_MaterialData" />
+        </xsd:sequence>
+
+        <xsd:attribute name="awakenMaxCount" type="xsd:int" use="required" />
+        <xsd:attribute name="masterpieceMaxCount" type="xsd:int" use="required" />
+        <xsd:attribute name="normalMaxCount" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantData_AwakenData">
+        <xsd:attribute name="materialCount" type="xsd:int" use="required" />
+        <xsd:attribute name="scrollCount" type="xsd:int" use="required" />
+        <xsd:attribute name="scrollId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantData_EnchantDecompositionData">
+        <xsd:sequence>
+            <xsd:element name="EnchantDecomposition" type="EnchantData_EnchantDecompositionData_EnchantDecomposition" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantData_EnchantDecompositionData_EnchantDecomposition">
+        <xsd:attribute name="baseCost" type="xsd:string" use="required" />
+        <xsd:attribute name="combatItemType" type="xsd:string" use="required" />
+        <xsd:attribute name="rank" type="xsd:int" use="required" />
+        <xsd:attribute name="rareGrade" type="xsd:int" use="required" />
+        <xsd:attribute name="resultItemAmount" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantData_EnchantRate">
+        <xsd:sequence>
+            <xsd:element name="ItemEnchant" type="EnchantData_EnchantRate_ItemEnchant" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantData_EnchantRate_ItemEnchant">
+        <xsd:attribute name="combatItemType" type="xsd:string" use="required" />
+        <xsd:attribute name="enchantProb" type="xsd:float" use="required" />
+        <xsd:attribute name="enchantStep" type="xsd:int" use="required" />
+        <xsd:attribute name="rank" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantData_EnchantSuccessRating">
+        <xsd:sequence>
+            <xsd:element name="Rating" type="EnchantData_EnchantSuccessRating_Rating" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantData_EnchantSuccessRating_Rating">
+        <xsd:attribute name="common" type="xsd:float" use="required" />
+        <xsd:attribute name="good" type="xsd:float" use="required" />
+        <xsd:attribute name="step" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantData_MaterialData">
+        <xsd:sequence>
+            <xsd:element name="EnchantMaterial" type="EnchantData_MaterialData_EnchantMaterial" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantData_MaterialData_EnchantMaterial">
+        <xsd:sequence>
+            <xsd:element name="MaterialByRarity" type="EnchantData_MaterialData_EnchantMaterial_MaterialByRarity" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="combatItemType" type="xsd:string" use="required" />
+        <xsd:attribute name="enchantStep" type="xsd:int" use="required" />
+        <xsd:attribute name="rank" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantData_MaterialData_EnchantMaterial_MaterialByRarity">
+        <xsd:attribute name="materialCount" type="xsd:int" use="required" />
+        <xsd:attribute name="rareGrade" type="xsd:int" use="required" />
+        <xsd:attribute name="scrollCount" type="xsd:int" use="required" />
+        <xsd:attribute name="scrollId" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:element name="EnchantData" type="EnchantData" />
+</xsd:schema>

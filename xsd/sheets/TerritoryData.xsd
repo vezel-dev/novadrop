@@ -1,0 +1,111 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/TerritoryData"
+            targetNamespace="https://vezel.dev/novadrop/dc/TerritoryData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="TerritoryData">
+        <xsd:sequence>
+            <xsd:element name="TerritoryGroup" type="TerritoryData_TerritoryGroup" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="huntingZoneId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TerritoryData_TerritoryGroup">
+        <xsd:sequence>
+            <xsd:element name="TerritoryList" type="TerritoryData_TerritoryGroup_TerritoryList" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TerritoryData_TerritoryGroup_TerritoryList">
+        <xsd:sequence>
+            <xsd:element name="Territory" type="TerritoryData_TerritoryGroup_TerritoryList_Territory" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TerritoryData_TerritoryGroup_TerritoryList_Territory">
+        <xsd:sequence>
+            <xsd:element name="Fence" type="TerritoryData_TerritoryGroup_TerritoryList_Territory_Fence" maxOccurs="unbounded" />
+            <xsd:element name="JumpGear" type="TerritoryData_TerritoryGroup_TerritoryList_Territory_JumpGear" minOccurs="0" />
+            <xsd:element name="Npc" type="TerritoryData_TerritoryGroup_TerritoryList_Territory_Npc" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Party" type="TerritoryData_TerritoryGroup_TerritoryList_Territory_Party" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="absoluteFenceZ" type="xsd:float" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TerritoryData_TerritoryGroup_TerritoryList_Territory_Fence">
+        <xsd:attribute name="pos" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TerritoryData_TerritoryGroup_TerritoryList_Territory_JumpGear">
+        <xsd:attribute name="continentId" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="jumpGearId" type="xsd:int" use="required" />
+        <xsd:attribute name="pos" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TerritoryData_TerritoryGroup_TerritoryList_Territory_Npc">
+        <xsd:sequence>
+            <xsd:element name="PatrolList" type="TerritoryData_TerritoryGroup_TerritoryList_Territory_Npc_PatrolList" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="ai" type="xsd:int" use="required" />
+        <xsd:attribute name="canGetBuff" type="xsd:boolean" />
+        <xsd:attribute name="dir" type="xsd:int" use="required" />
+        <xsd:attribute name="friendOfPlayer" type="xsd:boolean" />
+        <xsd:attribute name="npcTemplateId" type="xsd:int" use="required" />
+        <xsd:attribute name="villager" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TerritoryData_TerritoryGroup_TerritoryList_Territory_Npc_PatrolList">
+        <xsd:sequence>
+            <xsd:element name="Patrol" type="TerritoryData_TerritoryGroup_TerritoryList_Territory_Npc_PatrolList_Patrol" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="randomSocial" type="xsd:boolean" use="required" />
+        <xsd:attribute name="socialDuration" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TerritoryData_TerritoryGroup_TerritoryList_Territory_Npc_PatrolList_Patrol">
+        <xsd:sequence>
+            <xsd:element name="Social" type="TerritoryData_TerritoryGroup_TerritoryList_Territory_Npc_PatrolList_Patrol_Social" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TerritoryData_TerritoryGroup_TerritoryList_Territory_Npc_PatrolList_Patrol_Social">
+        <xsd:attribute name="motionId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TerritoryData_TerritoryGroup_TerritoryList_Territory_Party">
+        <xsd:sequence>
+            <xsd:element name="Npc" type="TerritoryData_TerritoryGroup_TerritoryList_Territory_Party_Npc" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="autoRespawn" type="xsd:boolean" />
+        <xsd:attribute name="delaySpawnTimeWhenWorldStart" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TerritoryData_TerritoryGroup_TerritoryList_Territory_Party_Npc">
+        <xsd:sequence>
+            <xsd:element name="PatrolList" type="TerritoryData_TerritoryGroup_TerritoryList_Territory_Party_Npc_PatrolList" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="ai" type="xsd:int" use="required" />
+        <xsd:attribute name="canGetBuff" type="xsd:boolean" />
+        <xsd:attribute name="friendOfPlayer" type="xsd:boolean" />
+        <xsd:attribute name="villager" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TerritoryData_TerritoryGroup_TerritoryList_Territory_Party_Npc_PatrolList">
+        <xsd:attribute name="randomSocial" type="xsd:boolean" use="required" />
+        <xsd:attribute name="socialDuration" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="TerritoryData" type="TerritoryData" />
+</xsd:schema>

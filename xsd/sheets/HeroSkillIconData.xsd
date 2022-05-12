@@ -1,0 +1,23 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/HeroSkillIconData"
+            targetNamespace="https://vezel.dev/novadrop/dc/HeroSkillIconData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="HeroSkillIconData">
+        <xsd:sequence>
+            <xsd:element name="Icon" type="HeroSkillIconData_Icon" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroSkillIconData_Icon"
+                     dc:keys="skillId">
+        <xsd:attribute name="iconName" type="xsd:string" use="required" />
+        <xsd:attribute name="skillId" type="xsd:int" use="required" />
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+        <xsd:attribute name="toolTip" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="HeroSkillIconData" type="HeroSkillIconData" />
+</xsd:schema>

@@ -1,0 +1,385 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/SkillEffectData"
+            targetNamespace="https://vezel.dev/novadrop/dc/SkillEffectData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="SkillEffectData"
+                     dc:keys="huntingZoneId">
+        <xsd:sequence>
+            <xsd:element name="SkillEffect" type="SkillEffectData_SkillEffect" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="class" type="xsd:string" />
+        <xsd:attribute name="heroTemplateId" type="xsd:int" />
+        <xsd:attribute name="huntingZoneId" type="xsd:int" use="required" />
+        <xsd:attribute name="team" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillEffectData_SkillEffect"
+                     dc:keys="templateId skillId">
+        <xsd:sequence>
+            <xsd:element name="AfterImage" type="SkillEffectData_SkillEffect_AfterImage" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="AttachmentObject" type="SkillEffectData_SkillEffect_AttachmentObject" minOccurs="0" />
+            <xsd:element name="CatchThrow" type="SkillEffectData_SkillEffect_CatchThrow" minOccurs="0" />
+            <xsd:element name="ChargeList" type="SkillEffectData_SkillEffect_ChargeList" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Defence" type="SkillEffectData_SkillEffect_Defence" minOccurs="0" />
+            <xsd:element name="Ground" type="SkillEffectData_SkillEffect_Ground" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="HitEffectList" type="SkillEffectData_SkillEffect_HitEffectList" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="LockOn" type="SkillEffectData_SkillEffect_LockOn" minOccurs="0" />
+            <xsd:element name="Normal" type="SkillEffectData_SkillEffect_Normal" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Projectile" type="SkillEffectData_SkillEffect_Projectile" minOccurs="0" />
+            <xsd:element name="Pulling" type="SkillEffectData_SkillEffect_Pulling" minOccurs="0" />
+            <xsd:element name="Random" type="SkillEffectData_SkillEffect_Random" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Target" type="SkillEffectData_SkillEffect_Target" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Visibility" type="SkillEffectData_SkillEffect_Visibility" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" />
+        <xsd:attribute name="isNoRemoveActionEnd" type="xsd:boolean" />
+        <xsd:attribute name="skillId" type="xsd:int" use="required" />
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillEffectData_SkillEffect_AfterImage">
+        <xsd:sequence>
+            <xsd:element name="AfterImage" type="SkillEffectData_SkillEffect_AfterImage" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Normal" type="SkillEffectData_SkillEffect_AfterImage_Normal" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Stage" type="SkillEffectData_SkillEffect_AfterImage_Stage" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="animName" type="xsd:string" />
+        <xsd:attribute name="animRate" type="xsd:float" />
+        <xsd:attribute name="blendOutTime" type="xsd:int" />
+        <xsd:attribute name="condition" type="xsd:string" use="required" />
+        <xsd:attribute name="despawnDelayTime" type="xsd:int" />
+        <xsd:attribute name="lifeTime" type="xsd:int" />
+        <xsd:attribute name="maintainAfterImage" type="xsd:boolean" />
+        <xsd:attribute name="overlayFx" type="xsd:int" use="required" />
+        <xsd:attribute name="posX" type="xsd:float" use="required" />
+        <xsd:attribute name="posY" type="xsd:float" use="required" />
+        <xsd:attribute name="posZ" type="xsd:float" use="required" />
+        <xsd:attribute name="rotX" type="xsd:float" use="required" />
+        <xsd:attribute name="rotY" type="xsd:float" use="required" />
+        <xsd:attribute name="rotZ" type="xsd:float" use="required" />
+        <xsd:attribute name="scale" type="xsd:float" />
+        <xsd:attribute name="startTime" type="xsd:int" use="required" />
+        <xsd:attribute name="useRootMotion" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillEffectData_SkillEffect_AfterImage_Normal">
+        <xsd:attribute name="absoluteRate" type="xsd:boolean" use="required" />
+        <xsd:attribute name="bChangeAbleScaleByRange" type="xsd:boolean" use="required" />
+        <xsd:attribute name="bForceVisibleEffect" type="xsd:boolean" />
+        <xsd:attribute name="bGround" type="xsd:boolean" use="required" />
+        <xsd:attribute name="boneName" type="xsd:string" use="required" />
+        <xsd:attribute name="detach" type="xsd:boolean" use="required" />
+        <xsd:attribute name="fixRotation" type="xsd:boolean" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="playRate" type="xsd:float" use="required" />
+        <xsd:attribute name="posX" type="xsd:float" use="required" />
+        <xsd:attribute name="posY" type="xsd:float" use="required" />
+        <xsd:attribute name="posZ" type="xsd:float" use="required" />
+        <xsd:attribute name="rescaleMethod" type="xsd:string" use="required" />
+        <xsd:attribute name="resource" type="xsd:string" use="required" />
+        <xsd:attribute name="rotX" type="xsd:float" use="required" />
+        <xsd:attribute name="rotY" type="xsd:float" use="required" />
+        <xsd:attribute name="rotZ" type="xsd:float" use="required" />
+        <xsd:attribute name="scale" type="xsd:float" use="required" />
+        <xsd:attribute name="scaleX" type="xsd:float" use="required" />
+        <xsd:attribute name="scaleY" type="xsd:float" use="required" />
+        <xsd:attribute name="scaleZ" type="xsd:float" use="required" />
+        <xsd:attribute name="stageIndex" type="xsd:int" use="required" />
+        <xsd:attribute name="startTime" type="xsd:int" use="required" />
+        <xsd:attribute name="subBoneName" type="xsd:string" use="required" />
+        <xsd:attribute name="subBoneName2" type="xsd:string" use="required" />
+        <xsd:attribute name="worldSpawn" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillEffectData_SkillEffect_AfterImage_Stage">
+        <xsd:sequence>
+            <xsd:element name="AnimSeq" type="SkillEffectData_SkillEffect_AfterImage_Stage_AnimSeq" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillEffectData_SkillEffect_AfterImage_Stage_AnimSeq">
+        <xsd:attribute name="animName" type="xsd:string" use="required" />
+        <xsd:attribute name="animRate" type="xsd:float" use="required" />
+        <xsd:attribute name="blendInTime" type="xsd:int" use="required" />
+        <xsd:attribute name="duration" type="xsd:int" use="required" />
+        <xsd:attribute name="rootMotionXYRate" type="xsd:float" use="required" />
+        <xsd:attribute name="rootMotionZRate" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillEffectData_SkillEffect_AttachmentObject">
+        <xsd:sequence>
+            <xsd:element name="Normal" type="SkillEffectData_SkillEffect_AttachmentObject_Normal" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Projectile" type="SkillEffectData_SkillEffect_AttachmentObject_Projectile" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillEffectData_SkillEffect_AttachmentObject_Normal">
+        <xsd:attribute name="absoluteRate" type="xsd:boolean" use="required" />
+        <xsd:attribute name="bChangeAbleScaleByRange" type="xsd:boolean" use="required" />
+        <xsd:attribute name="bForceVisibleEffect" type="xsd:boolean" />
+        <xsd:attribute name="bGround" type="xsd:boolean" use="required" />
+        <xsd:attribute name="boneName" type="xsd:string" use="required" />
+        <xsd:attribute name="detach" type="xsd:boolean" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="playRate" type="xsd:float" use="required" />
+        <xsd:attribute name="posX" type="xsd:float" use="required" />
+        <xsd:attribute name="posY" type="xsd:float" use="required" />
+        <xsd:attribute name="posZ" type="xsd:float" use="required" />
+        <xsd:attribute name="rescaleMethod" type="xsd:string" use="required" />
+        <xsd:attribute name="resource" type="xsd:string" use="required" />
+        <xsd:attribute name="rotX" type="xsd:float" use="required" />
+        <xsd:attribute name="rotY" type="xsd:float" use="required" />
+        <xsd:attribute name="rotZ" type="xsd:float" use="required" />
+        <xsd:attribute name="scale" type="xsd:float" use="required" />
+        <xsd:attribute name="scaleX" type="xsd:float" use="required" />
+        <xsd:attribute name="scaleY" type="xsd:float" use="required" />
+        <xsd:attribute name="scaleZ" type="xsd:float" use="required" />
+        <xsd:attribute name="stageIndex" type="xsd:int" use="required" />
+        <xsd:attribute name="startTime" type="xsd:int" use="required" />
+        <xsd:attribute name="subBoneName" type="xsd:string" use="required" />
+        <xsd:attribute name="subBoneName2" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillEffectData_SkillEffect_AttachmentObject_Projectile">
+        <xsd:attribute name="disappearEffectId" type="xsd:string" use="required" />
+        <xsd:attribute name="explodeEffectId" type="xsd:string" use="required" />
+        <xsd:attribute name="flyingEffectOnly" type="xsd:boolean" use="required" />
+        <xsd:attribute name="movingEffectId" type="xsd:string" use="required" />
+        <xsd:attribute name="pierceEffect" type="xsd:boolean" use="required" />
+        <xsd:attribute name="startBone" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillEffectData_SkillEffect_CatchThrow">
+        <xsd:attribute name="throwEndEffectId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillEffectData_SkillEffect_ChargeList">
+        <xsd:sequence>
+            <xsd:element name="Charge" type="SkillEffectData_SkillEffect_ChargeList_Charge" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="PerfectCharge" type="SkillEffectData_SkillEffect_ChargeList_PerfectCharge" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillEffectData_SkillEffect_ChargeList_Charge">
+        <xsd:attribute name="bGround" type="xsd:boolean" use="required" />
+        <xsd:attribute name="boneName" type="xsd:string" />
+        <xsd:attribute name="detach" type="xsd:boolean" use="required" />
+        <xsd:attribute name="fixRotation" type="xsd:boolean" />
+        <xsd:attribute name="playRate" type="xsd:float" use="required" />
+        <xsd:attribute name="posX" type="xsd:float" use="required" />
+        <xsd:attribute name="posY" type="xsd:float" use="required" />
+        <xsd:attribute name="posZ" type="xsd:float" use="required" />
+        <xsd:attribute name="rescaleMethod" type="xsd:string" use="required" />
+        <xsd:attribute name="resource" type="xsd:string" use="required" />
+        <xsd:attribute name="rotX" type="xsd:float" use="required" />
+        <xsd:attribute name="rotY" type="xsd:float" use="required" />
+        <xsd:attribute name="rotZ" type="xsd:float" use="required" />
+        <xsd:attribute name="scale" type="xsd:float" use="required" />
+        <xsd:attribute name="scaleX" type="xsd:float" use="required" />
+        <xsd:attribute name="scaleY" type="xsd:float" use="required" />
+        <xsd:attribute name="scaleZ" type="xsd:float" use="required" />
+        <xsd:attribute name="stage" type="xsd:int" use="required" />
+        <xsd:attribute name="startTime" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillEffectData_SkillEffect_ChargeList_PerfectCharge">
+        <xsd:attribute name="bGround" type="xsd:boolean" use="required" />
+        <xsd:attribute name="boneName" type="xsd:string" use="required" />
+        <xsd:attribute name="detach" type="xsd:boolean" use="required" />
+        <xsd:attribute name="playRate" type="xsd:float" use="required" />
+        <xsd:attribute name="posX" type="xsd:float" use="required" />
+        <xsd:attribute name="posY" type="xsd:float" use="required" />
+        <xsd:attribute name="posZ" type="xsd:float" use="required" />
+        <xsd:attribute name="rescaleMethod" type="xsd:string" use="required" />
+        <xsd:attribute name="resource" type="xsd:string" use="required" />
+        <xsd:attribute name="rotX" type="xsd:float" use="required" />
+        <xsd:attribute name="rotY" type="xsd:float" use="required" />
+        <xsd:attribute name="rotZ" type="xsd:float" use="required" />
+        <xsd:attribute name="scale" type="xsd:float" use="required" />
+        <xsd:attribute name="scaleX" type="xsd:float" use="required" />
+        <xsd:attribute name="scaleY" type="xsd:float" use="required" />
+        <xsd:attribute name="scaleZ" type="xsd:float" use="required" />
+        <xsd:attribute name="stage" type="xsd:int" use="required" />
+        <xsd:attribute name="startTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillEffectData_SkillEffect_Defence">
+        <xsd:attribute name="detach" type="xsd:boolean" use="required" />
+        <xsd:attribute name="perfectEffectId" type="xsd:int" />
+        <xsd:attribute name="successEffectId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillEffectData_SkillEffect_Ground">
+        <xsd:attribute name="absoluteRate" type="xsd:boolean" />
+        <xsd:attribute name="bGround" type="xsd:boolean" use="required" />
+        <xsd:attribute name="boneName" type="xsd:string" use="required" />
+        <xsd:attribute name="detach" type="xsd:boolean" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="playRate" type="xsd:float" use="required" />
+        <xsd:attribute name="posX" type="xsd:float" use="required" />
+        <xsd:attribute name="posY" type="xsd:float" use="required" />
+        <xsd:attribute name="posZ" type="xsd:float" use="required" />
+        <xsd:attribute name="rescaleMethod" type="xsd:string" use="required" />
+        <xsd:attribute name="resource" type="xsd:string" use="required" />
+        <xsd:attribute name="rotX" type="xsd:float" use="required" />
+        <xsd:attribute name="rotZ" type="xsd:float" use="required" />
+        <xsd:attribute name="scale" type="xsd:float" use="required" />
+        <xsd:attribute name="startTime" type="xsd:int" use="required" />
+        <xsd:attribute name="worldSpawn" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillEffectData_SkillEffect_HitEffectList">
+        <xsd:sequence>
+            <xsd:element name="HitEffect" type="SkillEffectData_SkillEffect_HitEffectList_HitEffect" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillEffectData_SkillEffect_HitEffectList_HitEffect">
+        <xsd:attribute name="areaIndex" type="xsd:int" use="required" />
+        <xsd:attribute name="beamEffectId" type="xsd:int" />
+        <xsd:attribute name="criticalHitBlend" type="xsd:string" />
+        <xsd:attribute name="criticalHitId" type="xsd:int" />
+        <xsd:attribute name="detach" type="xsd:boolean" use="required" />
+        <xsd:attribute name="direction" type="xsd:float" use="required" />
+        <xsd:attribute name="hitOffsetX" type="xsd:float" />
+        <xsd:attribute name="id" type="xsd:string" />
+        <xsd:attribute name="magneticEffectId" type="xsd:int" />
+        <xsd:attribute name="magneticShotEffectId" type="xsd:int" />
+        <xsd:attribute name="neverSkip" type="xsd:boolean" />
+        <xsd:attribute name="randomId" type="xsd:string" />
+        <xsd:attribute name="stackExplodeHitBlend" type="xsd:string" />
+        <xsd:attribute name="stackExplodeHitId" type="xsd:int" />
+        <xsd:attribute name="targetingIndex" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillEffectData_SkillEffect_LockOn">
+        <xsd:attribute name="magneticEffectId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillEffectData_SkillEffect_Normal">
+        <xsd:attribute name="absoluteRate" type="xsd:boolean" />
+        <xsd:attribute name="bChangeAbleScaleByRange" type="xsd:boolean" />
+        <xsd:attribute name="bForceVisibleEffect" type="xsd:boolean" />
+        <xsd:attribute name="bGround" type="xsd:boolean" use="required" />
+        <xsd:attribute name="bOnlyShowPlayer" type="xsd:boolean" />
+        <xsd:attribute name="boneName" type="xsd:string" use="required" />
+        <xsd:attribute name="detach" type="xsd:boolean" use="required" />
+        <xsd:attribute name="fixRotation" type="xsd:boolean" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="playRate" type="xsd:float" use="required" />
+        <xsd:attribute name="posX" type="xsd:float" use="required" />
+        <xsd:attribute name="posY" type="xsd:float" use="required" />
+        <xsd:attribute name="posZ" type="xsd:float" use="required" />
+        <xsd:attribute name="rescaleMethod" type="xsd:string" use="required" />
+        <xsd:attribute name="resource" type="xsd:string" />
+        <xsd:attribute name="rotX" type="xsd:float" />
+        <xsd:attribute name="rotY" type="xsd:float" />
+        <xsd:attribute name="rotZ" type="xsd:float" />
+        <xsd:attribute name="scale" type="xsd:float" use="required" />
+        <xsd:attribute name="scaleX" type="xsd:float" use="required" />
+        <xsd:attribute name="scaleY" type="xsd:float" use="required" />
+        <xsd:attribute name="scaleZ" type="xsd:float" use="required" />
+        <xsd:attribute name="stageIndex" type="xsd:int" />
+        <xsd:attribute name="startTime" type="xsd:int" use="required" />
+        <xsd:attribute name="subBoneName" type="xsd:string" />
+        <xsd:attribute name="subBoneName2" type="xsd:string" />
+        <xsd:attribute name="worldSpawn" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillEffectData_SkillEffect_Projectile">
+        <xsd:sequence>
+            <xsd:element name="AttachWeapon" type="SkillEffectData_SkillEffect_Projectile_AttachWeapon" minOccurs="0" />
+            <xsd:element name="StateEffect" type="SkillEffectData_SkillEffect_Projectile_StateEffect" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="bChangeAbleScaleByRange" type="xsd:boolean" />
+        <xsd:attribute name="disappearEffectId" type="xsd:string" use="required" />
+        <xsd:attribute name="explodeEffectId" type="xsd:string" use="required" />
+        <xsd:attribute name="flyingEffectOnly" type="xsd:boolean" use="required" />
+        <xsd:attribute name="movingEffectId" type="xsd:string" use="required" />
+        <xsd:attribute name="pierceEffect" type="xsd:boolean" />
+        <xsd:attribute name="startBone" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillEffectData_SkillEffect_Projectile_AttachWeapon">
+        <xsd:attribute name="afterImageId" type="xsd:int" use="required" />
+        <xsd:attribute name="changeWeaponScale" type="xsd:boolean" use="required" />
+        <xsd:attribute name="weaponMesh" type="xsd:string" use="required" />
+        <xsd:attribute name="weaponRot" type="xsd:string" use="required" />
+        <xsd:attribute name="weaponRotAxis" type="xsd:string" use="required" />
+        <xsd:attribute name="weaponScale" type="xsd:float" use="required" />
+        <xsd:attribute name="weaponScaleDelay" type="xsd:float" use="required" />
+        <xsd:attribute name="weaponScaleDuration" type="xsd:float" use="required" />
+        <xsd:attribute name="weaponScaleFrom" type="xsd:float" use="required" />
+        <xsd:attribute name="weaponScaleTo" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillEffectData_SkillEffect_Projectile_StateEffect">
+        <xsd:attribute name="enemyEffectId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillEffectData_SkillEffect_Pulling">
+        <xsd:attribute name="attachBone" type="xsd:string" />
+        <xsd:attribute name="maxHeight" type="xsd:float" use="required" />
+        <xsd:attribute name="maxHeightRate" type="xsd:float" use="required" />
+        <xsd:attribute name="pullEffectId" type="xsd:int" use="required" />
+        <xsd:attribute name="pullEffectTime" type="xsd:float" use="required" />
+        <xsd:attribute name="resource" type="xsd:string" />
+        <xsd:attribute name="throwEffectTime" type="xsd:float" use="required" />
+        <xsd:attribute name="weightFactor" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillEffectData_SkillEffect_Random">
+        <xsd:attribute name="absoluteRate" type="xsd:boolean" use="required" />
+        <xsd:attribute name="bGround" type="xsd:boolean" use="required" />
+        <xsd:attribute name="boneName" type="xsd:string" use="required" />
+        <xsd:attribute name="detach" type="xsd:boolean" use="required" />
+        <xsd:attribute name="playRate" type="xsd:float" use="required" />
+        <xsd:attribute name="posX" type="xsd:float" use="required" />
+        <xsd:attribute name="posY" type="xsd:float" use="required" />
+        <xsd:attribute name="posZ" type="xsd:float" use="required" />
+        <xsd:attribute name="rescaleMethod" type="xsd:string" use="required" />
+        <xsd:attribute name="resource" type="xsd:string" use="required" />
+        <xsd:attribute name="rotX" type="xsd:float" use="required" />
+        <xsd:attribute name="rotY" type="xsd:float" use="required" />
+        <xsd:attribute name="rotZ" type="xsd:float" use="required" />
+        <xsd:attribute name="scale" type="xsd:float" use="required" />
+        <xsd:attribute name="startTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillEffectData_SkillEffect_Target">
+        <xsd:attribute name="absoluteRate" type="xsd:boolean" use="required" />
+        <xsd:attribute name="areaIndex" type="xsd:int" use="required" />
+        <xsd:attribute name="fixRotation" type="xsd:boolean" />
+        <xsd:attribute name="playRate" type="xsd:float" use="required" />
+        <xsd:attribute name="posX" type="xsd:float" />
+        <xsd:attribute name="posY" type="xsd:float" />
+        <xsd:attribute name="posZ" type="xsd:float" use="required" />
+        <xsd:attribute name="resource" type="xsd:string" use="required" />
+        <xsd:attribute name="rotX" type="xsd:float" />
+        <xsd:attribute name="rotY" type="xsd:float" />
+        <xsd:attribute name="rotZ" type="xsd:float" use="required" />
+        <xsd:attribute name="scale" type="xsd:float" use="required" />
+        <xsd:attribute name="scaleX" type="xsd:float" use="required" />
+        <xsd:attribute name="scaleY" type="xsd:float" use="required" />
+        <xsd:attribute name="scaleZ" type="xsd:float" use="required" />
+        <xsd:attribute name="startTime" type="xsd:int" use="required" />
+        <xsd:attribute name="targetingIndex" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillEffectData_SkillEffect_Visibility">
+        <xsd:attribute name="hideEnd" type="xsd:float" use="required" />
+        <xsd:attribute name="hideObject" type="xsd:string" use="required" />
+        <xsd:attribute name="hideStart" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="SkillEffectData" type="SkillEffectData" />
+</xsd:schema>

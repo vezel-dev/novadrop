@@ -1,0 +1,100 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/EnchantRenewal"
+            targetNamespace="https://vezel.dev/novadrop/dc/EnchantRenewal"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="EnchantRenewal">
+        <xsd:sequence>
+            <xsd:element name="EnchantAdditiveQuestionTooltip" type="EnchantRenewal_EnchantAdditiveQuestionTooltip" maxOccurs="unbounded" />
+            <xsd:element name="EnchantQuestionTooltip" type="EnchantRenewal_EnchantQuestionTooltip" />
+            <xsd:element name="EnchantTooltip" type="EnchantRenewal_EnchantTooltip" />
+            <xsd:element name="EvolutionQuestionTooltip" type="EnchantRenewal_EvolutionQuestionTooltip" />
+            <xsd:element name="EvolutionTooltip" type="EnchantRenewal_EvolutionTooltip" />
+            <xsd:element name="RepairQuestionTooltip" type="EnchantRenewal_RepairQuestionTooltip" />
+            <xsd:element name="RepairTooltip" type="EnchantRenewal_RepairTooltip" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantRenewal_EnchantAdditiveQuestionTooltip">
+        <xsd:sequence>
+            <xsd:element name="Message" type="EnchantRenewal_EnchantAdditiveQuestionTooltip_Message" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="title" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantRenewal_EnchantAdditiveQuestionTooltip_Message">
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantRenewal_EnchantQuestionTooltip">
+        <xsd:sequence>
+            <xsd:element name="Message" type="EnchantRenewal_EnchantQuestionTooltip_Message" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantRenewal_EnchantQuestionTooltip_Message">
+        <xsd:attribute name="link" type="xsd:string" use="required" />
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantRenewal_EnchantTooltip">
+        <xsd:sequence>
+            <xsd:element name="Message" type="EnchantRenewal_EnchantTooltip_Message" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantRenewal_EnchantTooltip_Message">
+        <xsd:attribute name="link" type="xsd:string" use="required" />
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantRenewal_EvolutionQuestionTooltip">
+        <xsd:sequence>
+            <xsd:element name="Message" type="EnchantRenewal_EvolutionQuestionTooltip_Message" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantRenewal_EvolutionQuestionTooltip_Message">
+        <xsd:attribute name="link" type="xsd:string" use="required" />
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantRenewal_EvolutionTooltip">
+        <xsd:sequence>
+            <xsd:element name="Message" type="EnchantRenewal_EvolutionTooltip_Message" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantRenewal_EvolutionTooltip_Message">
+        <xsd:attribute name="link" type="xsd:string" use="required" />
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantRenewal_RepairQuestionTooltip">
+        <xsd:sequence>
+            <xsd:element name="Message" type="EnchantRenewal_RepairQuestionTooltip_Message" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantRenewal_RepairQuestionTooltip_Message">
+        <xsd:attribute name="link" type="xsd:string" use="required" />
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantRenewal_RepairTooltip">
+        <xsd:sequence>
+            <xsd:element name="Message" type="EnchantRenewal_RepairTooltip_Message" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantRenewal_RepairTooltip_Message">
+        <xsd:attribute name="link" type="xsd:string" use="required" />
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="EnchantRenewal" type="EnchantRenewal" />
+</xsd:schema>

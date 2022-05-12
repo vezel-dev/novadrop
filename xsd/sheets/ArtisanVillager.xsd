@@ -1,0 +1,11 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ArtisanVillager"
+            targetNamespace="https://vezel.dev/novadrop/dc/ArtisanVillager"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ArtisanVillager" />
+
+    <xsd:element name="ArtisanVillager" type="ArtisanVillager" />
+</xsd:schema>

@@ -1,0 +1,29 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/DropItemMesh"
+            targetNamespace="https://vezel.dev/novadrop/dc/DropItemMesh"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="DropItemMesh">
+        <xsd:sequence>
+            <xsd:element name="DropItem" type="DropItemMesh_DropItem" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DropItemMesh_DropItem">
+        <xsd:attribute name="boneName" type="xsd:string" />
+        <xsd:attribute name="effectId" type="xsd:int" />
+        <xsd:attribute name="explodeZExp" type="xsd:float" use="required" />
+        <xsd:attribute name="fallZExp" type="xsd:float" use="required" />
+        <xsd:attribute name="id" type="xsd:int" />
+        <xsd:attribute name="maxDuration" type="xsd:float" use="required" />
+        <xsd:attribute name="maxPeakZRatio" type="xsd:float" use="required" />
+        <xsd:attribute name="minDuration" type="xsd:float" use="required" />
+        <xsd:attribute name="minPeakZRatio" type="xsd:float" use="required" />
+        <xsd:attribute name="offSetZ" type="xsd:int" />
+        <xsd:attribute name="xyExp" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="DropItemMesh" type="DropItemMesh" />
+</xsd:schema>

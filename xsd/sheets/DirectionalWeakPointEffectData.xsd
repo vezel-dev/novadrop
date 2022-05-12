@@ -1,0 +1,23 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/DirectionalWeakPointEffectData"
+            targetNamespace="https://vezel.dev/novadrop/dc/DirectionalWeakPointEffectData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="DirectionalWeakPointEffectData">
+        <xsd:sequence>
+            <xsd:element name="EffectCondition" type="DirectionalWeakPointEffectData_EffectCondition" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="class" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DirectionalWeakPointEffectData_EffectCondition">
+        <xsd:attribute name="effectId" type="xsd:int" use="required" />
+        <xsd:attribute name="index" type="xsd:int" use="required" />
+        <xsd:attribute name="range" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="DirectionalWeakPointEffectData" type="DirectionalWeakPointEffectData" />
+</xsd:schema>

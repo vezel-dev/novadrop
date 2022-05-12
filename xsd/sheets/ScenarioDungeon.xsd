@@ -1,0 +1,56 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ScenarioDungeon"
+            targetNamespace="https://vezel.dev/novadrop/dc/ScenarioDungeon"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ScenarioDungeon">
+        <xsd:sequence>
+            <xsd:element name="Dungeon" type="ScenarioDungeon_Dungeon" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ScenarioDungeon_Dungeon">
+        <xsd:sequence>
+            <xsd:element name="AdditionalWorkList" type="ScenarioDungeon_Dungeon_AdditionalWorkList" />
+            <xsd:element name="ScenarioList" type="ScenarioDungeon_Dungeon_ScenarioList" />
+        </xsd:sequence>
+
+        <xsd:attribute name="buttonTooltipId" type="xsd:int" use="required" />
+        <xsd:attribute name="dungeonLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="minItemLevel" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ScenarioDungeon_Dungeon_AdditionalWorkList">
+        <xsd:sequence>
+            <xsd:element name="AdditionalWork" type="ScenarioDungeon_Dungeon_AdditionalWorkList_AdditionalWork" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ScenarioDungeon_Dungeon_AdditionalWorkList_AdditionalWork">
+        <xsd:attribute name="achievementId" type="xsd:int" use="required" />
+        <xsd:attribute name="flagIcon" type="xsd:string" use="required" />
+        <xsd:attribute name="flagNameId" type="xsd:int" use="required" />
+        <xsd:attribute name="flagTooltipId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ScenarioDungeon_Dungeon_ScenarioList">
+        <xsd:sequence>
+            <xsd:element name="Scenario" type="ScenarioDungeon_Dungeon_ScenarioList_Scenario" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="subTitleId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ScenarioDungeon_Dungeon_ScenarioList_Scenario">
+        <xsd:attribute name="achievementId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ScenarioDungeon" type="ScenarioDungeon" />
+</xsd:schema>

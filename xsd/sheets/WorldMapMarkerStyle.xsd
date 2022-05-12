@@ -1,0 +1,27 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/WorldMapMarkerStyle"
+            targetNamespace="https://vezel.dev/novadrop/dc/WorldMapMarkerStyle"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="WorldMapMarkerStyle">
+        <xsd:sequence>
+            <xsd:element name="Style" type="WorldMapMarkerStyle_Style" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldMapMarkerStyle_Style">
+        <xsd:attribute name="abledScale" type="xsd:boolean" use="required" />
+        <xsd:attribute name="depth" type="xsd:int" use="required" />
+        <xsd:attribute name="leftMargin" type="xsd:int" use="required" />
+        <xsd:attribute name="mouseOverResource" type="xsd:string" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="resource" type="xsd:string" use="required" />
+        <xsd:attribute name="resourceScale" type="xsd:float" />
+        <xsd:attribute name="rollover" type="xsd:boolean" use="required" />
+        <xsd:attribute name="topMargin" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="WorldMapMarkerStyle" type="WorldMapMarkerStyle" />
+</xsd:schema>

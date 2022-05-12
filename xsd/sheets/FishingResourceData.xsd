@@ -1,0 +1,56 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/FishingResourceData"
+            targetNamespace="https://vezel.dev/novadrop/dc/FishingResourceData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="FishingResourceData">
+        <xsd:sequence>
+            <xsd:element name="FishingStateAnimData" type="FishingResourceData_FishingStateAnimData" />
+            <xsd:element name="FloatResourceData" type="FishingResourceData_FloatResourceData" />
+            <xsd:element name="RodResourceData" type="FishingResourceData_RodResourceData" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="FishingResourceData_FishingStateAnimData">
+        <xsd:sequence>
+            <xsd:element name="StateAnim" type="FishingResourceData_FishingStateAnimData_StateAnim" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="FishingResourceData_FishingStateAnimData_StateAnim">
+        <xsd:attribute name="animName" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="isLooping" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="FishingResourceData_FloatResourceData">
+        <xsd:attribute name="floatAnimSetName" type="xsd:string" use="required" />
+        <xsd:attribute name="floatBoneName" type="xsd:string" use="required" />
+        <xsd:attribute name="floatFlyingBoneName" type="xsd:string" use="required" />
+        <xsd:attribute name="floatMeshName" type="xsd:string" use="required" />
+        <xsd:attribute name="reelAttachBone" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="FishingResourceData_RodResourceData">
+        <xsd:sequence>
+            <xsd:element name="ResourceSet" type="FishingResourceData_RodResourceData_ResourceSet" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="rodAttachBoneName" type="xsd:string" use="required" />
+        <xsd:attribute name="rodReelAttachBoneName" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="FishingResourceData_RodResourceData_ResourceSet">
+        <xsd:attribute name="animPlayRate" type="xsd:float" use="required" />
+        <xsd:attribute name="bodyAnimName" type="xsd:string" use="required" />
+        <xsd:attribute name="gender" type="xsd:string" use="required" />
+        <xsd:attribute name="race" type="xsd:string" use="required" />
+        <xsd:attribute name="rodAnimName" type="xsd:string" use="required" />
+        <xsd:attribute name="rodMeshName" type="xsd:string" use="required" />
+        <xsd:attribute name="sobAnimName" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="FishingResourceData" type="FishingResourceData" />
+</xsd:schema>

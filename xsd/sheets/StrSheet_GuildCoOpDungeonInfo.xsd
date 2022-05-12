@@ -1,0 +1,23 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/StrSheet_GuildCoOpDungeonInfo"
+            targetNamespace="https://vezel.dev/novadrop/dc/StrSheet_GuildCoOpDungeonInfo"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="StrSheet_GuildCoOpDungeonInfo">
+        <xsd:sequence>
+            <xsd:element name="Continent" type="StrSheet_GuildCoOpDungeonInfo_Continent" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="StrSheet_GuildCoOpDungeonInfo_Continent"
+                     dc:keys="continentId">
+        <xsd:attribute name="bossName" type="xsd:string" use="required" />
+        <xsd:attribute name="continentId" type="xsd:int" use="required" />
+        <xsd:attribute name="guildCoOpBossFeature" type="xsd:string" use="required" />
+        <xsd:attribute name="npcLocation" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="StrSheet_GuildCoOpDungeonInfo" type="StrSheet_GuildCoOpDungeonInfo" />
+</xsd:schema>

@@ -1,0 +1,50 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/PcFigureExTransformData"
+            targetNamespace="https://vezel.dev/novadrop/dc/PcFigureExTransformData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="PcFigureExTransformData">
+        <xsd:sequence>
+            <xsd:element name="TransformGroup" type="PcFigureExTransformData_TransformGroup" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PcFigureExTransformData_TransformGroup">
+        <xsd:sequence>
+            <xsd:element name="Transform" type="PcFigureExTransformData_TransformGroup_Transform" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="expressionType" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="negativeTransform" type="xsd:int" />
+        <xsd:attribute name="positiveTransform" type="xsd:int" />
+        <xsd:attribute name="saveType" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PcFigureExTransformData_TransformGroup_Transform">
+        <xsd:sequence>
+            <xsd:element name="CharacterGroup" type="PcFigureExTransformData_TransformGroup_Transform_CharacterGroup" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PcFigureExTransformData_TransformGroup_Transform_CharacterGroup">
+        <xsd:sequence>
+            <xsd:element name="Slider" type="PcFigureExTransformData_TransformGroup_Transform_CharacterGroup_Slider" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="gender" type="xsd:string" />
+        <xsd:attribute name="race" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PcFigureExTransformData_TransformGroup_Transform_CharacterGroup_Slider">
+        <xsd:attribute name="operator" type="xsd:string" use="required" />
+        <xsd:attribute name="sliderId" type="xsd:int" use="required" />
+        <xsd:attribute name="value" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="PcFigureExTransformData" type="PcFigureExTransformData" />
+</xsd:schema>

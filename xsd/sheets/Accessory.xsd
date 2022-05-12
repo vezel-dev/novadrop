@@ -1,0 +1,71 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/Accessory"
+            targetNamespace="https://vezel.dev/novadrop/dc/Accessory"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="Accessory">
+        <xsd:sequence>
+            <xsd:element name="BaseParticle" type="Accessory_BaseParticle" minOccurs="0" />
+            <xsd:element name="RaceData" type="Accessory_RaceData" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="desc" type="xsd:string" use="required" />
+        <xsd:attribute name="doNotValidateForPremiumHair" type="xsd:boolean" />
+        <xsd:attribute name="exclusiveSlot" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="includeAnimationParts" type="xsd:boolean" />
+        <xsd:attribute name="inheritParentSRT" type="xsd:boolean" />
+        <xsd:attribute name="slot" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="Accessory_BaseParticle">
+        <xsd:attribute name="emitter" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="Accessory_RaceData">
+        <xsd:sequence>
+            <xsd:element name="DataPerParts" type="Accessory_RaceData_DataPerParts" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="slot" type="xsd:string" use="required" />
+        <xsd:attribute name="templateId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="Accessory_RaceData_DataPerParts">
+        <xsd:sequence>
+            <xsd:element name="PartParticle" type="Accessory_RaceData_DataPerParts_PartParticle" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Particle" type="Accessory_RaceData_DataPerParts_Particle" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="animSet" type="xsd:string" />
+        <xsd:attribute name="attachBone" type="xsd:string" />
+        <xsd:attribute name="grade" type="xsd:string" />
+        <xsd:attribute name="mesh" type="xsd:string" />
+        <xsd:attribute name="partsId" type="xsd:int" use="required" />
+        <xsd:attribute name="physicsAsset" type="xsd:string" />
+        <xsd:attribute name="pos" type="xsd:string" />
+        <xsd:attribute name="rot" type="xsd:string" />
+        <xsd:attribute name="scale" type="xsd:string" />
+        <xsd:attribute name="type" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="Accessory_RaceData_DataPerParts_PartParticle">
+        <xsd:attribute name="attachBone" type="xsd:string" use="required" />
+        <xsd:attribute name="emitter" type="xsd:string" use="required" />
+        <xsd:attribute name="pos" type="xsd:string" use="required" />
+        <xsd:attribute name="rot" type="xsd:string" use="required" />
+        <xsd:attribute name="scale" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="Accessory_RaceData_DataPerParts_Particle">
+        <xsd:attribute name="attachBone" type="xsd:string" use="required" />
+        <xsd:attribute name="emitter" type="xsd:string" use="required" />
+        <xsd:attribute name="pos" type="xsd:string" use="required" />
+        <xsd:attribute name="rot" type="xsd:string" use="required" />
+        <xsd:attribute name="scale" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="Accessory" type="Accessory" />
+</xsd:schema>

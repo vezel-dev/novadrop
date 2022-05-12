@@ -1,0 +1,69 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ClassInfo"
+            targetNamespace="https://vezel.dev/novadrop/dc/ClassInfo"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ClassInfo">
+        <xsd:sequence>
+            <xsd:element name="ClassGaugeInfoData" type="ClassInfo_ClassGaugeInfoData" />
+            <xsd:element name="ClassPopupInfo" type="ClassInfo_ClassPopupInfo" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ClassInfo_ClassGaugeInfoData">
+        <xsd:sequence>
+            <xsd:element name="GaugeInfo" type="ClassInfo_ClassGaugeInfoData_GaugeInfo" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="gaugeMax" type="xsd:int" use="required" />
+        <xsd:attribute name="maxGauge" type="xsd:int" use="required" />
+        <xsd:attribute name="minGauge" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ClassInfo_ClassGaugeInfoData_GaugeInfo">
+        <xsd:sequence>
+            <xsd:element name="Info" type="ClassInfo_ClassGaugeInfoData_GaugeInfo_Info" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="className" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ClassInfo_ClassGaugeInfoData_GaugeInfo_Info"
+                     dc:keys="infoId">
+        <xsd:attribute name="gaugeInfo" type="xsd:int" use="required" />
+        <xsd:attribute name="infoId" type="xsd:int" use="required" />
+        <xsd:attribute name="infoName" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ClassInfo_ClassPopupInfo">
+        <xsd:sequence>
+            <xsd:element name="Popup" type="ClassInfo_ClassPopupInfo_Popup" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="restrictedString" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ClassInfo_ClassPopupInfo_Popup">
+        <xsd:sequence>
+            <xsd:element name="Button" type="ClassInfo_ClassPopupInfo_Popup_Button" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="class" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+        <xsd:attribute name="title" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ClassInfo_ClassPopupInfo_Popup_Button">
+        <xsd:attribute name="class" type="xsd:string" use="required" />
+        <xsd:attribute name="gender" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="race" type="xsd:string" use="required" />
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ClassInfo" type="ClassInfo" />
+</xsd:schema>

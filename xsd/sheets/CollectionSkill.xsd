@@ -1,0 +1,34 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/CollectionSkill"
+            targetNamespace="https://vezel.dev/novadrop/dc/CollectionSkill"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="CollectionSkill">
+        <xsd:sequence>
+            <xsd:element name="PickEnvironment" type="CollectionSkill_PickEnvironment" />
+            <xsd:element name="PickSkills" type="CollectionSkill_PickSkills" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CollectionSkill_PickEnvironment">
+        <xsd:attribute name="correctionValue" type="xsd:int" use="required" />
+        <xsd:attribute name="maxProficiencyLimit" type="xsd:int" use="required" />
+        <xsd:attribute name="profCorrectionDivier" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CollectionSkill_PickSkills">
+        <xsd:sequence>
+            <xsd:element name="PickSkill" type="CollectionSkill_PickSkills_PickSkill" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CollectionSkill_PickSkills_PickSkill">
+        <xsd:attribute name="gradeProficiencyLimit" type="xsd:int" use="required" />
+        <xsd:attribute name="pickSkillType" type="xsd:int" use="required" />
+        <xsd:attribute name="skillGrade" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="CollectionSkill" type="CollectionSkill" />
+</xsd:schema>

@@ -1,0 +1,64 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/PvpSystem"
+            targetNamespace="https://vezel.dev/novadrop/dc/PvpSystem"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="PvpSystem">
+        <xsd:sequence>
+            <xsd:element name="CurseRemoveScroll" type="PvpSystem_CurseRemoveScroll" />
+            <xsd:element name="CursedDreamPiece" type="PvpSystem_CursedDreamPiece" />
+            <xsd:element name="PkConsumptionModTable" type="PvpSystem_PkConsumptionModTable" />
+            <xsd:element name="PkConsumptionTable" type="PvpSystem_PkConsumptionTable" />
+            <xsd:element name="PkEnvironment" type="PvpSystem_PkEnvironment" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PvpSystem_CurseRemoveScroll">
+        <xsd:attribute name="itemTemplateId" type="xsd:int" use="required" />
+        <xsd:attribute name="removeProbability" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PvpSystem_CursedDreamPiece">
+        <xsd:attribute name="destroyRevision" type="xsd:float" use="required" />
+        <xsd:attribute name="guildWarRevision" type="xsd:float" use="required" />
+        <xsd:attribute name="itemTemplateId" type="xsd:int" use="required" />
+        <xsd:attribute name="revisionRate" type="xsd:float" use="required" />
+        <xsd:attribute name="value" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PvpSystem_PkConsumptionModTable">
+        <xsd:sequence>
+            <xsd:element name="PkConsumptionMod" type="PvpSystem_PkConsumptionModTable_PkConsumptionMod" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PvpSystem_PkConsumptionModTable_PkConsumptionMod">
+        <xsd:attribute name="maxLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="minLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="mod" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PvpSystem_PkConsumptionTable">
+        <xsd:sequence>
+            <xsd:element name="PkComsumption" type="PvpSystem_PkConsumptionTable_PkComsumption" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PvpSystem_PkConsumptionTable_PkComsumption">
+        <xsd:attribute name="count" type="xsd:int" use="required" />
+        <xsd:attribute name="maxLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="minLevel" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PvpSystem_PkEnvironment">
+        <xsd:attribute name="pkCompensationRate" type="xsd:float" use="required" />
+        <xsd:attribute name="pkConsumptionItemTemplateId" type="xsd:int" use="required" />
+        <xsd:attribute name="pkDeclareRange" type="xsd:int" use="required" />
+        <xsd:attribute name="pkSetTime" type="xsd:int" use="required" />
+        <xsd:attribute name="pkUpkeepTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="PvpSystem" type="PvpSystem" />
+</xsd:schema>

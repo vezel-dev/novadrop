@@ -1,0 +1,21 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/HighwaySound"
+            targetNamespace="https://vezel.dev/novadrop/dc/HighwaySound"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="HighwaySound">
+        <xsd:sequence>
+            <xsd:element name="Sound" type="HighwaySound_Sound" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HighwaySound_Sound">
+        <xsd:attribute name="enter" type="xsd:string" use="required" />
+        <xsd:attribute name="leave" type="xsd:string" use="required" />
+        <xsd:attribute name="loop" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="HighwaySound" type="HighwaySound" />
+</xsd:schema>

@@ -1,0 +1,21 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/VehicleExSoundData"
+            targetNamespace="https://vezel.dev/novadrop/dc/VehicleExSoundData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="VehicleExSoundData">
+        <xsd:sequence>
+            <xsd:element name="VehicleExSound" type="VehicleExSoundData_VehicleExSound" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="VehicleExSoundData_VehicleExSound">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="rotateBlockSound" type="xsd:string" use="required" />
+        <xsd:attribute name="rotateSound" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="VehicleExSoundData" type="VehicleExSoundData" />
+</xsd:schema>

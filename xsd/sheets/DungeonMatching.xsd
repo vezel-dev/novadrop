@@ -1,0 +1,95 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/DungeonMatching"
+            targetNamespace="https://vezel.dev/novadrop/dc/DungeonMatching"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="DungeonMatching">
+        <xsd:sequence>
+            <xsd:element name="ClassPosition" type="DungeonMatching_ClassPosition" />
+            <xsd:element name="Compensation" type="DungeonMatching_Compensation" />
+            <xsd:element name="Dungeon" type="DungeonMatching_Dungeon" maxOccurs="unbounded" />
+            <xsd:element name="MatchingStateDisplay" type="DungeonMatching_MatchingStateDisplay" />
+            <xsd:element name="MatchingTimeDisplay" type="DungeonMatching_MatchingTimeDisplay" />
+            <xsd:element name="Penalty" type="DungeonMatching_Penalty" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonMatching_ClassPosition">
+        <xsd:sequence>
+            <xsd:element name="Class" type="DungeonMatching_ClassPosition_Class" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonMatching_ClassPosition_Class">
+        <xsd:attribute name="defaultPosition" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="secondPosition" type="xsd:int" use="required" />
+        <xsd:attribute name="secondPositionLevel" type="xsd:int" />
+        <xsd:attribute name="thirdPosition" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonMatching_Compensation">
+        <xsd:sequence>
+            <xsd:element name="AddEntry" type="DungeonMatching_Compensation_AddEntry" />
+            <xsd:element name="DungeonClear" type="DungeonMatching_Compensation_DungeonClear" />
+            <xsd:element name="PositionCall" type="DungeonMatching_Compensation_PositionCall" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonMatching_Compensation_AddEntry">
+        <xsd:attribute name="addItemAmount" type="xsd:int" use="required" />
+        <xsd:attribute name="addItemTemplateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonMatching_Compensation_DungeonClear">
+        <xsd:attribute name="addItemAmount" type="xsd:int" use="required" />
+        <xsd:attribute name="addItemTemplateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonMatching_Compensation_PositionCall">
+        <xsd:attribute name="addItemAmount" type="xsd:int" use="required" />
+        <xsd:attribute name="addItemTemplateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonMatching_Dungeon">
+        <xsd:sequence>
+            <xsd:element name="ClearCondition" type="DungeonMatching_Dungeon_ClearCondition" minOccurs="0" />
+            <xsd:element name="NeedItem" type="DungeonMatching_Dungeon_NeedItem" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="dungeonLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="dungeonMaxLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="dungeonMinLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="matchingRoleId" type="xsd:int" use="required" />
+        <xsd:attribute name="minItemLevel" type="xsd:float" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonMatching_Dungeon_ClearCondition">
+        <xsd:attribute name="amount" type="xsd:int" use="required" />
+        <xsd:attribute name="huntingZoneId" type="xsd:int" use="required" />
+        <xsd:attribute name="killCount" type="xsd:int" use="required" />
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonMatching_Dungeon_NeedItem">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonMatching_MatchingStateDisplay">
+        <xsd:attribute name="refreshTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonMatching_MatchingTimeDisplay">
+        <xsd:attribute name="refreshTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonMatching_Penalty">
+        <xsd:attribute name="withdrawalAbnormalitySec" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="DungeonMatching" type="DungeonMatching" />
+</xsd:schema>

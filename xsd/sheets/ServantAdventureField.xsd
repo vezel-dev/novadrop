@@ -1,0 +1,49 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ServantAdventureField"
+            targetNamespace="https://vezel.dev/novadrop/dc/ServantAdventureField"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ServantAdventureField">
+        <xsd:sequence>
+            <xsd:element name="Field" type="ServantAdventureField_Field" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantAdventureField_Field">
+        <xsd:sequence>
+            <xsd:element name="Adventure" type="ServantAdventureField_Field_Adventure" maxOccurs="unbounded" />
+            <xsd:element name="FieldDescription" type="ServantAdventureField_Field_FieldDescription" />
+        </xsd:sequence>
+
+        <xsd:attribute name="continent" type="xsd:int" use="required" />
+        <xsd:attribute name="energyDecrease" type="xsd:int" use="required" />
+        <xsd:attribute name="hideField" type="xsd:boolean" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="image" type="xsd:string" use="required" />
+        <xsd:attribute name="stringid" type="xsd:int" use="required" />
+        <xsd:attribute name="territoryGroup" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantAdventureField_Field_Adventure">
+        <xsd:attribute name="criticalCompensation" type="xsd:int" use="required" />
+        <xsd:attribute name="defaultCompensation" type="xsd:int" use="required" />
+        <xsd:attribute name="defaultSuccessTime" type="xsd:string" use="required" />
+        <xsd:attribute name="servantGrade" type="xsd:int" use="required" />
+        <xsd:attribute name="servantMaxLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="servantMinLevel" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantAdventureField_Field_FieldDescription">
+        <xsd:sequence>
+            <xsd:element name="RewardItem" type="ServantAdventureField_Field_FieldDescription_RewardItem" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantAdventureField_Field_FieldDescription_RewardItem">
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ServantAdventureField" type="ServantAdventureField" />
+</xsd:schema>

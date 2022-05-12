@@ -1,0 +1,39 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/Leaderboards"
+            targetNamespace="https://vezel.dev/novadrop/dc/Leaderboards"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="Leaderboards">
+        <xsd:sequence>
+            <xsd:element name="ContentsTypeList" type="Leaderboards_ContentsTypeList" maxOccurs="unbounded" />
+            <xsd:element name="LeaderboardWindow" type="Leaderboards_LeaderboardWindow" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Leaderboards_ContentsTypeList">
+        <xsd:sequence>
+            <xsd:element name="ContentInfo" type="Leaderboards_ContentsTypeList_ContentInfo" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="sortId" type="xsd:int" use="required" />
+        <xsd:attribute name="stringId" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="Leaderboards_ContentsTypeList_ContentInfo">
+        <xsd:attribute name="conditionTooltipId" type="xsd:int" use="required" />
+        <xsd:attribute name="extraTooltipId" type="xsd:int" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="sort" type="xsd:int" use="required" />
+        <xsd:attribute name="stageShow" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:complexType name="Leaderboards_LeaderboardWindow">
+        <xsd:attribute name="columnStringIdList" type="xsd:string" use="required" />
+        <xsd:attribute name="updateIntervalSec" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="Leaderboards" type="Leaderboards" />
+</xsd:schema>

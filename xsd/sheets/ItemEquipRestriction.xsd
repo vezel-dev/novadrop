@@ -1,0 +1,29 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ItemEquipRestriction"
+            targetNamespace="https://vezel.dev/novadrop/dc/ItemEquipRestriction"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ItemEquipRestriction">
+        <xsd:sequence>
+            <xsd:element name="AllowedItems" type="ItemEquipRestriction_AllowedItems" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ItemEquipRestriction_AllowedItems">
+        <xsd:sequence>
+            <xsd:element name="Item" type="ItemEquipRestriction_AllowedItems_Item" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="battleFieldId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ItemEquipRestriction_AllowedItems_Item">
+        <xsd:attribute name="effectiveItemTemplateId" type="xsd:int" use="required" />
+        <xsd:attribute name="invenPos" type="xsd:int" use="required" />
+        <xsd:attribute name="userClass" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ItemEquipRestriction" type="ItemEquipRestriction" />
+</xsd:schema>

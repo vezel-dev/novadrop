@@ -1,0 +1,130 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/BattleInfoData"
+            targetNamespace="https://vezel.dev/novadrop/dc/BattleInfoData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="BattleInfoData">
+        <xsd:sequence>
+            <xsd:element name="DamageText" type="BattleInfoData_DamageText" />
+            <xsd:element name="TimeTable" type="BattleInfoData_TimeTable" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleInfoData_DamageText">
+        <xsd:sequence>
+            <xsd:element name="AttackWeight" type="BattleInfoData_DamageText_AttackWeight" />
+            <xsd:element name="DamageTextForm" type="BattleInfoData_DamageText_DamageTextForm" />
+            <xsd:element name="FontPositionSetting" type="BattleInfoData_DamageText_FontPositionSetting" />
+            <xsd:element name="FontSizeAdjustment" type="BattleInfoData_DamageText_FontSizeAdjustment" />
+            <xsd:element name="ScaleDistance" type="BattleInfoData_DamageText_ScaleDistance" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleInfoData_DamageText_AttackWeight">
+        <xsd:sequence>
+            <xsd:element name="Format" type="BattleInfoData_DamageText_AttackWeight_Format" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleInfoData_DamageText_AttackWeight_Format">
+        <xsd:attribute name="endWeight" type="xsd:float" use="required" />
+        <xsd:attribute name="ratio" type="xsd:float" use="required" />
+        <xsd:attribute name="startWeight" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleInfoData_DamageText_DamageTextForm">
+        <xsd:sequence>
+            <xsd:element name="Format" type="BattleInfoData_DamageText_DamageTextForm_Format" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleInfoData_DamageText_DamageTextForm_Format">
+        <xsd:attribute name="color" type="xsd:string" use="required" />
+        <xsd:attribute name="followOffset" type="xsd:string" />
+        <xsd:attribute name="followPlayer" type="xsd:boolean" />
+        <xsd:attribute name="font" type="xsd:string" use="required" />
+        <xsd:attribute name="isAttacker" type="xsd:boolean" />
+        <xsd:attribute name="kind" type="xsd:string" />
+        <xsd:attribute name="lifeTime" type="xsd:float" use="required" />
+        <xsd:attribute name="nocTanGrade" type="xsd:int" />
+        <xsd:attribute name="performer" type="xsd:string" use="required" />
+        <xsd:attribute name="postfix" type="xsd:string" />
+        <xsd:attribute name="prefix" type="xsd:string" />
+        <xsd:attribute name="ratio" type="xsd:float" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleInfoData_DamageText_FontPositionSetting">
+        <xsd:attribute name="fixedFontZOffset" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleInfoData_DamageText_FontSizeAdjustment">
+        <xsd:attribute name="maxFontSize" type="xsd:int" use="required" />
+        <xsd:attribute name="minFontSize" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleInfoData_DamageText_ScaleDistance">
+        <xsd:sequence>
+            <xsd:element name="Format" type="BattleInfoData_DamageText_ScaleDistance_Format" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleInfoData_DamageText_ScaleDistance_Format">
+        <xsd:attribute name="endDistance" type="xsd:float" use="required" />
+        <xsd:attribute name="ratio" type="xsd:float" use="required" />
+        <xsd:attribute name="startDistance" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleInfoData_TimeTable">
+        <xsd:sequence>
+            <xsd:element name="ColorTable" type="BattleInfoData_TimeTable_ColorTable" />
+            <xsd:element name="PositionTable" type="BattleInfoData_TimeTable_PositionTable" />
+            <xsd:element name="ScaleTable" type="BattleInfoData_TimeTable_ScaleTable" />
+        </xsd:sequence>
+
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleInfoData_TimeTable_ColorTable">
+        <xsd:sequence>
+            <xsd:element name="Point" type="BattleInfoData_TimeTable_ColorTable_Point" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleInfoData_TimeTable_ColorTable_Point">
+        <xsd:attribute name="color" type="xsd:string" use="required" />
+        <xsd:attribute name="easeInOut" type="xsd:boolean" use="required" />
+        <xsd:attribute name="power" type="xsd:float" use="required" />
+        <xsd:attribute name="time" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleInfoData_TimeTable_PositionTable">
+        <xsd:sequence>
+            <xsd:element name="Point" type="BattleInfoData_TimeTable_PositionTable_Point" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleInfoData_TimeTable_PositionTable_Point">
+        <xsd:attribute name="easeInOut" type="xsd:boolean" use="required" />
+        <xsd:attribute name="pos" type="xsd:string" use="required" />
+        <xsd:attribute name="power" type="xsd:float" use="required" />
+        <xsd:attribute name="time" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleInfoData_TimeTable_ScaleTable">
+        <xsd:sequence>
+            <xsd:element name="Point" type="BattleInfoData_TimeTable_ScaleTable_Point" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BattleInfoData_TimeTable_ScaleTable_Point">
+        <xsd:attribute name="easeInOut" type="xsd:boolean" use="required" />
+        <xsd:attribute name="power" type="xsd:float" use="required" />
+        <xsd:attribute name="scale" type="xsd:string" use="required" />
+        <xsd:attribute name="time" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="BattleInfoData" type="BattleInfoData" />
+</xsd:schema>

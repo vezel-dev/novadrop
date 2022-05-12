@@ -1,0 +1,60 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/AccessoryTransformSettingList"
+            targetNamespace="https://vezel.dev/novadrop/dc/AccessoryTransformSettingList"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="AccessoryTransformSettingList">
+        <xsd:sequence>
+            <xsd:element name="AccessoryTransformSetting" type="AccessoryTransformSettingList_AccessoryTransformSetting" maxOccurs="unbounded" />
+            <xsd:element name="AccessoryTransformTitleTextSetting" type="AccessoryTransformSettingList_AccessoryTransformTitleTextSetting" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AccessoryTransformSettingList_AccessoryTransformSetting">
+        <xsd:sequence>
+            <xsd:element name="TransformNode" type="AccessoryTransformSettingList_AccessoryTransformSetting_TransformNode" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="gender" type="xsd:string" use="required" />
+        <xsd:attribute name="race" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AccessoryTransformSettingList_AccessoryTransformSetting_TransformNode">
+        <xsd:sequence>
+            <xsd:element name="TransformAxis" type="AccessoryTransformSettingList_AccessoryTransformSetting_TransformNode_TransformAxis" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="delta" type="xsd:float" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AccessoryTransformSettingList_AccessoryTransformSetting_TransformNode_TransformAxis">
+        <xsd:attribute name="max" type="xsd:int" use="required" />
+        <xsd:attribute name="min" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AccessoryTransformSettingList_AccessoryTransformTitleTextSetting">
+        <xsd:sequence>
+            <xsd:element name="AccessoryTransformTitleType" type="AccessoryTransformSettingList_AccessoryTransformTitleTextSetting_AccessoryTransformTitleType" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AccessoryTransformSettingList_AccessoryTransformTitleTextSetting_AccessoryTransformTitleType">
+        <xsd:sequence>
+            <xsd:element name="AccessoryTransformText" type="AccessoryTransformSettingList_AccessoryTransformTitleTextSetting_AccessoryTransformTitleType_AccessoryTransformText" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AccessoryTransformSettingList_AccessoryTransformTitleTextSetting_AccessoryTransformTitleType_AccessoryTransformText">
+        <xsd:attribute name="maxtext" type="xsd:string" use="required" />
+        <xsd:attribute name="mintext" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:element name="AccessoryTransformSettingList" type="AccessoryTransformSettingList" />
+</xsd:schema>

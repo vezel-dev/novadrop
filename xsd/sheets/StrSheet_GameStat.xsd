@@ -1,0 +1,20 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/StrSheet_GameStat"
+            targetNamespace="https://vezel.dev/novadrop/dc/StrSheet_GameStat"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="StrSheet_GameStat">
+        <xsd:sequence>
+            <xsd:element name="String" type="StrSheet_GameStat_String" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="StrSheet_GameStat_String">
+        <xsd:attribute name="readableId" type="xsd:string" use="required" />
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="StrSheet_GameStat" type="StrSheet_GameStat" />
+</xsd:schema>

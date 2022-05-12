@@ -1,0 +1,116 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/S1ActionScripts"
+            targetNamespace="https://vezel.dev/novadrop/dc/S1ActionScripts"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="S1ActionScripts">
+        <xsd:sequence>
+            <xsd:element name="Script" type="S1ActionScripts_Script" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="S1ActionScripts_Script"
+                     dc:keys="id">
+        <xsd:sequence>
+            <xsd:element name="Action" type="S1ActionScripts_Script_Action" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="InitState" type="S1ActionScripts_Script_InitState" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="sState" type="S1ActionScripts_Script_sState" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="applySkillTimeRate" type="xsd:boolean" />
+        <xsd:attribute name="channel" type="xsd:int" />
+        <xsd:attribute name="enableInput" type="xsd:boolean" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="isOnlyPlayerTarget" type="xsd:boolean" />
+        <xsd:attribute name="isStopActionEnd" type="xsd:boolean" />
+        <xsd:attribute name="playingTime" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="S1ActionScripts_Script_Action">
+        <xsd:sequence>
+            <xsd:element name="Action" type="S1ActionScripts_Script_Action" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="InitState" type="S1ActionScripts_Script_Action_InitState" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="aeroSet" type="xsd:string" />
+        <xsd:attribute name="animName" type="xsd:string" />
+        <xsd:attribute name="blendInTime" type="xsd:float" />
+        <xsd:attribute name="blendTime" type="xsd:float" />
+        <xsd:attribute name="blink" type="xsd:boolean" />
+        <xsd:attribute name="cueName" type="xsd:string" />
+        <xsd:attribute name="dPadTextIdList" type="xsd:string" />
+        <xsd:attribute name="despawnScriptId" type="xsd:int" />
+        <xsd:attribute name="dir" type="xsd:int" />
+        <xsd:attribute name="dirType" type="xsd:string" />
+        <xsd:attribute name="distance" type="xsd:float" />
+        <xsd:attribute name="distanceLimit" type="xsd:float" />
+        <xsd:attribute name="duration" type="xsd:int" />
+        <xsd:attribute name="effectId" type="xsd:int" />
+        <xsd:attribute name="eventDialogId" type="xsd:int" />
+        <xsd:attribute name="from" type="xsd:float" />
+        <xsd:attribute name="fromTemplateId" type="xsd:int" />
+        <xsd:attribute name="huntingZoneId" type="xsd:int" />
+        <xsd:attribute name="isFinal" type="xsd:boolean" />
+        <xsd:attribute name="isOnlyPlayerTarget" type="xsd:boolean" />
+        <xsd:attribute name="keyTextIdList" type="xsd:string" />
+        <xsd:attribute name="message" type="xsd:string" />
+        <xsd:attribute name="moveAnim" type="xsd:string" />
+        <xsd:attribute name="name" type="xsd:string" />
+        <xsd:attribute name="objectId" type="xsd:int" />
+        <xsd:attribute name="on" type="xsd:boolean" />
+        <xsd:attribute name="param" type="xsd:string" />
+        <xsd:attribute name="pitch" type="xsd:float" />
+        <xsd:attribute name="playAttachedEffect" type="xsd:boolean" />
+        <xsd:attribute name="pos" type="xsd:string" />
+        <xsd:attribute name="postfix" type="xsd:string" />
+        <xsd:attribute name="postprocessSet" type="xsd:int" />
+        <xsd:attribute name="power" type="xsd:float" />
+        <xsd:attribute name="prob" type="xsd:float" />
+        <xsd:attribute name="radius" type="xsd:float" />
+        <xsd:attribute name="rate" type="xsd:float" />
+        <xsd:attribute name="rot" type="xsd:string" />
+        <xsd:attribute name="scale" type="xsd:float" />
+        <xsd:attribute name="scriptId" type="xsd:int" />
+        <xsd:attribute name="shapeId" type="xsd:int" />
+        <xsd:attribute name="showChat" type="xsd:boolean" />
+        <xsd:attribute name="skillId" type="xsd:int" />
+        <xsd:attribute name="socialMotionId" type="xsd:int" />
+        <xsd:attribute name="spawnScriptId" type="xsd:int" />
+        <xsd:attribute name="speed" type="xsd:int" />
+        <xsd:attribute name="style" type="xsd:string" />
+        <xsd:attribute name="tag" type="xsd:string" />
+        <xsd:attribute name="templateId" type="xsd:int" />
+        <xsd:attribute name="textId" type="xsd:int" />
+        <xsd:attribute name="time" type="xsd:int" />
+        <xsd:attribute name="to" type="xsd:float" />
+        <xsd:attribute name="toTemplateId" type="xsd:int" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+        <xsd:attribute name="visibility" type="xsd:boolean" />
+        <xsd:attribute name="volume" type="xsd:float" />
+        <xsd:attribute name="waitAnim" type="xsd:string" />
+        <xsd:attribute name="xPadTextIdList" type="xsd:string" />
+        <xsd:attribute name="yaw" type="xsd:float" />
+    </xsd:complexType>
+
+    <xsd:complexType name="S1ActionScripts_Script_Action_InitState">
+        <xsd:attribute name="visible" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="S1ActionScripts_Script_InitState">
+        <xsd:attribute name="scale" type="xsd:float" />
+        <xsd:attribute name="time" type="xsd:int" />
+        <xsd:attribute name="translate" type="xsd:float" />
+        <xsd:attribute name="unmount" type="xsd:boolean" />
+        <xsd:attribute name="visible" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:complexType name="S1ActionScripts_Script_sState">
+        <xsd:attribute name="visible" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="S1ActionScripts" type="S1ActionScripts" />
+</xsd:schema>

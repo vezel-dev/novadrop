@@ -1,0 +1,22 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/AeroSet"
+            targetNamespace="https://vezel.dev/novadrop/dc/AeroSet"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="AeroSet">
+        <xsd:sequence>
+            <xsd:element name="Continent" type="AeroSet_Continent" />
+        </xsd:sequence>
+
+        <xsd:attribute name="defaultAeroSet" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AeroSet_Continent">
+        <xsd:attribute name="aeroSet" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="AeroSet" type="AeroSet" />
+</xsd:schema>

@@ -1,0 +1,63 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/StackAttendanceEvent"
+            targetNamespace="https://vezel.dev/novadrop/dc/StackAttendanceEvent"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="StackAttendanceEvent">
+        <xsd:sequence>
+            <xsd:element name="Button" type="StackAttendanceEvent_Button" />
+            <xsd:element name="CheckConditions" type="StackAttendanceEvent_CheckConditions" />
+            <xsd:element name="IconTooltip" type="StackAttendanceEvent_IconTooltip" />
+            <xsd:element name="MainMenu" type="StackAttendanceEvent_MainMenu" />
+            <xsd:element name="RewardTypes" type="StackAttendanceEvent_RewardTypes" />
+        </xsd:sequence>
+
+        <xsd:attribute name="resetHourString" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="StackAttendanceEvent_Button">
+        <xsd:sequence>
+            <xsd:element name="ButtonToolTip" type="StackAttendanceEvent_Button_ButtonToolTip" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="StackAttendanceEvent_Button_ButtonToolTip">
+        <xsd:attribute name="buttonToolTip_1" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="StackAttendanceEvent_CheckConditions">
+        <xsd:sequence>
+            <xsd:element name="CheckCondition" type="StackAttendanceEvent_CheckConditions_CheckCondition" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="StackAttendanceEvent_CheckConditions_CheckCondition">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="StackAttendanceEvent_IconTooltip">
+        <xsd:attribute name="tooltipAttended" type="xsd:string" use="required" />
+        <xsd:attribute name="tooltipNotAttended" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="StackAttendanceEvent_MainMenu">
+        <xsd:attribute name="notReceived" type="xsd:string" use="required" />
+        <xsd:attribute name="received" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="StackAttendanceEvent_RewardTypes">
+        <xsd:sequence>
+            <xsd:element name="RewardType" type="StackAttendanceEvent_RewardTypes_RewardType" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="StackAttendanceEvent_RewardTypes_RewardType">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="StackAttendanceEvent" type="StackAttendanceEvent" />
+</xsd:schema>

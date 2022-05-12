@@ -1,0 +1,30 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/UserShape"
+            targetNamespace="https://vezel.dev/novadrop/dc/UserShape"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="UserShape">
+        <xsd:sequence>
+            <xsd:element name="Shape" type="UserShape_Shape" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="UserShape_Shape"
+                     dc:keys="id">
+        <xsd:attribute name="baseRunSpeed" type="xsd:float" use="required" />
+        <xsd:attribute name="baseUnarmedRunSpeed" type="xsd:float" use="required" />
+        <xsd:attribute name="bodyFxSize" type="xsd:float" use="required" />
+        <xsd:attribute name="branchStartBoneName" type="xsd:string" use="required" />
+        <xsd:attribute name="defaultBody" type="xsd:int" use="required" />
+        <xsd:attribute name="defaultFoot" type="xsd:int" use="required" />
+        <xsd:attribute name="defaultHand" type="xsd:int" use="required" />
+        <xsd:attribute name="defaultWeapon" type="xsd:int" use="required" />
+        <xsd:attribute name="hitEffectId" type="xsd:int" use="required" />
+        <xsd:attribute name="hitEffectId2" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="UserShape" type="UserShape" />
+</xsd:schema>

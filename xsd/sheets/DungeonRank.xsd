@@ -1,0 +1,31 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/DungeonRank"
+            targetNamespace="https://vezel.dev/novadrop/dc/DungeonRank"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="DungeonRank">
+        <xsd:sequence>
+            <xsd:element name="Settings" type="DungeonRank_Settings" />
+            <xsd:element name="StageData" type="DungeonRank_StageData" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="continentId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonRank_Settings" />
+
+    <xsd:complexType name="DungeonRank_StageData">
+        <xsd:sequence>
+            <xsd:element name="Stage" type="DungeonRank_StageData_Stage" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonRank_StageData_Stage">
+        <xsd:attribute name="grade" type="xsd:int" use="required" />
+        <xsd:attribute name="minPoint" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="DungeonRank" type="DungeonRank" />
+</xsd:schema>

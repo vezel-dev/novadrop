@@ -1,0 +1,22 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/DefaultSkillSet"
+            targetNamespace="https://vezel.dev/novadrop/dc/DefaultSkillSet"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="DefaultSkillSet">
+        <xsd:sequence>
+            <xsd:element name="Default" type="DefaultSkillSet_Default" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DefaultSkillSet_Default">
+        <xsd:attribute name="activeSkillIdList" type="xsd:string" use="required" />
+        <xsd:attribute name="class" type="xsd:string" use="required" />
+        <xsd:attribute name="gender" type="xsd:string" use="required" />
+        <xsd:attribute name="race" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="DefaultSkillSet" type="DefaultSkillSet" />
+</xsd:schema>

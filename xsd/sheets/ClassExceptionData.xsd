@@ -1,0 +1,41 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ClassExceptionData"
+            targetNamespace="https://vezel.dev/novadrop/dc/ClassExceptionData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ClassExceptionData">
+        <xsd:sequence>
+            <xsd:element name="Condition" type="ClassExceptionData_Condition" maxOccurs="unbounded" />
+            <xsd:element name="DeathPostProcess" type="ClassExceptionData_DeathPostProcess" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ClassExceptionData_Condition">
+        <xsd:attribute name="class" type="xsd:string" use="required" />
+        <xsd:attribute name="maxLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="minLevel" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ClassExceptionData_DeathPostProcess">
+        <xsd:sequence>
+            <xsd:element name="Action" type="ClassExceptionData_DeathPostProcess_Action" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="abnormalityId" type="xsd:int" use="required" />
+        <xsd:attribute name="class" type="xsd:string" use="required" />
+        <xsd:attribute name="postprocessId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ClassExceptionData_DeathPostProcess_Action">
+        <xsd:attribute name="duration" type="xsd:float" use="required" />
+        <xsd:attribute name="from" type="xsd:float" use="required" />
+        <xsd:attribute name="materialName" type="xsd:string" use="required" />
+        <xsd:attribute name="param" type="xsd:string" use="required" />
+        <xsd:attribute name="time" type="xsd:float" use="required" />
+        <xsd:attribute name="to" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ClassExceptionData" type="ClassExceptionData" />
+</xsd:schema>

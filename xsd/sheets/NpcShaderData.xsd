@@ -1,0 +1,38 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/NpcShaderData"
+            targetNamespace="https://vezel.dev/novadrop/dc/NpcShaderData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="NpcShaderData">
+        <xsd:sequence>
+            <xsd:element name="Shader" type="NpcShaderData_Shader" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcShaderData_Shader">
+        <xsd:sequence>
+            <xsd:element name="Option" type="NpcShaderData_Shader_Option" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="blendIn" type="xsd:float" use="required" />
+        <xsd:attribute name="blendInExponent" type="xsd:float" />
+        <xsd:attribute name="blendOut" type="xsd:float" />
+        <xsd:attribute name="condition" type="xsd:string" use="required" />
+        <xsd:attribute name="default" type="xsd:string" use="required" />
+        <xsd:attribute name="durationMillisec" type="xsd:int" />
+        <xsd:attribute name="hitFrom" type="xsd:float" />
+        <xsd:attribute name="hitParamName" type="xsd:string" />
+        <xsd:attribute name="hitTo" type="xsd:float" />
+        <xsd:attribute name="holdSpawnMi" type="xsd:boolean" />
+        <xsd:attribute name="spawnMiPostfix" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcShaderData_Shader_Option">
+        <xsd:attribute name="shadow" type="xsd:boolean" use="required" />
+        <xsd:attribute name="weaponEffect" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="NpcShaderData" type="NpcShaderData" />
+</xsd:schema>

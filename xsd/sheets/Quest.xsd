@@ -1,0 +1,1034 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/Quest"
+            targetNamespace="https://vezel.dev/novadrop/dc/Quest"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="Quest"
+                     dc:keys="id">
+        <xsd:sequence>
+            <xsd:element name="Header" type="Quest_Header" />
+            <xsd:element name="Tasks" type="Quest_Tasks" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header">
+        <xsd:sequence>
+            <xsd:element name="ContinentId" type="Quest_Header_ContinentId" minOccurs="0" />
+            <xsd:element name="Pos" type="Quest_Header_Pos" minOccurs="0" />
+            <xsd:element name="Quest번호" type="Quest_Header_Quest번호" />
+            <xsd:element name="Quest제목" type="Quest_Header_Quest제목" />
+            <xsd:element name="반복퀘스트" type="Quest_Header_반복퀘스트" />
+            <xsd:element name="발생조건" type="Quest_Header_발생조건" minOccurs="0" />
+            <xsd:element name="수행조건" type="Quest_Header_수행조건" />
+            <xsd:element name="수행지역" type="Quest_Header_수행지역" minOccurs="0" />
+            <xsd:element name="스토리그룹Id" type="Quest_Header_스토리그룹Id" minOccurs="0" />
+            <xsd:element name="요약정보" type="Quest_Header_요약정보" minOccurs="0" />
+            <xsd:element name="적정수행레벨" type="Quest_Header_적정수행레벨" minOccurs="0" />
+            <xsd:element name="적정수행인원" type="Quest_Header_적정수행인원" minOccurs="0" />
+            <xsd:element name="집회소분류" type="Quest_Header_집회소분류" minOccurs="0" />
+            <xsd:element name="추가보상" type="Quest_Header_추가보상" minOccurs="0" />
+            <xsd:element name="퀘스트종류" type="Quest_Header_퀘스트종류" />
+            <xsd:element name="특수가이드" type="Quest_Header_특수가이드" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_ContinentId">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_Pos" />
+
+    <xsd:complexType name="Quest_Header_Quest번호">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_Quest제목">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_반복퀘스트">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_발생조건">
+        <xsd:sequence>
+            <xsd:element name="NPC대화" type="Quest_Header_발생조건_NPC대화" minOccurs="0" />
+            <xsd:element name="아이템사용" type="Quest_Header_발생조건_아이템사용" minOccurs="0" />
+            <xsd:element name="즉시수주" type="Quest_Header_발생조건_즉시수주" minOccurs="0" />
+            <xsd:element name="테리토리진입" type="Quest_Header_발생조건_테리토리진입" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_발생조건_NPC대화">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_발생조건_아이템사용">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_발생조건_즉시수주">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_발생조건_테리토리진입">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_수행조건">
+        <xsd:sequence>
+            <xsd:element name="길드레벨" type="Quest_Header_수행조건_길드레벨" minOccurs="0" />
+            <xsd:element name="선행퀘스트" type="Quest_Header_수행조건_선행퀘스트" minOccurs="0" />
+            <xsd:element name="선행퀘스트논리식" type="Quest_Header_수행조건_선행퀘스트논리식" minOccurs="0" />
+            <xsd:element name="영주길드" type="Quest_Header_수행조건_영주길드" minOccurs="0" />
+            <xsd:element name="종족" type="Quest_Header_수행조건_종족" minOccurs="0" />
+            <xsd:element name="초과레벨" type="Quest_Header_수행조건_초과레벨" minOccurs="0" />
+            <xsd:element name="최대레벨" type="Quest_Header_수행조건_최대레벨" minOccurs="0" />
+            <xsd:element name="최소레벨" type="Quest_Header_수행조건_최소레벨" />
+            <xsd:element name="최소장비레벨" type="Quest_Header_수행조건_최소장비레벨" minOccurs="0" />
+            <xsd:element name="클래스" type="Quest_Header_수행조건_클래스" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_수행조건_길드레벨">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_수행조건_선행퀘스트">
+        <xsd:sequence>
+            <xsd:element name="선행퀘스트" type="Quest_Header_수행조건_선행퀘스트_선행퀘스트" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_수행조건_선행퀘스트_선행퀘스트">
+        <xsd:sequence>
+            <xsd:element name="퀘스트Id" type="Quest_Header_수행조건_선행퀘스트_선행퀘스트_퀘스트Id" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_수행조건_선행퀘스트_선행퀘스트_퀘스트Id">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_수행조건_선행퀘스트논리식">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_수행조건_영주길드">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_수행조건_종족">
+        <xsd:sequence>
+            <xsd:element name="Aman" type="Quest_Header_수행조건_종족_Aman" minOccurs="0" />
+            <xsd:element name="Baraka" type="Quest_Header_수행조건_종족_Baraka" minOccurs="0" />
+            <xsd:element name="Castanic" type="Quest_Header_수행조건_종족_Castanic" minOccurs="0" />
+            <xsd:element name="HighElf" type="Quest_Header_수행조건_종족_HighElf" minOccurs="0" />
+            <xsd:element name="Human" type="Quest_Header_수행조건_종족_Human" minOccurs="0" />
+            <xsd:element name="Popori" type="Quest_Header_수행조건_종족_Popori" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_수행조건_종족_Aman">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_수행조건_종족_Baraka">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_수행조건_종족_Castanic">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_수행조건_종족_HighElf">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_수행조건_종족_Human">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_수행조건_종족_Popori">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_수행조건_초과레벨">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_수행조건_최대레벨">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_수행조건_최소레벨">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_수행조건_최소장비레벨">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_수행조건_클래스">
+        <xsd:sequence>
+            <xsd:element name="Archer" type="Quest_Header_수행조건_클래스_Archer" minOccurs="0" />
+            <xsd:element name="Berserker" type="Quest_Header_수행조건_클래스_Berserker" minOccurs="0" />
+            <xsd:element name="Elementalist" type="Quest_Header_수행조건_클래스_Elementalist" minOccurs="0" />
+            <xsd:element name="Engineer" type="Quest_Header_수행조건_클래스_Engineer" minOccurs="0" />
+            <xsd:element name="Lancer" type="Quest_Header_수행조건_클래스_Lancer" minOccurs="0" />
+            <xsd:element name="Priest" type="Quest_Header_수행조건_클래스_Priest" minOccurs="0" />
+            <xsd:element name="Slayer" type="Quest_Header_수행조건_클래스_Slayer" minOccurs="0" />
+            <xsd:element name="Sorcerer" type="Quest_Header_수행조건_클래스_Sorcerer" minOccurs="0" />
+            <xsd:element name="Soulless" type="Quest_Header_수행조건_클래스_Soulless" minOccurs="0" />
+            <xsd:element name="Warrior" type="Quest_Header_수행조건_클래스_Warrior" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_수행조건_클래스_Archer">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_수행조건_클래스_Berserker">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_수행조건_클래스_Elementalist">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_수행조건_클래스_Engineer">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_수행조건_클래스_Lancer">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_수행조건_클래스_Priest">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_수행조건_클래스_Slayer">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_수행조건_클래스_Sorcerer">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_수행조건_클래스_Soulless">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_수행조건_클래스_Warrior">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_수행지역">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_스토리그룹Id">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_요약정보">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_적정수행레벨">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_적정수행인원">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_집회소분류">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_추가보상" />
+
+    <xsd:complexType name="Quest_Header_퀘스트종류">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Header_특수가이드">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks">
+        <xsd:sequence>
+            <xsd:element name="Task" type="Quest_Tasks_Task" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task">
+        <xsd:sequence>
+            <xsd:element name="Body" type="Quest_Tasks_Task_Body" />
+            <xsd:element name="Header" type="Quest_Tasks_Task_Header" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body">
+        <xsd:sequence>
+            <xsd:element name="Flag아이템이름" type="Quest_Tasks_Task_Body_Flag아이템이름" minOccurs="0" />
+            <xsd:element name="대상NPC지정" type="Quest_Tasks_Task_Body_대상NPC지정" minOccurs="0" />
+            <xsd:element name="목표지역" type="Quest_Tasks_Task_Body_목표지역" minOccurs="0" />
+            <xsd:element name="몬스터그룹" type="Quest_Tasks_Task_Body_몬스터그룹" minOccurs="0" />
+            <xsd:element name="몬스터지정" type="Quest_Tasks_Task_Body_몬스터지정" minOccurs="0" />
+            <xsd:element name="반복목표" type="Quest_Tasks_Task_Body_반복목표" minOccurs="0" />
+            <xsd:element name="반복방식" type="Quest_Tasks_Task_Body_반복방식" minOccurs="0" />
+            <xsd:element name="반복횟수" type="Quest_Tasks_Task_Body_반복횟수" minOccurs="0" />
+            <xsd:element name="방문그룹" type="Quest_Tasks_Task_Body_방문그룹" minOccurs="0" />
+            <xsd:element name="보상" type="Quest_Tasks_Task_Body_보상" minOccurs="0" />
+            <xsd:element name="분기작성" type="Quest_Tasks_Task_Body_분기작성" minOccurs="0" />
+            <xsd:element name="수집아이템지정" type="Quest_Tasks_Task_Body_수집아이템지정" minOccurs="0" />
+            <xsd:element name="스킬지정" type="Quest_Tasks_Task_Body_스킬지정" minOccurs="0" />
+            <xsd:element name="아이콘지정" type="Quest_Tasks_Task_Body_아이콘지정" minOccurs="0" />
+            <xsd:element name="아이템작성" type="Quest_Tasks_Task_Body_아이템작성" minOccurs="0" />
+            <xsd:element name="아이템지정" type="Quest_Tasks_Task_Body_아이템지정" minOccurs="0" />
+            <xsd:element name="오브젝트지정" type="Quest_Tasks_Task_Body_오브젝트지정" minOccurs="0" />
+            <xsd:element name="완료조건" type="Quest_Tasks_Task_Body_완료조건" minOccurs="0" />
+            <xsd:element name="이상상태지정" type="Quest_Tasks_Task_Body_이상상태지정" minOccurs="0" />
+            <xsd:element name="저널Text" type="Quest_Tasks_Task_Body_저널Text" minOccurs="0" />
+            <xsd:element name="저널Text2" type="Quest_Tasks_Task_Body_저널Text2" minOccurs="0" />
+            <xsd:element name="전달수량" type="Quest_Tasks_Task_Body_전달수량" minOccurs="0" />
+            <xsd:element name="전달아이템지정" type="Quest_Tasks_Task_Body_전달아이템지정" minOccurs="0" />
+            <xsd:element name="전장승리" type="Quest_Tasks_Task_Body_전장승리" minOccurs="0" />
+            <xsd:element name="제한시간" type="Quest_Tasks_Task_Body_제한시간" minOccurs="0" />
+            <xsd:element name="제한시간설정" type="Quest_Tasks_Task_Body_제한시간설정" minOccurs="0" />
+            <xsd:element name="지역명" type="Quest_Tasks_Task_Body_지역명" minOccurs="0" />
+            <xsd:element name="진행조건" type="Quest_Tasks_Task_Body_진행조건" minOccurs="0" />
+            <xsd:element name="채집물지정" type="Quest_Tasks_Task_Body_채집물지정" minOccurs="0" />
+            <xsd:element name="최대Flag소지량" type="Quest_Tasks_Task_Body_최대Flag소지량" minOccurs="0" />
+            <xsd:element name="호위횟수" type="Quest_Tasks_Task_Body_호위횟수" minOccurs="0" />
+            <xsd:element name="획득점수" type="Quest_Tasks_Task_Body_획득점수" minOccurs="0" />
+            <xsd:element name="횟수" type="Quest_Tasks_Task_Body_횟수" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_Flag아이템이름">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_대상NPC지정">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_목표지역">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_몬스터그룹">
+        <xsd:sequence>
+            <xsd:element name="몬스터그룹" type="Quest_Tasks_Task_Body_몬스터그룹_몬스터그룹" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_몬스터그룹_몬스터그룹">
+        <xsd:sequence>
+            <xsd:element name="그룹이름" type="Quest_Tasks_Task_Body_몬스터그룹_몬스터그룹_그룹이름" />
+            <xsd:element name="몬스터지정" type="Quest_Tasks_Task_Body_몬스터그룹_몬스터그룹_몬스터지정" />
+            <xsd:element name="사냥마리수" type="Quest_Tasks_Task_Body_몬스터그룹_몬스터그룹_사냥마리수" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_몬스터그룹_몬스터그룹_그룹이름">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_몬스터그룹_몬스터그룹_몬스터지정">
+        <xsd:sequence>
+            <xsd:element name="몬스터지정" type="Quest_Tasks_Task_Body_몬스터그룹_몬스터그룹_몬스터지정_몬스터지정" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_몬스터그룹_몬스터그룹_몬스터지정_몬스터지정">
+        <xsd:sequence>
+            <xsd:element name="몬스터Id" type="Quest_Tasks_Task_Body_몬스터그룹_몬스터그룹_몬스터지정_몬스터지정_몬스터Id" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_몬스터그룹_몬스터그룹_몬스터지정_몬스터지정_몬스터Id">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_몬스터그룹_몬스터그룹_사냥마리수">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_몬스터지정">
+        <xsd:sequence>
+            <xsd:element name="몬스터지정" type="Quest_Tasks_Task_Body_몬스터지정_몬스터지정" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_몬스터지정_몬스터지정">
+        <xsd:sequence>
+            <xsd:element name="몬스터Id" type="Quest_Tasks_Task_Body_몬스터지정_몬스터지정_몬스터Id" />
+            <xsd:element name="사냥마리수" type="Quest_Tasks_Task_Body_몬스터지정_몬스터지정_사냥마리수" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_몬스터지정_몬스터지정_몬스터Id">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_몬스터지정_몬스터지정_사냥마리수">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_반복목표">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_반복방식">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_반복횟수">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_방문그룹">
+        <xsd:sequence>
+            <xsd:element name="방문그룹" type="Quest_Tasks_Task_Body_방문그룹_방문그룹" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_방문그룹_방문그룹">
+        <xsd:sequence>
+            <xsd:element name="NPCId" type="Quest_Tasks_Task_Body_방문그룹_방문그룹_NPCId" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_방문그룹_방문그룹_NPCId">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_보상">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_분기작성">
+        <xsd:sequence>
+            <xsd:element name="분기작성" type="Quest_Tasks_Task_Body_분기작성_분기작성" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_분기작성_분기작성">
+        <xsd:sequence>
+            <xsd:element name="분기목표지역" type="Quest_Tasks_Task_Body_분기작성_분기작성_분기목표지역" minOccurs="0" />
+            <xsd:element name="지역명" type="Quest_Tasks_Task_Body_분기작성_분기작성_지역명" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_분기작성_분기작성_분기목표지역">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_분기작성_분기작성_지역명">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_수집아이템지정">
+        <xsd:sequence>
+            <xsd:element name="수집아이템지정" type="Quest_Tasks_Task_Body_수집아이템지정_수집아이템지정" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_수집아이템지정_수집아이템지정">
+        <xsd:sequence>
+            <xsd:element name="목표수량" type="Quest_Tasks_Task_Body_수집아이템지정_수집아이템지정_목표수량" />
+            <xsd:element name="몬스터Id" type="Quest_Tasks_Task_Body_수집아이템지정_수집아이템지정_몬스터Id" minOccurs="0" />
+            <xsd:element name="획득아이템Id" type="Quest_Tasks_Task_Body_수집아이템지정_수집아이템지정_획득아이템Id" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_수집아이템지정_수집아이템지정_목표수량">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_수집아이템지정_수집아이템지정_몬스터Id">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_수집아이템지정_수집아이템지정_획득아이템Id">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_스킬지정">
+        <xsd:sequence>
+            <xsd:element name="스킬지정" type="Quest_Tasks_Task_Body_스킬지정_스킬지정" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_스킬지정_스킬지정">
+        <xsd:sequence>
+            <xsd:element name="대상NPC지정" type="Quest_Tasks_Task_Body_스킬지정_스킬지정_대상NPC지정" />
+            <xsd:element name="스킬Id" type="Quest_Tasks_Task_Body_스킬지정_스킬지정_스킬Id" />
+            <xsd:element name="횟수" type="Quest_Tasks_Task_Body_스킬지정_스킬지정_횟수" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_스킬지정_스킬지정_대상NPC지정">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_스킬지정_스킬지정_스킬Id">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_스킬지정_스킬지정_횟수">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_아이콘지정">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_아이템작성">
+        <xsd:sequence>
+            <xsd:element name="Flag아이템이름" type="Quest_Tasks_Task_Body_아이템작성_Flag아이템이름" minOccurs="0" />
+            <xsd:element name="아이콘지정" type="Quest_Tasks_Task_Body_아이템작성_아이콘지정" minOccurs="0" />
+            <xsd:element name="아이템작성" type="Quest_Tasks_Task_Body_아이템작성_아이템작성" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="전달수량" type="Quest_Tasks_Task_Body_아이템작성_전달수량" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_아이템작성_Flag아이템이름">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_아이템작성_아이콘지정">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_아이템작성_아이템작성">
+        <xsd:sequence>
+            <xsd:element name="Flag아이템이름" type="Quest_Tasks_Task_Body_아이템작성_아이템작성_Flag아이템이름" />
+            <xsd:element name="몬스터지정" type="Quest_Tasks_Task_Body_아이템작성_아이템작성_몬스터지정" />
+            <xsd:element name="아이콘지정" type="Quest_Tasks_Task_Body_아이템작성_아이템작성_아이콘지정" />
+            <xsd:element name="전달수량" type="Quest_Tasks_Task_Body_아이템작성_아이템작성_전달수량" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_아이템작성_아이템작성_Flag아이템이름">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_아이템작성_아이템작성_몬스터지정">
+        <xsd:sequence>
+            <xsd:element name="몬스터지정" type="Quest_Tasks_Task_Body_아이템작성_아이템작성_몬스터지정_몬스터지정" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_아이템작성_아이템작성_몬스터지정_몬스터지정">
+        <xsd:sequence>
+            <xsd:element name="몬스터Id" type="Quest_Tasks_Task_Body_아이템작성_아이템작성_몬스터지정_몬스터지정_몬스터Id" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_아이템작성_아이템작성_몬스터지정_몬스터지정_몬스터Id">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_아이템작성_아이템작성_아이콘지정">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_아이템작성_아이템작성_전달수량">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_아이템작성_전달수량">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_아이템지정">
+        <xsd:sequence>
+            <xsd:element name="아이템지정" type="Quest_Tasks_Task_Body_아이템지정_아이템지정" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_아이템지정_아이템지정">
+        <xsd:sequence>
+            <xsd:element name="아이템Id" type="Quest_Tasks_Task_Body_아이템지정_아이템지정_아이템Id" />
+            <xsd:element name="전달수량" type="Quest_Tasks_Task_Body_아이템지정_아이템지정_전달수량" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_아이템지정_아이템지정_아이템Id">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_아이템지정_아이템지정_전달수량">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_오브젝트지정">
+        <xsd:sequence>
+            <xsd:element name="오브젝트지정" type="Quest_Tasks_Task_Body_오브젝트지정_오브젝트지정" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_오브젝트지정_오브젝트지정">
+        <xsd:sequence>
+            <xsd:element name="동작횟수" type="Quest_Tasks_Task_Body_오브젝트지정_오브젝트지정_동작횟수" />
+            <xsd:element name="오브젝트Id" type="Quest_Tasks_Task_Body_오브젝트지정_오브젝트지정_오브젝트Id" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_오브젝트지정_오브젝트지정_동작횟수">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_오브젝트지정_오브젝트지정_오브젝트Id">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_완료조건">
+        <xsd:sequence>
+            <xsd:element name="강화시도" type="Quest_Tasks_Task_Body_완료조건_강화시도" minOccurs="0" />
+            <xsd:element name="스킬습득" type="Quest_Tasks_Task_Body_완료조건_스킬습득" minOccurs="0" />
+            <xsd:element name="아이템사용" type="Quest_Tasks_Task_Body_완료조건_아이템사용" minOccurs="0" />
+            <xsd:element name="전장승리" type="Quest_Tasks_Task_Body_완료조건_전장승리" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_완료조건_강화시도">
+        <xsd:sequence>
+            <xsd:element name="강화횟수" type="Quest_Tasks_Task_Body_완료조건_강화시도_강화횟수" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_완료조건_강화시도_강화횟수">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_완료조건_스킬습득">
+        <xsd:sequence>
+            <xsd:element name="스킬Id" type="Quest_Tasks_Task_Body_완료조건_스킬습득_스킬Id" />
+            <xsd:element name="스킬종류" type="Quest_Tasks_Task_Body_완료조건_스킬습득_스킬종류" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_완료조건_스킬습득_스킬Id">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_완료조건_스킬습득_스킬종류">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_완료조건_아이템사용">
+        <xsd:sequence>
+            <xsd:element name="아이템Id" type="Quest_Tasks_Task_Body_완료조건_아이템사용_아이템Id" />
+            <xsd:element name="아이템갯수" type="Quest_Tasks_Task_Body_완료조건_아이템사용_아이템갯수" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_완료조건_아이템사용_아이템Id">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_완료조건_아이템사용_아이템갯수">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_완료조건_전장승리">
+        <xsd:sequence>
+            <xsd:element name="승리횟수" type="Quest_Tasks_Task_Body_완료조건_전장승리_승리횟수" />
+            <xsd:element name="전장Id" type="Quest_Tasks_Task_Body_완료조건_전장승리_전장Id" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_완료조건_전장승리_승리횟수">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_완료조건_전장승리_전장Id">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_이상상태지정">
+        <xsd:sequence>
+            <xsd:element name="이상상태지정" type="Quest_Tasks_Task_Body_이상상태지정_이상상태지정" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_이상상태지정_이상상태지정">
+        <xsd:sequence>
+            <xsd:element name="몬스터Id" type="Quest_Tasks_Task_Body_이상상태지정_이상상태지정_몬스터Id" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_이상상태지정_이상상태지정_몬스터Id">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_저널Text">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_저널Text2">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_전달수량">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_전달아이템지정">
+        <xsd:sequence>
+            <xsd:element name="전달아이템지정" type="Quest_Tasks_Task_Body_전달아이템지정_전달아이템지정" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_전달아이템지정_전달아이템지정">
+        <xsd:sequence>
+            <xsd:element name="아이템Id" type="Quest_Tasks_Task_Body_전달아이템지정_전달아이템지정_아이템Id" />
+            <xsd:element name="전달수량" type="Quest_Tasks_Task_Body_전달아이템지정_전달아이템지정_전달수량" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_전달아이템지정_전달아이템지정_아이템Id">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_전달아이템지정_전달아이템지정_전달수량">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_전장승리">
+        <xsd:sequence>
+            <xsd:element name="전장승리" type="Quest_Tasks_Task_Body_전장승리_전장승리" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_전장승리_전장승리">
+        <xsd:sequence>
+            <xsd:element name="전장Id" type="Quest_Tasks_Task_Body_전장승리_전장승리_전장Id" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_전장승리_전장승리_전장Id">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_제한시간">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_제한시간설정" mixed="true">
+        <xsd:sequence>
+            <xsd:element name="제한시간" type="Quest_Tasks_Task_Body_제한시간설정_제한시간" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_제한시간설정_제한시간">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_지역명">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_진행조건">
+        <xsd:sequence>
+            <xsd:element name="사냥인원" type="Quest_Tasks_Task_Body_진행조건_사냥인원" minOccurs="0" />
+            <xsd:element name="제한시간" type="Quest_Tasks_Task_Body_진행조건_제한시간" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_진행조건_사냥인원">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_진행조건_제한시간">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_채집물지정">
+        <xsd:sequence>
+            <xsd:element name="채집물지정" type="Quest_Tasks_Task_Body_채집물지정_채집물지정" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_채집물지정_채집물지정">
+        <xsd:sequence>
+            <xsd:element name="콜렉션Id" type="Quest_Tasks_Task_Body_채집물지정_채집물지정_콜렉션Id" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_채집물지정_채집물지정_콜렉션Id">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_최대Flag소지량">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_호위횟수">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_획득점수">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Body_횟수">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Header">
+        <xsd:sequence>
+            <xsd:element name="ContinentId" type="Quest_Tasks_Task_Header_ContinentId" minOccurs="0" />
+            <xsd:element name="Id" type="Quest_Tasks_Task_Header_Id" />
+            <xsd:element name="JournalScript" type="Quest_Tasks_Task_Header_JournalScript" />
+            <xsd:element name="Pos" type="Quest_Tasks_Task_Header_Pos" minOccurs="0" />
+            <xsd:element name="다음Task" type="Quest_Tasks_Task_Header_다음Task" />
+            <xsd:element name="이름" type="Quest_Tasks_Task_Header_이름" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Header_ContinentId">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Header_Id">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Header_JournalScript">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Header_Pos">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Header_다음Task">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quest_Tasks_Task_Header_이름">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string" />
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:element name="Quest" type="Quest" />
+</xsd:schema>

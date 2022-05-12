@@ -1,0 +1,42 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/DarkRiftReward"
+            targetNamespace="https://vezel.dev/novadrop/dc/DarkRiftReward"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="DarkRiftReward">
+        <xsd:sequence>
+            <xsd:element name="EachPointReward" type="DarkRiftReward_EachPointReward" />
+            <xsd:element name="PersonalReward" type="DarkRiftReward_PersonalReward" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DarkRiftReward_EachPointReward">
+        <xsd:sequence>
+            <xsd:element name="Reward" type="DarkRiftReward_EachPointReward_Reward" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DarkRiftReward_EachPointReward_Reward">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="itemCount" type="xsd:int" use="required" />
+        <xsd:attribute name="itemTemplateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DarkRiftReward_PersonalReward">
+        <xsd:sequence>
+            <xsd:element name="Reward" type="DarkRiftReward_PersonalReward_Reward" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DarkRiftReward_PersonalReward_Reward">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="itemCount" type="xsd:int" use="required" />
+        <xsd:attribute name="itemTemplateId" type="xsd:int" use="required" />
+        <xsd:attribute name="reputationId" type="xsd:int" use="required" />
+        <xsd:attribute name="reputationPoint" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="DarkRiftReward" type="DarkRiftReward" />
+</xsd:schema>

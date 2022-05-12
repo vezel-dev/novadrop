@@ -1,0 +1,67 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/DarkRiftDisplayConfig"
+            targetNamespace="https://vezel.dev/novadrop/dc/DarkRiftDisplayConfig"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="DarkRiftDisplayConfig">
+        <xsd:sequence>
+            <xsd:element name="AeroList" type="DarkRiftDisplayConfig_AeroList" />
+            <xsd:element name="DarkRiftCloud" type="DarkRiftDisplayConfig_DarkRiftCloud" />
+            <xsd:element name="GlobalTemplate" type="DarkRiftDisplayConfig_GlobalTemplate" />
+        </xsd:sequence>
+
+        <xsd:attribute name="displayRange" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DarkRiftDisplayConfig_AeroList">
+        <xsd:sequence>
+            <xsd:element name="Aero" type="DarkRiftDisplayConfig_AeroList_Aero" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DarkRiftDisplayConfig_AeroList_Aero">
+        <xsd:attribute name="color" type="xsd:string" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="scriptId" type="xsd:int" use="required" />
+        <xsd:attribute name="step" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DarkRiftDisplayConfig_DarkRiftCloud">
+        <xsd:attribute name="aeroRadiusMultiplier" type="xsd:float" use="required" />
+        <xsd:attribute name="animSetName" type="xsd:string" use="required" />
+        <xsd:attribute name="animTreeName" type="xsd:string" use="required" />
+        <xsd:attribute name="centerDecalEffectId" type="xsd:int" use="required" />
+        <xsd:attribute name="centerDecalEffectRadius" type="xsd:float" use="required" />
+        <xsd:attribute name="centerDecalWallEffectId" type="xsd:int" use="required" />
+        <xsd:attribute name="deathScriptId" type="xsd:int" use="required" />
+        <xsd:attribute name="despawnScriptId" type="xsd:int" use="required" />
+        <xsd:attribute name="effectIdList" type="xsd:string" use="required" />
+        <xsd:attribute name="initialSpawnScriptId" type="xsd:int" use="required" />
+        <xsd:attribute name="originZOffset" type="xsd:float" use="required" />
+        <xsd:attribute name="skelName" type="xsd:string" use="required" />
+        <xsd:attribute name="spawnHeight" type="xsd:float" use="required" />
+        <xsd:attribute name="waitScriptId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DarkRiftDisplayConfig_GlobalTemplate">
+        <xsd:attribute name="aeroBlendingRadiusFactor" type="xsd:float" use="required" />
+        <xsd:attribute name="aeroCylinderHeight" type="xsd:float" use="required" />
+        <xsd:attribute name="aeroLengthOfVolume" type="xsd:int" use="required" />
+        <xsd:attribute name="areaSpreadSpeed" type="xsd:float" use="required" />
+        <xsd:attribute name="asyncLoadDistance" type="xsd:float" use="required" />
+        <xsd:attribute name="curtainSliceCount" type="xsd:int" use="required" />
+        <xsd:attribute name="curtainSliceLength" type="xsd:float" use="required" />
+        <xsd:attribute name="curtainStaticMeshName" type="xsd:string" use="required" />
+        <xsd:attribute name="mapMarkerCongestedRange" type="xsd:int" use="required" />
+        <xsd:attribute name="mapMarkerFullyCongestedRange" type="xsd:int" use="required" />
+        <xsd:attribute name="mapMarkerMildlyCongestedRange" type="xsd:int" use="required" />
+        <xsd:attribute name="partyMatchingPopupSec" type="xsd:int" use="required" />
+        <xsd:attribute name="primaryAeroWeight" type="xsd:int" use="required" />
+        <xsd:attribute name="secondaryAeroWeight" type="xsd:int" use="required" />
+        <xsd:attribute name="withdrawalScriptId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="DarkRiftDisplayConfig" type="DarkRiftDisplayConfig" />
+</xsd:schema>

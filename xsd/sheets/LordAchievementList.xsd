@@ -1,0 +1,37 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/LordAchievementList"
+            targetNamespace="https://vezel.dev/novadrop/dc/LordAchievementList"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="LordAchievementList">
+        <xsd:sequence>
+            <xsd:element name="Achievement" type="LordAchievementList_Achievement" maxOccurs="unbounded" />
+            <xsd:element name="CategoryInfo" type="LordAchievementList_CategoryInfo" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="LordAchievementList_Achievement"
+                     dc:keys="id">
+        <xsd:attribute name="categoryId" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="point" type="xsd:int" use="required" />
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+        <xsd:attribute name="value1" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LordAchievementList_CategoryInfo">
+        <xsd:sequence>
+            <xsd:element name="MainCategory" type="LordAchievementList_CategoryInfo_MainCategory" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="LordAchievementList_CategoryInfo_MainCategory">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="LordAchievementList" type="LordAchievementList" />
+</xsd:schema>

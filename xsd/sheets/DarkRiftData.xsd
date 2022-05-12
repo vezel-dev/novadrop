@@ -1,0 +1,36 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/DarkRiftData"
+            targetNamespace="https://vezel.dev/novadrop/dc/DarkRiftData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="DarkRiftData">
+        <xsd:sequence>
+            <xsd:element name="HuntingZone" type="DarkRiftData_HuntingZone" maxOccurs="unbounded" />
+            <xsd:element name="WorldMap" type="DarkRiftData_WorldMap" />
+        </xsd:sequence>
+
+        <xsd:attribute name="availableMinLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="lifeTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DarkRiftData_HuntingZone">
+        <xsd:sequence>
+            <xsd:element name="DarkRift" type="DarkRiftData_HuntingZone_DarkRift" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DarkRiftData_HuntingZone_DarkRift">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="questUserCount" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DarkRiftData_WorldMap">
+        <xsd:attribute name="guardId" type="xsd:int" use="required" />
+        <xsd:attribute name="sectionId" type="xsd:int" use="required" />
+        <xsd:attribute name="worldId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="DarkRiftData" type="DarkRiftData" />
+</xsd:schema>

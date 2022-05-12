@@ -1,0 +1,50 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/StrSheet_ActionKey"
+            targetNamespace="https://vezel.dev/novadrop/dc/StrSheet_ActionKey"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="StrSheet_ActionKey">
+        <xsd:sequence>
+            <xsd:element name="Collections" type="StrSheet_ActionKey_Collections" />
+            <xsd:element name="Villager" type="StrSheet_ActionKey_Villager" />
+            <xsd:element name="WorkObject" type="StrSheet_ActionKey_WorkObject" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="StrSheet_ActionKey_Collections">
+        <xsd:sequence>
+            <xsd:element name="String" type="StrSheet_ActionKey_Collections_String" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="StrSheet_ActionKey_Collections_String">
+        <xsd:attribute name="collectionId" type="xsd:int" use="required" />
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="StrSheet_ActionKey_Villager">
+        <xsd:sequence>
+            <xsd:element name="String" type="StrSheet_ActionKey_Villager_String" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="StrSheet_ActionKey_Villager_String">
+        <xsd:attribute name="shapeId" type="xsd:int" use="required" />
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="StrSheet_ActionKey_WorkObject">
+        <xsd:sequence>
+            <xsd:element name="String" type="StrSheet_ActionKey_WorkObject_String" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="StrSheet_ActionKey_WorkObject_String">
+        <xsd:attribute name="shapeId" type="xsd:int" use="required" />
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="StrSheet_ActionKey" type="StrSheet_ActionKey" />
+</xsd:schema>

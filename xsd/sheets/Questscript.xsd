@@ -1,0 +1,33 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/Questscript"
+            targetNamespace="https://vezel.dev/novadrop/dc/Questscript"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="Questscript">
+        <xsd:sequence>
+            <xsd:element name="Quest" type="Questscript_Quest" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Questscript_Quest">
+        <xsd:sequence>
+            <xsd:element name="Script" type="Questscript_Quest_Script" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="Questscript_Quest_Script">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                <xsd:attribute name="function_name" type="xsd:string" use="required" />
+                <xsd:attribute name="npc_class_name" type="xsd:string" use="required" />
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:element name="Questscript" type="Questscript" />
+</xsd:schema>

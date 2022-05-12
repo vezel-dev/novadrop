@@ -1,0 +1,75 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/GmEvent"
+            targetNamespace="https://vezel.dev/novadrop/dc/GmEvent"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="GmEvent">
+        <xsd:sequence>
+            <xsd:element name="GmEventMessage" type="GmEvent_GmEventMessage" />
+            <xsd:element name="GmEventTemplates" type="GmEvent_GmEventTemplates" />
+            <xsd:element name="Territory" type="GmEvent_Territory" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="GmEvent_GmEventMessage">
+        <xsd:sequence>
+            <xsd:element name="AlimWindow" type="GmEvent_GmEventMessage_AlimWindow" />
+            <xsd:element name="BoardWindow" type="GmEvent_GmEventMessage_BoardWindow" />
+            <xsd:element name="MainMenu" type="GmEvent_GmEventMessage_MainMenu" />
+            <xsd:element name="OX" type="GmEvent_GmEventMessage_OX" />
+            <xsd:element name="UserStatus" type="GmEvent_GmEventMessage_UserStatus" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="GmEvent_GmEventMessage_AlimWindow">
+        <xsd:attribute name="afterStart" type="xsd:string" use="required" />
+        <xsd:attribute name="alreadyClose" type="xsd:string" use="required" />
+        <xsd:attribute name="beforeStart" type="xsd:string" use="required" />
+        <xsd:attribute name="notRemain" type="xsd:string" use="required" />
+        <xsd:attribute name="notyetClose" type="xsd:string" use="required" />
+        <xsd:attribute name="remain" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GmEvent_GmEventMessage_BoardWindow">
+        <xsd:attribute name="quiz" type="xsd:string" use="required" />
+        <xsd:attribute name="repeQuiz" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GmEvent_GmEventMessage_MainMenu">
+        <xsd:attribute name="onEnd" type="xsd:string" use="required" />
+        <xsd:attribute name="onExceed" type="xsd:string" use="required" />
+        <xsd:attribute name="onProgress" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GmEvent_GmEventMessage_OX">
+        <xsd:attribute name="normalRewardString" type="xsd:string" use="required" />
+        <xsd:attribute name="pointRewardString" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GmEvent_GmEventMessage_UserStatus">
+        <xsd:attribute name="adminNotRunningString" type="xsd:string" use="required" />
+        <xsd:attribute name="adminRunningString" type="xsd:string" use="required" />
+        <xsd:attribute name="aliveUserString" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GmEvent_GmEventTemplates">
+        <xsd:sequence>
+            <xsd:element name="GmEventTemplate" type="GmEvent_GmEventTemplates_GmEventTemplate" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="GmEvent_GmEventTemplates_GmEventTemplate">
+        <xsd:attribute name="alimUISoundId" type="xsd:int" use="required" />
+        <xsd:attribute name="desc" type="xsd:string" use="required" />
+        <xsd:attribute name="teleportDataStringId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GmEvent_Territory">
+        <xsd:attribute name="continentId" type="xsd:int" use="required" />
+        <xsd:attribute name="minChannelId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="GmEvent" type="GmEvent" />
+</xsd:schema>

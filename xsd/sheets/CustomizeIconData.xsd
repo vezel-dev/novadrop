@@ -1,0 +1,21 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/CustomizeIconData"
+            targetNamespace="https://vezel.dev/novadrop/dc/CustomizeIconData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="CustomizeIconData">
+        <xsd:sequence>
+            <xsd:element name="Icon" type="CustomizeIconData_Icon" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CustomizeIconData_Icon"
+                     dc:keys="id">
+        <xsd:attribute name="iconName" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="CustomizeIconData" type="CustomizeIconData" />
+</xsd:schema>

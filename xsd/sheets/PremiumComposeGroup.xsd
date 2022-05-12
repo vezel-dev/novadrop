@@ -1,0 +1,111 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/PremiumComposeGroup"
+            targetNamespace="https://vezel.dev/novadrop/dc/PremiumComposeGroup"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="PremiumComposeGroup">
+        <xsd:sequence>
+            <xsd:element name="PremiumCategoryStringGroup" type="PremiumComposeGroup_PremiumCategoryStringGroup" minOccurs="0" />
+            <xsd:element name="PremiumCompose" type="PremiumComposeGroup_PremiumCompose" maxOccurs="unbounded" />
+            <xsd:element name="PremiumComposeTime" type="PremiumComposeGroup_PremiumComposeTime" minOccurs="0" />
+            <xsd:element name="RefBandWidth" type="PremiumComposeGroup_RefBandWidth" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PremiumComposeGroup_PremiumCategoryStringGroup">
+        <xsd:sequence>
+            <xsd:element name="PremiumCategoryString" type="PremiumComposeGroup_PremiumCategoryStringGroup_PremiumCategoryString" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PremiumComposeGroup_PremiumCategoryStringGroup_PremiumCategoryString">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="materialType" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PremiumComposeGroup_PremiumCompose">
+        <xsd:sequence>
+            <xsd:element name="MaterialGroup" type="PremiumComposeGroup_PremiumCompose_MaterialGroup" />
+            <xsd:element name="RewardGroup" type="PremiumComposeGroup_PremiumCompose_RewardGroup" />
+        </xsd:sequence>
+
+        <xsd:attribute name="composeSlot" type="xsd:int" use="required" />
+        <xsd:attribute name="guideText" type="xsd:int" use="required" />
+        <xsd:attribute name="itemTemplateId" type="xsd:int" use="required" />
+        <xsd:attribute name="textA" type="xsd:int" use="required" />
+        <xsd:attribute name="textB" type="xsd:int" use="required" />
+        <xsd:attribute name="textTypeAllUse" type="xsd:int" />
+        <xsd:attribute name="titleText" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PremiumComposeGroup_PremiumCompose_MaterialGroup">
+        <xsd:sequence>
+            <xsd:element name="Material" type="PremiumComposeGroup_PremiumCompose_MaterialGroup_Material" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PremiumComposeGroup_PremiumCompose_MaterialGroup_Material">
+        <xsd:sequence>
+            <xsd:element name="MaterialData" type="PremiumComposeGroup_PremiumCompose_MaterialGroup_Material_MaterialData" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="materialType" type="xsd:string" use="required" />
+        <xsd:attribute name="thisTypeAllUse" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PremiumComposeGroup_PremiumCompose_MaterialGroup_Material_MaterialData">
+        <xsd:attribute name="itemTemplateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PremiumComposeGroup_PremiumCompose_RewardGroup">
+        <xsd:sequence>
+            <xsd:element name="Reward" type="PremiumComposeGroup_PremiumCompose_RewardGroup_Reward" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PremiumComposeGroup_PremiumCompose_RewardGroup_Reward">
+        <xsd:sequence>
+            <xsd:element name="RewardData" type="PremiumComposeGroup_PremiumCompose_RewardGroup_Reward_RewardData" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="refTemplateId" type="xsd:int" />
+        <xsd:attribute name="resultAllUse" type="xsd:boolean" />
+        <xsd:attribute name="rewardComposeType" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PremiumComposeGroup_PremiumCompose_RewardGroup_Reward_RewardData">
+        <xsd:attribute name="amount" type="xsd:int" use="required" />
+        <xsd:attribute name="itemTemplateId" type="xsd:int" use="required" />
+        <xsd:attribute name="notifyLevel" type="xsd:string" />
+        <xsd:attribute name="prob" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PremiumComposeGroup_PremiumComposeTime">
+        <xsd:attribute name="time" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PremiumComposeGroup_RefBandWidth">
+        <xsd:sequence>
+            <xsd:element name="Ref" type="PremiumComposeGroup_RefBandWidth_Ref" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PremiumComposeGroup_RefBandWidth_Ref">
+        <xsd:sequence>
+            <xsd:element name="Band" type="PremiumComposeGroup_RefBandWidth_Ref_Band" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PremiumComposeGroup_RefBandWidth_Ref_Band">
+        <xsd:attribute name="max" type="xsd:int" use="required" />
+        <xsd:attribute name="min" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="PremiumComposeGroup" type="PremiumComposeGroup" />
+</xsd:schema>

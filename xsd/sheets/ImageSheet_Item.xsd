@@ -1,0 +1,20 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ImageSheet_Item"
+            targetNamespace="https://vezel.dev/novadrop/dc/ImageSheet_Item"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ImageSheet_Item">
+        <xsd:sequence>
+            <xsd:element name="Image" type="ImageSheet_Item_Image" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ImageSheet_Item_Image">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="illustrationPath" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ImageSheet_Item" type="ImageSheet_Item" />
+</xsd:schema>

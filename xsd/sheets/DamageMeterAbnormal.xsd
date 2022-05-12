@@ -1,0 +1,21 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/DamageMeterAbnormal"
+            targetNamespace="https://vezel.dev/novadrop/dc/DamageMeterAbnormal"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="DamageMeterAbnormal">
+        <xsd:sequence>
+            <xsd:element name="AbnormalList" type="DamageMeterAbnormal_AbnormalList" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DamageMeterAbnormal_AbnormalList">
+        <xsd:attribute name="abnormalityId" type="xsd:int" use="required" />
+        <xsd:attribute name="icon" type="xsd:string" use="required" />
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="DamageMeterAbnormal" type="DamageMeterAbnormal" />
+</xsd:schema>

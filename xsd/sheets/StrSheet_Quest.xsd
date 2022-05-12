@@ -1,0 +1,21 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/StrSheet_Quest"
+            targetNamespace="https://vezel.dev/novadrop/dc/StrSheet_Quest"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="StrSheet_Quest">
+        <xsd:sequence>
+            <xsd:element name="String" type="StrSheet_Quest_String" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="StrSheet_Quest_String"
+                     dc:keys="id">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="StrSheet_Quest" type="StrSheet_Quest" />
+</xsd:schema>

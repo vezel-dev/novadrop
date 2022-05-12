@@ -1,0 +1,320 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/LobbyData"
+            targetNamespace="https://vezel.dev/novadrop/dc/LobbyData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="LobbyData">
+        <xsd:sequence>
+            <xsd:element name="ClassScene" type="LobbyData_ClassScene" />
+            <xsd:element name="CustomizeScene" type="LobbyData_CustomizeScene" />
+            <xsd:element name="GameModeSelectScene" type="LobbyData_GameModeSelectScene" />
+            <xsd:element name="LogoScene" type="LobbyData_LogoScene" />
+            <xsd:element name="RaceScene" type="LobbyData_RaceScene" />
+            <xsd:element name="SceneOccluder" type="LobbyData_SceneOccluder" />
+            <xsd:element name="SelectScene" type="LobbyData_SelectScene" />
+            <xsd:element name="ServerScene" type="LobbyData_ServerScene" />
+            <xsd:element name="TBALobbyScene" type="LobbyData_TBALobbyScene" />
+            <xsd:element name="TeleportScene" type="LobbyData_TeleportScene" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_ClassScene">
+        <xsd:sequence>
+            <xsd:element name="ChangeClass" type="LobbyData_ClassScene_ChangeClass" />
+            <xsd:element name="FadeIn" type="LobbyData_ClassScene_FadeIn" />
+            <xsd:element name="FadeOutToCustomize" type="LobbyData_ClassScene_FadeOutToCustomize" />
+        </xsd:sequence>
+
+        <xsd:attribute name="inWeaponStart" type="xsd:float" use="required" />
+        <xsd:attribute name="outWeaponStart" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_ClassScene_ChangeClass">
+        <xsd:attribute name="fadeIn" type="xsd:float" use="required" />
+        <xsd:attribute name="fadeOut" type="xsd:float" use="required" />
+        <xsd:attribute name="weaponStart" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_ClassScene_FadeIn">
+        <xsd:attribute name="fadeIn" type="xsd:float" use="required" />
+        <xsd:attribute name="weaponStart" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_ClassScene_FadeOutToCustomize">
+        <xsd:attribute name="fadeOut" type="xsd:float" use="required" />
+        <xsd:attribute name="fadeOutStart" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_CustomizeScene">
+        <xsd:sequence>
+            <xsd:element name="CustomizeGalleryWebSize" type="LobbyData_CustomizeScene_CustomizeGalleryWebSize" />
+            <xsd:element name="FadeIn" type="LobbyData_CustomizeScene_FadeIn" />
+            <xsd:element name="FadeOut" type="LobbyData_CustomizeScene_FadeOut" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_CustomizeScene_CustomizeGalleryWebSize">
+        <xsd:attribute name="height" type="xsd:int" use="required" />
+        <xsd:attribute name="width" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_CustomizeScene_FadeIn">
+        <xsd:attribute name="fadeIn" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_CustomizeScene_FadeOut">
+        <xsd:attribute name="fadeOut" type="xsd:float" use="required" />
+        <xsd:attribute name="fadeOutStart" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_GameModeSelectScene">
+        <xsd:sequence>
+            <xsd:element name="Camera" type="LobbyData_GameModeSelectScene_Camera" />
+            <xsd:element name="Continent" type="LobbyData_GameModeSelectScene_Continent" />
+            <xsd:element name="FadeIn" type="LobbyData_GameModeSelectScene_FadeIn" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_GameModeSelectScene_Camera">
+        <xsd:attribute name="fov" type="xsd:float" use="required" />
+        <xsd:attribute name="pos" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_GameModeSelectScene_Continent">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_GameModeSelectScene_FadeIn">
+        <xsd:attribute name="fadeIn" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_LogoScene">
+        <xsd:sequence>
+            <xsd:element name="Background" type="LobbyData_LogoScene_Background" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_LogoScene_Background">
+        <xsd:attribute name="image" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_RaceScene">
+        <xsd:sequence>
+            <xsd:element name="Background" type="LobbyData_RaceScene_Background" />
+            <xsd:element name="Continent" type="LobbyData_RaceScene_Continent" />
+            <xsd:element name="FadeIn" type="LobbyData_RaceScene_FadeIn" />
+            <xsd:element name="FadeOut" type="LobbyData_RaceScene_FadeOut" />
+            <xsd:element name="FadeOutToSelect" type="LobbyData_RaceScene_FadeOutToSelect" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_RaceScene_Background">
+        <xsd:attribute name="image" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_RaceScene_Continent">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_RaceScene_FadeIn">
+        <xsd:attribute name="fadeIn" type="xsd:float" use="required" />
+        <xsd:attribute name="matineeStart" type="xsd:float" use="required" />
+        <xsd:attribute name="uiStart" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_RaceScene_FadeOut">
+        <xsd:attribute name="fadeOut" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_RaceScene_FadeOutToSelect">
+        <xsd:attribute name="fadeOut" type="xsd:float" use="required" />
+        <xsd:attribute name="fadeOutStart" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_SceneOccluder">
+        <xsd:sequence>
+            <xsd:element name="DefaultOccluder" type="LobbyData_SceneOccluder_DefaultOccluder" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_SceneOccluder_DefaultOccluder">
+        <xsd:attribute name="flowRate" type="xsd:float" use="required" />
+        <xsd:attribute name="minimumShow" type="xsd:float" use="required" />
+        <xsd:attribute name="occludeFadeIn" type="xsd:float" use="required" />
+        <xsd:attribute name="occludeFadeOut" type="xsd:float" use="required" />
+        <xsd:attribute name="occludeStart" type="xsd:float" use="required" />
+        <xsd:attribute name="occluderMesh" type="xsd:string" use="required" />
+        <xsd:attribute name="whiteColor" type="xsd:string" use="required" />
+        <xsd:attribute name="whiteFadeIn" type="xsd:float" use="required" />
+        <xsd:attribute name="whiteFadeOut" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_SelectScene">
+        <xsd:sequence>
+            <xsd:element name="Background" type="LobbyData_SelectScene_Background" />
+            <xsd:element name="Camera" type="LobbyData_SelectScene_Camera" />
+            <xsd:element name="FadeIn" type="LobbyData_SelectScene_FadeIn" />
+            <xsd:element name="FadeOutToRace" type="LobbyData_SelectScene_FadeOutToRace" />
+            <xsd:element name="FadeOutToWorld" type="LobbyData_SelectScene_FadeOutToWorld" />
+            <xsd:element name="MapChange" type="LobbyData_SelectScene_MapChange" />
+            <xsd:element name="Matinee" type="LobbyData_SelectScene_Matinee" />
+            <xsd:element name="PageChange" type="LobbyData_SelectScene_PageChange" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_SelectScene_Background">
+        <xsd:attribute name="image" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_SelectScene_Camera">
+        <xsd:sequence>
+            <xsd:element name="AttachDofMesh" type="LobbyData_SelectScene_Camera_AttachDofMesh" />
+            <xsd:element name="AttachFogMesh" type="LobbyData_SelectScene_Camera_AttachFogMesh" />
+        </xsd:sequence>
+
+        <xsd:attribute name="fov" type="xsd:float" use="required" />
+        <xsd:attribute name="pos" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_SelectScene_Camera_AttachDofMesh">
+        <xsd:attribute name="resourcePath" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_SelectScene_Camera_AttachFogMesh">
+        <xsd:attribute name="resourcePath" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_SelectScene_FadeIn">
+        <xsd:attribute name="fadeIn" type="xsd:float" use="required" />
+        <xsd:attribute name="uiStart" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_SelectScene_FadeOutToRace">
+        <xsd:attribute name="fadeOut" type="xsd:float" use="required" />
+        <xsd:attribute name="fadeOutStart" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_SelectScene_FadeOutToWorld">
+        <xsd:attribute name="fadeOut" type="xsd:float" use="required" />
+        <xsd:attribute name="fadeOutStart" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_SelectScene_MapChange">
+        <xsd:attribute name="continentId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_SelectScene_Matinee">
+        <xsd:attribute name="firstFrom" type="xsd:float" use="required" />
+        <xsd:attribute name="firstTo" type="xsd:float" use="required" />
+        <xsd:attribute name="from" type="xsd:float" use="required" />
+        <xsd:attribute name="to" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_SelectScene_PageChange">
+        <xsd:attribute name="fadeIn" type="xsd:float" use="required" />
+        <xsd:attribute name="fadeOut" type="xsd:float" use="required" />
+        <xsd:attribute name="image" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_ServerScene">
+        <xsd:sequence>
+            <xsd:element name="Camera" type="LobbyData_ServerScene_Camera" />
+            <xsd:element name="Continent" type="LobbyData_ServerScene_Continent" />
+            <xsd:element name="FadeIn" type="LobbyData_ServerScene_FadeIn" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_ServerScene_Camera">
+        <xsd:attribute name="fov" type="xsd:float" use="required" />
+        <xsd:attribute name="pos" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_ServerScene_Continent">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_ServerScene_FadeIn">
+        <xsd:attribute name="fadeIn" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_TBALobbyScene">
+        <xsd:sequence>
+            <xsd:element name="BackGroundSetting" type="LobbyData_TBALobbyScene_BackGroundSetting" />
+            <xsd:element name="CameraSetting" type="LobbyData_TBALobbyScene_CameraSetting" />
+            <xsd:element name="FloorSetting" type="LobbyData_TBALobbyScene_FloorSetting" />
+            <xsd:element name="HeroSettingList" type="LobbyData_TBALobbyScene_HeroSettingList" />
+            <xsd:element name="LobbySpotLightList" type="LobbyData_TBALobbyScene_LobbySpotLightList" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_TBALobbyScene_BackGroundSetting">
+        <xsd:attribute name="aeroSetPackageName" type="xsd:string" use="required" />
+        <xsd:attribute name="dir" type="xsd:int" use="required" />
+        <xsd:attribute name="location" type="xsd:string" use="required" />
+        <xsd:attribute name="packageName" type="xsd:string" use="required" />
+        <xsd:attribute name="scale" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_TBALobbyScene_CameraSetting">
+        <xsd:attribute name="fov" type="xsd:float" use="required" />
+        <xsd:attribute name="location" type="xsd:string" use="required" />
+        <xsd:attribute name="lookAtLocation" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_TBALobbyScene_FloorSetting">
+        <xsd:attribute name="location" type="xsd:string" use="required" />
+        <xsd:attribute name="packageName" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_TBALobbyScene_HeroSettingList">
+        <xsd:sequence>
+            <xsd:element name="HeroSetting" type="LobbyData_TBALobbyScene_HeroSettingList_HeroSetting" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_TBALobbyScene_HeroSettingList_HeroSetting">
+        <xsd:attribute name="dir" type="xsd:int" use="required" />
+        <xsd:attribute name="heroTemplateId" type="xsd:int" use="required" />
+        <xsd:attribute name="location" type="xsd:string" use="required" />
+        <xsd:attribute name="scale" type="xsd:float" use="required" />
+        <xsd:attribute name="spawnEffectId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_TBALobbyScene_LobbySpotLightList">
+        <xsd:sequence>
+            <xsd:element name="LobbySpotLight" type="LobbyData_TBALobbyScene_LobbySpotLightList_LobbySpotLight" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_TBALobbyScene_LobbySpotLightList_LobbySpotLight">
+        <xsd:attribute name="brightness" type="xsd:float" use="required" />
+        <xsd:attribute name="castShadow" type="xsd:boolean" use="required" />
+        <xsd:attribute name="color" type="xsd:string" use="required" />
+        <xsd:attribute name="fallOffExponent" type="xsd:float" use="required" />
+        <xsd:attribute name="innerConeAngle" type="xsd:float" use="required" />
+        <xsd:attribute name="location" type="xsd:string" use="required" />
+        <xsd:attribute name="lookAtPosition" type="xsd:string" use="required" />
+        <xsd:attribute name="outerConeAngle" type="xsd:float" use="required" />
+        <xsd:attribute name="radius" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_TeleportScene">
+        <xsd:sequence>
+            <xsd:element name="Background" type="LobbyData_TeleportScene_Background" maxOccurs="unbounded" />
+            <xsd:element name="Fade" type="LobbyData_TeleportScene_Fade" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_TeleportScene_Background">
+        <xsd:attribute name="image" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyData_TeleportScene_Fade">
+        <xsd:attribute name="fadeIn" type="xsd:float" use="required" />
+        <xsd:attribute name="fadeOut" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="LobbyData" type="LobbyData" />
+</xsd:schema>

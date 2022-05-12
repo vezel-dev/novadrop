@@ -1,0 +1,34 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/PartySetting"
+            targetNamespace="https://vezel.dev/novadrop/dc/PartySetting"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="PartySetting">
+        <xsd:sequence>
+            <xsd:element name="PartyMatchingOption" type="PartySetting_PartyMatchingOption" />
+            <xsd:element name="RaidWindowOption" type="PartySetting_RaidWindowOption" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PartySetting_PartyMatchingOption">
+        <xsd:attribute name="lifeTime" type="xsd:int" use="required" />
+        <xsd:attribute name="maxCount" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PartySetting_RaidWindowOption">
+        <xsd:sequence>
+            <xsd:element name="RaidGroupName" type="PartySetting_RaidWindowOption_RaidGroupName" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="inputMaxChar" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PartySetting_RaidWindowOption_RaidGroupName">
+        <xsd:attribute name="index" type="xsd:int" use="required" />
+        <xsd:attribute name="strId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="PartySetting" type="PartySetting" />
+</xsd:schema>

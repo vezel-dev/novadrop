@@ -1,0 +1,41 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/Seren"
+            targetNamespace="https://vezel.dev/novadrop/dc/Seren"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="Seren">
+        <xsd:sequence>
+            <xsd:element name="String" type="Seren_String" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="duration" type="xsd:float" use="required" />
+        <xsd:attribute name="effectSound" type="xsd:int" use="required" />
+        <xsd:attribute name="enable" type="xsd:boolean" use="required" />
+        <xsd:attribute name="randomMsgInterval" type="xsd:float" use="required" />
+        <xsd:attribute name="serenLifeTime" type="xsd:float" use="required" />
+        <xsd:attribute name="serenName" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="Seren_String">
+        <xsd:attribute name="arg1" type="xsd:string" />
+        <xsd:attribute name="arg2" type="xsd:string" />
+        <xsd:attribute name="arg3" type="xsd:string" />
+        <xsd:attribute name="chat" type="xsd:boolean" use="required" />
+        <xsd:attribute name="class" type="xsd:string" />
+        <xsd:attribute name="color" type="xsd:string" use="required" />
+        <xsd:attribute name="delay" type="xsd:float" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="level" type="xsd:int" use="required" />
+        <xsd:attribute name="oneTime" type="xsd:boolean" />
+        <xsd:attribute name="repeat" type="xsd:boolean" />
+        <xsd:attribute name="serenMsg" type="xsd:boolean" />
+        <xsd:attribute name="size" type="xsd:int" use="required" />
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+        <xsd:attribute name="tutorialMsg" type="xsd:boolean" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="Seren" type="Seren" />
+</xsd:schema>

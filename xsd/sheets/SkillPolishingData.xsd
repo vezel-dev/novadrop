@@ -1,0 +1,55 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/SkillPolishingData"
+            targetNamespace="https://vezel.dev/novadrop/dc/SkillPolishingData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="SkillPolishingData">
+        <xsd:sequence>
+            <xsd:element name="SkillPolishingEffectData" type="SkillPolishingData_SkillPolishingEffectData" />
+            <xsd:element name="SkillPolishingUIData" type="SkillPolishingData_SkillPolishingUIData" />
+            <xsd:element name="SkillPolishingUIStringData" type="SkillPolishingData_SkillPolishingUIStringData" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillPolishingData_SkillPolishingEffectData">
+        <xsd:sequence>
+            <xsd:element name="ExpUpEffectList" type="SkillPolishingData_SkillPolishingEffectData_ExpUpEffectList" />
+        </xsd:sequence>
+
+        <xsd:attribute name="levelUpEffectId" type="xsd:int" use="required" />
+        <xsd:attribute name="shaderPassiveTypes" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillPolishingData_SkillPolishingEffectData_ExpUpEffectList">
+        <xsd:sequence>
+            <xsd:element name="ExpUpEffect" type="SkillPolishingData_SkillPolishingEffectData_ExpUpEffectList_ExpUpEffect" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillPolishingData_SkillPolishingEffectData_ExpUpEffectList_ExpUpEffect">
+        <xsd:attribute name="effectId" type="xsd:int" use="required" />
+        <xsd:attribute name="maxExp" type="xsd:string" use="required" />
+        <xsd:attribute name="minExp" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillPolishingData_SkillPolishingUIData">
+        <xsd:attribute name="intervalLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="startLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="tabCount" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillPolishingData_SkillPolishingUIStringData">
+        <xsd:attribute name="basicSkillDescUIId" type="xsd:int" use="required" />
+        <xsd:attribute name="mpCautionMsgUIId" type="xsd:int" use="required" />
+        <xsd:attribute name="requiredSkillDescUIId" type="xsd:int" use="required" />
+        <xsd:attribute name="tabTooltipUIId" type="xsd:int" use="required" />
+        <xsd:attribute name="tooltipTitleColorUIId" type="xsd:int" use="required" />
+        <xsd:attribute name="underLevelDescUIId" type="xsd:int" use="required" />
+        <xsd:attribute name="unlockButtonStringUIId" type="xsd:int" use="required" />
+        <xsd:attribute name="upgradeButtonStringUIId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="SkillPolishingData" type="SkillPolishingData" />
+</xsd:schema>

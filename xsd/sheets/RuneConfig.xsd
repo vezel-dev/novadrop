@@ -1,0 +1,56 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/RuneConfig"
+            targetNamespace="https://vezel.dev/novadrop/dc/RuneConfig"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="RuneConfig">
+        <xsd:sequence>
+            <xsd:element name="LevelForActivateRuneSlot" type="RuneConfig_LevelForActivateRuneSlot" />
+            <xsd:element name="MaxRunePage" type="RuneConfig_MaxRunePage" />
+            <xsd:element name="MaxSlotIndexByRuneType" type="RuneConfig_MaxSlotIndexByRuneType" />
+            <xsd:element name="RunePageBuyPrice" type="RuneConfig_RunePageBuyPrice" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="RuneConfig_LevelForActivateRuneSlot">
+        <xsd:sequence>
+            <xsd:element name="Data" type="RuneConfig_LevelForActivateRuneSlot_Data" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="RuneConfig_LevelForActivateRuneSlot_Data">
+        <xsd:attribute name="level" type="xsd:int" use="required" />
+        <xsd:attribute name="slotId" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="RuneConfig_MaxRunePage">
+        <xsd:attribute name="count" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="RuneConfig_MaxSlotIndexByRuneType">
+        <xsd:sequence>
+            <xsd:element name="Data" type="RuneConfig_MaxSlotIndexByRuneType_Data" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="RuneConfig_MaxSlotIndexByRuneType_Data">
+        <xsd:attribute name="maxSlotIndex" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="RuneConfig_RunePageBuyPrice">
+        <xsd:sequence>
+            <xsd:element name="Data" type="RuneConfig_RunePageBuyPrice_Data" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="RuneConfig_RunePageBuyPrice_Data">
+        <xsd:attribute name="pageNum" type="xsd:int" use="required" />
+        <xsd:attribute name="priceAmount" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="RuneConfig" type="RuneConfig" />
+</xsd:schema>

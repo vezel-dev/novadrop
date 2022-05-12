@@ -1,0 +1,51 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/VIPShop"
+            targetNamespace="https://vezel.dev/novadrop/dc/VIPShop"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="VIPShop">
+        <xsd:sequence>
+            <xsd:element name="SlotList" type="VIPShop_SlotList" />
+            <xsd:element name="UserResetPrice" type="VIPShop_UserResetPrice" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="VIPShop_SlotList">
+        <xsd:sequence>
+            <xsd:element name="List" type="VIPShop_SlotList_List" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="VIPShop_SlotList_List">
+        <xsd:sequence>
+            <xsd:element name="Item" type="VIPShop_SlotList_List_Item" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="ableVipLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="VIPShop_SlotList_List_Item">
+        <xsd:attribute name="amount" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+        <xsd:attribute name="token" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="VIPShop_UserResetPrice">
+        <xsd:sequence>
+            <xsd:element name="UserReset" type="VIPShop_UserResetPrice_UserReset" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="maxUserReset" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="VIPShop_UserResetPrice_UserReset">
+        <xsd:attribute name="count" type="xsd:int" use="required" />
+        <xsd:attribute name="token" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="VIPShop" type="VIPShop" />
+</xsd:schema>

@@ -1,0 +1,80 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/PreviewSet"
+            targetNamespace="https://vezel.dev/novadrop/dc/PreviewSet"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="PreviewSet">
+        <xsd:sequence>
+            <xsd:element name="PresetRace" type="PreviewSet_PresetRace" maxOccurs="unbounded" />
+            <xsd:element name="UI" type="PreviewSet_UI" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PreviewSet_PresetRace">
+        <xsd:sequence>
+            <xsd:element name="PresetGender" type="PreviewSet_PresetRace_PresetGender" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="race" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PreviewSet_PresetRace_PresetGender">
+        <xsd:sequence>
+            <xsd:element name="Camera" type="PreviewSet_PresetRace_PresetGender_Camera" />
+            <xsd:element name="OnVehicle" type="PreviewSet_PresetRace_PresetGender_OnVehicle" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="gender" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PreviewSet_PresetRace_PresetGender_Camera">
+        <xsd:attribute name="defaultZoom" type="xsd:float" use="required" />
+        <xsd:attribute name="fov" type="xsd:float" use="required" />
+        <xsd:attribute name="maxHeight" type="xsd:float" use="required" />
+        <xsd:attribute name="maxPitch" type="xsd:float" use="required" />
+        <xsd:attribute name="maxTilt" type="xsd:float" use="required" />
+        <xsd:attribute name="maxZoom" type="xsd:float" use="required" />
+        <xsd:attribute name="minHeight" type="xsd:float" use="required" />
+        <xsd:attribute name="minPitch" type="xsd:float" use="required" />
+        <xsd:attribute name="minTilt" type="xsd:float" use="required" />
+        <xsd:attribute name="minZoom" type="xsd:float" use="required" />
+        <xsd:attribute name="rotateExp" type="xsd:float" use="required" />
+        <xsd:attribute name="rotateSpeed" type="xsd:float" use="required" />
+        <xsd:attribute name="zoomExp" type="xsd:float" use="required" />
+        <xsd:attribute name="zoomSpeed" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PreviewSet_PresetRace_PresetGender_OnVehicle">
+        <xsd:sequence>
+            <xsd:element name="Camera" type="PreviewSet_PresetRace_PresetGender_OnVehicle_Camera" />
+        </xsd:sequence>
+
+        <xsd:attribute name="size" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PreviewSet_PresetRace_PresetGender_OnVehicle_Camera">
+        <xsd:attribute name="defaultZoom" type="xsd:float" use="required" />
+        <xsd:attribute name="fov" type="xsd:float" use="required" />
+        <xsd:attribute name="maxHeight" type="xsd:float" use="required" />
+        <xsd:attribute name="maxPitch" type="xsd:float" use="required" />
+        <xsd:attribute name="maxTilt" type="xsd:float" use="required" />
+        <xsd:attribute name="maxZoom" type="xsd:float" use="required" />
+        <xsd:attribute name="minHeight" type="xsd:float" use="required" />
+        <xsd:attribute name="minPitch" type="xsd:float" use="required" />
+        <xsd:attribute name="minTilt" type="xsd:float" use="required" />
+        <xsd:attribute name="minZoom" type="xsd:float" use="required" />
+        <xsd:attribute name="rotateExp" type="xsd:float" use="required" />
+        <xsd:attribute name="rotateSpeed" type="xsd:float" use="required" />
+        <xsd:attribute name="zoomExp" type="xsd:float" use="required" />
+        <xsd:attribute name="zoomSpeed" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PreviewSet_UI">
+        <xsd:attribute name="rotateDelta" type="xsd:int" use="required" />
+        <xsd:attribute name="zoomDelta" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="PreviewSet" type="PreviewSet" />
+</xsd:schema>

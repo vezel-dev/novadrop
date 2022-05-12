@@ -1,0 +1,62 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/EpPerk"
+            targetNamespace="https://vezel.dev/novadrop/dc/EpPerk"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="EpPerk">
+        <xsd:sequence>
+            <xsd:element name="Perk" type="EpPerk_Perk" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EpPerk_Perk">
+        <xsd:sequence>
+            <xsd:element name="Condition" type="EpPerk_Perk_Condition" />
+            <xsd:element name="PassiveList" type="EpPerk_Perk_PassiveList" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="level" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="skillCategoryId" type="xsd:int" use="required" />
+        <xsd:attribute name="sortNum" type="xsd:int" use="required" />
+        <xsd:attribute name="spendEp" type="xsd:int" use="required" />
+        <xsd:attribute name="usableClass" type="xsd:string" use="required" />
+        <xsd:attribute name="value1" type="xsd:string" use="required" />
+        <xsd:attribute name="value2" type="xsd:string" use="required" />
+        <xsd:attribute name="value3" type="xsd:string" use="required" />
+        <xsd:attribute name="value4" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EpPerk_Perk_Condition">
+        <xsd:sequence>
+            <xsd:element name="Precedence" type="EpPerk_Perk_Condition_Precedence" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="epLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="spentEp" type="xsd:int" use="required" />
+        <xsd:attribute name="totalEp" type="xsd:int" use="required" />
+        <xsd:attribute name="userLevel" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EpPerk_Perk_Condition_Precedence">
+        <xsd:attribute name="perkId" type="xsd:int" use="required" />
+        <xsd:attribute name="perkLevel" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EpPerk_Perk_PassiveList">
+        <xsd:sequence>
+            <xsd:element name="Data" type="EpPerk_Perk_PassiveList_Data" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EpPerk_Perk_PassiveList_Data">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="prob" type="xsd:float" use="required" />
+        <xsd:attribute name="value" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="EpPerk" type="EpPerk" />
+</xsd:schema>

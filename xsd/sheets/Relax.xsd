@@ -1,0 +1,62 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/Relax"
+            targetNamespace="https://vezel.dev/novadrop/dc/Relax"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="Relax">
+        <xsd:sequence>
+            <xsd:element name="BonfireList" type="Relax_BonfireList" />
+            <xsd:element name="CharmList" type="Relax_CharmList" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Relax_BonfireList">
+        <xsd:sequence>
+            <xsd:element name="Bonfire" type="Relax_BonfireList_Bonfire" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Relax_BonfireList_Bonfire">
+        <xsd:attribute name="boundaryHeight" type="xsd:float" use="required" />
+        <xsd:attribute name="boundaryRadius" type="xsd:float" use="required" />
+        <xsd:attribute name="collisionCylinderHeight" type="xsd:float" use="required" />
+        <xsd:attribute name="collisionCylinderRadius" type="xsd:float" use="required" />
+        <xsd:attribute name="despawnDuration" type="xsd:int" />
+        <xsd:attribute name="despawnEffectId" type="xsd:int" />
+        <xsd:attribute name="despawnStartTime" type="xsd:int" />
+        <xsd:attribute name="effectMoveSpeed" type="xsd:int" use="required" />
+        <xsd:attribute name="effectRadius" type="xsd:int" use="required" />
+        <xsd:attribute name="effectStartHeight" type="xsd:int" use="required" />
+        <xsd:attribute name="fixedEffectId" type="xsd:int" />
+        <xsd:attribute name="iconTooltipId" type="xsd:int" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="meshName" type="xsd:string" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="particleEffectName_Strong" type="xsd:string" use="required" />
+        <xsd:attribute name="particleEffectName_Weak" type="xsd:string" use="required" />
+        <xsd:attribute name="skillCooltimeSpeedRate" type="xsd:float" />
+        <xsd:attribute name="soundStrong" type="xsd:string" />
+        <xsd:attribute name="soundWeak" type="xsd:string" />
+        <xsd:attribute name="timeStopAbnormality" type="xsd:boolean" />
+        <xsd:attribute name="visible" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="Relax_CharmList">
+        <xsd:sequence>
+            <xsd:element name="Charm" type="Relax_CharmList_Charm" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Relax_CharmList_Charm">
+        <xsd:attribute name="charmEffectId" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="kind" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="targetEffectId" type="xsd:int" use="required" />
+        <xsd:attribute name="time" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="Relax" type="Relax" />
+</xsd:schema>

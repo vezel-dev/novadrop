@@ -1,0 +1,36 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/StormEffectData"
+            targetNamespace="https://vezel.dev/novadrop/dc/StormEffectData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="StormEffectData">
+        <xsd:sequence>
+            <xsd:element name="StormEffectList" type="StormEffectData_StormEffectList" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="StormEffectData_StormEffectList">
+        <xsd:sequence>
+            <xsd:element name="StormEffect" type="StormEffectData_StormEffectList_StormEffect" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="StormEffectData_StormEffectList_StormEffect">
+        <xsd:attribute name="distance" type="xsd:float" use="required" />
+        <xsd:attribute name="downAcc" type="xsd:float" use="required" />
+        <xsd:attribute name="downRotate" type="xsd:float" use="required" />
+        <xsd:attribute name="downSpeed" type="xsd:float" use="required" />
+        <xsd:attribute name="fluctuation" type="xsd:float" use="required" />
+        <xsd:attribute name="fluctuationDuration" type="xsd:float" />
+        <xsd:attribute name="fluctuationRate" type="xsd:float" use="required" />
+        <xsd:attribute name="fluctuationRotate" type="xsd:float" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="upAcc" type="xsd:float" use="required" />
+        <xsd:attribute name="upRotate" type="xsd:float" use="required" />
+        <xsd:attribute name="upSpeed" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="StormEffectData" type="StormEffectData" />
+</xsd:schema>

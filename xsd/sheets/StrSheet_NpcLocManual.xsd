@@ -1,0 +1,22 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/StrSheet_NpcLocManual"
+            targetNamespace="https://vezel.dev/novadrop/dc/StrSheet_NpcLocManual"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="StrSheet_NpcLocManual">
+        <xsd:sequence>
+            <xsd:element name="String" type="StrSheet_NpcLocManual_String" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="StrSheet_NpcLocManual_String"
+                     dc:keys="huntingZoneId templateId">
+        <xsd:attribute name="huntingZoneId" type="xsd:int" use="required" />
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="StrSheet_NpcLocManual" type="StrSheet_NpcLocManual" />
+</xsd:schema>

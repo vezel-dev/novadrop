@@ -1,0 +1,41 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/EquipmentSetEffectData"
+            targetNamespace="https://vezel.dev/novadrop/dc/EquipmentSetEffectData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="EquipmentSetEffectData">
+        <xsd:sequence>
+            <xsd:element name="EquipmentSetEffect" type="EquipmentSetEffectData_EquipmentSetEffect" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EquipmentSetEffectData_EquipmentSetEffect">
+        <xsd:sequence>
+            <xsd:element name="RaceData" type="EquipmentSetEffectData_EquipmentSetEffect_RaceData" />
+        </xsd:sequence>
+
+        <xsd:attribute name="desc" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EquipmentSetEffectData_EquipmentSetEffect_RaceData">
+        <xsd:sequence>
+            <xsd:element name="Effect" type="EquipmentSetEffectData_EquipmentSetEffect_RaceData_Effect" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="templateId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EquipmentSetEffectData_EquipmentSetEffect_RaceData_Effect">
+        <xsd:attribute name="attachBone" type="xsd:string" use="required" />
+        <xsd:attribute name="emitter" type="xsd:string" use="required" />
+        <xsd:attribute name="playRate" type="xsd:float" use="required" />
+        <xsd:attribute name="pos" type="xsd:string" use="required" />
+        <xsd:attribute name="rot" type="xsd:string" use="required" />
+        <xsd:attribute name="scale" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="EquipmentSetEffectData" type="EquipmentSetEffectData" />
+</xsd:schema>

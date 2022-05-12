@@ -1,0 +1,96 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ServantSkill"
+            targetNamespace="https://vezel.dev/novadrop/dc/ServantSkill"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ServantSkill">
+        <xsd:sequence>
+            <xsd:element name="AbilityInfo" type="ServantSkill_AbilityInfo" />
+            <xsd:element name="ActiveSkillData" type="ServantSkill_ActiveSkillData" />
+            <xsd:element name="ConditionalSkillData" type="ServantSkill_ConditionalSkillData" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantSkill_AbilityInfo">
+        <xsd:sequence>
+            <xsd:element name="AbilityCategory" type="ServantSkill_AbilityInfo_AbilityCategory" />
+            <xsd:element name="AbilityData" type="ServantSkill_AbilityInfo_AbilityData" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantSkill_AbilityInfo_AbilityCategory">
+        <xsd:sequence>
+            <xsd:element name="Category" type="ServantSkill_AbilityInfo_AbilityCategory_Category" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantSkill_AbilityInfo_AbilityCategory_Category">
+        <xsd:attribute name="iconName" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="kind" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="stringId" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantSkill_AbilityInfo_AbilityData">
+        <xsd:sequence>
+            <xsd:element name="Ability" type="ServantSkill_AbilityInfo_AbilityData_Ability" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantSkill_AbilityInfo_AbilityData_Ability">
+        <xsd:attribute name="categoryId" type="xsd:int" use="required" />
+        <xsd:attribute name="deletable" type="xsd:boolean" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="stringId" type="xsd:int" use="required" />
+        <xsd:attribute name="transferId" type="xsd:int" />
+        <xsd:attribute name="transferPrice" type="xsd:int" />
+        <xsd:attribute name="transferable" type="xsd:boolean" use="required" />
+        <xsd:attribute name="type" type="xsd:int" use="required" />
+        <xsd:attribute name="value1" type="xsd:string" />
+        <xsd:attribute name="value2" type="xsd:float" />
+        <xsd:attribute name="value3" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantSkill_ActiveSkillData">
+        <xsd:sequence>
+            <xsd:element name="ActiveSkill" type="ServantSkill_ActiveSkillData_ActiveSkill" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="iconName" type="xsd:string" use="required" />
+        <xsd:attribute name="stringId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantSkill_ActiveSkillData_ActiveSkill">
+        <xsd:sequence>
+            <xsd:element name="SkillData" type="ServantSkill_ActiveSkillData_ActiveSkill_SkillData" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantSkill_ActiveSkillData_ActiveSkill_SkillData">
+        <xsd:attribute name="grade" type="xsd:int" use="required" />
+        <xsd:attribute name="skillId" type="xsd:int" use="required" />
+        <xsd:attribute name="stringId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantSkill_ConditionalSkillData">
+        <xsd:sequence>
+            <xsd:element name="ConditionalSkill" type="ServantSkill_ConditionalSkillData_ConditionalSkill" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantSkill_ConditionalSkillData_ConditionalSkill">
+        <xsd:attribute name="iconName" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="stringId" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ServantSkill" type="ServantSkill" />
+</xsd:schema>

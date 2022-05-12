@@ -1,0 +1,26 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/HitRangeDecalDefine"
+            targetNamespace="https://vezel.dev/novadrop/dc/HitRangeDecalDefine"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="HitRangeDecalDefine">
+        <xsd:sequence>
+            <xsd:element name="HitRangeDecal" type="HitRangeDecalDefine_HitRangeDecal" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HitRangeDecalDefine_HitRangeDecal">
+        <xsd:attribute name="breakInvincible" type="xsd:boolean" />
+        <xsd:attribute name="category" type="xsd:int" />
+        <xsd:attribute name="exceptionId" type="xsd:int" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="ignoreDefence" type="xsd:boolean" />
+        <xsd:attribute name="ignoreSkill" type="xsd:boolean" />
+        <xsd:attribute name="resourceName" type="xsd:string" use="required" />
+        <xsd:attribute name="useRadiateTimer" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:element name="HitRangeDecalDefine" type="HitRangeDecalDefine" />
+</xsd:schema>

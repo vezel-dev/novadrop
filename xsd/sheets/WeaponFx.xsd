@@ -1,0 +1,47 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/WeaponFx"
+            targetNamespace="https://vezel.dev/novadrop/dc/WeaponFx"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="WeaponFx">
+        <xsd:sequence>
+            <xsd:element name="WeaponFxData" type="WeaponFx_WeaponFxData" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WeaponFx_WeaponFxData">
+        <xsd:sequence>
+            <xsd:element name="Fx" type="WeaponFx_WeaponFxData_Fx" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WeaponFx_WeaponFxData_Fx">
+        <xsd:sequence>
+            <xsd:element name="FxNumber" type="WeaponFx_WeaponFxData_Fx_FxNumber" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="weaponPosition" type="xsd:string" use="required" />
+        <xsd:attribute name="weaponStatus" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WeaponFx_WeaponFxData_Fx_FxNumber">
+        <xsd:attribute name="deco1" type="xsd:string" use="required" />
+        <xsd:attribute name="deco2" type="xsd:string" use="required" />
+        <xsd:attribute name="flame" type="xsd:string" use="required" />
+        <xsd:attribute name="fxBoneName" type="xsd:string" />
+        <xsd:attribute name="fxOffset" type="xsd:string" />
+        <xsd:attribute name="fxPlayRate" type="xsd:float" use="required" />
+        <xsd:attribute name="fxResource" type="xsd:string" use="required" />
+        <xsd:attribute name="fxRotate" type="xsd:string" />
+        <xsd:attribute name="fxScale" type="xsd:string" use="required" />
+        <xsd:attribute name="glow" type="xsd:string" use="required" />
+        <xsd:attribute name="spark" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="WeaponFx" type="WeaponFx" />
+</xsd:schema>

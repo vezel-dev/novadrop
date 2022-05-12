@@ -1,0 +1,40 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/QuestDialog"
+            targetNamespace="https://vezel.dev/novadrop/dc/QuestDialog"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="QuestDialog"
+                     dc:keys="huntingZoneId id">
+        <xsd:sequence>
+            <xsd:element name="Text" type="QuestDialog_Text" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="huntingZoneId" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="voiceTypeId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="QuestDialog_Text">
+        <xsd:sequence>
+            <xsd:element name="Page" type="QuestDialog_Text_Page" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="huntingZoneId" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="prevId" type="xsd:int" />
+        <xsd:attribute name="villagerId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="QuestDialog_Text_Page">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                <xsd:attribute name="social" type="xsd:int" use="required" />
+                <xsd:attribute name="voiceTypeId" type="xsd:int" />
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:element name="QuestDialog" type="QuestDialog" />
+</xsd:schema>

@@ -1,0 +1,73 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/Abnormality"
+            targetNamespace="https://vezel.dev/novadrop/dc/Abnormality"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="Abnormality">
+        <xsd:sequence>
+            <xsd:element name="Abnormal" type="Abnormality_Abnormal" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Abnormality_Abnormal"
+                     dc:keys="id">
+        <xsd:sequence>
+            <xsd:element name="AbnormalityEffect" type="Abnormality_Abnormal_AbnormalityEffect" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="alwaysVisibleEffect" type="xsd:boolean" />
+        <xsd:attribute name="bySkillCategory" type="xsd:string" />
+        <xsd:attribute name="canHold" type="xsd:boolean" />
+        <xsd:attribute name="group" type="xsd:string" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="infinity" type="xsd:boolean" use="required" />
+        <xsd:attribute name="isBlockOtherSpecialShader" type="xsd:boolean" />
+        <xsd:attribute name="isBuff" type="xsd:boolean" use="required" />
+        <xsd:attribute name="isHideOnRaid" type="xsd:boolean" />
+        <xsd:attribute name="isHideOnRefresh" type="xsd:boolean" use="required" />
+        <xsd:attribute name="isShow" type="xsd:string" use="required" />
+        <xsd:attribute name="kind" type="xsd:int" use="required" />
+        <xsd:attribute name="level" type="xsd:int" use="required" />
+        <xsd:attribute name="notCareDeath" type="xsd:boolean" use="required" />
+        <xsd:attribute name="priority" type="xsd:int" use="required" />
+        <xsd:attribute name="property" type="xsd:int" use="required" />
+        <xsd:attribute name="stopByRelax" type="xsd:boolean" />
+        <xsd:attribute name="time" type="xsd:string" use="required" />
+        <xsd:attribute name="useDamageFont" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:complexType name="Abnormality_Abnormal_AbnormalityEffect">
+        <xsd:attribute name="ShaderOnAlly" type="xsd:string" />
+        <xsd:attribute name="ShaderOnMy" type="xsd:string" />
+        <xsd:attribute name="ShaderOnOther" type="xsd:string" />
+        <xsd:attribute name="appearEffectId" type="xsd:int" />
+        <xsd:attribute name="appearShader" type="xsd:string" />
+        <xsd:attribute name="arcaneFxId" type="xsd:int" />
+        <xsd:attribute name="attackEffectId" type="xsd:int" />
+        <xsd:attribute name="damageEffectId" type="xsd:int" />
+        <xsd:attribute name="disappearEffectId" type="xsd:int" />
+        <xsd:attribute name="disappearShader" type="xsd:string" />
+        <xsd:attribute name="effectId" type="xsd:int" />
+        <xsd:attribute name="effectPart" type="xsd:string" />
+        <xsd:attribute name="effectTime" type="xsd:int" />
+        <xsd:attribute name="isEnemyCheck" type="xsd:int" />
+        <xsd:attribute name="isStartPostProcessEffect" type="xsd:boolean" />
+        <xsd:attribute name="linkEffectDuration" type="xsd:float" />
+        <xsd:attribute name="linkEffectResource" type="xsd:string" />
+        <xsd:attribute name="method" type="xsd:int" use="required" />
+        <xsd:attribute name="overlayEffectId" type="xsd:int" />
+        <xsd:attribute name="overrideShaderCondition" type="xsd:string" />
+        <xsd:attribute name="postProcessAppearTime" type="xsd:int" />
+        <xsd:attribute name="postProcessDisappearTime" type="xsd:int" />
+        <xsd:attribute name="postProcessEffectDelayTime" type="xsd:int" />
+        <xsd:attribute name="postProcessEffectIds" type="xsd:string" />
+        <xsd:attribute name="postProcessId" type="xsd:int" />
+        <xsd:attribute name="tickInterval" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:int" use="required" />
+        <xsd:attribute name="value" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="Abnormality" type="Abnormality" />
+</xsd:schema>

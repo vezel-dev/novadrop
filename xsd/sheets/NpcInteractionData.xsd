@@ -1,0 +1,48 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/NpcInteractionData"
+            targetNamespace="https://vezel.dev/novadrop/dc/NpcInteractionData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="NpcInteractionData">
+        <xsd:sequence>
+            <xsd:element name="InteractionRule" type="NpcInteractionData_InteractionRule" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcInteractionData_InteractionRule">
+        <xsd:sequence>
+            <xsd:element name="EffectList" type="NpcInteractionData_InteractionRule_EffectList" />
+            <xsd:element name="HotKey" type="NpcInteractionData_InteractionRule_HotKey" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="checkAbnormality" type="xsd:int" />
+        <xsd:attribute name="distance" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="inFieldEvent" type="xsd:boolean" use="required" />
+        <xsd:attribute name="interactOnFly" type="xsd:string" use="required" />
+        <xsd:attribute name="interval" type="xsd:int" use="required" />
+        <xsd:attribute name="point" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcInteractionData_InteractionRule_EffectList">
+        <xsd:sequence>
+            <xsd:element name="Effect" type="NpcInteractionData_InteractionRule_EffectList_Effect" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcInteractionData_InteractionRule_EffectList_Effect">
+        <xsd:attribute name="effectId" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcInteractionData_InteractionRule_HotKey">
+        <xsd:attribute name="icon" type="xsd:string" use="required" />
+        <xsd:attribute name="inputKey" type="xsd:string" use="required" />
+        <xsd:attribute name="msg" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:element name="NpcInteractionData" type="NpcInteractionData" />
+</xsd:schema>

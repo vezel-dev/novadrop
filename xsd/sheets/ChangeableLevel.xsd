@@ -1,0 +1,46 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ChangeableLevel"
+            targetNamespace="https://vezel.dev/novadrop/dc/ChangeableLevel"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ChangeableLevel">
+        <xsd:sequence>
+            <xsd:element name="Level" type="ChangeableLevel_Level" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ChangeableLevel_Level">
+        <xsd:sequence>
+            <xsd:element name="Condition" type="ChangeableLevel_Level_Condition" maxOccurs="unbounded" />
+            <xsd:element name="VisibleBGGroup" type="ChangeableLevel_Level_VisibleBGGroup" />
+        </xsd:sequence>
+
+        <xsd:attribute name="continentId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ChangeableLevel_Level_Condition"
+                     dc:keys="id">
+        <xsd:attribute name="groupId" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="questId" type="xsd:int" use="required" />
+        <xsd:attribute name="revertGroupId" type="xsd:int" use="required" />
+        <xsd:attribute name="taskId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ChangeableLevel_Level_VisibleBGGroup">
+        <xsd:sequence>
+            <xsd:element name="VisibleBG" type="ChangeableLevel_Level_VisibleBGGroup_VisibleBG" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="defaultGroupId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ChangeableLevel_Level_VisibleBGGroup_VisibleBG">
+        <xsd:attribute name="groupId" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ChangeableLevel" type="ChangeableLevel" />
+</xsd:schema>

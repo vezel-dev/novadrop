@@ -1,0 +1,51 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/GuildQuestconfig"
+            targetNamespace="https://vezel.dev/novadrop/dc/GuildQuestconfig"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="GuildQuestconfig">
+        <xsd:sequence>
+            <xsd:element name="ContributionPointconfig" type="GuildQuestconfig_ContributionPointconfig" />
+            <xsd:element name="SortData" type="GuildQuestconfig_SortData" />
+            <xsd:element name="WeeklyGuildQuestReward" type="GuildQuestconfig_WeeklyGuildQuestReward" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="concurrent" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildQuestconfig_ContributionPointconfig">
+        <xsd:attribute name="resetDay" type="xsd:string" use="required" />
+        <xsd:attribute name="resetHour" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildQuestconfig_SortData">
+        <xsd:sequence>
+            <xsd:element name="SortTarget" type="GuildQuestconfig_SortData_SortTarget" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildQuestconfig_SortData_SortTarget">
+        <xsd:attribute name="ascendingOrder" type="xsd:boolean" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="targetTemplateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildQuestconfig_WeeklyGuildQuestReward">
+        <xsd:sequence>
+            <xsd:element name="Item" type="GuildQuestconfig_WeeklyGuildQuestReward_Item" />
+        </xsd:sequence>
+
+        <xsd:attribute name="guildSize" type="xsd:int" use="required" />
+        <xsd:attribute name="needBalderionCoin" type="xsd:int" use="required" />
+        <xsd:attribute name="rewardStep" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildQuestconfig_WeeklyGuildQuestReward_Item">
+        <xsd:attribute name="count" type="xsd:int" use="required" />
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="GuildQuestconfig" type="GuildQuestconfig" />
+</xsd:schema>

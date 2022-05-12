@@ -1,0 +1,36 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/CombatDesign"
+            targetNamespace="https://vezel.dev/novadrop/dc/CombatDesign"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="CombatDesign">
+        <xsd:sequence>
+            <xsd:element name="PostProcess" type="CombatDesign_PostProcess" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CombatDesign_PostProcess">
+        <xsd:sequence>
+            <xsd:element name="BeHitPostProcess" type="CombatDesign_PostProcess_BeHitPostProcess" />
+            <xsd:element name="LowHpPostProcess" type="CombatDesign_PostProcess_LowHpPostProcess" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CombatDesign_PostProcess_BeHitPostProcess">
+        <xsd:attribute name="DurationMax" type="xsd:float" use="required" />
+        <xsd:attribute name="DurationMin" type="xsd:float" use="required" />
+        <xsd:attribute name="HpRatioDeltaMax" type="xsd:float" use="required" />
+        <xsd:attribute name="InvokeHpDelta" type="xsd:float" use="required" />
+        <xsd:attribute name="StrengthMax" type="xsd:float" use="required" />
+        <xsd:attribute name="StrengthMin" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CombatDesign_PostProcess_LowHpPostProcess">
+        <xsd:attribute name="HpRatio" type="xsd:float" use="required" />
+        <xsd:attribute name="Strength" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="CombatDesign" type="CombatDesign" />
+</xsd:schema>

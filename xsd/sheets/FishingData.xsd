@@ -1,0 +1,69 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/FishingData"
+            targetNamespace="https://vezel.dev/novadrop/dc/FishingData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="FishingData">
+        <xsd:sequence>
+            <xsd:element name="FishingBasicData" type="FishingData_FishingBasicData" />
+            <xsd:element name="FishingGameData" type="FishingData_FishingGameData" />
+            <xsd:element name="FishingRodData" type="FishingData_FishingRodData" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="FishingData_FishingBasicData">
+        <xsd:attribute name="fishingChargeLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="fishingChargeTime" type="xsd:float" use="required" />
+        <xsd:attribute name="fishingSkillId" type="xsd:int" use="required" />
+        <xsd:attribute name="floatEffectId" type="xsd:int" use="required" />
+        <xsd:attribute name="helloSkillId" type="xsd:int" use="required" />
+        <xsd:attribute name="limitTime" type="xsd:int" use="required" />
+        <xsd:attribute name="reelEffectId" type="xsd:int" use="required" />
+        <xsd:attribute name="reelHideTime" type="xsd:float" use="required" />
+        <xsd:attribute name="reelStartDistance" type="xsd:float" use="required" />
+        <xsd:attribute name="tutorialScriptId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="FishingData_FishingGameData">
+        <xsd:sequence>
+            <xsd:element name="LevelData" type="FishingData_FishingGameData_LevelData" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="fishWidth" type="xsd:int" use="required" />
+        <xsd:attribute name="initFishPosition" type="xsd:int" use="required" />
+        <xsd:attribute name="miniGameWholeLength" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="FishingData_FishingGameData_LevelData">
+        <xsd:attribute name="accelMoveSpeedPerSec" type="xsd:float" use="required" />
+        <xsd:attribute name="basicMoveSpeedPerSec" type="xsd:float" use="required" />
+        <xsd:attribute name="boxCrushTime" type="xsd:int" use="required" />
+        <xsd:attribute name="boxRecoveryTime" type="xsd:int" use="required" />
+        <xsd:attribute name="boxSpeedPerSec" type="xsd:int" use="required" />
+        <xsd:attribute name="fishForceCoolTime" type="xsd:int" use="required" />
+        <xsd:attribute name="fishForceDistance" type="xsd:int" use="required" />
+        <xsd:attribute name="fishForceDuration" type="xsd:int" use="required" />
+        <xsd:attribute name="flowDistancePerSec" type="xsd:int" use="required" />
+        <xsd:attribute name="gameLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="maxBoxPosition" type="xsd:int" use="required" />
+        <xsd:attribute name="maxBoxWidth" type="xsd:int" use="required" />
+        <xsd:attribute name="minBoxPosition" type="xsd:int" use="required" />
+        <xsd:attribute name="minBoxWidth" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="FishingData_FishingRodData">
+        <xsd:sequence>
+            <xsd:element name="FishingRod" type="FishingData_FishingRodData_FishingRod" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="FishingData_FishingRodData_FishingRod">
+        <xsd:attribute name="effectId" type="xsd:int" use="required" />
+        <xsd:attribute name="itemTemplateId" type="xsd:int" use="required" />
+        <xsd:attribute name="rodMeshName" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="FishingData" type="FishingData" />
+</xsd:schema>

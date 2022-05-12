@@ -1,0 +1,54 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/EquipmentEnchantData"
+            targetNamespace="https://vezel.dev/novadrop/dc/EquipmentEnchantData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="EquipmentEnchantData">
+        <xsd:sequence>
+            <xsd:element name="EnchantData" type="EquipmentEnchantData_EnchantData" maxOccurs="unbounded" />
+            <xsd:element name="PassivityCategoryData" type="EquipmentEnchantData_PassivityCategoryData" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EquipmentEnchantData_EnchantData">
+        <xsd:sequence>
+            <xsd:element name="Enchant" type="EquipmentEnchantData_EnchantData_Enchant" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EquipmentEnchantData_EnchantData_Enchant">
+        <xsd:sequence>
+            <xsd:element name="BasicStat" type="EquipmentEnchantData_EnchantData_Enchant_BasicStat" maxOccurs="unbounded" />
+            <xsd:element name="Effect" type="EquipmentEnchantData_EnchantData_Enchant_Effect" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EquipmentEnchantData_EnchantData_Enchant_BasicStat">
+        <xsd:attribute name="enchantStep" type="xsd:int" />
+        <xsd:attribute name="kind" type="xsd:string" use="required" />
+        <xsd:attribute name="rate" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EquipmentEnchantData_EnchantData_Enchant_Effect">
+        <xsd:attribute name="passivityCategoryId" type="xsd:int" use="required" />
+        <xsd:attribute name="step" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EquipmentEnchantData_PassivityCategoryData">
+        <xsd:sequence>
+            <xsd:element name="Category" type="EquipmentEnchantData_PassivityCategoryData_Category" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EquipmentEnchantData_PassivityCategoryData_Category">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="passivityLink" type="xsd:string" use="required" />
+        <xsd:attribute name="unchangeable" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:element name="EquipmentEnchantData" type="EquipmentEnchantData" />
+</xsd:schema>

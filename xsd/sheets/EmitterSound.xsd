@@ -1,0 +1,22 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/EmitterSound"
+            targetNamespace="https://vezel.dev/novadrop/dc/EmitterSound"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="EmitterSound">
+        <xsd:sequence>
+            <xsd:element name="Sound" type="EmitterSound_Sound" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EmitterSound_Sound">
+        <xsd:attribute name="cue" type="xsd:string" use="required" />
+        <xsd:attribute name="particle" type="xsd:string" use="required" />
+        <xsd:attribute name="radius" type="xsd:float" use="required" />
+        <xsd:attribute name="volume" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="EmitterSound" type="EmitterSound" />
+</xsd:schema>

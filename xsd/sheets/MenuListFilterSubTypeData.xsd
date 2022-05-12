@@ -1,0 +1,32 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/MenuListFilterSubTypeData"
+            targetNamespace="https://vezel.dev/novadrop/dc/MenuListFilterSubTypeData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="MenuListFilterSubTypeData">
+        <xsd:sequence>
+            <xsd:element name="FilterSubType" type="MenuListFilterSubTypeData_FilterSubType" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="MenuListFilterSubTypeData_FilterSubType">
+        <xsd:sequence>
+            <xsd:element name="FilterSubTypeElement" type="MenuListFilterSubTypeData_FilterSubType_FilterSubTypeElement" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="MenuListFilterSubTypeData_FilterSubType_FilterSubTypeElement">
+        <xsd:attribute name="element_1_stringId" type="xsd:int" />
+        <xsd:attribute name="element_2_stringId" type="xsd:int" />
+        <xsd:attribute name="element_3_stringId" type="xsd:int" />
+        <xsd:attribute name="element_4_stringId" type="xsd:int" />
+        <xsd:attribute name="element_5_stringId" type="xsd:int" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="MenuListFilterSubTypeData" type="MenuListFilterSubTypeData" />
+</xsd:schema>

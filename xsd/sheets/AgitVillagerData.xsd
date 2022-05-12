@@ -1,0 +1,39 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/AgitVillagerData"
+            targetNamespace="https://vezel.dev/novadrop/dc/AgitVillagerData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="AgitVillagerData">
+        <xsd:sequence>
+            <xsd:element name="AgitVillager" type="AgitVillagerData_AgitVillager" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AgitVillagerData_AgitVillager">
+        <xsd:sequence>
+            <xsd:element name="AgitSite" type="AgitVillagerData_AgitVillager_AgitSite" />
+            <xsd:element name="EnterAgit" type="AgitVillagerData_AgitVillager_EnterAgit" maxOccurs="unbounded" />
+            <xsd:element name="Option" type="AgitVillagerData_AgitVillager_Option" />
+        </xsd:sequence>
+
+        <xsd:attribute name="huntingZoneId" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AgitVillagerData_AgitVillager_AgitSite">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AgitVillagerData_AgitVillager_EnterAgit">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AgitVillagerData_AgitVillager_Option">
+        <xsd:attribute name="buysell" type="xsd:boolean" use="required" />
+        <xsd:attribute name="enter" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="AgitVillagerData" type="AgitVillagerData" />
+</xsd:schema>

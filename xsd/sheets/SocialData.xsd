@@ -1,0 +1,75 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/SocialData"
+            targetNamespace="https://vezel.dev/novadrop/dc/SocialData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="SocialData">
+        <xsd:sequence>
+            <xsd:element name="LimitedList" type="SocialData_LimitedList" minOccurs="0" />
+            <xsd:element name="Social" type="SocialData_Social" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="isNpc" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SocialData_LimitedList">
+        <xsd:sequence>
+            <xsd:element name="LimitedData" type="SocialData_LimitedList_LimitedData" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SocialData_LimitedList_LimitedData">
+        <xsd:sequence>
+            <xsd:element name="Social" type="SocialData_LimitedList_LimitedData_Social" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="limitedClass" type="xsd:string" use="required" />
+        <xsd:attribute name="limitedEquipItem" type="xsd:string" use="required" />
+        <xsd:attribute name="limitedGender" type="xsd:string" use="required" />
+        <xsd:attribute name="limitedRace" type="xsd:string" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SocialData_LimitedList_LimitedData_Social"
+                     dc:keys="id">
+        <xsd:attribute name="animName" type="xsd:string" use="required" />
+        <xsd:attribute name="animNameEnd" type="xsd:string" />
+        <xsd:attribute name="animNameStart" type="xsd:string" />
+        <xsd:attribute name="animSet" type="xsd:string" use="required" />
+        <xsd:attribute name="applyFootIK" type="xsd:boolean" />
+        <xsd:attribute name="icon" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="isLooping" type="xsd:boolean" />
+        <xsd:attribute name="keepPlayWhenPartsChanged" type="xsd:boolean" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="registerWord" type="xsd:string" use="required" />
+        <xsd:attribute name="tooltip" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SocialData_Social"
+                     dc:keys="id">
+        <xsd:attribute name="animName" type="xsd:string" use="required" />
+        <xsd:attribute name="animNameEnd" type="xsd:string" />
+        <xsd:attribute name="animNameStart" type="xsd:string" />
+        <xsd:attribute name="animSet" type="xsd:string" use="required" />
+        <xsd:attribute name="applyFootIK" type="xsd:boolean" />
+        <xsd:attribute name="equipWeapon" type="xsd:boolean" />
+        <xsd:attribute name="icon" type="xsd:string" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="isLooping" type="xsd:boolean" />
+        <xsd:attribute name="mountedUserSocial" type="xsd:int" />
+        <xsd:attribute name="name" type="xsd:string" />
+        <xsd:attribute name="registerWord" type="xsd:string" />
+        <xsd:attribute name="syncMotion" type="xsd:string" />
+        <xsd:attribute name="toolId" type="xsd:int" />
+        <xsd:attribute name="tooltip" type="xsd:string" />
+        <xsd:attribute name="type" type="xsd:string" />
+        <xsd:attribute name="vehicleSocialMotion" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:element name="SocialData" type="SocialData" />
+</xsd:schema>

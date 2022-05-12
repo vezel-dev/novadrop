@@ -1,0 +1,30 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/GroundBoostData"
+            targetNamespace="https://vezel.dev/novadrop/dc/GroundBoostData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="GroundBoostData">
+        <xsd:sequence>
+            <xsd:element name="Data" type="GroundBoostData_Data" />
+        </xsd:sequence>
+
+        <xsd:attribute name="blurBlendTime" type="xsd:float" use="required" />
+        <xsd:attribute name="boostCameraRotateLimit" type="xsd:float" use="required" />
+        <xsd:attribute name="boostEnergyAlarmPercent" type="xsd:float" use="required" />
+        <xsd:attribute name="boostFOV" type="xsd:float" use="required" />
+        <xsd:attribute name="maxBoostEnergy" type="xsd:float" use="required" />
+        <xsd:attribute name="recoveryEnergy" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GroundBoostData_Data">
+        <xsd:attribute name="accel" type="xsd:float" use="required" />
+        <xsd:attribute name="boostCost" type="xsd:int" use="required" />
+        <xsd:attribute name="boostSpeed" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="rotateSpeed" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="GroundBoostData" type="GroundBoostData" />
+</xsd:schema>

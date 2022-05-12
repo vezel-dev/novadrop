@@ -1,0 +1,15 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/DualOptionData"
+            targetNamespace="https://vezel.dev/novadrop/dc/DualOptionData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="DualOptionData">
+        <xsd:attribute name="changeProgressTime" type="xsd:int" use="required" />
+        <xsd:attribute name="openLimitEnchantCount" type="xsd:int" use="required" />
+        <xsd:attribute name="openProgressTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="DualOptionData" type="DualOptionData" />
+</xsd:schema>

@@ -1,0 +1,32 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ContinentData"
+            targetNamespace="https://vezel.dev/novadrop/dc/ContinentData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ContinentData">
+        <xsd:sequence>
+            <xsd:element name="Continent" type="ContinentData_Continent" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ContinentData_Continent">
+        <xsd:sequence>
+            <xsd:element name="HuntingZone" type="ContinentData_Continent_HuntingZone" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="channelMax" type="xsd:int" use="required" />
+        <xsd:attribute name="channelType" type="xsd:string" use="required" />
+        <xsd:attribute name="disableChannelListBtn" type="xsd:boolean" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="inChannelingContinent" type="xsd:string" />
+        <xsd:attribute name="isSpecificSpace" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ContinentData_Continent_HuntingZone">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ContinentData" type="ContinentData" />
+</xsd:schema>

@@ -1,0 +1,30 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/PresetSlotExpend"
+            targetNamespace="https://vezel.dev/novadrop/dc/PresetSlotExpend"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="PresetSlotExpend">
+        <xsd:sequence>
+            <xsd:element name="PresetSlotList" type="PresetSlotExpend_PresetSlotList" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PresetSlotExpend_PresetSlotList">
+        <xsd:sequence>
+            <xsd:element name="SlotExpend" type="PresetSlotExpend_PresetSlotList_SlotExpend" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="maxSlotAmount" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PresetSlotExpend_PresetSlotList_SlotExpend">
+        <xsd:attribute name="currentSlotAmount" type="xsd:int" use="required" />
+        <xsd:attribute name="needAmount" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="PresetSlotExpend" type="PresetSlotExpend" />
+</xsd:schema>

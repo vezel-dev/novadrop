@@ -1,0 +1,152 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/CardCompose"
+            targetNamespace="https://vezel.dev/novadrop/dc/CardCompose"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="CardCompose">
+        <xsd:sequence>
+            <xsd:element name="CardAutoRegistFilterData" type="CardCompose_CardAutoRegistFilterData" />
+            <xsd:element name="CardComposeData" type="CardCompose_CardComposeData" maxOccurs="unbounded" />
+            <xsd:element name="GuideInfo" type="CardCompose_GuideInfo" />
+            <xsd:element name="ItemTable" type="CardCompose_ItemTable" maxOccurs="unbounded" />
+            <xsd:element name="Mileage" type="CardCompose_Mileage" />
+            <xsd:element name="NonComposable" type="CardCompose_NonComposable" />
+            <xsd:element name="SeasonInfo" type="CardCompose_SeasonInfo" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CardCompose_CardAutoRegistFilterData">
+        <xsd:sequence>
+            <xsd:element name="GradeFilter" type="CardCompose_CardAutoRegistFilterData_GradeFilter" />
+            <xsd:element name="PropertyFilter" type="CardCompose_CardAutoRegistFilterData_PropertyFilter" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CardCompose_CardAutoRegistFilterData_GradeFilter">
+        <xsd:sequence>
+            <xsd:element name="ChildFilter" type="CardCompose_CardAutoRegistFilterData_GradeFilter_ChildFilter" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="labelStringId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CardCompose_CardAutoRegistFilterData_GradeFilter_ChildFilter">
+        <xsd:attribute name="labelStringId" type="xsd:string" use="required" />
+        <xsd:attribute name="refId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CardCompose_CardAutoRegistFilterData_PropertyFilter">
+        <xsd:sequence>
+            <xsd:element name="ChildFilter" type="CardCompose_CardAutoRegistFilterData_PropertyFilter_ChildFilter" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="labelStringId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CardCompose_CardAutoRegistFilterData_PropertyFilter_ChildFilter">
+        <xsd:attribute name="labelStringId" type="xsd:string" use="required" />
+        <xsd:attribute name="refId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CardCompose_CardComposeData">
+        <xsd:sequence>
+            <xsd:element name="FailResult" type="CardCompose_CardComposeData_FailResult" minOccurs="0" />
+            <xsd:element name="Material" type="CardCompose_CardComposeData_Material" />
+            <xsd:element name="SuccessResult" type="CardCompose_CardComposeData_SuccessResult" />
+        </xsd:sequence>
+
+        <xsd:attribute name="cardKindAmount" type="xsd:int" use="required" />
+        <xsd:attribute name="eachCardAmount" type="xsd:int" use="required" />
+        <xsd:attribute name="failMileagePerCard" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="requiredCardLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CardCompose_CardComposeData_FailResult">
+        <xsd:attribute name="itemTableId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CardCompose_CardComposeData_Material">
+        <xsd:sequence>
+            <xsd:element name="Gold" type="CardCompose_CardComposeData_Material_Gold" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CardCompose_CardComposeData_Material_Gold">
+        <xsd:attribute name="money" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CardCompose_CardComposeData_SuccessResult">
+        <xsd:attribute name="itemTableId" type="xsd:int" />
+        <xsd:attribute name="seasonGroupListId" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CardCompose_GuideInfo">
+        <xsd:sequence>
+            <xsd:element name="GuideText" type="CardCompose_GuideInfo_GuideText" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CardCompose_GuideInfo_GuideText">
+        <xsd:attribute name="text" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CardCompose_ItemTable">
+        <xsd:sequence>
+            <xsd:element name="Item" type="CardCompose_ItemTable_Item" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="jackpotAmount" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CardCompose_ItemTable_Item">
+        <xsd:attribute name="featuredProductNotification" type="xsd:boolean" />
+        <xsd:attribute name="templateId" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CardCompose_Mileage">
+        <xsd:attribute name="amount" type="xsd:int" use="required" />
+        <xsd:attribute name="rewardItemId" type="xsd:int" use="required" />
+        <xsd:attribute name="rewardMileage" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CardCompose_NonComposable">
+        <xsd:sequence>
+            <xsd:element name="Item" type="CardCompose_NonComposable_Item" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="tooltipText" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CardCompose_NonComposable_Item">
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CardCompose_SeasonInfo">
+        <xsd:sequence>
+            <xsd:element name="SeasonGroupList" type="CardCompose_SeasonInfo_SeasonGroupList" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CardCompose_SeasonInfo_SeasonGroupList">
+        <xsd:sequence>
+            <xsd:element name="Season" type="CardCompose_SeasonInfo_SeasonGroupList_Season" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CardCompose_SeasonInfo_SeasonGroupList_Season">
+        <xsd:attribute name="itemTableId" type="xsd:int" use="required" />
+        <xsd:attribute name="orderId" type="xsd:int" use="required" />
+        <xsd:attribute name="seasonCardItemId" type="xsd:string" use="required" />
+        <xsd:attribute name="seasonTitle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="CardCompose" type="CardCompose" />
+</xsd:schema>

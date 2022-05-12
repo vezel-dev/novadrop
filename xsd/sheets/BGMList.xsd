@@ -1,0 +1,23 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/BGMList"
+            targetNamespace="https://vezel.dev/novadrop/dc/BGMList"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="BGMList">
+        <xsd:sequence>
+            <xsd:element name="BGM" type="BGMList_BGM" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BGMList_BGM"
+                     dc:keys="templateId">
+        <xsd:attribute name="fadeTime" type="xsd:float" use="required" />
+        <xsd:attribute name="music" type="xsd:string" use="required" />
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="BGMList" type="BGMList" />
+</xsd:schema>

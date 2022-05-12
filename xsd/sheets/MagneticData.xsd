@@ -1,0 +1,78 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/MagneticData"
+            targetNamespace="https://vezel.dev/novadrop/dc/MagneticData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="MagneticData">
+        <xsd:sequence>
+            <xsd:element name="MagneticEffect" type="MagneticData_MagneticEffect" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="MagneticData_MagneticEffect">
+        <xsd:sequence>
+            <xsd:element name="CurveTracker" type="MagneticData_MagneticEffect_CurveTracker" minOccurs="0" />
+            <xsd:element name="Mesh" type="MagneticData_MagneticEffect_Mesh" minOccurs="0" />
+            <xsd:element name="Random" type="MagneticData_MagneticEffect_Random" minOccurs="0" />
+            <xsd:element name="Scale" type="MagneticData_MagneticEffect_Scale" minOccurs="0" />
+            <xsd:element name="Simulate" type="MagneticData_MagneticEffect_Simulate" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="EffectStartHeight" type="xsd:float" use="required" />
+        <xsd:attribute name="EffectStartTime" type="xsd:int" use="required" />
+        <xsd:attribute name="HitEffectId" type="xsd:int" use="required" />
+        <xsd:attribute name="MainEffectId" type="xsd:int" use="required" />
+        <xsd:attribute name="MaxDistance" type="xsd:float" use="required" />
+        <xsd:attribute name="MinDistance" type="xsd:float" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="MagneticData_MagneticEffect_CurveTracker">
+        <xsd:attribute name="EndAngle" type="xsd:float" use="required" />
+        <xsd:attribute name="EndVelocity" type="xsd:float" use="required" />
+        <xsd:attribute name="SpeedDistortion" type="xsd:float" use="required" />
+        <xsd:attribute name="StartAngle" type="xsd:float" use="required" />
+        <xsd:attribute name="StartVelocity" type="xsd:float" use="required" />
+        <xsd:attribute name="TrackingAccelExponent" type="xsd:float" use="required" />
+        <xsd:attribute name="TrackingEndTime" type="xsd:float" use="required" />
+        <xsd:attribute name="TrackingStartTime" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="MagneticData_MagneticEffect_Mesh">
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="offset" type="xsd:string" use="required" />
+        <xsd:attribute name="rotate" type="xsd:string" use="required" />
+        <xsd:attribute name="scale" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="MagneticData_MagneticEffect_Random">
+        <xsd:attribute name="accelExponent" type="xsd:float" use="required" />
+        <xsd:attribute name="startX" type="xsd:float" use="required" />
+        <xsd:attribute name="startY" type="xsd:float" use="required" />
+        <xsd:attribute name="startZ" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="MagneticData_MagneticEffect_Scale">
+        <xsd:attribute name="maxScale" type="xsd:float" use="required" />
+        <xsd:attribute name="maxValue" type="xsd:int" use="required" />
+        <xsd:attribute name="minScale" type="xsd:float" use="required" />
+        <xsd:attribute name="minValue" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="MagneticData_MagneticEffect_Simulate">
+        <xsd:attribute name="GravityAccel" type="xsd:float" use="required" />
+        <xsd:attribute name="MagneticAccelExponent" type="xsd:float" use="required" />
+        <xsd:attribute name="MagneticEndAccel" type="xsd:float" use="required" />
+        <xsd:attribute name="MagneticEndTime" type="xsd:int" use="required" />
+        <xsd:attribute name="MagneticInhaleAccel" type="xsd:float" use="required" />
+        <xsd:attribute name="MagneticStartAccel" type="xsd:float" use="required" />
+        <xsd:attribute name="MagneticStartTime" type="xsd:int" use="required" />
+        <xsd:attribute name="MaxSpeed" type="xsd:float" use="required" />
+        <xsd:attribute name="MinSpeed" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="MagneticData" type="MagneticData" />
+</xsd:schema>

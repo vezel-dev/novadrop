@@ -1,0 +1,78 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ContinentCacheData"
+            targetNamespace="https://vezel.dev/novadrop/dc/ContinentCacheData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ContinentCacheData">
+        <xsd:sequence>
+            <xsd:element name="Continent" type="ContinentCacheData_Continent" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ContinentCacheData_Continent"
+                     dc:keys="id">
+        <xsd:sequence>
+            <xsd:element name="AnimSetList" type="ContinentCacheData_Continent_AnimSetList" minOccurs="0" />
+            <xsd:element name="EffectList" type="ContinentCacheData_Continent_EffectList" minOccurs="0" />
+            <xsd:element name="SkeletalMeshList" type="ContinentCacheData_Continent_SkeletalMeshList" minOccurs="0" />
+            <xsd:element name="SoundCueList" type="ContinentCacheData_Continent_SoundCueList" minOccurs="0" />
+            <xsd:element name="StaticMeshList" type="ContinentCacheData_Continent_StaticMeshList" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ContinentCacheData_Continent_AnimSetList">
+        <xsd:sequence>
+            <xsd:element name="AnimSet" type="ContinentCacheData_Continent_AnimSetList_AnimSet" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ContinentCacheData_Continent_AnimSetList_AnimSet">
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ContinentCacheData_Continent_EffectList">
+        <xsd:sequence>
+            <xsd:element name="Effect" type="ContinentCacheData_Continent_EffectList_Effect" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ContinentCacheData_Continent_EffectList_Effect">
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ContinentCacheData_Continent_SkeletalMeshList">
+        <xsd:sequence>
+            <xsd:element name="SkeletalMesh" type="ContinentCacheData_Continent_SkeletalMeshList_SkeletalMesh" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ContinentCacheData_Continent_SkeletalMeshList_SkeletalMesh">
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ContinentCacheData_Continent_SoundCueList">
+        <xsd:sequence>
+            <xsd:element name="SoundCue" type="ContinentCacheData_Continent_SoundCueList_SoundCue" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ContinentCacheData_Continent_SoundCueList_SoundCue">
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ContinentCacheData_Continent_StaticMeshList">
+        <xsd:sequence>
+            <xsd:element name="StaticMesh" type="ContinentCacheData_Continent_StaticMeshList_StaticMesh" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ContinentCacheData_Continent_StaticMeshList_StaticMesh">
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ContinentCacheData" type="ContinentCacheData" />
+</xsd:schema>

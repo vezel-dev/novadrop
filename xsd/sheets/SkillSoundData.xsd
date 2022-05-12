@@ -1,0 +1,74 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/SkillSoundData"
+            targetNamespace="https://vezel.dev/novadrop/dc/SkillSoundData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="SkillSoundData"
+                     dc:keys="huntingZoneId">
+        <xsd:sequence>
+            <xsd:element name="SkillSound" type="SkillSoundData_SkillSound" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="huntingZoneId" type="xsd:int" use="required" />
+        <xsd:attribute name="templateId" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillSoundData_SkillSound"
+                     dc:keys="templateId skillId">
+        <xsd:sequence>
+            <xsd:element name="AfterImageSound" type="SkillSoundData_SkillSound_AfterImageSound" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="ChargeSoundList" type="SkillSoundData_SkillSound_ChargeSoundList" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="HitSoundList" type="SkillSoundData_SkillSound_HitSoundList" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Sound" type="SkillSoundData_SkillSound_Sound" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="skillId" type="xsd:int" use="required" />
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillSoundData_SkillSound_AfterImageSound">
+        <xsd:attribute name="radius" type="xsd:float" use="required" />
+        <xsd:attribute name="soundcue" type="xsd:string" use="required" />
+        <xsd:attribute name="stageIndex" type="xsd:int" use="required" />
+        <xsd:attribute name="time" type="xsd:float" use="required" />
+        <xsd:attribute name="volume" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillSoundData_SkillSound_ChargeSoundList">
+        <xsd:sequence>
+            <xsd:element name="ChargeSound" type="SkillSoundData_SkillSound_ChargeSoundList_ChargeSound" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillSoundData_SkillSound_ChargeSoundList_ChargeSound">
+        <xsd:attribute name="radius" type="xsd:float" use="required" />
+        <xsd:attribute name="soundcue" type="xsd:string" use="required" />
+        <xsd:attribute name="stage" type="xsd:int" use="required" />
+        <xsd:attribute name="volume" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillSoundData_SkillSound_HitSoundList">
+        <xsd:sequence>
+            <xsd:element name="HitSound" type="SkillSoundData_SkillSound_HitSoundList_HitSound" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillSoundData_SkillSound_HitSoundList_HitSound">
+        <xsd:attribute name="areaIndex" type="xsd:int" />
+        <xsd:attribute name="isPlayArmorSound" type="xsd:boolean" use="required" />
+        <xsd:attribute name="soundcue" type="xsd:string" />
+        <xsd:attribute name="targetingIndex" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillSoundData_SkillSound_Sound">
+        <xsd:attribute name="radius" type="xsd:float" use="required" />
+        <xsd:attribute name="soundcue" type="xsd:string" use="required" />
+        <xsd:attribute name="stageIndex" type="xsd:int" />
+        <xsd:attribute name="time" type="xsd:float" />
+        <xsd:attribute name="volume" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="SkillSoundData" type="SkillSoundData" />
+</xsd:schema>

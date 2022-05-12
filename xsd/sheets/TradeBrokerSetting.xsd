@@ -1,0 +1,62 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/TradeBrokerSetting"
+            targetNamespace="https://vezel.dev/novadrop/dc/TradeBrokerSetting"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="TradeBrokerSetting">
+        <xsd:sequence>
+            <xsd:element name="Deal" type="TradeBrokerSetting_Deal" />
+            <xsd:element name="SearchCondition" type="TradeBrokerSetting_SearchCondition" />
+            <xsd:element name="WarningPopUp" type="TradeBrokerSetting_WarningPopUp" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TradeBrokerSetting_Deal">
+        <xsd:sequence>
+            <xsd:element name="Suggest" type="TradeBrokerSetting_Deal_Suggest" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TradeBrokerSetting_Deal_Suggest">
+        <xsd:attribute name="lifeTime" type="xsd:int" use="required" />
+        <xsd:attribute name="maxCount" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TradeBrokerSetting_SearchCondition">
+        <xsd:sequence>
+            <xsd:element name="MaxEnchantLevel" type="TradeBrokerSetting_SearchCondition_MaxEnchantLevel" />
+            <xsd:element name="MaxItemLevel" type="TradeBrokerSetting_SearchCondition_MaxItemLevel" />
+            <xsd:element name="MaxItemRank" type="TradeBrokerSetting_SearchCondition_MaxItemRank" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TradeBrokerSetting_SearchCondition_MaxEnchantLevel">
+        <xsd:attribute name="value" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TradeBrokerSetting_SearchCondition_MaxItemLevel">
+        <xsd:attribute name="value" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TradeBrokerSetting_SearchCondition_MaxItemRank">
+        <xsd:attribute name="value" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TradeBrokerSetting_WarningPopUp">
+        <xsd:sequence>
+            <xsd:element name="Check" type="TradeBrokerSetting_WarningPopUp_Check" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="defaultValue" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TradeBrokerSetting_WarningPopUp_Check">
+        <xsd:attribute name="max" type="xsd:int" use="required" />
+        <xsd:attribute name="min" type="xsd:int" use="required" />
+        <xsd:attribute name="value" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="TradeBrokerSetting" type="TradeBrokerSetting" />
+</xsd:schema>

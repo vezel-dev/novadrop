@@ -1,19 +1,19 @@
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:dc="https://vezel.dev/novadrop/dc"
-            xmlns="https://vezel.dev/novadrop/dc/AbuseLetterList"
-            targetNamespace="https://vezel.dev/novadrop/dc/AbuseLetterList"
+            xmlns="https://vezel.dev/novadrop/dc/ConfigLetterList"
+            targetNamespace="https://vezel.dev/novadrop/dc/ConfigLetterList"
             xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
             elementFormDefault="qualified">
-    <xsd:complexType name="AbuseLetterList">
+    <xsd:complexType name="ConfigLetterList">
         <xsd:sequence>
-            <xsd:element name="AbuseLetter" type="AbuseLetterList_AbuseLetter" maxOccurs="unbounded" />
+            <xsd:element name="ConfigLetter" type="ConfigLetterList_ConfigLetter" maxOccurs="unbounded" />
         </xsd:sequence>
     </xsd:complexType>
 
-    <xsd:complexType name="AbuseLetterList_AbuseLetter">
+    <xsd:complexType name="ConfigLetterList_ConfigLetter">
         <xsd:attribute name="string" type="xsd:string" use="required" />
     </xsd:complexType>
 
-    <xsd:element name="AbuseLetterList" type="AbuseLetterList" />
+    <xsd:element name="ConfigLetterList" type="ConfigLetterList" />
 </xsd:schema>

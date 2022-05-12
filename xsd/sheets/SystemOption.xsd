@@ -1,0 +1,151 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/SystemOption"
+            targetNamespace="https://vezel.dev/novadrop/dc/SystemOption"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="SystemOption">
+        <xsd:sequence>
+            <xsd:element name="Etc" type="SystemOption_Etc" minOccurs="0" />
+            <xsd:element name="GameOption" type="SystemOption_GameOption" minOccurs="0" />
+            <xsd:element name="Interface" type="SystemOption_Interface" minOccurs="0" />
+            <xsd:element name="SoundOption" type="SystemOption_SoundOption" minOccurs="0" />
+            <xsd:element name="UIOption" type="SystemOption_UIOption" minOccurs="0" />
+            <xsd:element name="Video" type="SystemOption_Video" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SystemOption_Etc">
+        <xsd:sequence>
+            <xsd:element name="RemoveOverlap" type="SystemOption_Etc_RemoveOverlap" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SystemOption_Etc_RemoveOverlap">
+        <xsd:attribute name="accel" type="xsd:float" use="required" />
+        <xsd:attribute name="velocity" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SystemOption_GameOption">
+        <xsd:sequence>
+            <xsd:element name="DefaultOption" type="SystemOption_GameOption_DefaultOption" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SystemOption_GameOption_DefaultOption">
+        <xsd:attribute name="key" type="xsd:string" use="required" />
+        <xsd:attribute name="value" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SystemOption_Interface">
+        <xsd:sequence>
+            <xsd:element name="Camera" type="SystemOption_Interface_Camera" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SystemOption_Interface_Camera">
+        <xsd:sequence>
+            <xsd:element name="RotationSpeed" type="SystemOption_Interface_Camera_RotationSpeed" />
+            <xsd:element name="ZoomLimit" type="SystemOption_Interface_Camera_ZoomLimit" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SystemOption_Interface_Camera_RotationSpeed">
+        <xsd:sequence>
+            <xsd:element name="Data" type="SystemOption_Interface_Camera_RotationSpeed_Data" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SystemOption_Interface_Camera_RotationSpeed_Data">
+        <xsd:attribute name="value" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SystemOption_Interface_Camera_ZoomLimit">
+        <xsd:attribute name="defaultForNewbie" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SystemOption_SoundOption">
+        <xsd:sequence>
+            <xsd:element name="DefaultOption" type="SystemOption_SoundOption_DefaultOption" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SystemOption_SoundOption_DefaultOption">
+        <xsd:attribute name="key" type="xsd:string" use="required" />
+        <xsd:attribute name="value" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SystemOption_UIOption">
+        <xsd:sequence>
+            <xsd:element name="DefaultOption" type="SystemOption_UIOption_DefaultOption" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SystemOption_UIOption_DefaultOption">
+        <xsd:attribute name="key" type="xsd:string" use="required" />
+        <xsd:attribute name="uiName" type="xsd:string" use="required" />
+        <xsd:attribute name="value" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SystemOption_Video">
+        <xsd:sequence>
+            <xsd:element name="AutoFrameRateOptimize" type="SystemOption_Video_AutoFrameRateOptimize" />
+            <xsd:element name="CullDistance" type="SystemOption_Video_CullDistance" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SystemOption_Video_AutoFrameRateOptimize">
+        <xsd:sequence>
+            <xsd:element name="AutoFrameRate" type="SystemOption_Video_AutoFrameRateOptimize_AutoFrameRate" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SystemOption_Video_AutoFrameRateOptimize_AutoFrameRate">
+        <xsd:attribute name="level" type="xsd:int" use="required" />
+        <xsd:attribute name="targetFPS" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SystemOption_Video_CullDistance">
+        <xsd:sequence>
+            <xsd:element name="BackgroundObject" type="SystemOption_Video_CullDistance_BackgroundObject" />
+            <xsd:element name="S1GameObject" type="SystemOption_Video_CullDistance_S1GameObject" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SystemOption_Video_CullDistance_BackgroundObject">
+        <xsd:sequence>
+            <xsd:element name="Data" type="SystemOption_Video_CullDistance_BackgroundObject_Data" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SystemOption_Video_CullDistance_BackgroundObject_Data">
+        <xsd:sequence>
+            <xsd:element name="Value" type="SystemOption_Video_CullDistance_BackgroundObject_Data_Value" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SystemOption_Video_CullDistance_BackgroundObject_Data_Value">
+        <xsd:attribute name="distance" type="xsd:float" use="required" />
+        <xsd:attribute name="size" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SystemOption_Video_CullDistance_S1GameObject">
+        <xsd:sequence>
+            <xsd:element name="Data" type="SystemOption_Video_CullDistance_S1GameObject_Data" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SystemOption_Video_CullDistance_S1GameObject_Data">
+        <xsd:sequence>
+            <xsd:element name="Value" type="SystemOption_Video_CullDistance_S1GameObject_Data_Value" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SystemOption_Video_CullDistance_S1GameObject_Data_Value">
+        <xsd:attribute name="distance" type="xsd:float" use="required" />
+        <xsd:attribute name="size" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="SystemOption" type="SystemOption" />
+</xsd:schema>

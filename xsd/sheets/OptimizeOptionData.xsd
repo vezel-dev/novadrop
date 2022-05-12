@@ -1,0 +1,70 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/OptimizeOptionData"
+            targetNamespace="https://vezel.dev/novadrop/dc/OptimizeOptionData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="OptimizeOptionData">
+        <xsd:sequence>
+            <xsd:element name="ContinentSpecificData" type="OptimizeOptionData_ContinentSpecificData" />
+            <xsd:element name="OptimizeOption" type="OptimizeOptionData_OptimizeOption" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="OptimizeOptionData_ContinentSpecificData">
+        <xsd:sequence>
+            <xsd:element name="Continent" type="OptimizeOptionData_ContinentSpecificData_Continent" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="OptimizeOptionData_ContinentSpecificData_Continent">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="lowShapeUserThreshold" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="OptimizeOptionData_OptimizeOption">
+        <xsd:sequence>
+            <xsd:element name="ApplyOption" type="OptimizeOptionData_OptimizeOption_ApplyOption" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="contentsName" type="xsd:string" />
+        <xsd:attribute name="continentId" type="xsd:int" />
+        <xsd:attribute name="floorCheckInterval" type="xsd:float" />
+        <xsd:attribute name="forceApplyOptimize" type="xsd:boolean" />
+        <xsd:attribute name="forceCriticalEffectId" type="xsd:int" />
+        <xsd:attribute name="forceHitEffectId" type="xsd:int" />
+        <xsd:attribute name="frequencyOfHitSound" type="xsd:int" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="maxUserCountForHitEffect" type="xsd:int" />
+        <xsd:attribute name="skipAfterImage" type="xsd:boolean" />
+        <xsd:attribute name="skipCastDynamicShadowNpc" type="xsd:string" />
+        <xsd:attribute name="skipDamageMotion" type="xsd:boolean" />
+        <xsd:attribute name="skipFootIk" type="xsd:boolean" />
+        <xsd:attribute name="skipHitBloodEffect" type="xsd:boolean" />
+        <xsd:attribute name="skipHitOverlay" type="xsd:boolean" />
+        <xsd:attribute name="skipWeaponEffect" type="xsd:boolean" />
+        <xsd:attribute name="skipWeaponTrailEffect" type="xsd:boolean" />
+        <xsd:attribute name="useAdditionalOptimize" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:complexType name="OptimizeOptionData_OptimizeOption_ApplyOption"
+                     dc:keys="orderId">
+        <xsd:attribute name="bgDisplayDistance" type="xsd:int" />
+        <xsd:attribute name="bgFxDetail" type="xsd:int" />
+        <xsd:attribute name="characterCountLimitIndex" type="xsd:int" />
+        <xsd:attribute name="characterCullDistanceLimitIndex" type="xsd:int" />
+        <xsd:attribute name="characterShadowIndex" type="xsd:int" use="required" />
+        <xsd:attribute name="displayQualityPreset" type="xsd:int" use="required" />
+        <xsd:attribute name="effectLODLevel" type="xsd:int" />
+        <xsd:attribute name="effectLODLevelInDungeon" type="xsd:int" />
+        <xsd:attribute name="envCaseEffect" type="xsd:boolean" />
+        <xsd:attribute name="frame" type="xsd:int" use="required" />
+        <xsd:attribute name="groundDetail" type="xsd:int" />
+        <xsd:attribute name="orderId" type="xsd:int" use="required" />
+        <xsd:attribute name="postProcessQuality" type="xsd:int" />
+        <xsd:attribute name="useLowLighting" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:element name="OptimizeOptionData" type="OptimizeOptionData" />
+</xsd:schema>

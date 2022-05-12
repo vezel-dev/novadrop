@@ -1,0 +1,28 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/TBAPadButtonMap"
+            targetNamespace="https://vezel.dev/novadrop/dc/TBAPadButtonMap"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="TBAPadButtonMap">
+        <xsd:sequence>
+            <xsd:element name="KeyDefine" type="TBAPadButtonMap_KeyDefine" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TBAPadButtonMap_KeyDefine">
+        <xsd:attribute name="command" type="xsd:string" />
+        <xsd:attribute name="customizable" type="xsd:boolean" />
+        <xsd:attribute name="enableOnTBA" type="xsd:boolean" use="required" />
+        <xsd:attribute name="input" type="xsd:string" />
+        <xsd:attribute name="key1" type="xsd:string" use="required" />
+        <xsd:attribute name="key2" type="xsd:string" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="parameter" type="xsd:string" />
+        <xsd:attribute name="uiMode" type="xsd:string" />
+        <xsd:attribute name="when" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:element name="TBAPadButtonMap" type="TBAPadButtonMap" />
+</xsd:schema>

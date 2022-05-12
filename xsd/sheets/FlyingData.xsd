@@ -1,0 +1,51 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/FlyingData"
+            targetNamespace="https://vezel.dev/novadrop/dc/FlyingData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="FlyingData">
+        <xsd:sequence>
+            <xsd:element name="Data" type="FlyingData_Data" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="blurBlendTime" type="xsd:float" use="required" />
+        <xsd:attribute name="boostCameraRotateLimit" type="xsd:float" use="required" />
+        <xsd:attribute name="descentMaxDegree" type="xsd:float" use="required" />
+        <xsd:attribute name="descentMinDegree" type="xsd:float" use="required" />
+        <xsd:attribute name="fallingByLimitSpeed" type="xsd:float" use="required" />
+        <xsd:attribute name="fastFOV" type="xsd:float" use="required" />
+        <xsd:attribute name="flightEnergyAlarmPercent" type="xsd:float" use="required" />
+        <xsd:attribute name="guideShowTime" type="xsd:float" use="required" />
+        <xsd:attribute name="maxCameraPitch" type="xsd:float" use="required" />
+        <xsd:attribute name="maxFlightEnergy" type="xsd:float" use="required" />
+        <xsd:attribute name="minCameraPitch" type="xsd:float" use="required" />
+        <xsd:attribute name="normalFOV" type="xsd:float" use="required" />
+        <xsd:attribute name="recoveryEnergy" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="FlyingData_Data">
+        <xsd:attribute name="accel" type="xsd:float" use="required" />
+        <xsd:attribute name="backAdditionalCharacterPitch" type="xsd:float" use="required" />
+        <xsd:attribute name="backwardSpeed" type="xsd:float" use="required" />
+        <xsd:attribute name="basicCost" type="xsd:float" use="required" />
+        <xsd:attribute name="boostCost" type="xsd:float" use="required" />
+        <xsd:attribute name="boostSideMoveRate" type="xsd:float" use="required" />
+        <xsd:attribute name="descentCharacterMaxPitch" type="xsd:float" use="required" />
+        <xsd:attribute name="descentCharacterMinPitch" type="xsd:float" use="required" />
+        <xsd:attribute name="descentCost" type="xsd:float" use="required" />
+        <xsd:attribute name="descentMaxSpeed" type="xsd:float" use="required" />
+        <xsd:attribute name="descentSpeed" type="xsd:float" use="required" />
+        <xsd:attribute name="fastSpeed" type="xsd:float" use="required" />
+        <xsd:attribute name="forwardSpeed" type="xsd:float" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="idleAdditionalCharacterPitch" type="xsd:float" use="required" />
+        <xsd:attribute name="maxCharacterRoll" type="xsd:float" use="required" />
+        <xsd:attribute name="moveAdditionalCharacterPitch" type="xsd:float" use="required" />
+        <xsd:attribute name="rotateSpeed" type="xsd:float" use="required" />
+        <xsd:attribute name="upCost" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="FlyingData" type="FlyingData" />
+</xsd:schema>

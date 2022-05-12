@@ -1,0 +1,37 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/DeliveryMenuList"
+            targetNamespace="https://vezel.dev/novadrop/dc/DeliveryMenuList"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="DeliveryMenuList">
+        <xsd:sequence>
+            <xsd:element name="Menu" type="DeliveryMenuList_Menu" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DeliveryMenuList_Menu">
+        <xsd:sequence>
+            <xsd:element name="ItemList" type="DeliveryMenuList_Menu_ItemList" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="stringId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DeliveryMenuList_Menu_ItemList">
+        <xsd:sequence>
+            <xsd:element name="ItemData" type="DeliveryMenuList_Menu_ItemList_ItemData" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DeliveryMenuList_Menu_ItemList_ItemData">
+        <xsd:attribute name="price" type="xsd:int" use="required" />
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="DeliveryMenuList" type="DeliveryMenuList" />
+</xsd:schema>

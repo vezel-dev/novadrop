@@ -1,0 +1,42 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/PegasusPaths"
+            targetNamespace="https://vezel.dev/novadrop/dc/PegasusPaths"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="PegasusPaths">
+        <xsd:sequence>
+            <xsd:element name="PegasusPath" type="PegasusPaths_PegasusPath" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PegasusPaths_PegasusPath">
+        <xsd:sequence>
+            <xsd:element name="Stage" type="PegasusPaths_PegasusPath_Stage" />
+        </xsd:sequence>
+
+        <xsd:attribute name="description" type="xsd:string" use="required" />
+        <xsd:attribute name="index" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PegasusPaths_PegasusPath_Stage">
+        <xsd:sequence>
+            <xsd:element name="Seq" type="PegasusPaths_PegasusPath_Stage_Seq" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="continentId" type="xsd:int" use="required" />
+        <xsd:attribute name="inDungeon" type="xsd:boolean" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PegasusPaths_PegasusPath_Stage_Seq">
+        <xsd:attribute name="loc" type="xsd:string" use="required" />
+        <xsd:attribute name="rot" type="xsd:string" use="required" />
+        <xsd:attribute name="state" type="xsd:int" />
+        <xsd:attribute name="stateCount" type="xsd:int" />
+        <xsd:attribute name="time" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="PegasusPaths" type="PegasusPaths" />
+</xsd:schema>

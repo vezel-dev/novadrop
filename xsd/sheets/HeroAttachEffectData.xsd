@@ -1,0 +1,59 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/HeroAttachEffectData"
+            targetNamespace="https://vezel.dev/novadrop/dc/HeroAttachEffectData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="HeroAttachEffectData">
+        <xsd:sequence>
+            <xsd:element name="AttachEffect" type="HeroAttachEffectData_AttachEffect" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroAttachEffectData_AttachEffect"
+                     dc:keys="id">
+        <xsd:sequence>
+            <xsd:element name="EffectCondition" type="HeroAttachEffectData_AttachEffect_EffectCondition" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="bAccessById" type="xsd:boolean" use="required" />
+        <xsd:attribute name="desc" type="xsd:string" use="required" />
+        <xsd:attribute name="heroTemplateId" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroAttachEffectData_AttachEffect_EffectCondition">
+        <xsd:sequence>
+            <xsd:element name="Effect" type="HeroAttachEffectData_AttachEffect_EffectCondition_Effect" />
+        </xsd:sequence>
+
+        <xsd:attribute name="condition" type="xsd:string" use="required" />
+        <xsd:attribute name="desc" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroAttachEffectData_AttachEffect_EffectCondition_Effect"
+                     dc:keys="id">
+        <xsd:attribute name="bGround" type="xsd:boolean" use="required" />
+        <xsd:attribute name="boneName" type="xsd:string" use="required" />
+        <xsd:attribute name="detach" type="xsd:boolean" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="playRate" type="xsd:float" use="required" />
+        <xsd:attribute name="posX" type="xsd:float" use="required" />
+        <xsd:attribute name="posY" type="xsd:float" use="required" />
+        <xsd:attribute name="posZ" type="xsd:float" use="required" />
+        <xsd:attribute name="rescaleMethod" type="xsd:string" use="required" />
+        <xsd:attribute name="resource" type="xsd:string" use="required" />
+        <xsd:attribute name="rotX" type="xsd:float" use="required" />
+        <xsd:attribute name="rotY" type="xsd:float" use="required" />
+        <xsd:attribute name="rotZ" type="xsd:float" use="required" />
+        <xsd:attribute name="scale" type="xsd:float" use="required" />
+        <xsd:attribute name="scaleX" type="xsd:float" use="required" />
+        <xsd:attribute name="scaleY" type="xsd:float" use="required" />
+        <xsd:attribute name="scaleZ" type="xsd:float" use="required" />
+        <xsd:attribute name="startTime" type="xsd:int" use="required" />
+        <xsd:attribute name="worldSpawn" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="HeroAttachEffectData" type="HeroAttachEffectData" />
+</xsd:schema>

@@ -1,0 +1,30 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ItemDecompositionData"
+            targetNamespace="https://vezel.dev/novadrop/dc/ItemDecompositionData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ItemDecompositionData">
+        <xsd:sequence>
+            <xsd:element name="Hammer" type="ItemDecompositionData_Hammer" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ItemDecompositionData_Hammer">
+        <xsd:sequence>
+            <xsd:element name="Result" type="ItemDecompositionData_Hammer_Result" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="itemId" type="xsd:int" use="required" />
+        <xsd:attribute name="rank" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ItemDecompositionData_Hammer_Result">
+        <xsd:attribute name="combatItemType" type="xsd:string" use="required" />
+        <xsd:attribute name="powderCount" type="xsd:int" use="required" />
+        <xsd:attribute name="rareGrade" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ItemDecompositionData" type="ItemDecompositionData" />
+</xsd:schema>

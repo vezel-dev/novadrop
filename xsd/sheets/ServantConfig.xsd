@@ -1,0 +1,231 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ServantConfig"
+            targetNamespace="https://vezel.dev/novadrop/dc/ServantConfig"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ServantConfig">
+        <xsd:sequence>
+            <xsd:element name="AutoFeedPresentAbility" type="ServantConfig_AutoFeedPresentAbility" />
+            <xsd:element name="AutoPotionAbility" type="ServantConfig_AutoPotionAbility" />
+            <xsd:element name="PartnerConfig" type="ServantConfig_PartnerConfig" />
+            <xsd:element name="PetConfig" type="ServantConfig_PetConfig" />
+            <xsd:element name="PreviewCamera" type="ServantConfig_PreviewCamera" />
+            <xsd:element name="ServantAdventureReduceTimeTicket" type="ServantConfig_ServantAdventureReduceTimeTicket" />
+            <xsd:element name="SpawnServantByShortcut" type="ServantConfig_SpawnServantByShortcut" />
+            <xsd:element name="Storage" type="ServantConfig_Storage" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_AutoFeedPresentAbility">
+        <xsd:sequence>
+            <xsd:element name="Slot" type="ServantConfig_AutoFeedPresentAbility_Slot" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_AutoFeedPresentAbility_Slot">
+        <xsd:attribute name="index" type="xsd:int" use="required" />
+        <xsd:attribute name="max" type="xsd:float" use="required" />
+        <xsd:attribute name="min" type="xsd:float" use="required" />
+        <xsd:attribute name="templateId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_AutoPotionAbility">
+        <xsd:sequence>
+            <xsd:element name="Slot" type="ServantConfig_AutoPotionAbility_Slot" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_AutoPotionAbility_Slot">
+        <xsd:attribute name="index" type="xsd:int" use="required" />
+        <xsd:attribute name="max" type="xsd:float" use="required" />
+        <xsd:attribute name="min" type="xsd:float" use="required" />
+        <xsd:attribute name="templateId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_PartnerConfig">
+        <xsd:sequence>
+            <xsd:element name="AbilityTransfer" type="ServantConfig_PartnerConfig_AbilityTransfer" />
+            <xsd:element name="ConditionalSkillData" type="ServantConfig_PartnerConfig_ConditionalSkillData" />
+            <xsd:element name="PartnerEnergyEffect" type="ServantConfig_PartnerConfig_PartnerEnergyEffect" />
+            <xsd:element name="PartnerMix" type="ServantConfig_PartnerConfig_PartnerMix" />
+            <xsd:element name="PresentItemList" type="ServantConfig_PartnerConfig_PresentItemList" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_PartnerConfig_AbilityTransfer">
+        <xsd:sequence>
+            <xsd:element name="Transfer" type="ServantConfig_PartnerConfig_AbilityTransfer_Transfer" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_PartnerConfig_AbilityTransfer_Transfer">
+        <xsd:attribute name="enable" type="xsd:boolean" use="required" />
+        <xsd:attribute name="fromServantType" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_PartnerConfig_ConditionalSkillData">
+        <xsd:attribute name="resetItemTemplateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_PartnerConfig_PartnerEnergyEffect">
+        <xsd:sequence>
+            <xsd:element name="EnergyEffect" type="ServantConfig_PartnerConfig_PartnerEnergyEffect_EnergyEffect" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_PartnerConfig_PartnerEnergyEffect_EnergyEffect">
+        <xsd:attribute name="energyRate" type="xsd:float" use="required" />
+        <xsd:attribute name="fatigueStep" type="xsd:int" use="required" />
+        <xsd:attribute name="stringId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_PartnerConfig_PartnerMix">
+        <xsd:sequence>
+            <xsd:element name="MainCondition" type="ServantConfig_PartnerConfig_PartnerMix_MainCondition" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_PartnerConfig_PartnerMix_MainCondition">
+        <xsd:sequence>
+            <xsd:element name="SubCondition" type="ServantConfig_PartnerConfig_PartnerMix_MainCondition_SubCondition" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="mainLevel" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_PartnerConfig_PartnerMix_MainCondition_SubCondition">
+        <xsd:attribute name="requiredMoney" type="xsd:string" use="required" />
+        <xsd:attribute name="subLevel" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_PartnerConfig_PresentItemList">
+        <xsd:sequence>
+            <xsd:element name="ItemData" type="ServantConfig_PartnerConfig_PresentItemList_ItemData" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_PartnerConfig_PresentItemList_ItemData">
+        <xsd:attribute name="recoveryPoint" type="xsd:int" use="required" />
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_PetConfig">
+        <xsd:sequence>
+            <xsd:element name="FeedItemList" type="ServantConfig_PetConfig_FeedItemList" />
+            <xsd:element name="PetEvolution" type="ServantConfig_PetConfig_PetEvolution" />
+            <xsd:element name="PetLevel" type="ServantConfig_PetConfig_PetLevel" />
+            <xsd:element name="PetMix" type="ServantConfig_PetConfig_PetMix" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_PetConfig_FeedItemList">
+        <xsd:sequence>
+            <xsd:element name="ItemData" type="ServantConfig_PetConfig_FeedItemList_ItemData" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_PetConfig_FeedItemList_ItemData">
+        <xsd:attribute name="recoveryPoint" type="xsd:int" use="required" />
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_PetConfig_PetEvolution">
+        <xsd:sequence>
+            <xsd:element name="MaterialList" type="ServantConfig_PetConfig_PetEvolution_MaterialList" />
+            <xsd:element name="ResultData" type="ServantConfig_PetConfig_PetEvolution_ResultData" />
+        </xsd:sequence>
+
+        <xsd:attribute name="gold" type="xsd:int" use="required" />
+        <xsd:attribute name="needLevel" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_PetConfig_PetEvolution_MaterialList">
+        <xsd:sequence>
+            <xsd:element name="Material" type="ServantConfig_PetConfig_PetEvolution_MaterialList_Material" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_PetConfig_PetEvolution_MaterialList_Material">
+        <xsd:attribute name="amount" type="xsd:int" use="required" />
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_PetConfig_PetEvolution_ResultData">
+        <xsd:sequence>
+            <xsd:element name="Partner" type="ServantConfig_PetConfig_PetEvolution_ResultData_Partner" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_PetConfig_PetEvolution_ResultData_Partner">
+        <xsd:attribute name="servantId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_PetConfig_PetLevel">
+        <xsd:sequence>
+            <xsd:element name="Exp" type="ServantConfig_PetConfig_PetLevel_Exp" maxOccurs="unbounded" />
+            <xsd:element name="PetExpItem" type="ServantConfig_PetConfig_PetLevel_PetExpItem" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_PetConfig_PetLevel_Exp">
+        <xsd:attribute name="level" type="xsd:int" use="required" />
+        <xsd:attribute name="needExp" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_PetConfig_PetLevel_PetExpItem">
+        <xsd:sequence>
+            <xsd:element name="ItemData" type="ServantConfig_PetConfig_PetLevel_PetExpItem_ItemData" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_PetConfig_PetLevel_PetExpItem_ItemData">
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+        <xsd:attribute name="value" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_PetConfig_PetMix">
+        <xsd:attribute name="gold" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_PreviewCamera">
+        <xsd:attribute name="defaultZoom" type="xsd:float" use="required" />
+        <xsd:attribute name="fov" type="xsd:float" use="required" />
+        <xsd:attribute name="maxHeight" type="xsd:float" use="required" />
+        <xsd:attribute name="maxPitch" type="xsd:float" use="required" />
+        <xsd:attribute name="maxTilt" type="xsd:float" use="required" />
+        <xsd:attribute name="maxZoom" type="xsd:float" use="required" />
+        <xsd:attribute name="minHeight" type="xsd:float" use="required" />
+        <xsd:attribute name="minPitch" type="xsd:float" use="required" />
+        <xsd:attribute name="minTilt" type="xsd:float" use="required" />
+        <xsd:attribute name="minZoom" type="xsd:float" use="required" />
+        <xsd:attribute name="rotateExp" type="xsd:float" use="required" />
+        <xsd:attribute name="rotateSpeed" type="xsd:float" use="required" />
+        <xsd:attribute name="zoomExp" type="xsd:float" use="required" />
+        <xsd:attribute name="zoomSpeed" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_ServantAdventureReduceTimeTicket">
+        <xsd:sequence>
+            <xsd:element name="ReduceTimeTicket" type="ServantConfig_ServantAdventureReduceTimeTicket_ReduceTimeTicket" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_ServantAdventureReduceTimeTicket_ReduceTimeTicket">
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="second" type="xsd:string" use="required" />
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_SpawnServantByShortcut">
+        <xsd:attribute name="coolTime" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantConfig_Storage">
+        <xsd:attribute name="initSize" type="xsd:int" use="required" />
+        <xsd:attribute name="maxSize" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ServantConfig" type="ServantConfig" />
+</xsd:schema>

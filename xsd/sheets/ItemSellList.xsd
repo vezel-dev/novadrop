@@ -1,0 +1,25 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ItemSellList"
+            targetNamespace="https://vezel.dev/novadrop/dc/ItemSellList"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ItemSellList">
+        <xsd:sequence>
+            <xsd:element name="List" type="ItemSellList_List" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ItemSellList_List">
+        <xsd:sequence>
+            <xsd:element name="Item" type="ItemSellList_List_Item" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ItemSellList_List_Item">
+        <xsd:attribute name="priceRevision" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:element name="ItemSellList" type="ItemSellList" />
+</xsd:schema>

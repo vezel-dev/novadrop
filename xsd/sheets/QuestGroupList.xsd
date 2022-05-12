@@ -1,0 +1,50 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/QuestGroupList"
+            targetNamespace="https://vezel.dev/novadrop/dc/QuestGroupList"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="QuestGroupList">
+        <xsd:sequence>
+            <xsd:element name="QuestHuntingZoneList" type="QuestGroupList_QuestHuntingZoneList" />
+            <xsd:element name="StoryGroupList" type="QuestGroupList_StoryGroupList" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="QuestGroupList_QuestHuntingZoneList">
+        <xsd:sequence>
+            <xsd:element name="HuntingZone" type="QuestGroupList_QuestHuntingZoneList_HuntingZone" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="QuestGroupList_QuestHuntingZoneList_HuntingZone"
+                     dc:keys="id">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="kind" type="xsd:string" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="step" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="QuestGroupList_StoryGroupList">
+        <xsd:sequence>
+            <xsd:element name="StoryGroup" type="QuestGroupList_StoryGroupList_StoryGroup" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="QuestGroupList_StoryGroupList_StoryGroup">
+        <xsd:sequence>
+            <xsd:element name="Quest" type="QuestGroupList_StoryGroupList_StoryGroup_Quest" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="QuestGroupList_StoryGroupList_StoryGroup_Quest">
+        <xsd:attribute name="dec" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="QuestGroupList" type="QuestGroupList" />
+</xsd:schema>

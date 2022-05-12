@@ -1,0 +1,21 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/UIDefaultData"
+            targetNamespace="https://vezel.dev/novadrop/dc/UIDefaultData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="UIDefaultData">
+        <xsd:sequence>
+            <xsd:element name="Default" type="UIDefaultData_Default" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="UIDefaultData_Default">
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="param0" type="xsd:string" use="required" />
+        <xsd:attribute name="param1" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:element name="UIDefaultData" type="UIDefaultData" />
+</xsd:schema>

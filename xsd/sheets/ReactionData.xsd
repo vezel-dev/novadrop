@@ -1,0 +1,199 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ReactionData"
+            targetNamespace="https://vezel.dev/novadrop/dc/ReactionData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ReactionData">
+        <xsd:sequence>
+            <xsd:element name="Reaction" type="ReactionData_Reaction" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="isNpc" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ReactionData_Reaction"
+                     dc:keys="id">
+        <xsd:sequence>
+            <xsd:element name="Action" type="ReactionData_Reaction_Action" />
+            <xsd:element name="CameraShake" type="ReactionData_Reaction_CameraShake" minOccurs="0" />
+            <xsd:element name="HitInvincible" type="ReactionData_Reaction_HitInvincible" minOccurs="0" />
+            <xsd:element name="MoveInvincible" type="ReactionData_Reaction_MoveInvincible" minOccurs="0" />
+            <xsd:element name="NoReaction" type="ReactionData_Reaction_NoReaction" minOccurs="0" />
+            <xsd:element name="Property" type="ReactionData_Reaction_Property" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="basicActionId" type="xsd:int" />
+        <xsd:attribute name="cancelByCategory" type="xsd:string" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="parentReactionId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ReactionData_Reaction_Action">
+        <xsd:sequence>
+            <xsd:element name="CameraShake" type="ReactionData_Reaction_Action_CameraShake" />
+            <xsd:element name="Cancel" type="ReactionData_Reaction_Action_Cancel" minOccurs="0" />
+            <xsd:element name="HitCylinderList" type="ReactionData_Reaction_Action_HitCylinderList" minOccurs="0" />
+            <xsd:element name="MoveCylinderList" type="ReactionData_Reaction_Action_MoveCylinderList" minOccurs="0" />
+            <xsd:element name="MoveInvincible" type="ReactionData_Reaction_Action_MoveInvincible" />
+            <xsd:element name="Pending" type="ReactionData_Reaction_Action_Pending" />
+            <xsd:element name="StageList" type="ReactionData_Reaction_Action_StageList" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ReactionData_Reaction_Action_CameraShake">
+        <xsd:attribute name="duration" type="xsd:int" use="required" />
+        <xsd:attribute name="fovAmplitude" type="xsd:int" use="required" />
+        <xsd:attribute name="fovFrequency" type="xsd:int" use="required" />
+        <xsd:attribute name="innerRadius" type="xsd:float" />
+        <xsd:attribute name="locAmplitudeX" type="xsd:int" use="required" />
+        <xsd:attribute name="locAmplitudeY" type="xsd:int" use="required" />
+        <xsd:attribute name="locAmplitudeZ" type="xsd:int" use="required" />
+        <xsd:attribute name="locFrequencyX" type="xsd:int" use="required" />
+        <xsd:attribute name="locFrequencyY" type="xsd:int" use="required" />
+        <xsd:attribute name="locFrequencyZ" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" />
+        <xsd:attribute name="outerRadius" type="xsd:float" />
+        <xsd:attribute name="power" type="xsd:float" />
+        <xsd:attribute name="rotAmplitudeX" type="xsd:int" use="required" />
+        <xsd:attribute name="rotAmplitudeY" type="xsd:int" use="required" />
+        <xsd:attribute name="rotAmplitudeZ" type="xsd:int" use="required" />
+        <xsd:attribute name="rotFrequencyX" type="xsd:int" use="required" />
+        <xsd:attribute name="rotFrequencyY" type="xsd:int" use="required" />
+        <xsd:attribute name="rotFrequencyZ" type="xsd:int" use="required" />
+        <xsd:attribute name="shakeId" type="xsd:int" />
+        <xsd:attribute name="shakeRadius" type="xsd:int" use="required" />
+        <xsd:attribute name="speed" type="xsd:float" />
+        <xsd:attribute name="startCondition" type="xsd:string" />
+        <xsd:attribute name="startTime" type="xsd:int" use="required" />
+        <xsd:attribute name="startValue" type="xsd:int" />
+        <xsd:attribute name="targetType" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ReactionData_Reaction_Action_Cancel">
+        <xsd:attribute name="rearCancelStartTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ReactionData_Reaction_Action_HitCylinderList">
+        <xsd:sequence>
+            <xsd:element name="HitCylinder" type="ReactionData_Reaction_Action_HitCylinderList_HitCylinder" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ReactionData_Reaction_Action_HitCylinderList_HitCylinder">
+        <xsd:sequence>
+            <xsd:element name="Cylinder" type="ReactionData_Reaction_Action_HitCylinderList_HitCylinder_Cylinder" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="startTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ReactionData_Reaction_Action_HitCylinderList_HitCylinder_Cylinder">
+        <xsd:attribute name="height" type="xsd:float" use="required" />
+        <xsd:attribute name="id" type="xsd:int" />
+        <xsd:attribute name="locAngle" type="xsd:float" use="required" />
+        <xsd:attribute name="locDistance" type="xsd:float" use="required" />
+        <xsd:attribute name="locZ" type="xsd:float" use="required" />
+        <xsd:attribute name="radius" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ReactionData_Reaction_Action_MoveCylinderList">
+        <xsd:sequence>
+            <xsd:element name="MoveCylinder" type="ReactionData_Reaction_Action_MoveCylinderList_MoveCylinder" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ReactionData_Reaction_Action_MoveCylinderList_MoveCylinder">
+        <xsd:sequence>
+            <xsd:element name="Cylinder" type="ReactionData_Reaction_Action_MoveCylinderList_MoveCylinder_Cylinder" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="startTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ReactionData_Reaction_Action_MoveCylinderList_MoveCylinder_Cylinder">
+        <xsd:attribute name="height" type="xsd:float" use="required" />
+        <xsd:attribute name="locAngle" type="xsd:float" use="required" />
+        <xsd:attribute name="locDistance" type="xsd:float" use="required" />
+        <xsd:attribute name="locZ" type="xsd:float" use="required" />
+        <xsd:attribute name="radius" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ReactionData_Reaction_Action_MoveInvincible">
+        <xsd:attribute name="endTime" type="xsd:int" use="required" />
+        <xsd:attribute name="startTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ReactionData_Reaction_Action_Pending">
+        <xsd:attribute name="startTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ReactionData_Reaction_Action_StageList">
+        <xsd:sequence>
+            <xsd:element name="Stage" type="ReactionData_Reaction_Action_StageList_Stage" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ReactionData_Reaction_Action_StageList_Stage">
+        <xsd:sequence>
+            <xsd:element name="AnimSeq" type="ReactionData_Reaction_Action_StageList_Stage_AnimSeq" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ReactionData_Reaction_Action_StageList_Stage_AnimSeq">
+        <xsd:attribute name="animName" type="xsd:string" use="required" />
+        <xsd:attribute name="animRate" type="xsd:float" use="required" />
+        <xsd:attribute name="animSet" type="xsd:string" use="required" />
+        <xsd:attribute name="bAnimLooping" type="xsd:boolean" use="required" />
+        <xsd:attribute name="bEnableBlendInTimeWhenNpc" type="xsd:boolean" />
+        <xsd:attribute name="blendInTime" type="xsd:int" use="required" />
+        <xsd:attribute name="duration" type="xsd:int" use="required" />
+        <xsd:attribute name="loopingRate" type="xsd:float" use="required" />
+        <xsd:attribute name="readOnlyDuration" type="xsd:float" use="required" />
+        <xsd:attribute name="rootMotionXYRate" type="xsd:float" use="required" />
+        <xsd:attribute name="rootMotionZRate" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ReactionData_Reaction_CameraShake">
+        <xsd:attribute name="duration" type="xsd:int" use="required" />
+        <xsd:attribute name="fovAmplitude" type="xsd:int" use="required" />
+        <xsd:attribute name="fovFrequency" type="xsd:int" use="required" />
+        <xsd:attribute name="locAmplitudeX" type="xsd:int" use="required" />
+        <xsd:attribute name="locAmplitudeY" type="xsd:int" use="required" />
+        <xsd:attribute name="locAmplitudeZ" type="xsd:int" use="required" />
+        <xsd:attribute name="locFrequencyX" type="xsd:int" use="required" />
+        <xsd:attribute name="locFrequencyY" type="xsd:int" use="required" />
+        <xsd:attribute name="locFrequencyZ" type="xsd:int" use="required" />
+        <xsd:attribute name="rotAmplitudeX" type="xsd:int" use="required" />
+        <xsd:attribute name="rotAmplitudeY" type="xsd:int" use="required" />
+        <xsd:attribute name="rotAmplitudeZ" type="xsd:int" use="required" />
+        <xsd:attribute name="rotFrequencyX" type="xsd:int" use="required" />
+        <xsd:attribute name="rotFrequencyY" type="xsd:int" use="required" />
+        <xsd:attribute name="rotFrequencyZ" type="xsd:int" use="required" />
+        <xsd:attribute name="shakeRadius" type="xsd:int" use="required" />
+        <xsd:attribute name="startTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ReactionData_Reaction_HitInvincible">
+        <xsd:attribute name="endTime" type="xsd:int" use="required" />
+        <xsd:attribute name="exceptionalSkillCategory" type="xsd:int" use="required" />
+        <xsd:attribute name="startTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ReactionData_Reaction_MoveInvincible">
+        <xsd:attribute name="endTime" type="xsd:int" use="required" />
+        <xsd:attribute name="startTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ReactionData_Reaction_NoReaction">
+        <xsd:attribute name="endTime" type="xsd:int" use="required" />
+        <xsd:attribute name="startTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ReactionData_Reaction_Property">
+        <xsd:attribute name="weaponStatus" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ReactionData" type="ReactionData" />
+</xsd:schema>

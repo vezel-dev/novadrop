@@ -1,0 +1,82 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ReputationSystem"
+            targetNamespace="https://vezel.dev/novadrop/dc/ReputationSystem"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ReputationSystem">
+        <xsd:sequence>
+            <xsd:element name="NpcGuildGroupList" type="ReputationSystem_NpcGuildGroupList" />
+            <xsd:element name="NpcGuildList" type="ReputationSystem_NpcGuildList" />
+            <xsd:element name="ReputationList" type="ReputationSystem_ReputationList" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ReputationSystem_NpcGuildGroupList">
+        <xsd:sequence>
+            <xsd:element name="NpcGuildGroup" type="ReputationSystem_NpcGuildGroupList_NpcGuildGroup" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ReputationSystem_NpcGuildGroupList_NpcGuildGroup">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="stringId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ReputationSystem_NpcGuildList">
+        <xsd:sequence>
+            <xsd:element name="NPCGuild" type="ReputationSystem_NpcGuildList_NPCGuild" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ReputationSystem_NpcGuildList_NPCGuild">
+        <xsd:sequence>
+            <xsd:element name="Opposition" type="ReputationSystem_NpcGuildList_NPCGuild_Opposition" />
+            <xsd:element name="RealmList" type="ReputationSystem_NpcGuildList_NPCGuild_RealmList" />
+        </xsd:sequence>
+
+        <xsd:attribute name="groupId" type="xsd:int" use="required" />
+        <xsd:attribute name="hideUI" type="xsd:boolean" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="maxPoint" type="xsd:int" use="required" />
+        <xsd:attribute name="reputationId" type="xsd:int" use="required" />
+        <xsd:attribute name="startGrade" type="xsd:int" use="required" />
+        <xsd:attribute name="stringId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ReputationSystem_NpcGuildList_NPCGuild_Opposition" />
+
+    <xsd:complexType name="ReputationSystem_NpcGuildList_NPCGuild_RealmList">
+        <xsd:sequence>
+            <xsd:element name="Realm" type="ReputationSystem_NpcGuildList_NPCGuild_RealmList_Realm" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ReputationSystem_NpcGuildList_NPCGuild_RealmList_Realm">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ReputationSystem_ReputationList">
+        <xsd:sequence>
+            <xsd:element name="Reputation" type="ReputationSystem_ReputationList_Reputation" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ReputationSystem_ReputationList_Reputation">
+        <xsd:sequence>
+            <xsd:element name="Level" type="ReputationSystem_ReputationList_Reputation_Level" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ReputationSystem_ReputationList_Reputation_Level">
+        <xsd:attribute name="color" type="xsd:string" use="required" />
+        <xsd:attribute name="grade" type="xsd:int" use="required" />
+        <xsd:attribute name="maxExp" type="xsd:int" use="required" />
+        <xsd:attribute name="stringId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ReputationSystem" type="ReputationSystem" />
+</xsd:schema>

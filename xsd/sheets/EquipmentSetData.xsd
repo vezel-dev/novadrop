@@ -1,0 +1,42 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/EquipmentSetData"
+            targetNamespace="https://vezel.dev/novadrop/dc/EquipmentSetData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="EquipmentSetData">
+        <xsd:sequence>
+            <xsd:element name="EquipmentSet" type="EquipmentSetData_EquipmentSet" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EquipmentSetData_EquipmentSet">
+        <xsd:sequence>
+            <xsd:element name="Effect" type="EquipmentSetData_EquipmentSet_Effect" maxOccurs="unbounded" />
+            <xsd:element name="ItemList" type="EquipmentSetData_EquipmentSet_ItemList" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EquipmentSetData_EquipmentSet_Effect">
+        <xsd:attribute name="countOfEquipment" type="xsd:int" use="required" />
+        <xsd:attribute name="equipmentEffectSetId" type="xsd:int" />
+        <xsd:attribute name="passiveList" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EquipmentSetData_EquipmentSet_ItemList">
+        <xsd:sequence>
+            <xsd:element name="Item" type="EquipmentSetData_EquipmentSet_ItemList_Item" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EquipmentSetData_EquipmentSet_ItemList_Item">
+        <xsd:attribute name="equipPos" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:string" use="required" />
+        <xsd:attribute name="itemDelegatorName" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:element name="EquipmentSetData" type="EquipmentSetData" />
+</xsd:schema>

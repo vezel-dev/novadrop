@@ -1,0 +1,49 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/StyleFootPrintFxData"
+            targetNamespace="https://vezel.dev/novadrop/dc/StyleFootPrintFxData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="StyleFootPrintFxData">
+        <xsd:sequence>
+            <xsd:element name="FootPrintFx" type="StyleFootPrintFxData_FootPrintFx" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="StyleFootPrintFxData_FootPrintFx">
+        <xsd:sequence>
+            <xsd:element name="Foot" type="StyleFootPrintFxData_FootPrintFx_Foot" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="styleFxId" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="StyleFootPrintFxData_FootPrintFx_Foot">
+        <xsd:sequence>
+            <xsd:element name="Effect" type="StyleFootPrintFxData_FootPrintFx_Foot_Effect" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="position" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="StyleFootPrintFxData_FootPrintFx_Foot_Effect">
+        <xsd:attribute name="layerId" type="xsd:int" use="required" />
+        <xsd:attribute name="posX" type="xsd:float" use="required" />
+        <xsd:attribute name="posY" type="xsd:float" use="required" />
+        <xsd:attribute name="posZ" type="xsd:float" use="required" />
+        <xsd:attribute name="probability" type="xsd:float" use="required" />
+        <xsd:attribute name="resource" type="xsd:string" use="required" />
+        <xsd:attribute name="rotX" type="xsd:float" use="required" />
+        <xsd:attribute name="rotY" type="xsd:float" use="required" />
+        <xsd:attribute name="rotZ" type="xsd:float" use="required" />
+        <xsd:attribute name="scale" type="xsd:float" />
+        <xsd:attribute name="scaleX" type="xsd:float" />
+        <xsd:attribute name="scaleY" type="xsd:float" />
+        <xsd:attribute name="scaleZ" type="xsd:float" />
+    </xsd:complexType>
+
+    <xsd:element name="StyleFootPrintFxData" type="StyleFootPrintFxData" />
+</xsd:schema>

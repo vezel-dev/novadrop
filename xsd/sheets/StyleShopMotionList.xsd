@@ -1,0 +1,32 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/StyleShopMotionList"
+            targetNamespace="https://vezel.dev/novadrop/dc/StyleShopMotionList"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="StyleShopMotionList">
+        <xsd:sequence>
+            <xsd:element name="State" type="StyleShopMotionList_State" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="StyleShopMotionList_State">
+        <xsd:sequence>
+            <xsd:element name="Motion" type="StyleShopMotionList_State_Motion" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="StyleShopMotionList_State_Motion">
+        <xsd:attribute name="animName" type="xsd:string" />
+        <xsd:attribute name="icon" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="socialId" type="xsd:int" />
+        <xsd:attribute name="toggle" type="xsd:boolean" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="StyleShopMotionList" type="StyleShopMotionList" />
+</xsd:schema>

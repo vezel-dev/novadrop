@@ -1,0 +1,57 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/NpcAttachEffectData"
+            targetNamespace="https://vezel.dev/novadrop/dc/NpcAttachEffectData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="NpcAttachEffectData">
+        <xsd:sequence>
+            <xsd:element name="AttachEffect" type="NpcAttachEffectData_AttachEffect" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcAttachEffectData_AttachEffect"
+                     dc:keys="id">
+        <xsd:sequence>
+            <xsd:element name="Effect" type="NpcAttachEffectData_AttachEffect_Effect" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcAttachEffectData_AttachEffect_Effect">
+        <xsd:sequence>
+            <xsd:element name="OverideEffect" type="NpcAttachEffectData_AttachEffect_Effect_OverideEffect" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="condition" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcAttachEffectData_AttachEffect_Effect_OverideEffect"
+                     dc:keys="id">
+        <xsd:attribute name="bGround" type="xsd:boolean" use="required" />
+        <xsd:attribute name="bOnlyShowPlayer" type="xsd:boolean" />
+        <xsd:attribute name="boneName" type="xsd:string" use="required" />
+        <xsd:attribute name="detach" type="xsd:boolean" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="playRate" type="xsd:float" use="required" />
+        <xsd:attribute name="posX" type="xsd:float" use="required" />
+        <xsd:attribute name="posY" type="xsd:float" use="required" />
+        <xsd:attribute name="posZ" type="xsd:float" use="required" />
+        <xsd:attribute name="rescaleMethod" type="xsd:string" use="required" />
+        <xsd:attribute name="resource" type="xsd:string" use="required" />
+        <xsd:attribute name="rotX" type="xsd:float" use="required" />
+        <xsd:attribute name="rotY" type="xsd:float" use="required" />
+        <xsd:attribute name="rotZ" type="xsd:float" use="required" />
+        <xsd:attribute name="scale" type="xsd:float" use="required" />
+        <xsd:attribute name="scaleX" type="xsd:float" use="required" />
+        <xsd:attribute name="scaleY" type="xsd:float" use="required" />
+        <xsd:attribute name="scaleZ" type="xsd:float" use="required" />
+        <xsd:attribute name="startTime" type="xsd:int" use="required" />
+        <xsd:attribute name="worldSpawn" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="NpcAttachEffectData" type="NpcAttachEffectData" />
+</xsd:schema>

@@ -1,0 +1,47 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/UserShaderData"
+            targetNamespace="https://vezel.dev/novadrop/dc/UserShaderData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="UserShaderData">
+        <xsd:sequence>
+            <xsd:element name="Shader" type="UserShaderData_Shader" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="UserShaderData_Shader">
+        <xsd:sequence>
+            <xsd:element name="FixedLookInfoId" type="UserShaderData_Shader_FixedLookInfoId" minOccurs="0" />
+            <xsd:element name="Option" type="UserShaderData_Shader_Option" />
+        </xsd:sequence>
+
+        <xsd:attribute name="blendIn" type="xsd:float" use="required" />
+        <xsd:attribute name="blendOut" type="xsd:float" use="required" />
+        <xsd:attribute name="blendValueInOverlay" type="xsd:float" />
+        <xsd:attribute name="condition" type="xsd:string" use="required" />
+        <xsd:attribute name="default" type="xsd:string" use="required" />
+        <xsd:attribute name="hair" type="xsd:string" use="required" />
+        <xsd:attribute name="head" type="xsd:string" use="required" />
+        <xsd:attribute name="keepPreviousEquipment" type="xsd:boolean" />
+        <xsd:attribute name="priority" type="xsd:int" use="required" />
+        <xsd:attribute name="trans" type="xsd:string" use="required" />
+        <xsd:attribute name="weaponShader1" type="xsd:string" use="required" />
+        <xsd:attribute name="weaponShader2" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="UserShaderData_Shader_FixedLookInfoId">
+        <xsd:attribute name="body" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="UserShaderData_Shader_Option">
+        <xsd:attribute name="namePlate" type="xsd:boolean" />
+        <xsd:attribute name="shadow" type="xsd:boolean" />
+        <xsd:attribute name="turnOffPartsParticle" type="xsd:string" use="required" />
+        <xsd:attribute name="useOnlyWeaponMaterial" type="xsd:boolean" />
+        <xsd:attribute name="weaponEffect" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:element name="UserShaderData" type="UserShaderData" />
+</xsd:schema>

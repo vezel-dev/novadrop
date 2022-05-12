@@ -1,0 +1,24 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/PostProcessEffect"
+            targetNamespace="https://vezel.dev/novadrop/dc/PostProcessEffect"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="PostProcessEffect">
+        <xsd:sequence>
+            <xsd:element name="Effect" type="PostProcessEffect_Effect" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PostProcessEffect_Effect">
+        <xsd:attribute name="duration" type="xsd:int" use="required" />
+        <xsd:attribute name="from" type="xsd:float" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="parameterName" type="xsd:string" use="required" />
+        <xsd:attribute name="pattern" type="xsd:string" use="required" />
+        <xsd:attribute name="to" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="PostProcessEffect" type="PostProcessEffect" />
+</xsd:schema>

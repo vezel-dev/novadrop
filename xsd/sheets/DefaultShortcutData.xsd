@@ -1,0 +1,33 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/DefaultShortcutData"
+            targetNamespace="https://vezel.dev/novadrop/dc/DefaultShortcutData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="DefaultShortcutData">
+        <xsd:sequence>
+            <xsd:element name="Char" type="DefaultShortcutData_Char" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DefaultShortcutData_Char">
+        <xsd:sequence>
+            <xsd:element name="Shortcut" type="DefaultShortcutData_Char_Shortcut" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="class" type="xsd:string" use="required" />
+        <xsd:attribute name="gender" type="xsd:string" use="required" />
+        <xsd:attribute name="race" type="xsd:string" use="required" />
+        <xsd:attribute name="tutorial" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DefaultShortcutData_Char_Shortcut">
+        <xsd:attribute name="column" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="line" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="DefaultShortcutData" type="DefaultShortcutData" />
+</xsd:schema>

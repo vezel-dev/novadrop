@@ -1,0 +1,119 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/AchievementList"
+            targetNamespace="https://vezel.dev/novadrop/dc/AchievementList"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="AchievementList">
+        <xsd:sequence>
+            <xsd:element name="Achievement" type="AchievementList_Achievement" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="CategoryInfo" type="AchievementList_CategoryInfo" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AchievementList_Achievement"
+                     dc:keys="compareId id">
+        <xsd:sequence>
+            <xsd:element name="Condition" type="AchievementList_Achievement_Condition" maxOccurs="unbounded" />
+            <xsd:element name="RewardList" type="AchievementList_Achievement_RewardList" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="active" type="xsd:boolean" use="required" />
+        <xsd:attribute name="categoryId" type="xsd:int" use="required" />
+        <xsd:attribute name="classes" type="xsd:string" use="required" />
+        <xsd:attribute name="compare" type="xsd:boolean" use="required" />
+        <xsd:attribute name="compareId" type="xsd:int" use="required" />
+        <xsd:attribute name="description" type="xsd:string" use="required" />
+        <xsd:attribute name="detail" type="xsd:string" />
+        <xsd:attribute name="grade" type="xsd:int" use="required" />
+        <xsd:attribute name="hidden" type="xsd:boolean" />
+        <xsd:attribute name="iconName" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="point" type="xsd:int" use="required" />
+        <xsd:attribute name="sortGroup" type="xsd:string" />
+        <xsd:attribute name="tbaOnly" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AchievementList_Achievement_Condition">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="max" type="xsd:int" />
+        <xsd:attribute name="string" type="xsd:string" />
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:string" />
+        <xsd:attribute name="value1" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AchievementList_Achievement_RewardList">
+        <xsd:sequence>
+            <xsd:element name="AbilityReward" type="AchievementList_Achievement_RewardList_AbilityReward" minOccurs="0" />
+            <xsd:element name="ItemReward" type="AchievementList_Achievement_RewardList_ItemReward" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="MoneyReward" type="AchievementList_Achievement_RewardList_MoneyReward" minOccurs="0" />
+            <xsd:element name="SpecialReward" type="AchievementList_Achievement_RewardList_SpecialReward" minOccurs="0" />
+            <xsd:element name="TitleReward" type="AchievementList_Achievement_RewardList_TitleReward" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AchievementList_Achievement_RewardList_AbilityReward">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AchievementList_Achievement_RewardList_ItemReward">
+        <xsd:attribute name="amount" type="xsd:int" use="required" />
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AchievementList_Achievement_RewardList_MoneyReward">
+        <xsd:attribute name="amount" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AchievementList_Achievement_RewardList_SpecialReward">
+        <xsd:attribute name="desc" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AchievementList_Achievement_RewardList_TitleReward">
+        <xsd:attribute name="title" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AchievementList_CategoryInfo">
+        <xsd:sequence>
+            <xsd:element name="MainCategory" type="AchievementList_CategoryInfo_MainCategory" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AchievementList_CategoryInfo_MainCategory"
+                     dc:keys="priority">
+        <xsd:sequence>
+            <xsd:element name="SubCategory" type="AchievementList_CategoryInfo_MainCategory_SubCategory" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="excludeAlmost" type="xsd:boolean" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="isCompensation" type="xsd:boolean" />
+        <xsd:attribute name="isGrade" type="xsd:boolean" />
+        <xsd:attribute name="isSummary" type="xsd:boolean" />
+        <xsd:attribute name="isSummaryCounting" type="xsd:boolean" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="normalImage" type="xsd:string" use="required" />
+        <xsd:attribute name="overImage" type="xsd:string" use="required" />
+        <xsd:attribute name="pressImage" type="xsd:string" use="required" />
+        <xsd:attribute name="priority" type="xsd:int" use="required" />
+        <xsd:attribute name="str1" type="xsd:string" />
+        <xsd:attribute name="str2" type="xsd:string" />
+        <xsd:attribute name="str3" type="xsd:string" />
+        <xsd:attribute name="summaryId" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AchievementList_CategoryInfo_MainCategory_SubCategory">
+        <xsd:attribute name="absolutelyHidden" type="xsd:boolean" />
+        <xsd:attribute name="excludeAlmost" type="xsd:boolean" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="referStr" type="xsd:string" />
+        <xsd:attribute name="referType" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:element name="AchievementList" type="AchievementList" />
+</xsd:schema>

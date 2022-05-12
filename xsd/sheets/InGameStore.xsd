@@ -1,0 +1,79 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/InGameStore"
+            targetNamespace="https://vezel.dev/novadrop/dc/InGameStore"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="InGameStore">
+        <xsd:sequence>
+            <xsd:element name="CategoryTab" type="InGameStore_CategoryTab" />
+            <xsd:element name="Filters" type="InGameStore_Filters" />
+            <xsd:element name="HanCoinQueryTimeout" type="InGameStore_HanCoinQueryTimeout" />
+            <xsd:element name="ShowTCatChargeButton" type="InGameStore_ShowTCatChargeButton" />
+            <xsd:element name="SortOrders" type="InGameStore_SortOrders" />
+            <xsd:element name="TagOrder" type="InGameStore_TagOrder" />
+            <xsd:element name="TagResources" type="InGameStore_TagResources" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="InGameStore_CategoryTab">
+        <xsd:sequence>
+            <xsd:element name="Tab" type="InGameStore_CategoryTab_Tab" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="InGameStore_CategoryTab_Tab">
+        <xsd:attribute name="dispName" type="xsd:string" use="required" />
+        <xsd:attribute name="iconType" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="InGameStore_Filters">
+        <xsd:sequence>
+            <xsd:element name="Filter" type="InGameStore_Filters_Filter" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="InGameStore_Filters_Filter">
+        <xsd:attribute name="default" type="xsd:boolean" />
+        <xsd:attribute name="filter" type="xsd:string" use="required" />
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="InGameStore_HanCoinQueryTimeout">
+        <xsd:attribute name="sec" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="InGameStore_ShowTCatChargeButton">
+        <xsd:attribute name="enable" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="InGameStore_SortOrders">
+        <xsd:sequence>
+            <xsd:element name="SortBy" type="InGameStore_SortOrders_SortBy" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="InGameStore_SortOrders_SortBy">
+        <xsd:attribute name="default" type="xsd:boolean" />
+        <xsd:attribute name="order" type="xsd:string" use="required" />
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="InGameStore_TagOrder">
+        <xsd:attribute name="tags" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="InGameStore_TagResources">
+        <xsd:sequence>
+            <xsd:element name="Tag" type="InGameStore_TagResources_Tag" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="InGameStore_TagResources_Tag">
+        <xsd:attribute name="resource" type="xsd:string" use="required" />
+        <xsd:attribute name="tag" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="InGameStore" type="InGameStore" />
+</xsd:schema>

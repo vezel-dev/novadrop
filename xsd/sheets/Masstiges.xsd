@@ -1,0 +1,15 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/Masstiges"
+            targetNamespace="https://vezel.dev/novadrop/dc/Masstiges"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="Masstiges">
+        <xsd:attribute name="lastMasstigeId" type="xsd:int" use="required" />
+        <xsd:attribute name="tokenAcquireAllSoundId" type="xsd:int" use="required" />
+        <xsd:attribute name="tokenAcquireSoundId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="Masstiges" type="Masstiges" />
+</xsd:schema>

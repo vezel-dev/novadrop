@@ -1,0 +1,50 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/DungeonRecommend"
+            targetNamespace="https://vezel.dev/novadrop/dc/DungeonRecommend"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="DungeonRecommend">
+        <xsd:sequence>
+            <xsd:element name="Dungeon" type="DungeonRecommend_Dungeon" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonRecommend_Dungeon">
+        <xsd:sequence>
+            <xsd:element name="Recommend" type="DungeonRecommend_Dungeon_Recommend" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonRecommend_Dungeon_Recommend">
+        <xsd:sequence>
+            <xsd:element name="Category" type="DungeonRecommend_Dungeon_Recommend_Category" />
+            <xsd:element name="DropItem" type="DungeonRecommend_Dungeon_Recommend_DropItem" />
+        </xsd:sequence>
+
+        <xsd:attribute name="rank" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonRecommend_Dungeon_Recommend_Category">
+        <xsd:attribute name="nameId" type="xsd:string" use="required" />
+        <xsd:attribute name="tooltipStrId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonRecommend_Dungeon_Recommend_DropItem">
+        <xsd:sequence>
+            <xsd:element name="Class" type="DungeonRecommend_Dungeon_Recommend_DropItem_Class" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonRecommend_Dungeon_Recommend_DropItem_Class">
+        <xsd:attribute name="itemIdList" type="xsd:string" use="required" />
+        <xsd:attribute name="nameId" type="xsd:string" use="required" />
+        <xsd:attribute name="tooltipStrId" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="DungeonRecommend" type="DungeonRecommend" />
+</xsd:schema>

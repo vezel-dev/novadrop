@@ -1,0 +1,42 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ClimbingTerritory"
+            targetNamespace="https://vezel.dev/novadrop/dc/ClimbingTerritory"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ClimbingTerritory">
+        <xsd:sequence>
+            <xsd:element name="Territory" type="ClimbingTerritory_Territory" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="areaName" type="xsd:string" use="required" />
+        <xsd:attribute name="continentId" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ClimbingTerritory_Territory">
+        <xsd:sequence>
+            <xsd:element name="Climbing" type="ClimbingTerritory_Territory_Climbing" />
+            <xsd:element name="Fence" type="ClimbingTerritory_Territory_Fence" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="addMaxZ" type="xsd:float" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="subtractMinZ" type="xsd:float" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ClimbingTerritory_Territory_Climbing">
+        <xsd:attribute name="dir" type="xsd:int" use="required" />
+        <xsd:attribute name="endPos" type="xsd:string" use="required" />
+        <xsd:attribute name="finalPos" type="xsd:string" use="required" />
+        <xsd:attribute name="showGuideEffect" type="xsd:boolean" />
+        <xsd:attribute name="startPos" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ClimbingTerritory_Territory_Fence">
+        <xsd:attribute name="pos" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ClimbingTerritory" type="ClimbingTerritory" />
+</xsd:schema>

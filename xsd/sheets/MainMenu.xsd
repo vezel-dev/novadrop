@@ -1,0 +1,36 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/MainMenu"
+            targetNamespace="https://vezel.dev/novadrop/dc/MainMenu"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="MainMenu">
+        <xsd:sequence>
+            <xsd:element name="Menu" type="MainMenu_Menu" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="MainMenu_Menu">
+        <xsd:sequence>
+            <xsd:element name="MenuItem" type="MainMenu_Menu_MenuItem" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="excludedGameModeList" type="xsd:string" />
+        <xsd:attribute name="iconPath" type="xsd:string" />
+        <xsd:attribute name="id" type="xsd:string" use="required" />
+        <xsd:attribute name="index" type="xsd:int" />
+        <xsd:attribute name="readableId" type="xsd:string" use="required" />
+        <xsd:attribute name="uiName" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="MainMenu_Menu_MenuItem">
+        <xsd:attribute name="conditionLevel" type="xsd:int" />
+        <xsd:attribute name="excludedGameModeList" type="xsd:string" />
+        <xsd:attribute name="id" type="xsd:string" use="required" />
+        <xsd:attribute name="readableId" type="xsd:string" use="required" />
+        <xsd:attribute name="uiName" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="MainMenu" type="MainMenu" />
+</xsd:schema>

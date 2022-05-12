@@ -1,0 +1,62 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/PixieFollowing"
+            targetNamespace="https://vezel.dev/novadrop/dc/PixieFollowing"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="PixieFollowing">
+        <xsd:sequence>
+            <xsd:element name="AttachLoc" type="PixieFollowing_AttachLoc" />
+            <xsd:element name="FollowingMesh" type="PixieFollowing_FollowingMesh" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PixieFollowing_AttachLoc">
+        <xsd:sequence>
+            <xsd:element name="RaceAttachLoc" type="PixieFollowing_AttachLoc_RaceAttachLoc" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PixieFollowing_AttachLoc_RaceAttachLoc">
+        <xsd:attribute name="adjustX" type="xsd:float" use="required" />
+        <xsd:attribute name="adjustY" type="xsd:float" use="required" />
+        <xsd:attribute name="adjustZ" type="xsd:float" use="required" />
+        <xsd:attribute name="gender" type="xsd:string" use="required" />
+        <xsd:attribute name="race" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PixieFollowing_FollowingMesh">
+        <xsd:sequence>
+            <xsd:element name="Effect" type="PixieFollowing_FollowingMesh_Effect" />
+        </xsd:sequence>
+
+        <xsd:attribute name="animSet" type="xsd:string" use="required" />
+        <xsd:attribute name="animTree" type="xsd:string" use="required" />
+        <xsd:attribute name="attachBoneName" type="xsd:string" use="required" />
+        <xsd:attribute name="mesh" type="xsd:string" use="required" />
+        <xsd:attribute name="scale" type="xsd:float" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PixieFollowing_FollowingMesh_Effect">
+        <xsd:attribute name="absoluteOffsetLoc" type="xsd:boolean" use="required" />
+        <xsd:attribute name="bGround" type="xsd:boolean" use="required" />
+        <xsd:attribute name="boneName" type="xsd:string" use="required" />
+        <xsd:attribute name="detach" type="xsd:boolean" use="required" />
+        <xsd:attribute name="pitch" type="xsd:float" use="required" />
+        <xsd:attribute name="playRate" type="xsd:float" use="required" />
+        <xsd:attribute name="posX" type="xsd:float" use="required" />
+        <xsd:attribute name="posY" type="xsd:float" use="required" />
+        <xsd:attribute name="posZ" type="xsd:float" use="required" />
+        <xsd:attribute name="rescaleMethod" type="xsd:string" use="required" />
+        <xsd:attribute name="resource" type="xsd:string" use="required" />
+        <xsd:attribute name="roll" type="xsd:float" use="required" />
+        <xsd:attribute name="scale" type="xsd:float" use="required" />
+        <xsd:attribute name="time" type="xsd:float" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+        <xsd:attribute name="yaw" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="PixieFollowing" type="PixieFollowing" />
+</xsd:schema>

@@ -1,0 +1,195 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/PCCustomizePreset"
+            targetNamespace="https://vezel.dev/novadrop/dc/PCCustomizePreset"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="PCCustomizePreset">
+        <xsd:sequence>
+            <xsd:element name="PresetRace" type="PCCustomizePreset_PresetRace" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PCCustomizePreset_PresetRace">
+        <xsd:sequence>
+            <xsd:element name="PresetGender" type="PCCustomizePreset_PresetRace_PresetGender" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="race" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PCCustomizePreset_PresetRace_PresetGender">
+        <xsd:sequence>
+            <xsd:element name="ArmorList" type="PCCustomizePreset_PresetRace_PresetGender_ArmorList" />
+            <xsd:element name="CustomCamera" type="PCCustomizePreset_PresetRace_PresetGender_CustomCamera" />
+            <xsd:element name="DecalList" type="PCCustomizePreset_PresetRace_PresetGender_DecalList" />
+            <xsd:element name="DecoList" type="PCCustomizePreset_PresetRace_PresetGender_DecoList" minOccurs="0" />
+            <xsd:element name="FaceList" type="PCCustomizePreset_PresetRace_PresetGender_FaceList" />
+            <xsd:element name="HairList" type="PCCustomizePreset_PresetRace_PresetGender_HairList" minOccurs="0" />
+            <xsd:element name="HairToneList" type="PCCustomizePreset_PresetRace_PresetGender_HairToneList" minOccurs="0" />
+            <xsd:element name="PresetList" type="PCCustomizePreset_PresetRace_PresetGender_PresetList" />
+            <xsd:element name="SkinToneList" type="PCCustomizePreset_PresetRace_PresetGender_SkinToneList" />
+            <xsd:element name="Voice" type="PCCustomizePreset_PresetRace_PresetGender_Voice" />
+        </xsd:sequence>
+
+        <xsd:attribute name="dir" type="xsd:float" use="required" />
+        <xsd:attribute name="gender" type="xsd:string" use="required" />
+        <xsd:attribute name="pos" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PCCustomizePreset_PresetRace_PresetGender_ArmorList">
+        <xsd:sequence>
+            <xsd:element name="Armed" type="PCCustomizePreset_PresetRace_PresetGender_ArmorList_Armed" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PCCustomizePreset_PresetRace_PresetGender_ArmorList_Armed">
+        <xsd:sequence>
+            <xsd:element name="Armor" type="PCCustomizePreset_PresetRace_PresetGender_ArmorList_Armed_Armor" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="class" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PCCustomizePreset_PresetRace_PresetGender_ArmorList_Armed_Armor">
+        <xsd:attribute name="body" type="xsd:int" use="required" />
+        <xsd:attribute name="foot" type="xsd:int" use="required" />
+        <xsd:attribute name="hand" type="xsd:int" use="required" />
+        <xsd:attribute name="icon" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PCCustomizePreset_PresetRace_PresetGender_CustomCamera">
+        <xsd:attribute name="fov" type="xsd:float" use="required" />
+        <xsd:attribute name="maxHeight" type="xsd:float" use="required" />
+        <xsd:attribute name="maxPitch" type="xsd:float" use="required" />
+        <xsd:attribute name="maxTilt" type="xsd:float" use="required" />
+        <xsd:attribute name="maxZoom" type="xsd:float" use="required" />
+        <xsd:attribute name="minHeight" type="xsd:float" use="required" />
+        <xsd:attribute name="minPitch" type="xsd:float" use="required" />
+        <xsd:attribute name="minTilt" type="xsd:float" use="required" />
+        <xsd:attribute name="minZoom" type="xsd:float" use="required" />
+        <xsd:attribute name="rotateExp" type="xsd:float" use="required" />
+        <xsd:attribute name="rotateSpeed" type="xsd:float" use="required" />
+        <xsd:attribute name="zoomExp" type="xsd:float" use="required" />
+        <xsd:attribute name="zoomSpeed" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PCCustomizePreset_PresetRace_PresetGender_DecalList">
+        <xsd:sequence>
+            <xsd:element name="Face" type="PCCustomizePreset_PresetRace_PresetGender_DecalList_Face" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PCCustomizePreset_PresetRace_PresetGender_DecalList_Face">
+        <xsd:sequence>
+            <xsd:element name="Decal" type="PCCustomizePreset_PresetRace_PresetGender_DecalList_Face_Decal" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PCCustomizePreset_PresetRace_PresetGender_DecalList_Face_Decal">
+        <xsd:attribute name="description" type="xsd:string" use="required" />
+        <xsd:attribute name="icon" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="resource" type="xsd:string" use="required" />
+        <xsd:attribute name="scaleX" type="xsd:float" use="required" />
+        <xsd:attribute name="scaleY" type="xsd:float" use="required" />
+        <xsd:attribute name="translationX" type="xsd:float" use="required" />
+        <xsd:attribute name="translationY" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PCCustomizePreset_PresetRace_PresetGender_DecoList">
+        <xsd:sequence>
+            <xsd:element name="Face" type="PCCustomizePreset_PresetRace_PresetGender_DecoList_Face" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PCCustomizePreset_PresetRace_PresetGender_DecoList_Face">
+        <xsd:sequence>
+            <xsd:element name="Deco" type="PCCustomizePreset_PresetRace_PresetGender_DecoList_Face_Deco" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PCCustomizePreset_PresetRace_PresetGender_DecoList_Face_Deco">
+        <xsd:attribute name="description" type="xsd:string" use="required" />
+        <xsd:attribute name="icon" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PCCustomizePreset_PresetRace_PresetGender_FaceList">
+        <xsd:sequence>
+            <xsd:element name="Face" type="PCCustomizePreset_PresetRace_PresetGender_FaceList_Face" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PCCustomizePreset_PresetRace_PresetGender_FaceList_Face">
+        <xsd:attribute name="description" type="xsd:string" use="required" />
+        <xsd:attribute name="icon" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="partId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PCCustomizePreset_PresetRace_PresetGender_HairList">
+        <xsd:sequence>
+            <xsd:element name="Hair" type="PCCustomizePreset_PresetRace_PresetGender_HairList_Hair" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PCCustomizePreset_PresetRace_PresetGender_HairList_Hair">
+        <xsd:attribute name="description" type="xsd:string" use="required" />
+        <xsd:attribute name="icon" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="isPremium" type="xsd:boolean" />
+        <xsd:attribute name="partId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PCCustomizePreset_PresetRace_PresetGender_HairToneList">
+        <xsd:sequence>
+            <xsd:element name="HairTone" type="PCCustomizePreset_PresetRace_PresetGender_HairToneList_HairTone" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PCCustomizePreset_PresetRace_PresetGender_HairToneList_HairTone">
+        <xsd:attribute name="color" type="xsd:string" use="required" />
+        <xsd:attribute name="description" type="xsd:string" use="required" />
+        <xsd:attribute name="icon" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="isPremium" type="xsd:boolean" />
+        <xsd:attribute name="specColor" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PCCustomizePreset_PresetRace_PresetGender_PresetList">
+        <xsd:sequence>
+            <xsd:element name="Preset" type="PCCustomizePreset_PresetRace_PresetGender_PresetList_Preset" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PCCustomizePreset_PresetRace_PresetGender_PresetList_Preset">
+        <xsd:attribute name="icon" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PCCustomizePreset_PresetRace_PresetGender_SkinToneList">
+        <xsd:sequence>
+            <xsd:element name="SkinTone" type="PCCustomizePreset_PresetRace_PresetGender_SkinToneList_SkinTone" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PCCustomizePreset_PresetRace_PresetGender_SkinToneList_SkinTone">
+        <xsd:attribute name="color" type="xsd:string" use="required" />
+        <xsd:attribute name="description" type="xsd:string" use="required" />
+        <xsd:attribute name="icon" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PCCustomizePreset_PresetRace_PresetGender_Voice">
+        <xsd:attribute name="default" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="PCCustomizePreset" type="PCCustomizePreset" />
+</xsd:schema>

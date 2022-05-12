@@ -1,0 +1,40 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ArcaneFx"
+            targetNamespace="https://vezel.dev/novadrop/dc/ArcaneFx"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ArcaneFx">
+        <xsd:sequence>
+            <xsd:element name="ArcaneFxData" type="ArcaneFx_ArcaneFxData" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ArcaneFx_ArcaneFxData">
+        <xsd:sequence>
+            <xsd:element name="Fx" type="ArcaneFx_ArcaneFxData_Fx" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArcaneFx_ArcaneFxData_Fx">
+        <xsd:sequence>
+            <xsd:element name="FxNumber" type="ArcaneFx_ArcaneFxData_Fx_FxNumber" />
+        </xsd:sequence>
+
+        <xsd:attribute name="weaponStatus" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArcaneFx_ArcaneFxData_Fx_FxNumber">
+        <xsd:attribute name="attachBoneOrSocketName" type="xsd:string" use="required" />
+        <xsd:attribute name="pos" type="xsd:string" use="required" />
+        <xsd:attribute name="resource" type="xsd:string" use="required" />
+        <xsd:attribute name="rotate" type="xsd:string" use="required" />
+        <xsd:attribute name="scale" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ArcaneFx" type="ArcaneFx" />
+</xsd:schema>

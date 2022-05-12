@@ -1,0 +1,62 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/BalloonGuide"
+            targetNamespace="https://vezel.dev/novadrop/dc/BalloonGuide"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="BalloonGuide">
+        <xsd:sequence>
+            <xsd:element name="DialogEvent" type="BalloonGuide_DialogEvent" />
+            <xsd:element name="Guide" type="BalloonGuide_Guide" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BalloonGuide_DialogEvent">
+        <xsd:sequence>
+            <xsd:element name="Event" type="BalloonGuide_DialogEvent_Event" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BalloonGuide_DialogEvent_Event">
+        <xsd:attribute name="by" type="xsd:string" />
+        <xsd:attribute name="dialogList" type="xsd:string" use="required" />
+        <xsd:attribute name="guideId" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="rate" type="xsd:float" />
+        <xsd:attribute name="subValue" type="xsd:int" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+        <xsd:attribute name="value" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BalloonGuide_Guide">
+        <xsd:sequence>
+            <xsd:element name="Dialog" type="BalloonGuide_Guide_Dialog" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="enableList" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="isShowOverlayOnly" type="xsd:boolean" />
+        <xsd:attribute name="mapId" type="xsd:string" />
+        <xsd:attribute name="specialbutton" type="xsd:string" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+        <xsd:attribute name="uiName" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BalloonGuide_Guide_Dialog">
+        <xsd:attribute name="dialogSide" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="interval" type="xsd:int" use="required" />
+        <xsd:attribute name="isScriptEditable" type="xsd:boolean" />
+        <xsd:attribute name="isShowScriptOnly" type="xsd:boolean" />
+        <xsd:attribute name="posX" type="xsd:float" use="required" />
+        <xsd:attribute name="posY" type="xsd:float" use="required" />
+        <xsd:attribute name="rectEnd" type="xsd:string" />
+        <xsd:attribute name="rectStart" type="xsd:string" />
+        <xsd:attribute name="scriptId" type="xsd:int" />
+        <xsd:attribute name="tab" type="xsd:int" />
+        <xsd:attribute name="time" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="BalloonGuide" type="BalloonGuide" />
+</xsd:schema>

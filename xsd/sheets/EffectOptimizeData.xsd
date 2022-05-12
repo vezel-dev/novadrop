@@ -1,0 +1,29 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/EffectOptimizeData"
+            targetNamespace="https://vezel.dev/novadrop/dc/EffectOptimizeData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="EffectOptimizeData">
+        <xsd:sequence>
+            <xsd:element name="EffectInfo" type="EffectOptimizeData_EffectInfo" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EffectOptimizeData_EffectInfo">
+        <xsd:sequence>
+            <xsd:element name="DisplayEmitter" type="EffectOptimizeData_EffectInfo_DisplayEmitter" />
+        </xsd:sequence>
+
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EffectOptimizeData_EffectInfo_DisplayEmitter">
+        <xsd:attribute name="clientLOD" type="xsd:int" use="required" />
+        <xsd:attribute name="finalIndexList" type="xsd:string" use="required" />
+        <xsd:attribute name="indexList" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="EffectOptimizeData" type="EffectOptimizeData" />
+</xsd:schema>

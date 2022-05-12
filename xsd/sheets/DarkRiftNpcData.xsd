@@ -1,0 +1,59 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/DarkRiftNpcData"
+            targetNamespace="https://vezel.dev/novadrop/dc/DarkRiftNpcData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="DarkRiftNpcData">
+        <xsd:sequence>
+            <xsd:element name="CombatBalanceGroupList" type="DarkRiftNpcData_CombatBalanceGroupList" />
+            <xsd:element name="CompensationBalanceGroupList" type="DarkRiftNpcData_CompensationBalanceGroupList" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DarkRiftNpcData_CombatBalanceGroupList">
+        <xsd:sequence>
+            <xsd:element name="CombatBalanceGroup" type="DarkRiftNpcData_CombatBalanceGroupList_CombatBalanceGroup" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DarkRiftNpcData_CombatBalanceGroupList_CombatBalanceGroup">
+        <xsd:sequence>
+            <xsd:element name="Balance" type="DarkRiftNpcData_CombatBalanceGroupList_CombatBalanceGroup_Balance" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DarkRiftNpcData_CombatBalanceGroupList_CombatBalanceGroup_Balance">
+        <xsd:attribute name="abnormalityId" type="xsd:int" use="required" />
+        <xsd:attribute name="bonusReputationRatio" type="xsd:float" use="required" />
+        <xsd:attribute name="maxUserCount" type="xsd:int" use="required" />
+        <xsd:attribute name="minUserCount" type="xsd:int" use="required" />
+        <xsd:attribute name="pushCount" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DarkRiftNpcData_CompensationBalanceGroupList">
+        <xsd:sequence>
+            <xsd:element name="CompensationBalanceGroup" type="DarkRiftNpcData_CompensationBalanceGroupList_CompensationBalanceGroup" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DarkRiftNpcData_CompensationBalanceGroupList_CompensationBalanceGroup">
+        <xsd:sequence>
+            <xsd:element name="Balance" type="DarkRiftNpcData_CompensationBalanceGroupList_CompensationBalanceGroup_Balance" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DarkRiftNpcData_CompensationBalanceGroupList_CompensationBalanceGroup_Balance">
+        <xsd:attribute name="abnormalityId" type="xsd:string" use="required" />
+        <xsd:attribute name="maxUserCount" type="xsd:int" use="required" />
+        <xsd:attribute name="minUserCount" type="xsd:int" use="required" />
+        <xsd:attribute name="pushCount" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="DarkRiftNpcData" type="DarkRiftNpcData" />
+</xsd:schema>

@@ -1,0 +1,45 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/DungeonResonance"
+            targetNamespace="https://vezel.dev/novadrop/dc/DungeonResonance"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="DungeonResonance">
+        <xsd:sequence>
+            <xsd:element name="BasicInfoList" type="DungeonResonance_BasicInfoList" minOccurs="0" />
+            <xsd:element name="DifficultyInfoList" type="DungeonResonance_DifficultyInfoList" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonResonance_BasicInfoList">
+        <xsd:sequence>
+            <xsd:element name="List" type="DungeonResonance_BasicInfoList_List" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonResonance_BasicInfoList_List">
+        <xsd:attribute name="aeroSet" type="xsd:string" use="required" />
+        <xsd:attribute name="aeroSetEndBlendTime" type="xsd:float" use="required" />
+        <xsd:attribute name="aeroSetEndDelayTime" type="xsd:float" use="required" />
+        <xsd:attribute name="aeroSetStartBlendTime" type="xsd:float" use="required" />
+        <xsd:attribute name="aeroSetStartDelayTime" type="xsd:float" use="required" />
+        <xsd:attribute name="continentId" type="xsd:int" use="required" />
+        <xsd:attribute name="variantId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonResonance_DifficultyInfoList">
+        <xsd:sequence>
+            <xsd:element name="DifficultyInfo" type="DungeonResonance_DifficultyInfoList_DifficultyInfo" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="VariantId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DungeonResonance_DifficultyInfoList_DifficultyInfo">
+        <xsd:attribute name="DifficultyType" type="xsd:string" use="required" />
+        <xsd:attribute name="needEntranceItemCount" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="DungeonResonance" type="DungeonResonance" />
+</xsd:schema>

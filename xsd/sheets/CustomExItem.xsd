@@ -1,0 +1,45 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/CustomExItem"
+            targetNamespace="https://vezel.dev/novadrop/dc/CustomExItem"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="CustomExItem">
+        <xsd:sequence>
+            <xsd:element name="ItemData" type="CustomExItem_ItemData" />
+            <xsd:element name="RenameItem" type="CustomExItem_RenameItem" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CustomExItem_ItemData">
+        <xsd:sequence>
+            <xsd:element name="Item" type="CustomExItem_ItemData_Item" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CustomExItem_ItemData_Item"
+                     dc:keys="id">
+        <xsd:attribute name="color" type="xsd:string" use="required" />
+        <xsd:attribute name="customizingName" type="xsd:string" use="required" />
+        <xsd:attribute name="fontSize" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="maxLen" type="xsd:int" use="required" />
+        <xsd:attribute name="param" type="xsd:string" use="required" />
+        <xsd:attribute name="partId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CustomExItem_RenameItem">
+        <xsd:sequence>
+            <xsd:element name="Item" type="CustomExItem_RenameItem_Item" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CustomExItem_RenameItem_Item"
+                     dc:keys="id">
+        <xsd:attribute name="enableItemList" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="CustomExItem" type="CustomExItem" />
+</xsd:schema>

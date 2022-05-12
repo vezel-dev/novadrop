@@ -1,0 +1,21 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/UITextureSizeTable"
+            targetNamespace="https://vezel.dev/novadrop/dc/UITextureSizeTable"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="UITextureSizeTable">
+        <xsd:sequence>
+            <xsd:element name="Texture" type="UITextureSizeTable_Texture" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="UITextureSizeTable_Texture">
+        <xsd:attribute name="height" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="width" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="UITextureSizeTable" type="UITextureSizeTable" />
+</xsd:schema>

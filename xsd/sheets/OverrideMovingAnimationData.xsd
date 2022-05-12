@@ -1,0 +1,29 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/OverrideMovingAnimationData"
+            targetNamespace="https://vezel.dev/novadrop/dc/OverrideMovingAnimationData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="OverrideMovingAnimationData">
+        <xsd:sequence>
+            <xsd:element name="OverrideAnimation" type="OverrideMovingAnimationData_OverrideAnimation" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="OverrideMovingAnimationData_OverrideAnimation">
+        <xsd:attribute name="backStepSpeedRate" type="xsd:float" use="required" />
+        <xsd:attribute name="backwardAnim" type="xsd:string" use="required" />
+        <xsd:attribute name="forwardAnim" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="leftBackwardAnim" type="xsd:string" use="required" />
+        <xsd:attribute name="leftForwardAnim" type="xsd:string" use="required" />
+        <xsd:attribute name="leftwardAnim" type="xsd:string" use="required" />
+        <xsd:attribute name="rightBackwardAnim" type="xsd:string" use="required" />
+        <xsd:attribute name="rightForwardAnim" type="xsd:string" use="required" />
+        <xsd:attribute name="rightwardAnim" type="xsd:string" use="required" />
+        <xsd:attribute name="standAnim" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="OverrideMovingAnimationData" type="OverrideMovingAnimationData" />
+</xsd:schema>

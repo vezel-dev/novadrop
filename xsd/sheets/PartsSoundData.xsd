@@ -1,0 +1,24 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/PartsSoundData"
+            targetNamespace="https://vezel.dev/novadrop/dc/PartsSoundData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="PartsSoundData">
+        <xsd:sequence>
+            <xsd:element name="Part" type="PartsSoundData_Part" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PartsSoundData_Part"
+                     dc:keys="id">
+        <xsd:attribute name="armorSound" type="xsd:string" use="required" />
+        <xsd:attribute name="fallDownSound" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="rustleSound" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="PartsSoundData" type="PartsSoundData" />
+</xsd:schema>

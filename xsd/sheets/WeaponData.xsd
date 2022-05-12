@@ -1,0 +1,45 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/WeaponData"
+            targetNamespace="https://vezel.dev/novadrop/dc/WeaponData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="WeaponData">
+        <xsd:sequence>
+            <xsd:element name="Weapon" type="WeaponData_Weapon" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WeaponData_Weapon"
+                     dc:keys="id">
+        <xsd:attribute name="armingFxId" type="xsd:string" />
+        <xsd:attribute name="boneL" type="xsd:string" use="required" />
+        <xsd:attribute name="boneR" type="xsd:string" use="required" />
+        <xsd:attribute name="bulletId" type="xsd:int" />
+        <xsd:attribute name="diffuseMap" type="xsd:string" />
+        <xsd:attribute name="disArmingFxId" type="xsd:string" />
+        <xsd:attribute name="enchantFxId" type="xsd:int" />
+        <xsd:attribute name="grade" type="xsd:string" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="isSkeletalMesh" type="xsd:boolean" />
+        <xsd:attribute name="materialParamId" type="xsd:int" />
+        <xsd:attribute name="meshL" type="xsd:string" />
+        <xsd:attribute name="meshR" type="xsd:string" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="normalMap" type="xsd:string" />
+        <xsd:attribute name="offsetL" type="xsd:string" />
+        <xsd:attribute name="offsetR" type="xsd:string" />
+        <xsd:attribute name="scaleL" type="xsd:float" />
+        <xsd:attribute name="scaleR" type="xsd:float" />
+        <xsd:attribute name="specularMap" type="xsd:string" />
+        <xsd:attribute name="templateId" type="xsd:string" />
+        <xsd:attribute name="unarmedMeshL" type="xsd:string" />
+        <xsd:attribute name="unarmedMeshR" type="xsd:string" />
+        <xsd:attribute name="unarmedSocketL" type="xsd:string" />
+        <xsd:attribute name="unarmedSocketR" type="xsd:string" />
+        <xsd:attribute name="weaponFxId" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:element name="WeaponData" type="WeaponData" />
+</xsd:schema>

@@ -1,0 +1,20 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ItemFilterInfo"
+            targetNamespace="https://vezel.dev/novadrop/dc/ItemFilterInfo"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ItemFilterInfo">
+        <xsd:sequence>
+            <xsd:element name="Filter" type="ItemFilterInfo_Filter" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ItemFilterInfo_Filter">
+        <xsd:attribute name="category" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ItemFilterInfo" type="ItemFilterInfo" />
+</xsd:schema>

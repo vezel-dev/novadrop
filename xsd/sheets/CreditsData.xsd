@@ -1,0 +1,21 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/CreditsData"
+            targetNamespace="https://vezel.dev/novadrop/dc/CreditsData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="CreditsData">
+        <xsd:sequence>
+            <xsd:element name="Credits" type="CreditsData_Credits" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CreditsData_Credits">
+        <xsd:attribute name="param1" type="xsd:string" use="required" />
+        <xsd:attribute name="param2" type="xsd:string" />
+        <xsd:attribute name="type" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="CreditsData" type="CreditsData" />
+</xsd:schema>

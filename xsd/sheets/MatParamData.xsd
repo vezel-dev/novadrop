@@ -1,0 +1,31 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/MatParamData"
+            targetNamespace="https://vezel.dev/novadrop/dc/MatParamData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="MatParamData">
+        <xsd:sequence>
+            <xsd:element name="AnimMaterial" type="MatParamData_AnimMaterial" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="animSet" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="MatParamData_AnimMaterial">
+        <xsd:sequence>
+            <xsd:element name="Material" type="MatParamData_AnimMaterial_Material" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="animName" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="MatParamData_AnimMaterial_Material">
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="time" type="xsd:float" use="required" />
+        <xsd:attribute name="value" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="MatParamData" type="MatParamData" />
+</xsd:schema>

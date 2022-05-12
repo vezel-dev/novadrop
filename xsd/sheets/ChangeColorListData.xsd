@@ -1,0 +1,24 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ChangeColorListData"
+            targetNamespace="https://vezel.dev/novadrop/dc/ChangeColorListData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ChangeColorListData">
+        <xsd:sequence>
+            <xsd:element name="Color" type="ChangeColorListData_Color" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="randomMinValue" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ChangeColorListData_Color">
+        <xsd:attribute name="colorId" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="lifeItem" type="xsd:string" use="required" />
+        <xsd:attribute name="selectOption" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ChangeColorListData" type="ChangeColorListData" />
+</xsd:schema>

@@ -1,0 +1,31 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/PlayTimeEvent"
+            targetNamespace="https://vezel.dev/novadrop/dc/PlayTimeEvent"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="PlayTimeEvent">
+        <xsd:sequence>
+            <xsd:element name="Event" type="PlayTimeEvent_Event" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PlayTimeEvent_Event">
+        <xsd:sequence>
+            <xsd:element name="Reward" type="PlayTimeEvent_Event_Reward" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="resetTime" type="xsd:int" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PlayTimeEvent_Event_Reward">
+        <xsd:attribute name="amount" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="itemTemplateId" type="xsd:int" use="required" />
+        <xsd:attribute name="playMin" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="PlayTimeEvent" type="PlayTimeEvent" />
+</xsd:schema>

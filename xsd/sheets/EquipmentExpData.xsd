@@ -1,0 +1,29 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/EquipmentExpData"
+            targetNamespace="https://vezel.dev/novadrop/dc/EquipmentExpData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="EquipmentExpData">
+        <xsd:sequence>
+            <xsd:element name="EquipmentExp" type="EquipmentExpData_EquipmentExp" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EquipmentExpData_EquipmentExp">
+        <xsd:sequence>
+            <xsd:element name="Exp" type="EquipmentExpData_EquipmentExp_Exp" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EquipmentExpData_EquipmentExp_Exp">
+        <xsd:attribute name="enchantStep" type="xsd:int" use="required" />
+        <xsd:attribute name="maxExp" type="xsd:string" use="required" />
+        <xsd:attribute name="supExp" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="EquipmentExpData" type="EquipmentExpData" />
+</xsd:schema>

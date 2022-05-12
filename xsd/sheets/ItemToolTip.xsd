@@ -1,0 +1,86 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ItemToolTip"
+            targetNamespace="https://vezel.dev/novadrop/dc/ItemToolTip"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ItemToolTip">
+        <xsd:sequence>
+            <xsd:element name="Class" type="ItemToolTip_Class" />
+            <xsd:element name="EnchantableParts" type="ItemToolTip_EnchantableParts" />
+            <xsd:element name="Gender" type="ItemToolTip_Gender" />
+            <xsd:element name="Grade" type="ItemToolTip_Grade" />
+            <xsd:element name="ItemCategory" type="ItemToolTip_ItemCategory" />
+            <xsd:element name="Race" type="ItemToolTip_Race" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ItemToolTip_Class">
+        <xsd:sequence>
+            <xsd:element name="Name" type="ItemToolTip_Class_Name" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ItemToolTip_Class_Name">
+        <xsd:attribute name="displayText" type="xsd:string" use="required" />
+        <xsd:attribute name="eng" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ItemToolTip_EnchantableParts">
+        <xsd:sequence>
+            <xsd:element name="Name" type="ItemToolTip_EnchantableParts_Name" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ItemToolTip_EnchantableParts_Name">
+        <xsd:attribute name="displayText" type="xsd:string" use="required" />
+        <xsd:attribute name="eng" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ItemToolTip_Gender">
+        <xsd:sequence>
+            <xsd:element name="Name" type="ItemToolTip_Gender_Name" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ItemToolTip_Gender_Name">
+        <xsd:attribute name="displayText" type="xsd:string" use="required" />
+        <xsd:attribute name="eng" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ItemToolTip_Grade">
+        <xsd:sequence>
+            <xsd:element name="Name" type="ItemToolTip_Grade_Name" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ItemToolTip_Grade_Name">
+        <xsd:attribute name="displayText" type="xsd:string" use="required" />
+        <xsd:attribute name="eng" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ItemToolTip_ItemCategory">
+        <xsd:sequence>
+            <xsd:element name="Name" type="ItemToolTip_ItemCategory_Name" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ItemToolTip_ItemCategory_Name">
+        <xsd:attribute name="displayText" type="xsd:string" use="required" />
+        <xsd:attribute name="eng" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ItemToolTip_Race">
+        <xsd:sequence>
+            <xsd:element name="Name" type="ItemToolTip_Race_Name" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ItemToolTip_Race_Name">
+        <xsd:attribute name="displayText" type="xsd:string" use="required" />
+        <xsd:attribute name="eng" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ItemToolTip" type="ItemToolTip" />
+</xsd:schema>

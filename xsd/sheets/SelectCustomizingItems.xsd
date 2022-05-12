@@ -1,0 +1,30 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/SelectCustomizingItems"
+            targetNamespace="https://vezel.dev/novadrop/dc/SelectCustomizingItems"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="SelectCustomizingItems">
+        <xsd:sequence>
+            <xsd:element name="SelectCustomizingItem" type="SelectCustomizingItems_SelectCustomizingItem" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SelectCustomizingItems_SelectCustomizingItem">
+        <xsd:attribute name="iconImage" type="xsd:string" use="required" />
+        <xsd:attribute name="text01StringId" type="xsd:int" use="required" />
+        <xsd:attribute name="text02StringId" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStringId" type="xsd:int" use="required" />
+        <xsd:attribute name="tooltipText0StringId" type="xsd:int" use="required" />
+        <xsd:attribute name="tooltipText1StringId" type="xsd:int" use="required" />
+        <xsd:attribute name="tooltipText2StringId" type="xsd:int" use="required" />
+        <xsd:attribute name="tooltipText3StringId" type="xsd:int" use="required" />
+        <xsd:attribute name="tooltipText4StringId" type="xsd:int" use="required" />
+        <xsd:attribute name="tooltipText5StringId" type="xsd:int" use="required" />
+        <xsd:attribute name="tooltipText6StringId" type="xsd:int" use="required" />
+        <xsd:attribute name="transformGroupId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="SelectCustomizingItems" type="SelectCustomizingItems" />
+</xsd:schema>

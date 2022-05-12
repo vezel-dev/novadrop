@@ -1,0 +1,48 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/StatueData"
+            targetNamespace="https://vezel.dev/novadrop/dc/StatueData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="StatueData">
+        <xsd:sequence>
+            <xsd:element name="DaisCommonData" type="StatueData_DaisCommonData" />
+            <xsd:element name="StatueSocialMotionData" type="StatueData_StatueSocialMotionData" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="statueType" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="StatueData_DaisCommonData">
+        <xsd:sequence>
+            <xsd:element name="DaisPackage" type="StatueData_DaisCommonData_DaisPackage" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="nameFontColor" type="xsd:string" use="required" />
+        <xsd:attribute name="nameFontSize" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="StatueData_DaisCommonData_DaisPackage">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="resourceName" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="StatueData_StatueSocialMotionData">
+        <xsd:sequence>
+            <xsd:element name="SocialMotionData" type="StatueData_StatueSocialMotionData_SocialMotionData" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="gender" type="xsd:string" use="required" />
+        <xsd:attribute name="race" type="xsd:string" use="required" />
+        <xsd:attribute name="scale" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="StatueData_StatueSocialMotionData_SocialMotionData">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="socialMotionId" type="xsd:int" use="required" />
+        <xsd:attribute name="stopMotionTime" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="StatueData" type="StatueData" />
+</xsd:schema>

@@ -1,0 +1,38 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/SkillGetConList"
+            targetNamespace="https://vezel.dev/novadrop/dc/SkillGetConList"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="SkillGetConList">
+        <xsd:sequence>
+            <xsd:element name="SkillList" type="SkillGetConList_SkillList" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillGetConList_SkillList">
+        <xsd:attribute name="awakenGrade" type="xsd:int" />
+        <xsd:attribute name="class" type="xsd:string" use="required" />
+        <xsd:attribute name="connectedUiPos" type="xsd:string" />
+        <xsd:attribute name="cost" type="xsd:int" use="required" />
+        <xsd:attribute name="dontSendMsg" type="xsd:boolean" />
+        <xsd:attribute name="gender" type="xsd:string" use="required" />
+        <xsd:attribute name="guildLevel" type="xsd:int" />
+        <xsd:attribute name="guildPoint" type="xsd:int" />
+        <xsd:attribute name="isActive" type="xsd:boolean" use="required" />
+        <xsd:attribute name="isPkServerOnly" type="xsd:boolean" />
+        <xsd:attribute name="learnType" type="xsd:string" />
+        <xsd:attribute name="level" type="xsd:int" use="required" />
+        <xsd:attribute name="prerequisiteActiveSkills" type="xsd:string" use="required" />
+        <xsd:attribute name="prerequisitePassiveSkills" type="xsd:string" use="required" />
+        <xsd:attribute name="prevSkillId" type="xsd:int" use="required" />
+        <xsd:attribute name="prevSkillOverride" type="xsd:boolean" use="required" />
+        <xsd:attribute name="race" type="xsd:string" use="required" />
+        <xsd:attribute name="skillId" type="xsd:int" use="required" />
+        <xsd:attribute name="uiLevel" type="xsd:int" />
+        <xsd:attribute name="uiPos" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:element name="SkillGetConList" type="SkillGetConList" />
+</xsd:schema>

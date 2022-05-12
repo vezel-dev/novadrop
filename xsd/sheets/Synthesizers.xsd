@@ -1,0 +1,45 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/Synthesizers"
+            targetNamespace="https://vezel.dev/novadrop/dc/Synthesizers"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="Synthesizers">
+        <xsd:sequence>
+            <xsd:element name="Synthesizer" type="Synthesizers_Synthesizer" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Synthesizers_Synthesizer">
+        <xsd:sequence>
+            <xsd:element name="SynthesizeItems" type="Synthesizers_Synthesizer_SynthesizeItems" />
+            <xsd:element name="TargetItemList" type="Synthesizers_Synthesizer_TargetItemList" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="Synthesizers_Synthesizer_SynthesizeItems">
+        <xsd:sequence>
+            <xsd:element name="SynthesizeItem" type="Synthesizers_Synthesizer_SynthesizeItems_SynthesizeItem" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Synthesizers_Synthesizer_SynthesizeItems_SynthesizeItem">
+        <xsd:attribute name="itemTemplateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="Synthesizers_Synthesizer_TargetItemList">
+        <xsd:sequence>
+            <xsd:element name="TargetItem" type="Synthesizers_Synthesizer_TargetItemList_TargetItem" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Synthesizers_Synthesizer_TargetItemList_TargetItem">
+        <xsd:attribute name="amount" type="xsd:int" use="required" />
+        <xsd:attribute name="itemTemplateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="Synthesizers" type="Synthesizers" />
+</xsd:schema>

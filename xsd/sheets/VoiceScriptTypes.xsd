@@ -1,0 +1,20 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/VoiceScriptTypes"
+            targetNamespace="https://vezel.dev/novadrop/dc/VoiceScriptTypes"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="VoiceScriptTypes">
+        <xsd:sequence>
+            <xsd:element name="Type" type="VoiceScriptTypes_Type" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="VoiceScriptTypes_Type">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="voiceSound" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="VoiceScriptTypes" type="VoiceScriptTypes" />
+</xsd:schema>

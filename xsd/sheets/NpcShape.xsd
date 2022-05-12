@@ -1,0 +1,71 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/NpcShape"
+            targetNamespace="https://vezel.dev/novadrop/dc/NpcShape"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="NpcShape">
+        <xsd:sequence>
+            <xsd:element name="Shape" type="NpcShape_Shape" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcShape_Shape"
+                     dc:keys="id">
+        <xsd:sequence>
+            <xsd:element name="HitEffect" type="NpcShape_Shape_HitEffect" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="accPart1" type="xsd:int" />
+        <xsd:attribute name="accPart2" type="xsd:int" />
+        <xsd:attribute name="accPart4" type="xsd:int" />
+        <xsd:attribute name="accessoryColorId1" type="xsd:string" />
+        <xsd:attribute name="accessoryColorId2" type="xsd:string" />
+        <xsd:attribute name="animSet" type="xsd:string" use="required" />
+        <xsd:attribute name="animSetAttach" type="xsd:string" />
+        <xsd:attribute name="animSetFace" type="xsd:string" />
+        <xsd:attribute name="animSetHair" type="xsd:string" />
+        <xsd:attribute name="animSetShare" type="xsd:string" />
+        <xsd:attribute name="animSetTail" type="xsd:string" />
+        <xsd:attribute name="animSetWeapon" type="xsd:string" />
+        <xsd:attribute name="baseRunSpeed" type="xsd:float" />
+        <xsd:attribute name="baseTurnSpeed" type="xsd:float" />
+        <xsd:attribute name="baseWalkSpeed" type="xsd:float" />
+        <xsd:attribute name="bodyPart" type="xsd:int" />
+        <xsd:attribute name="bulletId" type="xsd:int" />
+        <xsd:attribute name="colorVar" type="xsd:string" />
+        <xsd:attribute name="customAttachment" type="xsd:int" />
+        <xsd:attribute name="customFace" type="xsd:int" />
+        <xsd:attribute name="customHair" type="xsd:int" />
+        <xsd:attribute name="customHairTone" type="xsd:int" />
+        <xsd:attribute name="customMakeup" type="xsd:int" />
+        <xsd:attribute name="customPreset" type="xsd:int" />
+        <xsd:attribute name="customSkinTone" type="xsd:int" />
+        <xsd:attribute name="deathMagneticEffectId" type="xsd:int" />
+        <xsd:attribute name="facePart" type="xsd:int" />
+        <xsd:attribute name="footPart" type="xsd:int" />
+        <xsd:attribute name="hairPart" type="xsd:int" />
+        <xsd:attribute name="handPart" type="xsd:int" />
+        <xsd:attribute name="hitDecalId" type="xsd:string" />
+        <xsd:attribute name="hitDecalId2" type="xsd:string" />
+        <xsd:attribute name="hitEffectId" type="xsd:int" />
+        <xsd:attribute name="hitEffectId2" type="xsd:int" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="includeDynamicParts" type="xsd:boolean" />
+        <xsd:attribute name="lowShapeId" type="xsd:int" />
+        <xsd:attribute name="mesh" type="xsd:string" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="shapeTemplate" type="xsd:int" />
+        <xsd:attribute name="weaponEnchantLevel" type="xsd:int" />
+        <xsd:attribute name="weaponPart" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcShape_Shape_HitEffect">
+        <xsd:attribute name="rule" type="xsd:string" use="required" />
+        <xsd:attribute name="xoffset" type="xsd:float" use="required" />
+        <xsd:attribute name="yoffset" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="NpcShape" type="NpcShape" />
+</xsd:schema>

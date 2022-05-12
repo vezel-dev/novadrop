@@ -1,0 +1,35 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/SkillPolishingList"
+            targetNamespace="https://vezel.dev/novadrop/dc/SkillPolishingList"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="SkillPolishingList">
+        <xsd:sequence>
+            <xsd:element name="SkillPolishing" type="SkillPolishingList_SkillPolishing" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillPolishingList_SkillPolishing">
+        <xsd:sequence>
+            <xsd:element name="SkillPolishingEffect" type="SkillPolishingList_SkillPolishing_SkillPolishingEffect" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="checkAbnormalityKind" type="xsd:string" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="isIncreaseMpCost" type="xsd:boolean" />
+        <xsd:attribute name="requiredLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="requiredSkillId" type="xsd:int" use="required" />
+        <xsd:attribute name="skillCategoryId" type="xsd:int" use="required" />
+        <xsd:attribute name="sortIdx" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+        <xsd:attribute name="usableClass" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillPolishingList_SkillPolishing_SkillPolishingEffect">
+        <xsd:attribute name="dataId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="SkillPolishingList" type="SkillPolishingList" />
+</xsd:schema>

@@ -1,0 +1,94 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/TBAChatClientConfigData"
+            targetNamespace="https://vezel.dev/novadrop/dc/TBAChatClientConfigData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="TBAChatClientConfigData">
+        <xsd:sequence>
+            <xsd:element name="AwesomiumUrl" type="TBAChatClientConfigData_AwesomiumUrl" />
+            <xsd:element name="ChannelList" type="TBAChatClientConfigData_ChannelList" />
+            <xsd:element name="ChatWindowCloseRemainTime" type="TBAChatClientConfigData_ChatWindowCloseRemainTime" />
+            <xsd:element name="DefaultChatWindowSize" type="TBAChatClientConfigData_DefaultChatWindowSize" />
+            <xsd:element name="DefaultTabList" type="TBAChatClientConfigData_DefaultTabList" />
+            <xsd:element name="FastReplyShortcut" type="TBAChatClientConfigData_FastReplyShortcut" />
+            <xsd:element name="Megaphone" type="TBAChatClientConfigData_Megaphone" />
+            <xsd:element name="PartySearchLimit" type="TBAChatClientConfigData_PartySearchLimit" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TBAChatClientConfigData_AwesomiumUrl">
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TBAChatClientConfigData_ChannelList">
+        <xsd:sequence>
+            <xsd:element name="Group" type="TBAChatClientConfigData_ChannelList_Group" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TBAChatClientConfigData_ChannelList_Group">
+        <xsd:sequence>
+            <xsd:element name="Channel" type="TBAChatClientConfigData_ChannelList_Group_Channel" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:string" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TBAChatClientConfigData_ChannelList_Group_Channel">
+        <xsd:attribute name="color" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:string" use="required" />
+        <xsd:attribute name="makeNameLink" type="xsd:boolean" use="required" />
+        <xsd:attribute name="showChannelName" type="xsd:boolean" use="required" />
+        <xsd:attribute name="static" type="xsd:boolean" />
+        <xsd:attribute name="useHtml" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TBAChatClientConfigData_ChatWindowCloseRemainTime">
+        <xsd:attribute name="time" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TBAChatClientConfigData_DefaultChatWindowSize">
+        <xsd:attribute name="height" type="xsd:int" use="required" />
+        <xsd:attribute name="width" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TBAChatClientConfigData_DefaultTabList">
+        <xsd:sequence>
+            <xsd:element name="Tab" type="TBAChatClientConfigData_DefaultTabList_Tab" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TBAChatClientConfigData_DefaultTabList_Tab">
+        <xsd:attribute name="autoInputChange" type="xsd:boolean" />
+        <xsd:attribute name="defaultInputChannel" type="xsd:string" />
+        <xsd:attribute name="fontSize" type="xsd:float" use="required" />
+        <xsd:attribute name="includeChannels" type="xsd:string" />
+        <xsd:attribute name="includeGroups" type="xsd:string" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="opacity" type="xsd:float" use="required" />
+        <xsd:attribute name="partyAutoInputChange" type="xsd:boolean" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TBAChatClientConfigData_FastReplyShortcut">
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TBAChatClientConfigData_Megaphone">
+        <xsd:attribute name="maxExposeSec" type="xsd:float" use="required" />
+        <xsd:attribute name="maxLength" type="xsd:int" use="required" />
+        <xsd:attribute name="minExposeSec" type="xsd:float" use="required" />
+        <xsd:attribute name="msgColor" type="xsd:string" use="required" />
+        <xsd:attribute name="userColor" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TBAChatClientConfigData_PartySearchLimit">
+        <xsd:attribute name="high" type="xsd:int" use="required" />
+        <xsd:attribute name="low" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="TBAChatClientConfigData" type="TBAChatClientConfigData" />
+</xsd:schema>

@@ -1,0 +1,25 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/PostProcess"
+            targetNamespace="https://vezel.dev/novadrop/dc/PostProcess"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="PostProcess">
+        <xsd:sequence>
+            <xsd:element name="Set" type="PostProcess_Set" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PostProcess_Set">
+        <xsd:attribute name="bAlwaysRender" type="xsd:boolean" use="required" />
+        <xsd:attribute name="chain" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="layer" type="xsd:int" use="required" />
+        <xsd:attribute name="material" type="xsd:string" use="required" />
+        <xsd:attribute name="priority" type="xsd:int" use="required" />
+        <xsd:attribute name="useScreenRatio" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:element name="PostProcess" type="PostProcess" />
+</xsd:schema>

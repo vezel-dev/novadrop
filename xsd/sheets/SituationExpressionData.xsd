@@ -1,0 +1,163 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/SituationExpressionData"
+            targetNamespace="https://vezel.dev/novadrop/dc/SituationExpressionData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="SituationExpressionData">
+        <xsd:sequence>
+            <xsd:element name="Data" type="SituationExpressionData_Data" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SituationExpressionData_Data">
+        <xsd:sequence>
+            <xsd:element name="ConditionInfo" type="SituationExpressionData_Data_ConditionInfo" />
+            <xsd:element name="JobInfo" type="SituationExpressionData_Data_JobInfo" />
+        </xsd:sequence>
+
+        <xsd:attribute name="huntingZoneId" type="xsd:int" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="templateId" type="xsd:string" />
+        <xsd:attribute name="tutorial" type="xsd:boolean" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SituationExpressionData_Data_ConditionInfo">
+        <xsd:sequence>
+            <xsd:element name="ConditionList" type="SituationExpressionData_Data_ConditionInfo_ConditionList" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SituationExpressionData_Data_ConditionInfo_ConditionList">
+        <xsd:sequence>
+            <xsd:element name="AbnormalCondition" type="SituationExpressionData_Data_ConditionInfo_ConditionList_AbnormalCondition" minOccurs="0" />
+            <xsd:element name="ActionCondition" type="SituationExpressionData_Data_ConditionInfo_ConditionList_ActionCondition" minOccurs="0" />
+            <xsd:element name="DialogCondition" type="SituationExpressionData_Data_ConditionInfo_ConditionList_DialogCondition" minOccurs="0" />
+            <xsd:element name="LifeCondition" type="SituationExpressionData_Data_ConditionInfo_ConditionList_LifeCondition" minOccurs="0" />
+            <xsd:element name="NpcCondition" type="SituationExpressionData_Data_ConditionInfo_ConditionList_NpcCondition" minOccurs="0" />
+            <xsd:element name="PositionCondition" type="SituationExpressionData_Data_ConditionInfo_ConditionList_PositionCondition" minOccurs="0" />
+            <xsd:element name="QuestCondition" type="SituationExpressionData_Data_ConditionInfo_ConditionList_QuestCondition" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="SearchCondition" type="SituationExpressionData_Data_ConditionInfo_ConditionList_SearchCondition" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="StatCondition" type="SituationExpressionData_Data_ConditionInfo_ConditionList_StatCondition" minOccurs="0" />
+            <xsd:element name="StateCondition" type="SituationExpressionData_Data_ConditionInfo_ConditionList_StateCondition" minOccurs="0" />
+            <xsd:element name="UserCondition" type="SituationExpressionData_Data_ConditionInfo_ConditionList_UserCondition" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SituationExpressionData_Data_ConditionInfo_ConditionList_AbnormalCondition">
+        <xsd:attribute name="abnormalId" type="xsd:string" use="required" />
+        <xsd:attribute name="buff" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SituationExpressionData_Data_ConditionInfo_ConditionList_ActionCondition">
+        <xsd:attribute name="exceptSubType" type="xsd:string" />
+        <xsd:attribute name="option" type="xsd:string" />
+        <xsd:attribute name="skillId" type="xsd:string" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SituationExpressionData_Data_ConditionInfo_ConditionList_DialogCondition">
+        <xsd:attribute name="huntingZoneId" type="xsd:int" use="required" />
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SituationExpressionData_Data_ConditionInfo_ConditionList_LifeCondition">
+        <xsd:attribute name="checkInterval" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SituationExpressionData_Data_ConditionInfo_ConditionList_NpcCondition">
+        <xsd:attribute name="flag" type="xsd:boolean" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SituationExpressionData_Data_ConditionInfo_ConditionList_PositionCondition">
+        <xsd:attribute name="checkInterval" type="xsd:float" />
+        <xsd:attribute name="continentId" type="xsd:int" use="required" />
+        <xsd:attribute name="pos" type="xsd:string" use="required" />
+        <xsd:attribute name="radius" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SituationExpressionData_Data_ConditionInfo_ConditionList_QuestCondition">
+        <xsd:attribute name="questId" type="xsd:int" use="required" />
+        <xsd:attribute name="taskId" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SituationExpressionData_Data_ConditionInfo_ConditionList_SearchCondition">
+        <xsd:attribute name="checkInterval" type="xsd:float" />
+        <xsd:attribute name="class" type="xsd:string" />
+        <xsd:attribute name="haveMarker" type="xsd:string" use="required" />
+        <xsd:attribute name="huntingZoneId" type="xsd:int" />
+        <xsd:attribute name="maxDistance" type="xsd:int" use="required" />
+        <xsd:attribute name="maxNumber" type="xsd:int" use="required" />
+        <xsd:attribute name="minDistance" type="xsd:int" use="required" />
+        <xsd:attribute name="minNumber" type="xsd:int" use="required" />
+        <xsd:attribute name="templateId" type="xsd:int" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SituationExpressionData_Data_ConditionInfo_ConditionList_StatCondition">
+        <xsd:attribute name="checkInterval" type="xsd:float" />
+        <xsd:attribute name="maxValue" type="xsd:float" use="required" />
+        <xsd:attribute name="minValue" type="xsd:float" use="required" />
+        <xsd:attribute name="option" type="xsd:string" />
+        <xsd:attribute name="stat" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SituationExpressionData_Data_ConditionInfo_ConditionList_StateCondition">
+        <xsd:attribute name="id" type="xsd:int" />
+        <xsd:attribute name="option" type="xsd:string" />
+        <xsd:attribute name="type" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SituationExpressionData_Data_ConditionInfo_ConditionList_UserCondition">
+        <xsd:attribute name="flag" type="xsd:boolean" use="required" />
+        <xsd:attribute name="option" type="xsd:string" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SituationExpressionData_Data_JobInfo">
+        <xsd:sequence>
+            <xsd:element name="ActionScriptJob" type="SituationExpressionData_Data_JobInfo_ActionScriptJob" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="EffectJob" type="SituationExpressionData_Data_JobInfo_EffectJob" minOccurs="0" />
+            <xsd:element name="EmoticonJob" type="SituationExpressionData_Data_JobInfo_EmoticonJob" minOccurs="0" />
+            <xsd:element name="SkillIconJob" type="SituationExpressionData_Data_JobInfo_SkillIconJob" minOccurs="0" />
+            <xsd:element name="SocialJob" type="SituationExpressionData_Data_JobInfo_SocialJob" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SituationExpressionData_Data_JobInfo_ActionScriptJob">
+        <xsd:attribute name="delayTime" type="xsd:int" />
+        <xsd:attribute name="durationTime" type="xsd:int" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SituationExpressionData_Data_JobInfo_EffectJob">
+        <xsd:attribute name="delayTime" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SituationExpressionData_Data_JobInfo_EmoticonJob">
+        <xsd:attribute name="delayTime" type="xsd:int" />
+        <xsd:attribute name="durationTime" type="xsd:int" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SituationExpressionData_Data_JobInfo_SkillIconJob">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SituationExpressionData_Data_JobInfo_SocialJob">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="SituationExpressionData" type="SituationExpressionData" />
+</xsd:schema>

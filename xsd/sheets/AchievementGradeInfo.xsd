@@ -1,0 +1,63 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/AchievementGradeInfo"
+            targetNamespace="https://vezel.dev/novadrop/dc/AchievementGradeInfo"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="AchievementGradeInfo">
+        <xsd:sequence>
+            <xsd:element name="CategoryGrade" type="AchievementGradeInfo_CategoryGrade" maxOccurs="unbounded" />
+            <xsd:element name="GeneralGrade" type="AchievementGradeInfo_GeneralGrade" />
+            <xsd:element name="Season" type="AchievementGradeInfo_Season" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AchievementGradeInfo_CategoryGrade"
+                     dc:keys="id">
+        <xsd:sequence>
+            <xsd:element name="Grade" type="AchievementGradeInfo_CategoryGrade_Grade" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AchievementGradeInfo_CategoryGrade_Grade"
+                     dc:keys="id">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="needRate" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AchievementGradeInfo_GeneralGrade">
+        <xsd:sequence>
+            <xsd:element name="Grade" type="AchievementGradeInfo_GeneralGrade_Grade" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AchievementGradeInfo_GeneralGrade_Grade"
+                     dc:keys="id">
+        <xsd:attribute name="desc" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AchievementGradeInfo_Season"
+                     dc:keys="id">
+        <xsd:sequence>
+            <xsd:element name="Grade" type="AchievementGradeInfo_Season_Grade" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="point" type="xsd:int" />
+        <xsd:attribute name="startDate" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AchievementGradeInfo_Season_Grade">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="needRate" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="AchievementGradeInfo" type="AchievementGradeInfo" />
+</xsd:schema>

@@ -1,0 +1,1207 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/SkillData"
+            targetNamespace="https://vezel.dev/novadrop/dc/SkillData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="SkillData"
+                     dc:keys="huntingZoneId">
+        <xsd:sequence>
+            <xsd:element name="Skill" type="SkillData_Skill" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="huntingZoneId" type="xsd:int" use="required" />
+        <xsd:attribute name="templateId" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill"
+                     dc:keys="templateId id">
+        <xsd:sequence>
+            <xsd:element name="Action" type="SkillData_Skill_Action" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Anger" type="SkillData_Skill_Anger" minOccurs="0" />
+            <xsd:element name="AttackAnimRate" type="SkillData_Skill_AttackAnimRate" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="AutoContinue" type="SkillData_Skill_AutoContinue" minOccurs="0" />
+            <xsd:element name="BalanceRef" type="SkillData_Skill_BalanceRef" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="BattleField" type="SkillData_Skill_BattleField" minOccurs="0" />
+            <xsd:element name="Bulldozer" type="SkillData_Skill_Bulldozer" minOccurs="0" />
+            <xsd:element name="Bullet" type="SkillData_Skill_Bullet" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="BulletList" type="SkillData_Skill_BulletList" minOccurs="0" />
+            <xsd:element name="CatchThrow" type="SkillData_Skill_CatchThrow" minOccurs="0" />
+            <xsd:element name="ChargingStageList" type="SkillData_Skill_ChargingStageList" minOccurs="0" />
+            <xsd:element name="CheckEquipment" type="SkillData_Skill_CheckEquipment" minOccurs="0" />
+            <xsd:element name="ConnectSkill" type="SkillData_Skill_ConnectSkill" minOccurs="0" />
+            <xsd:element name="Counter" type="SkillData_Skill_Counter" minOccurs="0" />
+            <xsd:element name="Custom" type="SkillData_Skill_Custom" minOccurs="0" />
+            <xsd:element name="Dash" type="SkillData_Skill_Dash" minOccurs="0" />
+            <xsd:element name="Defence" type="SkillData_Skill_Defence" minOccurs="0" />
+            <xsd:element name="Drain" type="SkillData_Skill_Drain" minOccurs="0" />
+            <xsd:element name="InverseCapture" type="SkillData_Skill_InverseCapture" minOccurs="0" />
+            <xsd:element name="KeyState" type="SkillData_Skill_KeyState" minOccurs="0" />
+            <xsd:element name="Mount" type="SkillData_Skill_Mount" minOccurs="0" />
+            <xsd:element name="Precondition" type="SkillData_Skill_Precondition" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Projectile" type="SkillData_Skill_Projectile" minOccurs="0" />
+            <xsd:element name="Property" type="SkillData_Skill_Property" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Pulling" type="SkillData_Skill_Pulling" minOccurs="0" />
+            <xsd:element name="RangedCritical" type="SkillData_Skill_RangedCritical" minOccurs="0" />
+            <xsd:element name="ShortTel" type="SkillData_Skill_ShortTel" minOccurs="0" />
+            <xsd:element name="ShowTargetingList" type="SkillData_Skill_ShowTargetingList" minOccurs="0" />
+            <xsd:element name="TargetingList" type="SkillData_Skill_TargetingList" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Teleport" type="SkillData_Skill_Teleport" minOccurs="0" />
+            <xsd:element name="UserProjectileCurveMove" type="SkillData_Skill_UserProjectileCurveMove" minOccurs="0" />
+            <xsd:element name="WeakPoint" type="SkillData_Skill_WeakPoint" minOccurs="0" />
+            <xsd:element name="WeaponIK" type="SkillData_Skill_WeaponIK" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="adjAtkByOwnerHp" type="xsd:boolean" />
+        <xsd:attribute name="applyAttackAnimRate" type="xsd:boolean" />
+        <xsd:attribute name="attackRange" type="xsd:string" />
+        <xsd:attribute name="attackRangeMax" type="xsd:string" />
+        <xsd:attribute name="autoUse" type="xsd:boolean" />
+        <xsd:attribute name="breakInvincible" type="xsd:boolean" />
+        <xsd:attribute name="canUseOnRide" type="xsd:boolean" />
+        <xsd:attribute name="category" type="xsd:string" use="required" />
+        <xsd:attribute name="changeDirToCenter" type="xsd:boolean" />
+        <xsd:attribute name="changeDirToCenterForConsole" type="xsd:boolean" />
+        <xsd:attribute name="changeDirection" type="xsd:int" />
+        <xsd:attribute name="changeDirectionAbsolute" type="xsd:int" />
+        <xsd:attribute name="connectNextSkill" type="xsd:int" />
+        <xsd:attribute name="customFontColor" type="xsd:string" />
+        <xsd:attribute name="decreaseCoolTimeByRelax" type="xsd:boolean" />
+        <xsd:attribute name="forceLockOnTarget" type="xsd:boolean" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="ignoreDefence" type="xsd:boolean" />
+        <xsd:attribute name="ignoreLos" type="xsd:boolean" />
+        <xsd:attribute name="immediateCommanderSkill" type="xsd:boolean" />
+        <xsd:attribute name="isPlayArmorSound" type="xsd:boolean" />
+        <xsd:attribute name="isSelfRootSkill" type="xsd:boolean" />
+        <xsd:attribute name="keepMovingCharge" type="xsd:boolean" />
+        <xsd:attribute name="keptMovingCharge" type="xsd:boolean" />
+        <xsd:attribute name="magicalFactor" type="xsd:float" />
+        <xsd:attribute name="magneticSpeedProportion" type="xsd:boolean" />
+        <xsd:attribute name="mountAbnormality" type="xsd:int" />
+        <xsd:attribute name="mustMountFlyingVehicle" type="xsd:boolean" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="needWeapon" type="xsd:boolean" />
+        <xsd:attribute name="nextSkill" type="xsd:int" />
+        <xsd:attribute name="nocTanRate" type="xsd:string" />
+        <xsd:attribute name="nocTanUse" type="xsd:int" />
+        <xsd:attribute name="parentId" type="xsd:int" />
+        <xsd:attribute name="physicalFactor" type="xsd:float" />
+        <xsd:attribute name="pushtarget" type="xsd:string" use="required" />
+        <xsd:attribute name="returnAnimName" type="xsd:string" />
+        <xsd:attribute name="returnAnimSet" type="xsd:string" />
+        <xsd:attribute name="shotSkill" type="xsd:string" />
+        <xsd:attribute name="showNextSkillTooltip" type="xsd:boolean" />
+        <xsd:attribute name="skillDamageType" type="xsd:string" />
+        <xsd:attribute name="templateId" type="xsd:int" />
+        <xsd:attribute name="timeRate" type="xsd:float" />
+        <xsd:attribute name="totalAtk" type="xsd:string" />
+        <xsd:attribute name="totalStk" type="xsd:float" />
+        <xsd:attribute name="totalStkPvp" type="xsd:float" />
+        <xsd:attribute name="triggertype" type="xsd:int" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+        <xsd:attribute name="useCustomColor" type="xsd:boolean" />
+        <xsd:attribute name="useSkillWhileAirReaction" type="xsd:boolean" />
+        <xsd:attribute name="useSkillWhileBulldozer" type="xsd:boolean" />
+        <xsd:attribute name="useSkillWhileReaction" type="xsd:boolean" />
+        <xsd:attribute name="waistAngleIK" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Action">
+        <xsd:sequence>
+            <xsd:element name="CameraShakeList" type="SkillData_Skill_Action_CameraShakeList" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="CameraType" type="SkillData_Skill_Action_CameraType" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="CameraZoom" type="SkillData_Skill_Action_CameraZoom" minOccurs="0" />
+            <xsd:element name="Cancel" type="SkillData_Skill_Action_Cancel" minOccurs="0" />
+            <xsd:element name="HitCylinderList" type="SkillData_Skill_Action_HitCylinderList" minOccurs="0" />
+            <xsd:element name="MoveCylinderList" type="SkillData_Skill_Action_MoveCylinderList" minOccurs="0" />
+            <xsd:element name="MoveInvincible" type="SkillData_Skill_Action_MoveInvincible" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Pending" type="SkillData_Skill_Action_Pending" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Script" type="SkillData_Skill_Action_Script" minOccurs="0" />
+            <xsd:element name="SpecialEffectList" type="SkillData_Skill_Action_SpecialEffectList" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="StageList" type="SkillData_Skill_Action_StageList" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="animControlType" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Action_CameraShakeList">
+        <xsd:sequence>
+            <xsd:element name="CameraShake" type="SkillData_Skill_Action_CameraShakeList_CameraShake" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="name" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Action_CameraShakeList_CameraShake">
+        <xsd:attribute name="duration" type="xsd:int" />
+        <xsd:attribute name="innerRadius" type="xsd:float" />
+        <xsd:attribute name="name" type="xsd:string" />
+        <xsd:attribute name="outerRadius" type="xsd:float" />
+        <xsd:attribute name="power" type="xsd:float" />
+        <xsd:attribute name="shakeId" type="xsd:int" use="required" />
+        <xsd:attribute name="speed" type="xsd:float" />
+        <xsd:attribute name="startCondition" type="xsd:string" use="required" />
+        <xsd:attribute name="startTime" type="xsd:int" />
+        <xsd:attribute name="startValue" type="xsd:int" />
+        <xsd:attribute name="targetType" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Action_CameraType">
+        <xsd:attribute name="duration" type="xsd:float" use="required" />
+        <xsd:attribute name="prepareStageId" type="xsd:int" use="required" />
+        <xsd:attribute name="startStageId" type="xsd:int" use="required" />
+        <xsd:attribute name="startTime" type="xsd:float" use="required" />
+        <xsd:attribute name="stopFollowWhenActionEnd" type="xsd:boolean" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+        <xsd:attribute name="weight" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Action_CameraZoom">
+        <xsd:attribute name="cameraRotationWeight" type="xsd:float" />
+        <xsd:attribute name="customHeight" type="xsd:float" />
+        <xsd:attribute name="customOffset" type="xsd:float" />
+        <xsd:attribute name="duration" type="xsd:float" use="required" />
+        <xsd:attribute name="startTime" type="xsd:float" use="required" />
+        <xsd:attribute name="stopOnActionEnd" type="xsd:boolean" use="required" />
+        <xsd:attribute name="type" type="xsd:string" />
+        <xsd:attribute name="zoomDistance" type="xsd:float" use="required" />
+        <xsd:attribute name="zoomExp" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Action_Cancel">
+        <xsd:attribute name="frontCancelEndTime" type="xsd:int" use="required" />
+        <xsd:attribute name="moveCancelStartTime" type="xsd:int" />
+        <xsd:attribute name="rearCancelStartTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Action_HitCylinderList">
+        <xsd:sequence>
+            <xsd:element name="HitCylinder" type="SkillData_Skill_Action_HitCylinderList_HitCylinder" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Action_HitCylinderList_HitCylinder">
+        <xsd:sequence>
+            <xsd:element name="Cylinder" type="SkillData_Skill_Action_HitCylinderList_HitCylinder_Cylinder" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="startTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Action_HitCylinderList_HitCylinder_Cylinder">
+        <xsd:attribute name="height" type="xsd:float" use="required" />
+        <xsd:attribute name="id" type="xsd:int" />
+        <xsd:attribute name="locAngle" type="xsd:float" use="required" />
+        <xsd:attribute name="locDistance" type="xsd:float" use="required" />
+        <xsd:attribute name="locZ" type="xsd:float" use="required" />
+        <xsd:attribute name="radius" type="xsd:float" use="required" />
+        <xsd:attribute name="startTime" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Action_MoveCylinderList">
+        <xsd:sequence>
+            <xsd:element name="MoveCylinder" type="SkillData_Skill_Action_MoveCylinderList_MoveCylinder" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Action_MoveCylinderList_MoveCylinder">
+        <xsd:sequence>
+            <xsd:element name="Cylinder" type="SkillData_Skill_Action_MoveCylinderList_MoveCylinder_Cylinder" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="startTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Action_MoveCylinderList_MoveCylinder_Cylinder">
+        <xsd:attribute name="height" type="xsd:float" use="required" />
+        <xsd:attribute name="id" type="xsd:int" />
+        <xsd:attribute name="locAngle" type="xsd:float" use="required" />
+        <xsd:attribute name="locDistance" type="xsd:float" use="required" />
+        <xsd:attribute name="locZ" type="xsd:float" use="required" />
+        <xsd:attribute name="radius" type="xsd:float" use="required" />
+        <xsd:attribute name="startTime" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Action_MoveInvincible">
+        <xsd:attribute name="endTime" type="xsd:int" use="required" />
+        <xsd:attribute name="exceptDefence" type="xsd:boolean" />
+        <xsd:attribute name="exceptObjectNpc" type="xsd:boolean" />
+        <xsd:attribute name="ignoreCollision" type="xsd:string" />
+        <xsd:attribute name="startTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Action_Pending">
+        <xsd:attribute name="endTime" type="xsd:int" />
+        <xsd:attribute name="startTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Action_Script">
+        <xsd:attribute name="scriptNumber" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Action_SpecialEffectList">
+        <xsd:sequence>
+            <xsd:element name="Effect" type="SkillData_Skill_Action_SpecialEffectList_Effect" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Action_SpecialEffectList_Effect">
+        <xsd:sequence>
+            <xsd:element name="Move" type="SkillData_Skill_Action_SpecialEffectList_Effect_Move" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="posX" type="xsd:float" use="required" />
+        <xsd:attribute name="posY" type="xsd:float" use="required" />
+        <xsd:attribute name="posZ" type="xsd:float" use="required" />
+        <xsd:attribute name="startTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Action_SpecialEffectList_Effect_Move">
+        <xsd:attribute name="distance" type="xsd:float" use="required" />
+        <xsd:attribute name="duration" type="xsd:float" use="required" />
+        <xsd:attribute name="maxHeight" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Action_StageList">
+        <xsd:sequence>
+            <xsd:element name="Stage" type="SkillData_Skill_Action_StageList_Stage" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Action_StageList_Stage">
+        <xsd:sequence>
+            <xsd:element name="AnimSeq" type="SkillData_Skill_Action_StageList_Stage_AnimSeq" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="AttachmentObject" type="SkillData_Skill_Action_StageList_Stage_AttachmentObject" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Property" type="SkillData_Skill_Action_StageList_Stage_Property" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="LoopRepeat" type="xsd:boolean" />
+        <xsd:attribute name="bForceRotation" type="xsd:boolean" />
+        <xsd:attribute name="changeDirToPos" type="xsd:boolean" />
+        <xsd:attribute name="changeDirToPosMax" type="xsd:int" />
+        <xsd:attribute name="changeDirToTarget" type="xsd:boolean" />
+        <xsd:attribute name="changeDirToTargetMax" type="xsd:int" />
+        <xsd:attribute name="hitRangeGroupId" type="xsd:int" />
+        <xsd:attribute name="movable" type="xsd:boolean" />
+        <xsd:attribute name="overrideMovingAnimId" type="xsd:int" />
+        <xsd:attribute name="scriptId" type="xsd:int" />
+        <xsd:attribute name="variableMaxLoop" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Action_StageList_Stage_AnimSeq">
+        <xsd:attribute name="animMotionId" type="xsd:int" />
+        <xsd:attribute name="animName" type="xsd:string" use="required" />
+        <xsd:attribute name="animRate" type="xsd:float" use="required" />
+        <xsd:attribute name="animSet" type="xsd:string" use="required" />
+        <xsd:attribute name="bAnimLooping" type="xsd:boolean" use="required" />
+        <xsd:attribute name="bEnableBlendInTimeWhenNpc" type="xsd:boolean" />
+        <xsd:attribute name="basicRate" type="xsd:int" />
+        <xsd:attribute name="blendInTime" type="xsd:int" />
+        <xsd:attribute name="duration" type="xsd:int" use="required" />
+        <xsd:attribute name="loopCount" type="xsd:int" />
+        <xsd:attribute name="loopingRate" type="xsd:float" />
+        <xsd:attribute name="movingAnimName" type="xsd:string" />
+        <xsd:attribute name="readOnlyDuration" type="xsd:float" />
+        <xsd:attribute name="rootMotionXYRate" type="xsd:float" use="required" />
+        <xsd:attribute name="rootMotionZRate" type="xsd:float" use="required" />
+        <xsd:attribute name="waitAnimName" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Action_StageList_Stage_AttachmentObject">
+        <xsd:attribute name="animName" type="xsd:string" use="required" />
+        <xsd:attribute name="animRate" type="xsd:float" use="required" />
+        <xsd:attribute name="blendInTime" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Action_StageList_Stage_Property">
+        <xsd:sequence>
+            <xsd:element name="AutoLockOn" type="SkillData_Skill_Action_StageList_Stage_Property_AutoLockOn" minOccurs="0" />
+            <xsd:element name="Bulldozer" type="SkillData_Skill_Action_StageList_Stage_Property_Bulldozer" minOccurs="0" />
+            <xsd:element name="ChangeWeaponScale" type="SkillData_Skill_Action_StageList_Stage_Property_ChangeWeaponScale" minOccurs="0" />
+            <xsd:element name="LockOn" type="SkillData_Skill_Action_StageList_Stage_Property_LockOn" minOccurs="0" />
+            <xsd:element name="MoveToDest" type="SkillData_Skill_Action_StageList_Stage_Property_MoveToDest" minOccurs="0" />
+            <xsd:element name="MovingCast" type="SkillData_Skill_Action_StageList_Stage_Property_MovingCast" minOccurs="0" />
+            <xsd:element name="MovingDefence" type="SkillData_Skill_Action_StageList_Stage_Property_MovingDefence" minOccurs="0" />
+            <xsd:element name="MovingShot" type="SkillData_Skill_Action_StageList_Stage_Property_MovingShot" minOccurs="0" />
+            <xsd:element name="RangeLockOn" type="SkillData_Skill_Action_StageList_Stage_Property_RangeLockOn" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="abnormalityKind" type="xsd:int" />
+        <xsd:attribute name="adjustAnimToTarget" type="xsd:boolean" />
+        <xsd:attribute name="animControlType" type="xsd:string" />
+        <xsd:attribute name="isItemSkill" type="xsd:boolean" />
+        <xsd:attribute name="needOtherUserCollisionCheck" type="xsd:boolean" />
+        <xsd:attribute name="relocateBackWhenCollide" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Action_StageList_Stage_Property_AutoLockOn">
+        <xsd:attribute name="effectId" type="xsd:int" use="required" />
+        <xsd:attribute name="endTime" type="xsd:int" use="required" />
+        <xsd:attribute name="launchByMaxTarget" type="xsd:boolean" use="required" />
+        <xsd:attribute name="startTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Action_StageList_Stage_Property_Bulldozer" />
+
+    <xsd:complexType name="SkillData_Skill_Action_StageList_Stage_Property_ChangeWeaponScale">
+        <xsd:attribute name="delay" type="xsd:float" />
+        <xsd:attribute name="duration" type="xsd:float" use="required" />
+        <xsd:attribute name="weaponScaleFrom" type="xsd:string" use="required" />
+        <xsd:attribute name="weaponScaleTo" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Action_StageList_Stage_Property_LockOn">
+        <xsd:attribute name="effectId" type="xsd:int" use="required" />
+        <xsd:attribute name="launchByMaxTarget" type="xsd:boolean" use="required" />
+        <xsd:attribute name="msgId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Action_StageList_Stage_Property_MoveToDest">
+        <xsd:attribute name="endAccel" type="xsd:float" use="required" />
+        <xsd:attribute name="endVelocity" type="xsd:float" use="required" />
+        <xsd:attribute name="maxDistance" type="xsd:float" use="required" />
+        <xsd:attribute name="peakRate" type="xsd:float" use="required" />
+        <xsd:attribute name="startAccel" type="xsd:float" use="required" />
+        <xsd:attribute name="startVelocity" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Action_StageList_Stage_Property_MovingCast" />
+
+    <xsd:complexType name="SkillData_Skill_Action_StageList_Stage_Property_MovingDefence">
+        <xsd:attribute name="backwardAnim" type="xsd:string" use="required" />
+        <xsd:attribute name="barrierFieldId" type="xsd:int" />
+        <xsd:attribute name="forwardAnim" type="xsd:string" use="required" />
+        <xsd:attribute name="waitAnim" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Action_StageList_Stage_Property_MovingShot" />
+
+    <xsd:complexType name="SkillData_Skill_Action_StageList_Stage_Property_RangeLockOn">
+        <xsd:attribute name="maxDistance" type="xsd:float" use="required" />
+        <xsd:attribute name="targetingEffectId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Anger">
+        <xsd:attribute name="speedUpRate" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_AttackAnimRate">
+        <xsd:sequence>
+            <xsd:element name="Fast" type="SkillData_Skill_AttackAnimRate_Fast" />
+            <xsd:element name="Slow" type="SkillData_Skill_AttackAnimRate_Slow" />
+        </xsd:sequence>
+
+        <xsd:attribute name="minimumInterval" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_AttackAnimRate_Fast">
+        <xsd:attribute name="downTime" type="xsd:float" use="required" />
+        <xsd:attribute name="upTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_AttackAnimRate_Slow">
+        <xsd:attribute name="slowDownTime" type="xsd:float" use="required" />
+        <xsd:attribute name="upTime" type="xsd:int" use="required" />
+        <xsd:attribute name="zeroTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_AutoContinue">
+        <xsd:attribute name="skillId" type="xsd:int" use="required" />
+        <xsd:attribute name="useOnSuccess" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_BalanceRef">
+        <xsd:attribute name="ignoreAttr" type="xsd:string" use="required" />
+        <xsd:attribute name="isAngerSkill" type="xsd:string" use="required" />
+        <xsd:attribute name="needBalance" type="xsd:string" use="required" />
+        <xsd:attribute name="refItemLevel" type="xsd:string" use="required" />
+        <xsd:attribute name="refLeatherDmgRate" type="xsd:string" use="required" />
+        <xsd:attribute name="refMailDmgRate" type="xsd:string" use="required" />
+        <xsd:attribute name="refRobeDmgRate" type="xsd:string" use="required" />
+        <xsd:attribute name="refTotalAtk" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_BattleField">
+        <xsd:attribute name="showOverlayMapTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Bulldozer">
+        <xsd:attribute name="duration" type="xsd:int" use="required" />
+        <xsd:attribute name="maxWidth" type="xsd:float" use="required" />
+        <xsd:attribute name="speed" type="xsd:int" use="required" />
+        <xsd:attribute name="widthRatio" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Bullet">
+        <xsd:attribute name="beamEffect" type="xsd:boolean" />
+        <xsd:attribute name="createTime" type="xsd:float" use="required" />
+        <xsd:attribute name="detachTime" type="xsd:float" use="required" />
+        <xsd:attribute name="flyingBackDuration" type="xsd:float" />
+        <xsd:attribute name="flyingDuration" type="xsd:float" use="required" />
+        <xsd:attribute name="projectileHit" type="xsd:boolean" />
+        <xsd:attribute name="shotSkill" type="xsd:int" />
+        <xsd:attribute name="startSkill" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_BulletList">
+        <xsd:sequence>
+            <xsd:element name="Bullet" type="SkillData_Skill_BulletList_Bullet" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_BulletList_Bullet">
+        <xsd:attribute name="createTime" type="xsd:float" use="required" />
+        <xsd:attribute name="detachTime" type="xsd:float" use="required" />
+        <xsd:attribute name="flyingDuration" type="xsd:float" use="required" />
+        <xsd:attribute name="shotSkill" type="xsd:int" use="required" />
+        <xsd:attribute name="startSkill" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_CatchThrow">
+        <xsd:attribute name="attachBone" type="xsd:string" use="required" />
+        <xsd:attribute name="duration" type="xsd:float" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_ChargingStageList">
+        <xsd:sequence>
+            <xsd:element name="ChargeStage" type="SkillData_Skill_ChargingStageList_ChargeStage" maxOccurs="unbounded" />
+            <xsd:element name="Interval" type="SkillData_Skill_ChargingStageList_Interval" maxOccurs="unbounded" />
+            <xsd:element name="OverChargeConnectSkill" type="SkillData_Skill_ChargingStageList_OverChargeConnectSkill" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="costTotalHp" type="xsd:int" />
+        <xsd:attribute name="costTotalHpRate" type="xsd:float" />
+        <xsd:attribute name="costTotalMp" type="xsd:int" />
+        <xsd:attribute name="costTotalMpRate" type="xsd:float" />
+        <xsd:attribute name="costTotalSt" type="xsd:int" />
+        <xsd:attribute name="movable" type="xsd:boolean" use="required" />
+        <xsd:attribute name="movingAnimName" type="xsd:string" />
+        <xsd:attribute name="movingAnimRate" type="xsd:float" />
+        <xsd:attribute name="startAnimName" type="xsd:string" />
+        <xsd:attribute name="startAnimRate" type="xsd:float" />
+        <xsd:attribute name="waitAnimName" type="xsd:string" use="required" />
+        <xsd:attribute name="waitAnimRate" type="xsd:float" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_ChargingStageList_ChargeStage">
+        <xsd:sequence>
+            <xsd:element name="ChangeWeaponScale" type="SkillData_Skill_ChargingStageList_ChargeStage_ChangeWeaponScale" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="costHpRate" type="xsd:float" use="required" />
+        <xsd:attribute name="costMpRate" type="xsd:float" use="required" />
+        <xsd:attribute name="costStRate" type="xsd:float" />
+        <xsd:attribute name="duration" type="xsd:float" use="required" />
+        <xsd:attribute name="perfectChargeEnd" type="xsd:int" />
+        <xsd:attribute name="perfectChargeStart" type="xsd:int" />
+        <xsd:attribute name="shaderConditionOnPerfectChargeRange" type="xsd:string" />
+        <xsd:attribute name="shotSkillId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_ChargingStageList_ChargeStage_ChangeWeaponScale">
+        <xsd:attribute name="duration" type="xsd:float" use="required" />
+        <xsd:attribute name="weaponScaleFrom" type="xsd:string" use="required" />
+        <xsd:attribute name="weaponScaleTo" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_ChargingStageList_Interval">
+        <xsd:attribute name="costHpRate" type="xsd:float" use="required" />
+        <xsd:attribute name="costMpRate" type="xsd:float" />
+        <xsd:attribute name="time" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_ChargingStageList_OverChargeConnectSkill">
+        <xsd:attribute name="redirectSkill" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_CheckEquipment">
+        <xsd:attribute name="inventoryType" type="xsd:int" use="required" />
+        <xsd:attribute name="itemTemplateList" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_ConnectSkill">
+        <xsd:sequence>
+            <xsd:element name="AddAbnormalityConnectSkill" type="SkillData_Skill_ConnectSkill_AddAbnormalityConnectSkill" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="AddConnectSkill" type="SkillData_Skill_ConnectSkill_AddConnectSkill" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="redirectSkill" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_ConnectSkill_AddAbnormalityConnectSkill">
+        <xsd:attribute name="abnormalityId" type="xsd:int" use="required" />
+        <xsd:attribute name="redirectSkill" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_ConnectSkill_AddConnectSkill">
+        <xsd:attribute name="redirectSkill" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Counter" />
+
+    <xsd:complexType name="SkillData_Skill_Custom">
+        <xsd:attribute name="handlerName" type="xsd:string" use="required" />
+        <xsd:attribute name="parameters" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Dash">
+        <xsd:attribute name="dashFailSkill" type="xsd:int" />
+        <xsd:attribute name="dashRedirectSkill" type="xsd:int" use="required" />
+        <xsd:attribute name="followTarget" type="xsd:string" />
+        <xsd:attribute name="mustHaveTarget" type="xsd:boolean" />
+        <xsd:attribute name="speed" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Defence">
+        <xsd:attribute name="allDirection" type="xsd:boolean" />
+        <xsd:attribute name="brokenAnimSet" type="xsd:string" />
+        <xsd:attribute name="rootMotion" type="xsd:boolean" />
+        <xsd:attribute name="successAnimName" type="xsd:string" />
+        <xsd:attribute name="successAnimSet" type="xsd:string" />
+        <xsd:attribute name="superArmor" type="xsd:boolean" />
+        <xsd:attribute name="superArmorId" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Drain">
+        <xsd:attribute name="backSkillId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_InverseCapture">
+        <xsd:attribute name="holdTime" type="xsd:float" use="required" />
+        <xsd:attribute name="holdingAnim" type="xsd:string" use="required" />
+        <xsd:attribute name="movingDuration" type="xsd:float" use="required" />
+        <xsd:attribute name="shotSkill" type="xsd:int" />
+        <xsd:attribute name="successAnim" type="xsd:string" use="required" />
+        <xsd:attribute name="targetToCenter" type="xsd:boolean" />
+        <xsd:attribute name="targetToGround" type="xsd:boolean" />
+        <xsd:attribute name="withdrawAnim" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_KeyState">
+        <xsd:sequence>
+            <xsd:element name="State" type="SkillData_Skill_KeyState_State" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_KeyState_State">
+        <xsd:attribute name="backward" type="xsd:boolean" use="required" />
+        <xsd:attribute name="forward" type="xsd:boolean" use="required" />
+        <xsd:attribute name="left" type="xsd:boolean" use="required" />
+        <xsd:attribute name="onlyActive" type="xsd:boolean" use="required" />
+        <xsd:attribute name="right" type="xsd:boolean" use="required" />
+        <xsd:attribute name="skillId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Mount">
+        <xsd:attribute name="vehicleId" type="xsd:string" use="required" />
+        <xsd:attribute name="vehicleSupplyItemId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Precondition">
+        <xsd:sequence>
+            <xsd:element name="BattleFieldRanker" type="SkillData_Skill_Precondition_BattleFieldRanker" minOccurs="0" />
+            <xsd:element name="Cost" type="SkillData_Skill_Precondition_Cost" />
+            <xsd:element name="ExclusiveAbnormality" type="SkillData_Skill_Precondition_ExclusiveAbnormality" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="coolTime" type="xsd:int" />
+        <xsd:attribute name="coolTimeResetWhenSkillCancel" type="xsd:boolean" />
+        <xsd:attribute name="disabledSkill" type="xsd:boolean" />
+        <xsd:attribute name="maxShowTotalAtk" type="xsd:int" />
+        <xsd:attribute name="maxStack" type="xsd:int" />
+        <xsd:attribute name="minLevel" type="xsd:int" />
+        <xsd:attribute name="modeChangeMethod" type="xsd:int" use="required" />
+        <xsd:attribute name="modeNo" type="xsd:int" use="required" />
+        <xsd:attribute name="offModeNo" type="xsd:int" />
+        <xsd:attribute name="showCoolTime" type="xsd:int" />
+        <xsd:attribute name="successMp" type="xsd:int" />
+        <xsd:attribute name="unionClass" type="xsd:string" />
+        <xsd:attribute name="unionClassEx" type="xsd:string" />
+        <xsd:attribute name="unionElite" type="xsd:string" />
+        <xsd:attribute name="unionId" type="xsd:string" />
+        <xsd:attribute name="unionType" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Precondition_BattleFieldRanker">
+        <xsd:attribute name="theLeastRank" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Precondition_Cost">
+        <xsd:sequence>
+            <xsd:element name="ItemList" type="SkillData_Skill_Precondition_Cost_ItemList" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="hp" type="xsd:int" />
+        <xsd:attribute name="hpRate" type="xsd:float" />
+        <xsd:attribute name="mp" type="xsd:int" />
+        <xsd:attribute name="mpRate" type="xsd:float" />
+        <xsd:attribute name="st" type="xsd:int" />
+        <xsd:attribute name="stRate" type="xsd:float" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Precondition_Cost_ItemList" />
+
+    <xsd:complexType name="SkillData_Skill_Precondition_ExclusiveAbnormality" />
+
+    <xsd:complexType name="SkillData_Skill_Projectile">
+        <xsd:sequence>
+            <xsd:element name="HitCylinder" type="SkillData_Skill_Projectile_HitCylinder" minOccurs="0" />
+            <xsd:element name="TargetingList" type="SkillData_Skill_Projectile_TargetingList" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="areaBoxSizeX" type="xsd:int" />
+        <xsd:attribute name="areaBoxSizeY" type="xsd:int" />
+        <xsd:attribute name="areaBoxSizeZ" type="xsd:int" />
+        <xsd:attribute name="hideFromEnemy" type="xsd:boolean" />
+        <xsd:attribute name="hitEffectOnTarget" type="xsd:boolean" />
+        <xsd:attribute name="instanceShotHit" type="xsd:boolean" />
+        <xsd:attribute name="lifeTime" type="xsd:int" />
+        <xsd:attribute name="loopingTime" type="xsd:int" />
+        <xsd:attribute name="rotationSpeed" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Projectile_HitCylinder">
+        <xsd:attribute name="height" type="xsd:float" use="required" />
+        <xsd:attribute name="locAngle" type="xsd:float" use="required" />
+        <xsd:attribute name="locDistance" type="xsd:float" use="required" />
+        <xsd:attribute name="locZ" type="xsd:float" use="required" />
+        <xsd:attribute name="radius" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Projectile_TargetingList">
+        <xsd:sequence>
+            <xsd:element name="Targeting" type="SkillData_Skill_Projectile_TargetingList_Targeting" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Projectile_TargetingList_Targeting">
+        <xsd:sequence>
+            <xsd:element name="AreaList" type="SkillData_Skill_Projectile_TargetingList_Targeting_AreaList" />
+            <xsd:element name="CameraShakeList" type="SkillData_Skill_Projectile_TargetingList_Targeting_CameraShakeList" minOccurs="0" />
+            <xsd:element name="ProjectileSkillList" type="SkillData_Skill_Projectile_TargetingList_Targeting_ProjectileSkillList" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="time" type="xsd:int" />
+        <xsd:attribute name="type" type="xsd:string" />
+        <xsd:attribute name="until" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Projectile_TargetingList_Targeting_AreaList">
+        <xsd:sequence>
+            <xsd:element name="Area" type="SkillData_Skill_Projectile_TargetingList_Targeting_AreaList_Area" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Projectile_TargetingList_Targeting_AreaList_Area">
+        <xsd:sequence>
+            <xsd:element name="Effect" type="SkillData_Skill_Projectile_TargetingList_Targeting_AreaList_Area_Effect" />
+            <xsd:element name="HitEffect" type="SkillData_Skill_Projectile_TargetingList_Targeting_AreaList_Area_HitEffect" />
+        </xsd:sequence>
+
+        <xsd:attribute name="crosshairRadius" type="xsd:int" />
+        <xsd:attribute name="maxCount" type="xsd:int" use="required" />
+        <xsd:attribute name="maxRadius" type="xsd:float" />
+        <xsd:attribute name="offsetAngle" type="xsd:float" />
+        <xsd:attribute name="offsetDistance" type="xsd:float" />
+        <xsd:attribute name="pierceDepth" type="xsd:int" />
+        <xsd:attribute name="rangeAngle" type="xsd:float" />
+        <xsd:attribute name="rotateAngle" type="xsd:float" />
+        <xsd:attribute name="time" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Projectile_TargetingList_Targeting_AreaList_Area_Effect">
+        <xsd:sequence>
+            <xsd:element name="AbnoramlityOff" type="SkillData_Skill_Projectile_TargetingList_Targeting_AreaList_Area_Effect_AbnoramlityOff" minOccurs="0" />
+            <xsd:element name="AbnormalityOff" type="SkillData_Skill_Projectile_TargetingList_Targeting_AreaList_Area_Effect_AbnormalityOff" minOccurs="0" />
+            <xsd:element name="AbnormalityOnCommon" type="SkillData_Skill_Projectile_TargetingList_Targeting_AreaList_Area_Effect_AbnormalityOnCommon" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="AbnormalityOnPvp" type="SkillData_Skill_Projectile_TargetingList_Targeting_AreaList_Area_Effect_AbnormalityOnPvp" minOccurs="0" />
+            <xsd:element name="HpDiff" type="SkillData_Skill_Projectile_TargetingList_Targeting_AreaList_Area_Effect_HpDiff" />
+            <xsd:element name="MpDiff" type="SkillData_Skill_Projectile_TargetingList_Targeting_AreaList_Area_Effect_MpDiff" />
+            <xsd:element name="TargetCondition" type="SkillData_Skill_Projectile_TargetingList_Targeting_AreaList_Area_Effect_TargetCondition" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="abnormalityRate" type="xsd:float" />
+        <xsd:attribute name="atk" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Projectile_TargetingList_Targeting_AreaList_Area_Effect_AbnoramlityOff">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="kind" type="xsd:int" use="required" />
+        <xsd:attribute name="level" type="xsd:int" use="required" />
+        <xsd:attribute name="method" type="xsd:int" use="required" />
+        <xsd:attribute name="stackCount" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Projectile_TargetingList_Targeting_AreaList_Area_Effect_AbnormalityOff">
+        <xsd:attribute name="kind" type="xsd:int" use="required" />
+        <xsd:attribute name="level" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Projectile_TargetingList_Targeting_AreaList_Area_Effect_AbnormalityOnCommon">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Projectile_TargetingList_Targeting_AreaList_Area_Effect_AbnormalityOnPvp">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Projectile_TargetingList_Targeting_AreaList_Area_Effect_HpDiff">
+        <xsd:attribute name="value" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Projectile_TargetingList_Targeting_AreaList_Area_Effect_MpDiff">
+        <xsd:attribute name="value" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Projectile_TargetingList_Targeting_AreaList_Area_Effect_TargetCondition">
+        <xsd:attribute name="abnormalityKind" type="xsd:int" use="required" />
+        <xsd:attribute name="reactionType" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Projectile_TargetingList_Targeting_AreaList_Area_HitEffect">
+        <xsd:attribute name="type" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Projectile_TargetingList_Targeting_CameraShakeList">
+        <xsd:sequence>
+            <xsd:element name="CameraShake" type="SkillData_Skill_Projectile_TargetingList_Targeting_CameraShakeList_CameraShake" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Projectile_TargetingList_Targeting_CameraShakeList_CameraShake">
+        <xsd:attribute name="duration" type="xsd:int" use="required" />
+        <xsd:attribute name="innerRadius" type="xsd:float" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="outerRadius" type="xsd:float" use="required" />
+        <xsd:attribute name="power" type="xsd:float" use="required" />
+        <xsd:attribute name="shakeId" type="xsd:int" use="required" />
+        <xsd:attribute name="speed" type="xsd:float" use="required" />
+        <xsd:attribute name="startTime" type="xsd:int" use="required" />
+        <xsd:attribute name="startValue" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Projectile_TargetingList_Targeting_ProjectileSkillList">
+        <xsd:sequence>
+            <xsd:element name="ProjectileSkill" type="SkillData_Skill_Projectile_TargetingList_Targeting_ProjectileSkillList_ProjectileSkill" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Projectile_TargetingList_Targeting_ProjectileSkillList_ProjectileSkill">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Property">
+        <xsd:sequence>
+            <xsd:element name="Direction" type="SkillData_Skill_Property_Direction" minOccurs="0" />
+            <xsd:element name="ExplodeProjectileWhenHit" type="SkillData_Skill_Property_ExplodeProjectileWhenHit" minOccurs="0" />
+            <xsd:element name="Property" type="SkillData_Skill_Property" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="adjustLoopRepeat" type="xsd:boolean" />
+        <xsd:attribute name="afterDefenceSuccess" type="xsd:string" />
+        <xsd:attribute name="cancelPressPendingTime" type="xsd:int" />
+        <xsd:attribute name="defence" type="xsd:boolean" />
+        <xsd:attribute name="noCorrectLocation" type="xsd:boolean" />
+        <xsd:attribute name="reactionPendingType" type="xsd:string" />
+        <xsd:attribute name="skillPendingType" type="xsd:string" />
+        <xsd:attribute name="skillPendingTypeForAutoUse" type="xsd:string" />
+        <xsd:attribute name="stuckTimeAfterUseSkill" type="xsd:float" />
+        <xsd:attribute name="toCenterWhenNoMove" type="xsd:boolean" />
+        <xsd:attribute name="toggleOnAbnormalityIds" type="xsd:string" />
+        <xsd:attribute name="toggleOnType" type="xsd:string" />
+        <xsd:attribute name="useArcaneGaugeFullToggle" type="xsd:boolean" />
+        <xsd:attribute name="useStGaugeFullToggle" type="xsd:boolean" />
+        <xsd:attribute name="weaponStatus" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Property_Direction">
+        <xsd:attribute name="toCenterWhenNoMove" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Property_ExplodeProjectileWhenHit">
+        <xsd:attribute name="projectileCategory" type="xsd:string" />
+        <xsd:attribute name="targetCategory" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Pulling">
+        <xsd:attribute name="attachBone" type="xsd:string" />
+        <xsd:attribute name="maxHeight" type="xsd:float" use="required" />
+        <xsd:attribute name="maxHeightRate" type="xsd:float" use="required" />
+        <xsd:attribute name="minDistanceForMaxHeight" type="xsd:float" />
+        <xsd:attribute name="pullEffectTime" type="xsd:float" use="required" />
+        <xsd:attribute name="resource" type="xsd:string" />
+        <xsd:attribute name="throwEffectTime" type="xsd:float" />
+        <xsd:attribute name="weightFactor" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_RangedCritical">
+        <xsd:sequence>
+            <xsd:element name="Abnormal" type="SkillData_Skill_RangedCritical_Abnormal" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_RangedCritical_Abnormal">
+        <xsd:sequence>
+            <xsd:element name="Area" type="SkillData_Skill_RangedCritical_Abnormal_Area" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_RangedCritical_Abnormal_Area">
+        <xsd:attribute name="effectIncreaseRate" type="xsd:float" use="required" />
+        <xsd:attribute name="occurRate" type="xsd:float" use="required" />
+        <xsd:attribute name="radius" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_ShortTel">
+        <xsd:attribute name="dist" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_ShowTargetingList">
+        <xsd:sequence>
+            <xsd:element name="Targeting" type="SkillData_Skill_ShowTargetingList_Targeting" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="adjustTargetingPos" type="xsd:string" use="required" />
+        <xsd:attribute name="showHitRangeEx" type="xsd:string" />
+        <xsd:attribute name="staticHitRange" type="xsd:boolean" />
+        <xsd:attribute name="useStage" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_ShowTargetingList_Targeting">
+        <xsd:sequence>
+            <xsd:element name="AreaList" type="SkillData_Skill_ShowTargetingList_Targeting_AreaList" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="spanX" type="xsd:float" />
+        <xsd:attribute name="spanY" type="xsd:float" />
+        <xsd:attribute name="time" type="xsd:int" use="required" />
+        <xsd:attribute name="until" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_ShowTargetingList_Targeting_AreaList">
+        <xsd:sequence>
+            <xsd:element name="Area" type="SkillData_Skill_ShowTargetingList_Targeting_AreaList_Area" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_ShowTargetingList_Targeting_AreaList_Area">
+        <xsd:attribute name="maxRadius" type="xsd:float" use="required" />
+        <xsd:attribute name="minRadius" type="xsd:float" use="required" />
+        <xsd:attribute name="offsetAngle" type="xsd:float" use="required" />
+        <xsd:attribute name="offsetDistance" type="xsd:float" use="required" />
+        <xsd:attribute name="rangeAngle" type="xsd:float" use="required" />
+        <xsd:attribute name="rotateAngle" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_TargetingList">
+        <xsd:sequence>
+            <xsd:element name="Targeting" type="SkillData_Skill_TargetingList_Targeting" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="MultiInstanceShoot" type="xsd:boolean" />
+        <xsd:attribute name="adjustTargetingPos" type="xsd:string" />
+        <xsd:attribute name="attachHitRangeToSelf" type="xsd:boolean" />
+        <xsd:attribute name="customAddScale" type="xsd:float" />
+        <xsd:attribute name="shakeTargetValue" type="xsd:string" />
+        <xsd:attribute name="showHitRange" type="xsd:string" />
+        <xsd:attribute name="showHitRangeEx" type="xsd:string" />
+        <xsd:attribute name="useRawTarget" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_TargetingList_Targeting">
+        <xsd:sequence>
+            <xsd:element name="AreaList" type="SkillData_Skill_TargetingList_Targeting_AreaList" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="CameraShakeList" type="SkillData_Skill_TargetingList_Targeting_CameraShakeList" minOccurs="0" />
+            <xsd:element name="Cost" type="SkillData_Skill_TargetingList_Targeting_Cost" minOccurs="0" />
+            <xsd:element name="ProjectileSkillList" type="SkillData_Skill_TargetingList_Targeting_ProjectileSkillList" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="LoopRepeatTargeting" type="xsd:boolean" />
+        <xsd:attribute name="aggroWhenNonOffensiveSkillHit" type="xsd:int" />
+        <xsd:attribute name="combinedArea" type="xsd:boolean" />
+        <xsd:attribute name="endTime" type="xsd:int" />
+        <xsd:attribute name="hitRangeGroupId" type="xsd:int" />
+        <xsd:attribute name="id" type="xsd:int" />
+        <xsd:attribute name="interval" type="xsd:int" />
+        <xsd:attribute name="method" type="xsd:string" />
+        <xsd:attribute name="startTime" type="xsd:int" />
+        <xsd:attribute name="time" type="xsd:int" />
+        <xsd:attribute name="type" type="xsd:string" />
+        <xsd:attribute name="until" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_TargetingList_Targeting_AreaList">
+        <xsd:sequence>
+            <xsd:element name="Area" type="SkillData_Skill_TargetingList_Targeting_AreaList_Area" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_TargetingList_Targeting_AreaList_Area">
+        <xsd:sequence>
+            <xsd:element name="Effect" type="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Effect" />
+            <xsd:element name="HitEffect" type="SkillData_Skill_TargetingList_Targeting_AreaList_Area_HitEffect" minOccurs="0" />
+            <xsd:element name="Reaction" type="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Reaction" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="crosshairRadius" type="xsd:float" />
+        <xsd:attribute name="crosshairRadius2" type="xsd:float" />
+        <xsd:attribute name="evadeByJumping" type="xsd:boolean" />
+        <xsd:attribute name="maxCount" type="xsd:int" use="required" />
+        <xsd:attribute name="maxHeight" type="xsd:float" use="required" />
+        <xsd:attribute name="maxRadius" type="xsd:float" use="required" />
+        <xsd:attribute name="minHeight" type="xsd:float" use="required" />
+        <xsd:attribute name="minRadius" type="xsd:float" use="required" />
+        <xsd:attribute name="offsetAngle" type="xsd:float" use="required" />
+        <xsd:attribute name="offsetDistance" type="xsd:float" use="required" />
+        <xsd:attribute name="pierceDepth" type="xsd:int" />
+        <xsd:attribute name="rangeAngle" type="xsd:float" use="required" />
+        <xsd:attribute name="rotateAngle" type="xsd:float" use="required" />
+        <xsd:attribute name="subIgnoreDefence" type="xsd:boolean" />
+        <xsd:attribute name="time" type="xsd:int" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Effect">
+        <xsd:sequence>
+            <xsd:element name="AbnoramlityOff" type="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Effect_AbnoramlityOff" minOccurs="0" />
+            <xsd:element name="AbnormalityOff" type="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Effect_AbnormalityOff" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="AbnormalityOnCommon" type="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Effect_AbnormalityOnCommon" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="AbnormalityOnPvp" type="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Effect_AbnormalityOnPvp" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="HpDiff" type="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Effect_HpDiff" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="KnockBack" type="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Effect_KnockBack" minOccurs="0" />
+            <xsd:element name="MpDiff" type="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Effect_MpDiff" minOccurs="0" />
+            <xsd:element name="ResetDungeon" type="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Effect_ResetDungeon" minOccurs="0" />
+            <xsd:element name="StackExplode" type="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Effect_StackExplode" minOccurs="0" />
+            <xsd:element name="SummonNpc" type="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Effect_SummonNpc" minOccurs="0" />
+            <xsd:element name="Teleport" type="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Effect_Teleport" minOccurs="0" />
+            <xsd:element name="ToggleServant" type="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Effect_ToggleServant" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="abnormalityRate" type="xsd:float" />
+        <xsd:attribute name="atk" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Effect_AbnoramlityOff">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="kind" type="xsd:int" use="required" />
+        <xsd:attribute name="level" type="xsd:int" use="required" />
+        <xsd:attribute name="method" type="xsd:int" use="required" />
+        <xsd:attribute name="stackCount" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Effect_AbnormalityOff">
+        <xsd:attribute name="abnormalityRate" type="xsd:float" />
+        <xsd:attribute name="abnormalityRateForPvp" type="xsd:float" />
+        <xsd:attribute name="timeOverrideLarge" type="xsd:int" />
+        <xsd:attribute name="timeOverrideMedium" type="xsd:int" />
+        <xsd:attribute name="timeOverrideSmall" type="xsd:int" />
+        <xsd:attribute name="timeOverrideUser" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Effect_AbnormalityOnCommon">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Effect_AbnormalityOnPvp">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="timeOverrideUser" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Effect_HpDiff">
+        <xsd:attribute name="value" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Effect_KnockBack">
+        <xsd:attribute name="backDistance" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Effect_MpDiff">
+        <xsd:attribute name="levelOver" type="xsd:int" />
+        <xsd:attribute name="value" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Effect_ResetDungeon">
+        <xsd:attribute name="continentList" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Effect_StackExplode">
+        <xsd:sequence>
+            <xsd:element name="Damage" type="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Effect_StackExplode_Damage" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Effect_StackExplode_Damage">
+        <xsd:attribute name="method" type="xsd:int" />
+        <xsd:attribute name="type" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Effect_SummonNpc">
+        <xsd:attribute name="atkRatio" type="xsd:float" />
+        <xsd:attribute name="bonusHpRate" type="xsd:float" />
+        <xsd:attribute name="defRatio" type="xsd:float" />
+        <xsd:attribute name="disableTooltipNpcDescription" type="xsd:boolean" />
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Effect_Teleport">
+        <xsd:attribute name="distRange" type="xsd:int" />
+        <xsd:attribute name="istrue" type="xsd:boolean" />
+        <xsd:attribute name="range" type="xsd:int" />
+        <xsd:attribute name="recallContinent" type="xsd:int" />
+        <xsd:attribute name="recallPos" type="xsd:string" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Effect_ToggleServant">
+        <xsd:attribute name="servantTemplateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_TargetingList_Targeting_AreaList_Area_HitEffect">
+        <xsd:attribute name="attachRule" type="xsd:string" />
+        <xsd:attribute name="detach" type="xsd:boolean" />
+        <xsd:attribute name="id" type="xsd:int" />
+        <xsd:attribute name="type" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Reaction">
+        <xsd:sequence>
+            <xsd:element name="AirReaction" type="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Reaction_AirReaction" minOccurs="0" />
+            <xsd:element name="DynamicReaction" type="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Reaction_DynamicReaction" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="basicRate" type="xsd:float" />
+        <xsd:attribute name="ignoreSkill" type="xsd:boolean" />
+        <xsd:attribute name="miniRate" type="xsd:float" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Reaction_AirReaction">
+        <xsd:attribute name="distance" type="xsd:float" use="required" />
+        <xsd:attribute name="downAccel" type="xsd:float" use="required" />
+        <xsd:attribute name="downVelocity" type="xsd:float" />
+        <xsd:attribute name="firstDistance" type="xsd:float" use="required" />
+        <xsd:attribute name="firstDownAccel" type="xsd:float" use="required" />
+        <xsd:attribute name="firstUpAccel" type="xsd:float" use="required" />
+        <xsd:attribute name="firstUpDistance" type="xsd:float" use="required" />
+        <xsd:attribute name="firstUpVelocity" type="xsd:float" use="required" />
+        <xsd:attribute name="upAccel" type="xsd:float" use="required" />
+        <xsd:attribute name="upDistance" type="xsd:float" use="required" />
+        <xsd:attribute name="upVelocity" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_TargetingList_Targeting_AreaList_Area_Reaction_DynamicReaction">
+        <xsd:attribute name="correctRate" type="xsd:float" />
+        <xsd:attribute name="reactionAccel" type="xsd:float" use="required" />
+        <xsd:attribute name="reactionEndSpeed" type="xsd:float" use="required" />
+        <xsd:attribute name="reactionSpeed" type="xsd:float" use="required" />
+        <xsd:attribute name="useInterpolation" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_TargetingList_Targeting_CameraShakeList">
+        <xsd:sequence>
+            <xsd:element name="CameraShake" type="SkillData_Skill_TargetingList_Targeting_CameraShakeList_CameraShake" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_TargetingList_Targeting_CameraShakeList_CameraShake">
+        <xsd:attribute name="duration" type="xsd:int" use="required" />
+        <xsd:attribute name="innerRadius" type="xsd:float" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="outerRadius" type="xsd:float" use="required" />
+        <xsd:attribute name="power" type="xsd:float" use="required" />
+        <xsd:attribute name="shakeId" type="xsd:int" use="required" />
+        <xsd:attribute name="speed" type="xsd:float" use="required" />
+        <xsd:attribute name="startCondition" type="xsd:string" use="required" />
+        <xsd:attribute name="startTime" type="xsd:int" use="required" />
+        <xsd:attribute name="startValue" type="xsd:int" use="required" />
+        <xsd:attribute name="targetType" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_TargetingList_Targeting_Cost">
+        <xsd:sequence>
+            <xsd:element name="Itemlist" type="SkillData_Skill_TargetingList_Targeting_Cost_Itemlist" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="hp" type="xsd:int" />
+        <xsd:attribute name="method" type="xsd:int" />
+        <xsd:attribute name="mp" type="xsd:int" />
+        <xsd:attribute name="st" type="xsd:int" />
+        <xsd:attribute name="stRate" type="xsd:float" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_TargetingList_Targeting_Cost_Itemlist">
+        <xsd:sequence>
+            <xsd:element name="Item" type="SkillData_Skill_TargetingList_Targeting_Cost_Itemlist_Item" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_TargetingList_Targeting_Cost_Itemlist_Item">
+        <xsd:attribute name="count" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_TargetingList_Targeting_ProjectileSkillList">
+        <xsd:sequence>
+            <xsd:element name="ProjectileSkill" type="SkillData_Skill_TargetingList_Targeting_ProjectileSkillList_ProjectileSkill" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_TargetingList_Targeting_ProjectileSkillList_ProjectileSkill">
+        <xsd:attribute name="acceleration" type="xsd:float" />
+        <xsd:attribute name="areaHeight" type="xsd:int" />
+        <xsd:attribute name="areaRadius" type="xsd:int" />
+        <xsd:attribute name="changeDirProjectilePerSecToTarget" type="xsd:boolean" />
+        <xsd:attribute name="detachAngle" type="xsd:float" use="required" />
+        <xsd:attribute name="detachDistance" type="xsd:string" use="required" />
+        <xsd:attribute name="detachHeight" type="xsd:string" use="required" />
+        <xsd:attribute name="flyingDirAngle" type="xsd:int" />
+        <xsd:attribute name="flyingDistance" type="xsd:string" use="required" />
+        <xsd:attribute name="flyingSpeed" type="xsd:float" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="ignoreGeo" type="xsd:boolean" />
+        <xsd:attribute name="multiShoot" type="xsd:boolean" />
+        <xsd:attribute name="projectileShootAngle" type="xsd:int" />
+        <xsd:attribute name="shootAngle" type="xsd:float" />
+        <xsd:attribute name="shootForward" type="xsd:boolean" />
+        <xsd:attribute name="shootForwardType" type="xsd:string" />
+        <xsd:attribute name="useForDestPos" type="xsd:boolean" />
+        <xsd:attribute name="velocityType" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_Teleport">
+        <xsd:attribute name="distRange" type="xsd:int" use="required" />
+        <xsd:attribute name="istrue" type="xsd:boolean" use="required" />
+        <xsd:attribute name="range" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_UserProjectileCurveMove">
+        <xsd:attribute name="angle" type="xsd:float" />
+        <xsd:attribute name="controllerPointHeightJitter" type="xsd:float" />
+        <xsd:attribute name="controllerPointHeightOffsetA" type="xsd:float" use="required" />
+        <xsd:attribute name="controllerPointHeightOffsetB" type="xsd:float" use="required" />
+        <xsd:attribute name="controllerPointLocRateA" type="xsd:float" use="required" />
+        <xsd:attribute name="controllerPointLocRateB" type="xsd:float" use="required" />
+        <xsd:attribute name="controllerPointSpeedMultiplierA" type="xsd:float" />
+        <xsd:attribute name="controllerPointSpeedMultiplierB" type="xsd:float" />
+        <xsd:attribute name="controllerPointWidthJitter" type="xsd:float" />
+        <xsd:attribute name="controllerPointWidthOffsetA" type="xsd:float" />
+        <xsd:attribute name="controllerPointWidthOffsetB" type="xsd:float" />
+        <xsd:attribute name="destPointJitter" type="xsd:float" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_WeakPoint">
+        <xsd:attribute name="explodeType" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillData_Skill_WeaponIK">
+        <xsd:attribute name="endTime" type="xsd:float" use="required" />
+        <xsd:attribute name="startTime" type="xsd:float" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="SkillData" type="SkillData" />
+</xsd:schema>

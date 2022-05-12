@@ -1,0 +1,24 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/S1ActionScriptTriggers"
+            targetNamespace="https://vezel.dev/novadrop/dc/S1ActionScriptTriggers"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="S1ActionScriptTriggers">
+        <xsd:sequence>
+            <xsd:element name="Trigger" type="S1ActionScriptTriggers_Trigger" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="S1ActionScriptTriggers_Trigger">
+        <xsd:attribute name="huntingZoneId" type="xsd:int" use="required" />
+        <xsd:attribute name="offsetTime" type="xsd:int" use="required" />
+        <xsd:attribute name="period" type="xsd:int" use="required" />
+        <xsd:attribute name="repeatCount" type="xsd:int" use="required" />
+        <xsd:attribute name="scriptId" type="xsd:int" use="required" />
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="S1ActionScriptTriggers" type="S1ActionScriptTriggers" />
+</xsd:schema>

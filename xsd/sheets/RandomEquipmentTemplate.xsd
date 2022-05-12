@@ -1,0 +1,60 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/RandomEquipmentTemplate"
+            targetNamespace="https://vezel.dev/novadrop/dc/RandomEquipmentTemplate"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="RandomEquipmentTemplate">
+        <xsd:sequence>
+            <xsd:element name="Equipment" type="RandomEquipmentTemplate_Equipment" maxOccurs="unbounded" />
+            <xsd:element name="Group" type="RandomEquipmentTemplate_Group" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="RandomEquipmentTemplate_Equipment">
+        <xsd:sequence>
+            <xsd:element name="PassivityGroup" type="RandomEquipmentTemplate_Equipment_PassivityGroup" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="def" type="xsd:string" use="required" />
+        <xsd:attribute name="grade" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="level" type="xsd:int" use="required" />
+        <xsd:attribute name="magicalAttackMax" type="xsd:string" />
+        <xsd:attribute name="magicalAttackMin" type="xsd:string" />
+        <xsd:attribute name="magicalDefence" type="xsd:string" />
+        <xsd:attribute name="maxAtk" type="xsd:string" use="required" />
+        <xsd:attribute name="minAtk" type="xsd:string" use="required" />
+        <xsd:attribute name="physicalAttackMax" type="xsd:string" />
+        <xsd:attribute name="physicalAttackMin" type="xsd:string" />
+        <xsd:attribute name="physicalDefence" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="RandomEquipmentTemplate_Equipment_PassivityGroup">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="RandomEquipmentTemplate_Group">
+        <xsd:sequence>
+            <xsd:element name="Equipment" type="RandomEquipmentTemplate_Group_Equipment" />
+        </xsd:sequence>
+
+        <xsd:attribute name="atkRate" type="xsd:float" use="required" />
+        <xsd:attribute name="balanceRate" type="xsd:float" use="required" />
+        <xsd:attribute name="def" type="xsd:int" use="required" />
+        <xsd:attribute name="defRate" type="xsd:float" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="impactRate" type="xsd:float" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="part" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="RandomEquipmentTemplate_Group_Equipment">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="RandomEquipmentTemplate" type="RandomEquipmentTemplate" />
+</xsd:schema>

@@ -1,0 +1,57 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/BeamEffectData"
+            targetNamespace="https://vezel.dev/novadrop/dc/BeamEffectData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="BeamEffectData">
+        <xsd:sequence>
+            <xsd:element name="BeamEffect" type="BeamEffectData_BeamEffect" maxOccurs="unbounded" />
+            <xsd:element name="TargetData" type="BeamEffectData_TargetData" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BeamEffectData_BeamEffect">
+        <xsd:sequence>
+            <xsd:element name="Effect" type="BeamEffectData_BeamEffect_Effect" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="fixEndpointTime" type="xsd:int" />
+        <xsd:attribute name="from" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="lifeTime" type="xsd:int" />
+        <xsd:attribute name="to" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BeamEffectData_BeamEffect_Effect">
+        <xsd:sequence>
+            <xsd:element name="Attach" type="BeamEffectData_BeamEffect_Effect_Attach" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="attachTerm" type="xsd:int" />
+        <xsd:attribute name="attachTime" type="xsd:int" use="required" />
+        <xsd:attribute name="count" type="xsd:int" />
+        <xsd:attribute name="detachTerm" type="xsd:int" />
+        <xsd:attribute name="detachTime" type="xsd:int" use="required" />
+        <xsd:attribute name="holdTime" type="xsd:int" />
+        <xsd:attribute name="resource" type="xsd:string" use="required" />
+        <xsd:attribute name="startTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BeamEffectData_BeamEffect_Effect_Attach">
+        <xsd:attribute name="boneName" type="xsd:string" />
+        <xsd:attribute name="offsetAngle" type="xsd:int" />
+        <xsd:attribute name="offsetDistance" type="xsd:int" />
+        <xsd:attribute name="offsetHeight" type="xsd:int" />
+        <xsd:attribute name="offsetJitter" type="xsd:int" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BeamEffectData_TargetData">
+        <xsd:attribute name="defaultBoneList" type="xsd:string" use="required" />
+        <xsd:attribute name="defaultBoneName" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="BeamEffectData" type="BeamEffectData" />
+</xsd:schema>

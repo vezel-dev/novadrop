@@ -1,0 +1,50 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/EquipmentEvolutionData"
+            targetNamespace="https://vezel.dev/novadrop/dc/EquipmentEvolutionData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="EquipmentEvolutionData">
+        <xsd:sequence>
+            <xsd:element name="EquipmentEvolution" type="EquipmentEvolutionData_EquipmentEvolution" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EquipmentEvolutionData_EquipmentEvolution">
+        <xsd:sequence>
+            <xsd:element name="Condition" type="EquipmentEvolutionData_EquipmentEvolution_Condition" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="targetTemplateId" type="xsd:int" use="required" />
+        <xsd:attribute name="useSimplePopupMessage" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EquipmentEvolutionData_EquipmentEvolution_Condition">
+        <xsd:sequence>
+            <xsd:element name="MaterialList" type="EquipmentEvolutionData_EquipmentEvolution_Condition_MaterialList" />
+            <xsd:element name="ResultData" type="EquipmentEvolutionData_EquipmentEvolution_Condition_ResultData" />
+        </xsd:sequence>
+
+        <xsd:attribute name="awaken" type="xsd:boolean" use="required" />
+        <xsd:attribute name="masterpiece" type="xsd:boolean" use="required" />
+        <xsd:attribute name="targetEnchantStep" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EquipmentEvolutionData_EquipmentEvolution_Condition_MaterialList">
+        <xsd:sequence>
+            <xsd:element name="Material" type="EquipmentEvolutionData_EquipmentEvolution_Condition_MaterialList_Material" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EquipmentEvolutionData_EquipmentEvolution_Condition_MaterialList_Material">
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EquipmentEvolutionData_EquipmentEvolution_Condition_ResultData">
+        <xsd:attribute name="resultEnchantStep" type="xsd:int" use="required" />
+        <xsd:attribute name="resultTemplateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="EquipmentEvolutionData" type="EquipmentEvolutionData" />
+</xsd:schema>

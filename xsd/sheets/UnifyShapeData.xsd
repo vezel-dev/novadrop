@@ -1,0 +1,41 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/UnifyShapeData"
+            targetNamespace="https://vezel.dev/novadrop/dc/UnifyShapeData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="UnifyShapeData">
+        <xsd:sequence>
+            <xsd:element name="ShapeData" type="UnifyShapeData_ShapeData" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="UnifyShapeData_ShapeData">
+        <xsd:sequence>
+            <xsd:element name="UnifyPartData" type="UnifyShapeData_ShapeData_UnifyPartData" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="continentId" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="UnifyShapeData_ShapeData_UnifyPartData">
+        <xsd:attribute name="backStyleItemId" type="xsd:int" use="required" />
+        <xsd:attribute name="bodyItemId" type="xsd:int" use="required" />
+        <xsd:attribute name="bodyStyleItemId" type="xsd:int" use="required" />
+        <xsd:attribute name="class" type="xsd:string" />
+        <xsd:attribute name="effectStyleItemId" type="xsd:int" use="required" />
+        <xsd:attribute name="faceStyleItemId" type="xsd:int" use="required" />
+        <xsd:attribute name="feetItemId" type="xsd:int" use="required" />
+        <xsd:attribute name="gender" type="xsd:string" />
+        <xsd:attribute name="hairStyleItemId" type="xsd:int" use="required" />
+        <xsd:attribute name="handItemId" type="xsd:int" use="required" />
+        <xsd:attribute name="race" type="xsd:string" />
+        <xsd:attribute name="underwearItemId" type="xsd:int" use="required" />
+        <xsd:attribute name="weaponItemId" type="xsd:int" use="required" />
+        <xsd:attribute name="weaponStyleItemId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="UnifyShapeData" type="UnifyShapeData" />
+</xsd:schema>

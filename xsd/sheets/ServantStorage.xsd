@@ -1,0 +1,43 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ServantStorage"
+            targetNamespace="https://vezel.dev/novadrop/dc/ServantStorage"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ServantStorage">
+        <xsd:sequence>
+            <xsd:element name="ServantStorageViewData" type="ServantStorage_ServantStorageViewData" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantStorage_ServantStorageViewData">
+        <xsd:sequence>
+            <xsd:element name="DetailViewData" type="ServantStorage_ServantStorageViewData_DetailViewData" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantStorage_ServantStorageViewData_DetailViewData">
+        <xsd:sequence>
+            <xsd:element name="ViewData" type="ServantStorage_ServantStorageViewData_DetailViewData_ViewData" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantStorage_ServantStorageViewData_DetailViewData_ViewData">
+        <xsd:sequence>
+            <xsd:element name="SubButton" type="ServantStorage_ServantStorageViewData_DetailViewData_ViewData_SubButton" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="enterButtonStringId" type="xsd:string" use="required" />
+        <xsd:attribute name="viewName" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantStorage_ServantStorageViewData_DetailViewData_ViewData_SubButton">
+        <xsd:attribute name="ButtonStringId" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ServantStorage" type="ServantStorage" />
+</xsd:schema>

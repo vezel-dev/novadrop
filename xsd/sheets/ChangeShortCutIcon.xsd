@@ -1,0 +1,31 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ChangeShortCutIcon"
+            targetNamespace="https://vezel.dev/novadrop/dc/ChangeShortCutIcon"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ChangeShortCutIcon">
+        <xsd:sequence>
+            <xsd:element name="Category" type="ChangeShortCutIcon_Category" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ChangeShortCutIcon_Category">
+        <xsd:sequence>
+            <xsd:element name="Condition" type="ChangeShortCutIcon_Category_Condition" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="class" type="xsd:string" use="required" />
+        <xsd:attribute name="gender" type="xsd:string" use="required" />
+        <xsd:attribute name="race" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ChangeShortCutIcon_Category_Condition">
+        <xsd:attribute name="abnormalityId" type="xsd:int" use="required" />
+        <xsd:attribute name="skillIdFrom" type="xsd:int" use="required" />
+        <xsd:attribute name="skillIdTo" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ChangeShortCutIcon" type="ChangeShortCutIcon" />
+</xsd:schema>

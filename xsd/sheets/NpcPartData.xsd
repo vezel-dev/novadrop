@@ -1,0 +1,46 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/NpcPartData"
+            targetNamespace="https://vezel.dev/novadrop/dc/NpcPartData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="NpcPartData">
+        <xsd:sequence>
+            <xsd:element name="NpcTemplateId" type="NpcPartData_NpcTemplateId" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="huntingZoneId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcPartData_NpcTemplateId">
+        <xsd:sequence>
+            <xsd:element name="Part" type="NpcPartData_NpcTemplateId_Part" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcPartData_NpcTemplateId_Part">
+        <xsd:sequence>
+            <xsd:element name="BreakStage" type="NpcPartData_NpcTemplateId_Part_BreakStage" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="cylinderIdList" type="xsd:string" use="required" />
+        <xsd:attribute name="desc" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="materialName" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcPartData_NpcTemplateId_Part_BreakStage">
+        <xsd:attribute name="desc" type="xsd:string" use="required" />
+        <xsd:attribute name="destroyMIParamValue" type="xsd:float" use="required" />
+        <xsd:attribute name="forceFragmentAnimSync" type="xsd:boolean" />
+        <xsd:attribute name="fragmentAnim" type="xsd:string" />
+        <xsd:attribute name="fragmentShapeFadeoutMS" type="xsd:float" />
+        <xsd:attribute name="fragmentShapeId" type="xsd:int" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="NpcPartData" type="NpcPartData" />
+</xsd:schema>

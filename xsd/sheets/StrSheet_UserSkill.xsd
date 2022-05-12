@@ -1,0 +1,25 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/StrSheet_UserSkill"
+            targetNamespace="https://vezel.dev/novadrop/dc/StrSheet_UserSkill"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="StrSheet_UserSkill">
+        <xsd:sequence>
+            <xsd:element name="String" type="StrSheet_UserSkill_String" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="StrSheet_UserSkill_String"
+                     dc:keys="id">
+        <xsd:attribute name="class" type="xsd:string" use="required" />
+        <xsd:attribute name="gender" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" />
+        <xsd:attribute name="race" type="xsd:string" use="required" />
+        <xsd:attribute name="tooltip" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:element name="StrSheet_UserSkill" type="StrSheet_UserSkill" />
+</xsd:schema>

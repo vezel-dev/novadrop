@@ -1,0 +1,30 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/LoadUI"
+            targetNamespace="https://vezel.dev/novadrop/dc/LoadUI"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="LoadUI">
+        <xsd:sequence>
+            <xsd:element name="UIWidget" type="LoadUI_UIWidget" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="posFileName" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LoadUI_UIWidget">
+        <xsd:attribute name="alwaysloaded" type="xsd:boolean" use="required" />
+        <xsd:attribute name="arguments" type="xsd:string" use="required" />
+        <xsd:attribute name="fileName" type="xsd:string" use="required" />
+        <xsd:attribute name="group" type="xsd:int" use="required" />
+        <xsd:attribute name="isAdmin" type="xsd:boolean" />
+        <xsd:attribute name="logoutclose" type="xsd:boolean" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="sound" type="xsd:string" use="required" />
+        <xsd:attribute name="x" type="xsd:float" use="required" />
+        <xsd:attribute name="y" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="LoadUI" type="LoadUI" />
+</xsd:schema>

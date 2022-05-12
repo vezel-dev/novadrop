@@ -1,0 +1,110 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/GuildCallData"
+            targetNamespace="https://vezel.dev/novadrop/dc/GuildCallData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="GuildCallData">
+        <xsd:sequence>
+            <xsd:element name="GuildCoOpDungeon" type="GuildCallData_GuildCoOpDungeon" />
+            <xsd:element name="GuildEventTabImage" type="GuildCallData_GuildEventTabImage" />
+            <xsd:element name="GuildEventUIImage" type="GuildCallData_GuildEventUIImage" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildCallData_GuildCoOpDungeon">
+        <xsd:sequence>
+            <xsd:element name="GuildCoOpDungeonEntranceItem" type="GuildCallData_GuildCoOpDungeon_GuildCoOpDungeonEntranceItem" />
+            <xsd:element name="Variant" type="GuildCallData_GuildCoOpDungeon_Variant" />
+        </xsd:sequence>
+
+        <xsd:attribute name="bossRemovalPostProcessIds" type="xsd:string" use="required" />
+        <xsd:attribute name="itemDropEffect" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildCallData_GuildCoOpDungeon_GuildCoOpDungeonEntranceItem">
+        <xsd:sequence>
+            <xsd:element name="DefaultMaterial" type="GuildCallData_GuildCoOpDungeon_GuildCoOpDungeonEntranceItem_DefaultMaterial" />
+            <xsd:element name="SubstitutionalMaterial" type="GuildCallData_GuildCoOpDungeon_GuildCoOpDungeonEntranceItem_SubstitutionalMaterial" />
+        </xsd:sequence>
+
+        <xsd:attribute name="needItemCount" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildCallData_GuildCoOpDungeon_GuildCoOpDungeonEntranceItem_DefaultMaterial">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildCallData_GuildCoOpDungeon_GuildCoOpDungeonEntranceItem_SubstitutionalMaterial">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="priority" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildCallData_GuildCoOpDungeon_Variant">
+        <xsd:sequence>
+            <xsd:element name="GuildCoOpDungeonHpGageValue" type="GuildCallData_GuildCoOpDungeon_Variant_GuildCoOpDungeonHpGageValue" />
+            <xsd:element name="GuildCoOpDungeonWarningTime" type="GuildCallData_GuildCoOpDungeon_Variant_GuildCoOpDungeonWarningTime" />
+            <xsd:element name="MaxEnterPartyMember" type="GuildCallData_GuildCoOpDungeon_Variant_MaxEnterPartyMember" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildCallData_GuildCoOpDungeon_Variant_GuildCoOpDungeonHpGageValue">
+        <xsd:attribute name="value" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildCallData_GuildCoOpDungeon_Variant_GuildCoOpDungeonWarningTime">
+        <xsd:attribute name="value" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildCallData_GuildCoOpDungeon_Variant_MaxEnterPartyMember">
+        <xsd:attribute name="value" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildCallData_GuildEventTabImage">
+        <xsd:sequence>
+            <xsd:element name="GuildEvent" type="GuildCallData_GuildEventTabImage_GuildEvent" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildCallData_GuildEventTabImage_GuildEvent">
+        <xsd:sequence>
+            <xsd:element name="DefaultImage" type="GuildCallData_GuildEventTabImage_GuildEvent_DefaultImage" />
+            <xsd:element name="UsableImage" type="GuildCallData_GuildEventTabImage_GuildEvent_UsableImage" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildCallData_GuildEventTabImage_GuildEvent_DefaultImage">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildCallData_GuildEventTabImage_GuildEvent_UsableImage">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="img" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildCallData_GuildEventUIImage">
+        <xsd:sequence>
+            <xsd:element name="GuildEvent" type="GuildCallData_GuildEventUIImage_GuildEvent" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildCallData_GuildEventUIImage_GuildEvent">
+        <xsd:sequence>
+            <xsd:element name="Image" type="GuildCallData_GuildEventUIImage_GuildEvent_Image" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildCallData_GuildEventUIImage_GuildEvent_Image">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="img" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="GuildCallData" type="GuildCallData" />
+</xsd:schema>

@@ -1,0 +1,118 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/EnchantPopup"
+            targetNamespace="https://vezel.dev/novadrop/dc/EnchantPopup"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="EnchantPopup">
+        <xsd:sequence>
+            <xsd:element name="FixedString" type="EnchantPopup_FixedString" />
+            <xsd:element name="FixedValue" type="EnchantPopup_FixedValue" />
+            <xsd:element name="Popup" type="EnchantPopup_Popup" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantPopup_FixedString">
+        <xsd:sequence>
+            <xsd:element name="String" type="EnchantPopup_FixedString_String" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantPopup_FixedString_String">
+        <xsd:attribute name="key" type="xsd:string" use="required" />
+        <xsd:attribute name="value" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantPopup_FixedValue">
+        <xsd:sequence>
+            <xsd:element name="Float" type="EnchantPopup_FixedValue_Float" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantPopup_FixedValue_Float">
+        <xsd:attribute name="key" type="xsd:string" use="required" />
+        <xsd:attribute name="value" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantPopup_Popup">
+        <xsd:sequence>
+            <xsd:element name="ArrowGuideSlot" type="EnchantPopup_Popup_ArrowGuideSlot" minOccurs="0" />
+            <xsd:element name="ItemSlot" type="EnchantPopup_Popup_ItemSlot" minOccurs="0" />
+            <xsd:element name="Recommend" type="EnchantPopup_Popup_Recommend" />
+            <xsd:element name="Title" type="EnchantPopup_Popup_Title" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantPopup_Popup_ArrowGuideSlot">
+        <xsd:sequence>
+            <xsd:element name="LeftSlot" type="EnchantPopup_Popup_ArrowGuideSlot_LeftSlot" />
+            <xsd:element name="RightSlot" type="EnchantPopup_Popup_ArrowGuideSlot_RightSlot" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantPopup_Popup_ArrowGuideSlot_LeftSlot">
+        <xsd:sequence>
+            <xsd:element name="Slot" type="EnchantPopup_Popup_ArrowGuideSlot_LeftSlot_Slot" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="leftStringId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantPopup_Popup_ArrowGuideSlot_LeftSlot_Slot"
+                     dc:keys="index">
+        <xsd:attribute name="index" type="xsd:int" use="required" />
+        <xsd:attribute name="itemId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantPopup_Popup_ArrowGuideSlot_RightSlot">
+        <xsd:sequence>
+            <xsd:element name="Slot" type="EnchantPopup_Popup_ArrowGuideSlot_RightSlot_Slot" />
+        </xsd:sequence>
+
+        <xsd:attribute name="rightStringId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantPopup_Popup_ArrowGuideSlot_RightSlot_Slot"
+                     dc:keys="index">
+        <xsd:attribute name="index" type="xsd:int" use="required" />
+        <xsd:attribute name="itemId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantPopup_Popup_ItemSlot">
+        <xsd:sequence>
+            <xsd:element name="Slot" type="EnchantPopup_Popup_ItemSlot_Slot" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantPopup_Popup_ItemSlot_Slot"
+                     dc:keys="index">
+        <xsd:attribute name="index" type="xsd:int" use="required" />
+        <xsd:attribute name="itemId" type="xsd:int" use="required" />
+        <xsd:attribute name="stringId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantPopup_Popup_Recommend">
+        <xsd:sequence>
+            <xsd:element name="Slot" type="EnchantPopup_Popup_Recommend_Slot" />
+        </xsd:sequence>
+
+        <xsd:attribute name="recommendStringId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantPopup_Popup_Recommend_Slot"
+                     dc:keys="index">
+        <xsd:attribute name="index" type="xsd:int" use="required" />
+        <xsd:attribute name="itemId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantPopup_Popup_Title">
+        <xsd:attribute name="footerStringId" type="xsd:string" use="required" />
+        <xsd:attribute name="headerStringId" type="xsd:string" use="required" />
+        <xsd:attribute name="titleStringId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="EnchantPopup" type="EnchantPopup" />
+</xsd:schema>

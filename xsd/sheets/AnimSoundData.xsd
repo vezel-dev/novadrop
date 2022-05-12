@@ -1,0 +1,37 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/AnimSoundData"
+            targetNamespace="https://vezel.dev/novadrop/dc/AnimSoundData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="AnimSoundData">
+        <xsd:sequence>
+            <xsd:element name="AnimSound" type="AnimSoundData_AnimSound" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="animSet" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AnimSoundData_AnimSound">
+        <xsd:sequence>
+            <xsd:element name="Sound" type="AnimSoundData_AnimSound_Sound" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="animName" type="xsd:string" />
+        <xsd:attribute name="id" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AnimSoundData_AnimSound_Sound">
+        <xsd:attribute name="fadeOutTime" type="xsd:float" />
+        <xsd:attribute name="radius" type="xsd:float" use="required" />
+        <xsd:attribute name="shapeId" type="xsd:int" use="required" />
+        <xsd:attribute name="soundcue" type="xsd:string" />
+        <xsd:attribute name="soundcueother" type="xsd:string" />
+        <xsd:attribute name="time" type="xsd:float" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+        <xsd:attribute name="volume" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="AnimSoundData" type="AnimSoundData" />
+</xsd:schema>

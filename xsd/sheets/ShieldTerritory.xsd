@@ -1,0 +1,33 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ShieldTerritory"
+            targetNamespace="https://vezel.dev/novadrop/dc/ShieldTerritory"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ShieldTerritory">
+        <xsd:sequence>
+            <xsd:element name="Territory" type="ShieldTerritory_Territory" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="areaName" type="xsd:string" use="required" />
+        <xsd:attribute name="continentId" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ShieldTerritory_Territory">
+        <xsd:sequence>
+            <xsd:element name="Fence" type="ShieldTerritory_Territory_Fence" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="addMaxZ" type="xsd:float" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="subtractMinZ" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ShieldTerritory_Territory_Fence">
+        <xsd:attribute name="pos" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ShieldTerritory" type="ShieldTerritory" />
+</xsd:schema>

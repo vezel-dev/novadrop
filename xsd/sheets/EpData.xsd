@@ -1,0 +1,91 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/EpData"
+            targetNamespace="https://vezel.dev/novadrop/dc/EpData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="EpData">
+        <xsd:sequence>
+            <xsd:element name="CommonPerkSkillInfo" type="EpData_CommonPerkSkillInfo" />
+            <xsd:element name="EPWindowTabInfo" type="EpData_EPWindowTabInfo" />
+            <xsd:element name="EpPageData" type="EpData_EpPageData" />
+            <xsd:element name="ExpEffectList" type="EpData_ExpEffectList" />
+            <xsd:element name="ExpUpdateDelay" type="EpData_ExpUpdateDelay" />
+            <xsd:element name="LevelUpEffect" type="EpData_LevelUpEffect" />
+        </xsd:sequence>
+
+        <xsd:attribute name="isSystemOn" type="xsd:boolean" use="required" />
+        <xsd:attribute name="maxEp" type="xsd:int" use="required" />
+        <xsd:attribute name="maxEpLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="titleText" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EpData_CommonPerkSkillInfo">
+        <xsd:attribute name="iconName" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EpData_EPWindowTabInfo">
+        <xsd:sequence>
+            <xsd:element name="TabInfo" type="EpData_EPWindowTabInfo_TabInfo" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EpData_EPWindowTabInfo_TabInfo"
+                     dc:keys="index">
+        <xsd:attribute name="iconAttrList" type="xsd:string" use="required" />
+        <xsd:attribute name="index" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EpData_EpPageData">
+        <xsd:attribute name="cost" type="xsd:string" use="required" />
+        <xsd:attribute name="maxPage" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EpData_ExpEffectList">
+        <xsd:sequence>
+            <xsd:element name="ExpEffect" type="EpData_ExpEffectList_ExpEffect" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EpData_ExpEffectList_ExpEffect">
+        <xsd:sequence>
+            <xsd:element name="Effect" type="EpData_ExpEffectList_ExpEffect_Effect" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="from" type="xsd:int" use="required" />
+        <xsd:attribute name="to" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EpData_ExpEffectList_ExpEffect_Effect">
+        <xsd:attribute name="effectId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EpData_ExpUpdateDelay">
+        <xsd:attribute name="delay" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EpData_LevelUpEffect">
+        <xsd:sequence>
+            <xsd:element name="Effect" type="EpData_LevelUpEffect_Effect" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EpData_LevelUpEffect_Effect">
+        <xsd:sequence>
+            <xsd:element name="Texture" type="EpData_LevelUpEffect_Effect_Texture" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="effectId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EpData_LevelUpEffect_Effect_Texture">
+        <xsd:attribute name="epGrade" type="xsd:int" use="required" />
+        <xsd:attribute name="maxEpLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="minEpLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" />
+        <xsd:attribute name="parameter" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:element name="EpData" type="EpData" />
+</xsd:schema>

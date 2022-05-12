@@ -1,0 +1,44 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/TrialAccount"
+            targetNamespace="https://vezel.dev/novadrop/dc/TrialAccount"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="TrialAccount">
+        <xsd:sequence>
+            <xsd:element name="Popup" type="TrialAccount_Popup" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TrialAccount_Popup">
+        <xsd:sequence>
+            <xsd:element name="Condition" type="TrialAccount_Popup_Condition" />
+            <xsd:element name="Type" type="TrialAccount_Popup_Type" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TrialAccount_Popup_Condition">
+        <xsd:sequence>
+            <xsd:element name="Event" type="TrialAccount_Popup_Condition_Event" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TrialAccount_Popup_Condition_Event">
+        <xsd:attribute name="delayTime" type="xsd:float" use="required" />
+        <xsd:attribute name="level" type="xsd:int" />
+        <xsd:attribute name="movieId" type="xsd:int" />
+        <xsd:attribute name="popupId" type="xsd:int" use="required" />
+        <xsd:attribute name="raf" type="xsd:boolean" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TrialAccount_Popup_Type">
+        <xsd:attribute name="bodyStr" type="xsd:int" use="required" />
+        <xsd:attribute name="buttonStr" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStr" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="TrialAccount" type="TrialAccount" />
+</xsd:schema>

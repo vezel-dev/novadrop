@@ -1,0 +1,50 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/HelpData"
+            targetNamespace="https://vezel.dev/novadrop/dc/HelpData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="HelpData">
+        <xsd:sequence>
+            <xsd:element name="Category" type="HelpData_Category" />
+            <xsd:element name="Help" type="HelpData_Help" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HelpData_Category">
+        <xsd:sequence>
+            <xsd:element name="Group" type="HelpData_Category_Group" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HelpData_Category_Group">
+        <xsd:sequence>
+            <xsd:element name="Item" type="HelpData_Category_Group_Item" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="text" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HelpData_Category_Group_Item">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="text" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HelpData_Help">
+        <xsd:sequence>
+            <xsd:element name="Page" type="HelpData_Help_Page" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HelpData_Help_Page">
+        <xsd:attribute name="flash" type="xsd:string" use="required" />
+        <xsd:attribute name="image" type="xsd:string" use="required" />
+        <xsd:attribute name="movie" type="xsd:string" use="required" />
+        <xsd:attribute name="text" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="HelpData" type="HelpData" />
+</xsd:schema>

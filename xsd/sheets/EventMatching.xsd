@@ -1,0 +1,245 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/EventMatching"
+            targetNamespace="https://vezel.dev/novadrop/dc/EventMatching"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="EventMatching">
+        <xsd:sequence>
+            <xsd:element name="AdditionalReward" type="EventMatching_AdditionalReward" />
+            <xsd:element name="CompleteLimitPerDay" type="EventMatching_CompleteLimitPerDay" />
+            <xsd:element name="ContentBanner" type="EventMatching_ContentBanner" />
+            <xsd:element name="DailyCheckEvent" type="EventMatching_DailyCheckEvent" />
+            <xsd:element name="DefaultEventImage" type="EventMatching_DefaultEventImage" />
+            <xsd:element name="EventFilter" type="EventMatching_EventFilter" />
+            <xsd:element name="EventGroup" type="EventMatching_EventGroup" maxOccurs="unbounded" />
+            <xsd:element name="PlayGuideUI" type="EventMatching_PlayGuideUI" />
+            <xsd:element name="ReputationStoreTeleport" type="EventMatching_ReputationStoreTeleport" />
+        </xsd:sequence>
+
+        <xsd:attribute name="beginLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="guildString" type="xsd:string" use="required" />
+        <xsd:attribute name="npcGuildId" type="xsd:int" use="required" />
+        <xsd:attribute name="showReputationPointByLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="tipStringBattleField" type="xsd:string" use="required" />
+        <xsd:attribute name="tipStringCommon" type="xsd:string" use="required" />
+        <xsd:attribute name="tipStringDungeon" type="xsd:string" use="required" />
+        <xsd:attribute name="tipStringField" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EventMatching_AdditionalReward">
+        <xsd:sequence>
+            <xsd:element name="CompensationList" type="EventMatching_AdditionalReward_CompensationList" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="resetDay" type="xsd:string" use="required" />
+        <xsd:attribute name="tipString" type="xsd:string" use="required" />
+        <xsd:attribute name="uiCompleteString" type="xsd:string" use="required" />
+        <xsd:attribute name="uiProgressString" type="xsd:string" use="required" />
+        <xsd:attribute name="uiTitle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EventMatching_AdditionalReward_CompensationList">
+        <xsd:sequence>
+            <xsd:element name="Compensation" type="EventMatching_AdditionalReward_CompensationList_Compensation" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="completeCount" type="xsd:int" use="required" />
+        <xsd:attribute name="mailBody" type="xsd:string" use="required" />
+        <xsd:attribute name="mailSender" type="xsd:string" use="required" />
+        <xsd:attribute name="mailTitle" type="xsd:string" use="required" />
+        <xsd:attribute name="maxLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="minLevel" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EventMatching_AdditionalReward_CompensationList_Compensation">
+        <xsd:attribute name="amount" type="xsd:string" use="required" />
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EventMatching_CompleteLimitPerDay">
+        <xsd:sequence>
+            <xsd:element name="Setting" type="EventMatching_CompleteLimitPerDay_Setting" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="tipString" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EventMatching_CompleteLimitPerDay_Setting">
+        <xsd:attribute name="battleField" type="xsd:int" use="required" />
+        <xsd:attribute name="common" type="xsd:int" use="required" />
+        <xsd:attribute name="dungeon" type="xsd:int" use="required" />
+        <xsd:attribute name="field" type="xsd:int" use="required" />
+        <xsd:attribute name="maxLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="minLevel" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EventMatching_ContentBanner">
+        <xsd:sequence>
+            <xsd:element name="EventList" type="EventMatching_ContentBanner_EventList" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="switchTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EventMatching_ContentBanner_EventList">
+        <xsd:sequence>
+            <xsd:element name="Event" type="EventMatching_ContentBanner_EventList_Event" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="maxLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="minLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="requiredItemLevel" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EventMatching_ContentBanner_EventList_Event">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="image" type="xsd:string" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="subCopy" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+        <xsd:attribute name="value" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EventMatching_DailyCheckEvent">
+        <xsd:sequence>
+            <xsd:element name="Event" type="EventMatching_DailyCheckEvent_Event" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="totalCheckDay" type="xsd:int" use="required" />
+        <xsd:attribute name="uiTitle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EventMatching_DailyCheckEvent_Event">
+        <xsd:attribute name="abnormalityId" type="xsd:int" use="required" />
+        <xsd:attribute name="day" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EventMatching_DefaultEventImage">
+        <xsd:sequence>
+            <xsd:element name="DefaultImage" type="EventMatching_DefaultEventImage_DefaultImage" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EventMatching_DefaultEventImage_DefaultImage">
+        <xsd:attribute name="image" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EventMatching_EventFilter">
+        <xsd:sequence>
+            <xsd:element name="Filter" type="EventMatching_EventFilter_Filter" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EventMatching_EventFilter_Filter"
+                     dc:keys="index">
+        <xsd:attribute name="index" type="xsd:int" use="required" />
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EventMatching_EventGroup">
+        <xsd:sequence>
+            <xsd:element name="Event" type="EventMatching_EventGroup_Event" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="isSpecialCompensation" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EventMatching_EventGroup_Event">
+        <xsd:sequence>
+            <xsd:element name="Action" type="EventMatching_EventGroup_Event_Action" />
+            <xsd:element name="CompensationList" type="EventMatching_EventGroup_Event_CompensationList" />
+            <xsd:element name="TargetList" type="EventMatching_EventGroup_Event_TargetList" />
+        </xsd:sequence>
+
+        <xsd:attribute name="active" type="xsd:boolean" use="required" />
+        <xsd:attribute name="additionalSortPriority" type="xsd:int" />
+        <xsd:attribute name="categoryId" type="xsd:int" use="required" />
+        <xsd:attribute name="fieldEvent" type="xsd:boolean" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="image" type="xsd:string" />
+        <xsd:attribute name="questId" type="xsd:int" use="required" />
+        <xsd:attribute name="recommend" type="xsd:boolean" />
+        <xsd:attribute name="recommendMaxItemLevel" type="xsd:float" />
+        <xsd:attribute name="repeat" type="xsd:boolean" use="required" />
+        <xsd:attribute name="requiredItemLevel" type="xsd:float" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EventMatching_EventGroup_Event_Action">
+        <xsd:attribute name="requiredLevel" type="xsd:int" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+        <xsd:attribute name="uiName" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EventMatching_EventGroup_Event_CompensationList">
+        <xsd:sequence>
+            <xsd:element name="Compensation" type="EventMatching_EventGroup_Event_CompensationList_Compensation" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="mailBody" type="xsd:string" use="required" />
+        <xsd:attribute name="mailSender" type="xsd:string" use="required" />
+        <xsd:attribute name="mailTitle" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EventMatching_EventGroup_Event_CompensationList_Compensation">
+        <xsd:attribute name="amount" type="xsd:string" use="required" />
+        <xsd:attribute name="npcGuildId" type="xsd:int" />
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EventMatching_EventGroup_Event_TargetList">
+        <xsd:sequence>
+            <xsd:element name="Target" type="EventMatching_EventGroup_Event_TargetList_Target" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EventMatching_EventGroup_Event_TargetList_Target">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="teleportContinentId" type="xsd:int" />
+        <xsd:attribute name="teleportPos" type="xsd:string" />
+        <xsd:attribute name="zoneNameId" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EventMatching_PlayGuideUI">
+        <xsd:sequence>
+            <xsd:element name="Event" type="EventMatching_PlayGuideUI_Event" maxOccurs="unbounded" />
+            <xsd:element name="Link" type="EventMatching_PlayGuideUI_Link" maxOccurs="unbounded" />
+            <xsd:element name="Tip" type="EventMatching_PlayGuideUI_Tip" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="minimapTooltip" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EventMatching_PlayGuideUI_Event">
+        <xsd:attribute name="buttonString" type="xsd:string" use="required" />
+        <xsd:attribute name="cancelString" type="xsd:string" />
+        <xsd:attribute name="completeString" type="xsd:string" />
+        <xsd:attribute name="messageString" type="xsd:string" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+        <xsd:attribute name="typeString" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EventMatching_PlayGuideUI_Link">
+        <xsd:attribute name="enable" type="xsd:boolean" use="required" />
+        <xsd:attribute name="showHotkey" type="xsd:boolean" use="required" />
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+        <xsd:attribute name="switch" type="xsd:boolean" use="required" />
+        <xsd:attribute name="uiName" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EventMatching_PlayGuideUI_Tip">
+        <xsd:attribute name="tutorialId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EventMatching_ReputationStoreTeleport">
+        <xsd:attribute name="minLevel" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="EventMatching" type="EventMatching" />
+</xsd:schema>

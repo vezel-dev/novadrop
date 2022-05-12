@@ -1,0 +1,21 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/QuestJumpGroup"
+            targetNamespace="https://vezel.dev/novadrop/dc/QuestJumpGroup"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="QuestJumpGroup">
+        <xsd:sequence>
+            <xsd:element name="Group" type="QuestJumpGroup_Group" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="QuestJumpGroup_Group">
+        <xsd:attribute name="groupStringId" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="questIdList" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="QuestJumpGroup" type="QuestJumpGroup" />
+</xsd:schema>

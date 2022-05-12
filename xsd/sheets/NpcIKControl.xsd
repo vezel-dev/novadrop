@@ -1,0 +1,102 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/NpcIKControl"
+            targetNamespace="https://vezel.dev/novadrop/dc/NpcIKControl"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="NpcIKControl">
+        <xsd:sequence>
+            <xsd:element name="Shape" type="NpcIKControl_Shape" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcIKControl_Shape"
+                     dc:keys="id">
+        <xsd:sequence>
+            <xsd:element name="DamageMotion" type="NpcIKControl_Shape_DamageMotion" minOccurs="0" />
+            <xsd:element name="FootIK" type="NpcIKControl_Shape_FootIK" minOccurs="0" />
+            <xsd:element name="LookAtcontrol" type="NpcIKControl_Shape_LookAtcontrol" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="SlopeControl" type="NpcIKControl_Shape_SlopeControl" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcIKControl_Shape_DamageMotion">
+        <xsd:sequence>
+            <xsd:element name="AttackBone" type="NpcIKControl_Shape_DamageMotion_AttackBone" />
+            <xsd:element name="DamageMotionSet" type="NpcIKControl_Shape_DamageMotion_DamageMotionSet" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcIKControl_Shape_DamageMotion_AttackBone">
+        <xsd:attribute name="boneName" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcIKControl_Shape_DamageMotion_DamageMotionSet">
+        <xsd:sequence>
+            <xsd:element name="DamageMotionBounceControl" type="NpcIKControl_Shape_DamageMotion_DamageMotionSet_DamageMotionBounceControl" minOccurs="0" />
+            <xsd:element name="DamageMotionRotateControl" type="NpcIKControl_Shape_DamageMotion_DamageMotionSet_DamageMotionRotateControl" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcIKControl_Shape_DamageMotion_DamageMotionSet_DamageMotionBounceControl">
+        <xsd:attribute name="boneName" type="xsd:string" use="required" />
+        <xsd:attribute name="down" type="xsd:float" use="required" />
+        <xsd:attribute name="duration" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcIKControl_Shape_DamageMotion_DamageMotionSet_DamageMotionRotateControl">
+        <xsd:attribute name="blendOutTime" type="xsd:float" use="required" />
+        <xsd:attribute name="boneName" type="xsd:string" use="required" />
+        <xsd:attribute name="duration" type="xsd:float" use="required" />
+        <xsd:attribute name="pitchMax" type="xsd:int" use="required" />
+        <xsd:attribute name="pitchMin" type="xsd:int" use="required" />
+        <xsd:attribute name="pitchSpeed" type="xsd:float" use="required" />
+        <xsd:attribute name="yawImpulse" type="xsd:float" use="required" />
+        <xsd:attribute name="yawMax" type="xsd:int" use="required" />
+        <xsd:attribute name="yawMin" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcIKControl_Shape_FootIK">
+        <xsd:sequence>
+            <xsd:element name="FootControl" type="NpcIKControl_Shape_FootIK_FootControl" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="forDamageMotionBounceOnly" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcIKControl_Shape_FootIK_FootControl">
+        <xsd:attribute name="animBend" type="xsd:boolean" />
+        <xsd:attribute name="bendAxis" type="xsd:string" use="required" />
+        <xsd:attribute name="blendInTime" type="xsd:float" use="required" />
+        <xsd:attribute name="blendOutTime" type="xsd:float" use="required" />
+        <xsd:attribute name="boneNames" type="xsd:string" use="required" />
+        <xsd:attribute name="enableFootUpDir" type="xsd:boolean" use="required" />
+        <xsd:attribute name="invertBendAxis" type="xsd:boolean" use="required" />
+        <xsd:attribute name="limitHeight" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcIKControl_Shape_LookAtcontrol">
+        <xsd:attribute name="allowRotationX" type="xsd:boolean" use="required" />
+        <xsd:attribute name="allowRotationY" type="xsd:boolean" use="required" />
+        <xsd:attribute name="allowRotationZ" type="xsd:boolean" use="required" />
+        <xsd:attribute name="blendInTime" type="xsd:float" use="required" />
+        <xsd:attribute name="blendOutTime" type="xsd:float" use="required" />
+        <xsd:attribute name="boneNames" type="xsd:string" use="required" />
+        <xsd:attribute name="defineUpAxis" type="xsd:boolean" use="required" />
+        <xsd:attribute name="enableLimit" type="xsd:boolean" use="required" />
+        <xsd:attribute name="invertLookAtAxis" type="xsd:boolean" use="required" />
+        <xsd:attribute name="invertUpAxis" type="xsd:boolean" use="required" />
+        <xsd:attribute name="limitBasedOnRefPose" type="xsd:boolean" use="required" />
+        <xsd:attribute name="lookAtAxis" type="xsd:string" use="required" />
+        <xsd:attribute name="maxAngle" type="xsd:float" use="required" />
+        <xsd:attribute name="targetLocationInterpSpeed" type="xsd:float" use="required" />
+        <xsd:attribute name="upAxis" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcIKControl_Shape_SlopeControl" />
+
+    <xsd:element name="NpcIKControl" type="NpcIKControl" />
+</xsd:schema>

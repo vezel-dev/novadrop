@@ -1,0 +1,56 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/MythicCraftData"
+            targetNamespace="https://vezel.dev/novadrop/dc/MythicCraftData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="MythicCraftData">
+        <xsd:sequence>
+            <xsd:element name="MythicCraft" type="MythicCraftData_MythicCraft" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="MythicCraftData_MythicCraft">
+        <xsd:sequence>
+            <xsd:element name="MaintainData" type="MythicCraftData_MythicCraft_MaintainData" />
+            <xsd:element name="MaterialCondition" type="MythicCraftData_MythicCraft_MaterialCondition" />
+            <xsd:element name="ResultData" type="MythicCraftData_MythicCraft_ResultData" />
+        </xsd:sequence>
+
+        <xsd:attribute name="targetTemplateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="MythicCraftData_MythicCraft_MaintainData">
+        <xsd:attribute name="enchant" type="xsd:boolean" use="required" />
+        <xsd:attribute name="randomOption" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="MythicCraftData_MythicCraft_MaterialCondition">
+        <xsd:sequence>
+            <xsd:element name="MaterialEnchant" type="MythicCraftData_MythicCraft_MaterialCondition_MaterialEnchant" />
+        </xsd:sequence>
+
+        <xsd:attribute name="materialTemplateId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="MythicCraftData_MythicCraft_MaterialCondition_MaterialEnchant">
+        <xsd:sequence>
+            <xsd:element name="Material" type="MythicCraftData_MythicCraft_MaterialCondition_MaterialEnchant_Material" />
+        </xsd:sequence>
+
+        <xsd:attribute name="enchantStep" type="xsd:int" use="required" />
+        <xsd:attribute name="requiredMoney" type="xsd:string" use="required" />
+        <xsd:attribute name="successProb" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="MythicCraftData_MythicCraft_MaterialCondition_MaterialEnchant_Material">
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="MythicCraftData_MythicCraft_ResultData">
+        <xsd:attribute name="resultTemplateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="MythicCraftData" type="MythicCraftData" />
+</xsd:schema>

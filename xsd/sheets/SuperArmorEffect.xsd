@@ -1,0 +1,95 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/SuperArmorEffect"
+            targetNamespace="https://vezel.dev/novadrop/dc/SuperArmorEffect"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="SuperArmorEffect">
+        <xsd:sequence>
+            <xsd:element name="Effect" type="SuperArmorEffect_Effect" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SuperArmorEffect_Effect">
+        <xsd:sequence>
+            <xsd:element name="AttackAnimRate" type="SuperArmorEffect_Effect_AttackAnimRate" minOccurs="0" />
+            <xsd:element name="HitEffect" type="SuperArmorEffect_Effect_HitEffect" />
+            <xsd:element name="HitOverlayList" type="SuperArmorEffect_Effect_HitOverlayList" minOccurs="0" />
+            <xsd:element name="Shader" type="SuperArmorEffect_Effect_Shader" />
+            <xsd:element name="TargetAnimRate" type="SuperArmorEffect_Effect_TargetAnimRate" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SuperArmorEffect_Effect_AttackAnimRate">
+        <xsd:sequence>
+            <xsd:element name="Fast" type="SuperArmorEffect_Effect_AttackAnimRate_Fast" />
+            <xsd:element name="Slow" type="SuperArmorEffect_Effect_AttackAnimRate_Slow" />
+        </xsd:sequence>
+
+        <xsd:attribute name="canOverlapped" type="xsd:boolean" use="required" />
+        <xsd:attribute name="minimumInterval" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SuperArmorEffect_Effect_AttackAnimRate_Fast">
+        <xsd:attribute name="downTime" type="xsd:float" use="required" />
+        <xsd:attribute name="upTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SuperArmorEffect_Effect_AttackAnimRate_Slow">
+        <xsd:attribute name="slowDownTime" type="xsd:float" use="required" />
+        <xsd:attribute name="upTime" type="xsd:int" use="required" />
+        <xsd:attribute name="zeroTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SuperArmorEffect_Effect_HitEffect">
+        <xsd:attribute name="additionalHitEffectId" type="xsd:int" use="required" />
+        <xsd:attribute name="criticalHitEffect" type="xsd:int" use="required" />
+        <xsd:attribute name="hitEffectId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SuperArmorEffect_Effect_HitOverlayList">
+        <xsd:sequence>
+            <xsd:element name="HitOverlay" type="SuperArmorEffect_Effect_HitOverlayList_HitOverlay" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SuperArmorEffect_Effect_HitOverlayList_HitOverlay">
+        <xsd:attribute name="b" type="xsd:float" use="required" />
+        <xsd:attribute name="duration" type="xsd:float" use="required" />
+        <xsd:attribute name="g" type="xsd:float" use="required" />
+        <xsd:attribute name="power" type="xsd:float" use="required" />
+        <xsd:attribute name="r" type="xsd:float" use="required" />
+        <xsd:attribute name="target" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SuperArmorEffect_Effect_Shader">
+        <xsd:attribute name="condition" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SuperArmorEffect_Effect_TargetAnimRate">
+        <xsd:sequence>
+            <xsd:element name="Fast" type="SuperArmorEffect_Effect_TargetAnimRate_Fast" />
+            <xsd:element name="Slow" type="SuperArmorEffect_Effect_TargetAnimRate_Slow" />
+        </xsd:sequence>
+
+        <xsd:attribute name="canOverlapped" type="xsd:boolean" use="required" />
+        <xsd:attribute name="minimumInterval" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SuperArmorEffect_Effect_TargetAnimRate_Fast">
+        <xsd:attribute name="downTime" type="xsd:float" use="required" />
+        <xsd:attribute name="upTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="SuperArmorEffect_Effect_TargetAnimRate_Slow">
+        <xsd:attribute name="slowDownTime" type="xsd:float" use="required" />
+        <xsd:attribute name="upTime" type="xsd:int" use="required" />
+        <xsd:attribute name="zeroTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="SuperArmorEffect" type="SuperArmorEffect" />
+</xsd:schema>

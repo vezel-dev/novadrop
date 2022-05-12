@@ -1,0 +1,20 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/VillagerMenu"
+            targetNamespace="https://vezel.dev/novadrop/dc/VillagerMenu"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="VillagerMenu">
+        <xsd:sequence>
+            <xsd:element name="Villager" type="VillagerMenu_Villager" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="VillagerMenu_Villager">
+        <xsd:attribute name="guideEffectId" type="xsd:int" />
+        <xsd:attribute name="id" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="VillagerMenu" type="VillagerMenu" />
+</xsd:schema>

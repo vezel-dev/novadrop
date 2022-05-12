@@ -1,0 +1,42 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/CollectionCommonData"
+            targetNamespace="https://vezel.dev/novadrop/dc/CollectionCommonData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="CollectionCommonData">
+        <xsd:sequence>
+            <xsd:element name="CollectDifficulty" type="CollectionCommonData_CollectDifficulty" />
+            <xsd:element name="IconPathTable" type="CollectionCommonData_IconPathTable" />
+            <xsd:element name="ShowNamePlate" type="CollectionCommonData_ShowNamePlate" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CollectionCommonData_CollectDifficulty">
+        <xsd:attribute name="easyProbOver" type="xsd:int" use="required" />
+        <xsd:attribute name="easyProbUnder" type="xsd:int" use="required" />
+        <xsd:attribute name="hardProbOver" type="xsd:int" use="required" />
+        <xsd:attribute name="hardProbUnder" type="xsd:int" use="required" />
+        <xsd:attribute name="normalProbOver" type="xsd:int" use="required" />
+        <xsd:attribute name="normalProbUnder" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CollectionCommonData_IconPathTable">
+        <xsd:sequence>
+            <xsd:element name="Item" type="CollectionCommonData_IconPathTable_Item" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CollectionCommonData_IconPathTable_Item">
+        <xsd:attribute name="path" type="xsd:string" use="required" />
+        <xsd:attribute name="typeName" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CollectionCommonData_ShowNamePlate">
+        <xsd:attribute name="distance" type="xsd:int" use="required" />
+        <xsd:attribute name="extractorDistance" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="CollectionCommonData" type="CollectionCommonData" />
+</xsd:schema>

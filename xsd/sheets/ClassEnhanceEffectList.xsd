@@ -1,0 +1,48 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ClassEnhanceEffectList"
+            targetNamespace="https://vezel.dev/novadrop/dc/ClassEnhanceEffectList"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ClassEnhanceEffectList">
+        <xsd:sequence>
+            <xsd:element name="ClassEnhanceEffect" type="ClassEnhanceEffectList_ClassEnhanceEffect" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ClassEnhanceEffectList_ClassEnhanceEffect">
+        <xsd:sequence>
+            <xsd:element name="Change" type="ClassEnhanceEffectList_ClassEnhanceEffect_Change" />
+            <xsd:element name="Cost" type="ClassEnhanceEffectList_ClassEnhanceEffect_Cost" />
+            <xsd:element name="RequiredItemList" type="ClassEnhanceEffectList_ClassEnhanceEffect_RequiredItemList" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ClassEnhanceEffectList_ClassEnhanceEffect_Change">
+        <xsd:attribute name="changeSkillIconFrom" type="xsd:int" />
+        <xsd:attribute name="changeSkillIconTo" type="xsd:int" />
+        <xsd:attribute name="changeSkillIdFrom" type="xsd:string" />
+        <xsd:attribute name="changeSkillIdTo" type="xsd:int" />
+        <xsd:attribute name="showChangeIconUI" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ClassEnhanceEffectList_ClassEnhanceEffect_Cost">
+        <xsd:attribute name="money" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ClassEnhanceEffectList_ClassEnhanceEffect_RequiredItemList">
+        <xsd:sequence>
+            <xsd:element name="RequiredItem" type="ClassEnhanceEffectList_ClassEnhanceEffect_RequiredItemList_RequiredItem" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ClassEnhanceEffectList_ClassEnhanceEffect_RequiredItemList_RequiredItem">
+        <xsd:attribute name="amount" type="xsd:int" use="required" />
+        <xsd:attribute name="itemId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ClassEnhanceEffectList" type="ClassEnhanceEffectList" />
+</xsd:schema>

@@ -1,0 +1,231 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ResourceSummary"
+            targetNamespace="https://vezel.dev/novadrop/dc/ResourceSummary"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ResourceSummary">
+        <xsd:sequence>
+            <xsd:element name="Package" type="ResourceSummary_Package" maxOccurs="unbounded" />
+            <xsd:element name="SpacePackageList" type="ResourceSummary_SpacePackageList" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ResourceSummary_Package">
+        <xsd:sequence>
+            <xsd:element name="AeroSet" type="ResourceSummary_Package_AeroSet" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="AnimSet" type="ResourceSummary_Package_AnimSet" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="AnimTree" type="ResourceSummary_Package_AnimTree" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="GfxMovieInfo" type="ResourceSummary_Package_GfxMovieInfo" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Material" type="ResourceSummary_Package_Material" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Particle" type="ResourceSummary_Package_Particle" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="SkeletalMesh" type="ResourceSummary_Package_SkeletalMesh" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="SoundCue" type="ResourceSummary_Package_SoundCue" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="StaticMesh" type="ResourceSummary_Package_StaticMesh" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Texture" type="ResourceSummary_Package_Texture" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="World" type="ResourceSummary_Package_World" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="filename" type="xsd:string" use="required" />
+        <xsd:attribute name="guid" type="xsd:string" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="timestamp" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ResourceSummary_Package_AeroSet">
+        <xsd:sequence>
+            <xsd:element name="PostProcessingSetting" type="ResourceSummary_Package_AeroSet_PostProcessingSetting" />
+        </xsd:sequence>
+
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ResourceSummary_Package_AeroSet_PostProcessingSetting">
+        <xsd:attribute name="enableBloom" type="xsd:boolean" use="required" />
+        <xsd:attribute name="enableDOF" type="xsd:boolean" use="required" />
+        <xsd:attribute name="enableSceneEffect" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ResourceSummary_Package_AnimSet">
+        <xsd:sequence>
+            <xsd:element name="AnimSequence" type="ResourceSummary_Package_AnimSet_AnimSequence" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ResourceSummary_Package_AnimSet_AnimSequence">
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ResourceSummary_Package_AnimTree">
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ResourceSummary_Package_GfxMovieInfo">
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ResourceSummary_Package_Material">
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ResourceSummary_Package_Particle">
+        <xsd:sequence>
+            <xsd:element name="Emitter" type="ResourceSummary_Package_Particle_Emitter" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ResourceSummary_Package_Particle_Emitter">
+        <xsd:sequence>
+            <xsd:element name="LOD" type="ResourceSummary_Package_Particle_Emitter_LOD" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="index" type="xsd:int" use="required" />
+        <xsd:attribute name="isnull" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ResourceSummary_Package_Particle_Emitter_LOD">
+        <xsd:sequence>
+            <xsd:element name="RequiredModule" type="ResourceSummary_Package_Particle_Emitter_LOD_RequiredModule" />
+        </xsd:sequence>
+
+        <xsd:attribute name="enabled" type="xsd:boolean" use="required" />
+        <xsd:attribute name="index" type="xsd:int" use="required" />
+        <xsd:attribute name="isnull" type="xsd:boolean" use="required" />
+        <xsd:attribute name="level" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ResourceSummary_Package_Particle_Emitter_LOD_RequiredModule">
+        <xsd:attribute name="emitterLoops" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ResourceSummary_Package_SkeletalMesh">
+        <xsd:sequence>
+            <xsd:element name="Bone" type="ResourceSummary_Package_SkeletalMesh_Bone" maxOccurs="unbounded" />
+            <xsd:element name="MIC" type="ResourceSummary_Package_SkeletalMesh_MIC" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Socket" type="ResourceSummary_Package_SkeletalMesh_Socket" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ResourceSummary_Package_SkeletalMesh_Bone">
+        <xsd:attribute name="index" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ResourceSummary_Package_SkeletalMesh_MIC">
+        <xsd:attribute name="index" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ResourceSummary_Package_SkeletalMesh_Socket">
+        <xsd:attribute name="index" type="xsd:int" use="required" />
+        <xsd:attribute name="isnull" type="xsd:boolean" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ResourceSummary_Package_SoundCue">
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ResourceSummary_Package_StaticMesh">
+        <xsd:sequence>
+            <xsd:element name="LODModel" type="ResourceSummary_Package_StaticMesh_LODModel" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ResourceSummary_Package_StaticMesh_LODModel">
+        <xsd:sequence>
+            <xsd:element name="MIC" type="ResourceSummary_Package_StaticMesh_LODModel_MIC" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="index" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ResourceSummary_Package_StaticMesh_LODModel_MIC">
+        <xsd:attribute name="index" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ResourceSummary_Package_Texture">
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ResourceSummary_Package_World">
+        <xsd:sequence>
+            <xsd:element name="PersistentLevel" type="ResourceSummary_Package_World_PersistentLevel" />
+            <xsd:element name="StreamingLevel" type="ResourceSummary_Package_World_StreamingLevel" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ResourceSummary_Package_World_PersistentLevel">
+        <xsd:sequence>
+            <xsd:element name="Terrain" type="ResourceSummary_Package_World_PersistentLevel_Terrain" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ResourceSummary_Package_World_PersistentLevel_Terrain">
+        <xsd:sequence>
+            <xsd:element name="Layer" type="ResourceSummary_Package_World_PersistentLevel_Terrain_Layer" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ResourceSummary_Package_World_PersistentLevel_Terrain_Layer">
+        <xsd:sequence>
+            <xsd:element name="TerrainLayerSetup" type="ResourceSummary_Package_World_PersistentLevel_Terrain_Layer_TerrainLayerSetup" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="index" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ResourceSummary_Package_World_PersistentLevel_Terrain_Layer_TerrainLayerSetup">
+        <xsd:sequence>
+            <xsd:element name="Material" type="ResourceSummary_Package_World_PersistentLevel_Terrain_Layer_TerrainLayerSetup_Material" />
+        </xsd:sequence>
+
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ResourceSummary_Package_World_PersistentLevel_Terrain_Layer_TerrainLayerSetup_Material">
+        <xsd:attribute name="index" type="xsd:int" use="required" />
+        <xsd:attribute name="isnull" type="xsd:boolean" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ResourceSummary_Package_World_StreamingLevel">
+        <xsd:sequence>
+            <xsd:element name="S1LevelStreamingDistance" type="ResourceSummary_Package_World_StreamingLevel_S1LevelStreamingDistance" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="typename" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ResourceSummary_Package_World_StreamingLevel_S1LevelStreamingDistance">
+        <xsd:attribute name="distanceLoadingStart" type="xsd:float" use="required" />
+        <xsd:attribute name="distanceUnload" type="xsd:float" use="required" />
+        <xsd:attribute name="distanceVisible" type="xsd:float" use="required" />
+        <xsd:attribute name="originX" type="xsd:float" use="required" />
+        <xsd:attribute name="originY" type="xsd:float" use="required" />
+        <xsd:attribute name="zoneNumberX" type="xsd:int" use="required" />
+        <xsd:attribute name="zoneNumberY" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ResourceSummary_SpacePackageList" />
+
+    <xsd:element name="ResourceSummary" type="ResourceSummary" />
+</xsd:schema>

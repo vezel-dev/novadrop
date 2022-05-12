@@ -1,0 +1,23 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/StrSheet_AccountBenefit"
+            targetNamespace="https://vezel.dev/novadrop/dc/StrSheet_AccountBenefit"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="StrSheet_AccountBenefit">
+        <xsd:sequence>
+            <xsd:element name="String" type="StrSheet_AccountBenefit_String" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="StrSheet_AccountBenefit_String"
+                     dc:keys="id">
+        <xsd:attribute name="hideCoolTime" type="xsd:boolean" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="showLeftTimeOver1Year" type="xsd:boolean" />
+        <xsd:attribute name="string" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="StrSheet_AccountBenefit" type="StrSheet_AccountBenefit" />
+</xsd:schema>

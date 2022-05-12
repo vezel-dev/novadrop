@@ -1,0 +1,28 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/EventSystem"
+            targetNamespace="https://vezel.dev/novadrop/dc/EventSystem"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="EventSystem">
+        <xsd:sequence>
+            <xsd:element name="EventSystemFormatList" type="EventSystem_EventSystemFormatList" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EventSystem_EventSystemFormatList">
+        <xsd:sequence>
+            <xsd:element name="EventSystemFormat" type="EventSystem_EventSystemFormatList_EventSystemFormat" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EventSystem_EventSystemFormatList_EventSystemFormat">
+        <xsd:attribute name="eventButtonTextId" type="xsd:string" use="required" />
+        <xsd:attribute name="eventTextId" type="xsd:string" use="required" />
+        <xsd:attribute name="eventTitleId" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="EventSystem" type="EventSystem" />
+</xsd:schema>

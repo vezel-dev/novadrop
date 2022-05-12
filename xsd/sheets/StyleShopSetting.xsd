@@ -1,0 +1,59 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/StyleShopSetting"
+            targetNamespace="https://vezel.dev/novadrop/dc/StyleShopSetting"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="StyleShopSetting">
+        <xsd:sequence>
+            <xsd:element name="DisplaySaleItemList" type="StyleShopSetting_DisplaySaleItemList" />
+            <xsd:element name="PriceIconString" type="StyleShopSetting_PriceIconString" />
+            <xsd:element name="RightChargeTCatBtn" type="StyleShopSetting_RightChargeTCatBtn" />
+            <xsd:element name="UseAwesomium" type="StyleShopSetting_UseAwesomium" />
+            <xsd:element name="UseCash" type="StyleShopSetting_UseCash" />
+            <xsd:element name="UseNPCGuildPoint" type="StyleShopSetting_UseNPCGuildPoint" />
+            <xsd:element name="UseTcat" type="StyleShopSetting_UseTcat" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="StyleShopSetting_DisplaySaleItemList">
+        <xsd:attribute name="visible" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="StyleShopSetting_PriceIconString">
+        <xsd:sequence>
+            <xsd:element name="Icon" type="StyleShopSetting_PriceIconString_Icon" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="StyleShopSetting_PriceIconString_Icon">
+        <xsd:attribute name="iconStr" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="StyleShopSetting_RightChargeTCatBtn">
+        <xsd:attribute name="enable" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="StyleShopSetting_UseAwesomium">
+        <xsd:attribute name="enable" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="StyleShopSetting_UseCash">
+        <xsd:attribute name="enable" type="xsd:boolean" use="required" />
+        <xsd:attribute name="iconId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="StyleShopSetting_UseNPCGuildPoint">
+        <xsd:attribute name="enable" type="xsd:boolean" use="required" />
+        <xsd:attribute name="iconId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="StyleShopSetting_UseTcat">
+        <xsd:attribute name="enable" type="xsd:boolean" use="required" />
+        <xsd:attribute name="iconId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="StyleShopSetting" type="StyleShopSetting" />
+</xsd:schema>

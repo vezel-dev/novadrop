@@ -1,0 +1,34 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/WeaponStatusConfig"
+            targetNamespace="https://vezel.dev/novadrop/dc/WeaponStatusConfig"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="WeaponStatusConfig">
+        <xsd:sequence>
+            <xsd:element name="WeaponStatus" type="WeaponStatusConfig_WeaponStatus" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="defaultInWeaponDurationTime" type="xsd:float" use="required" />
+        <xsd:attribute name="defaultOutWeaponDurationTime" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WeaponStatusConfig_WeaponStatus">
+        <xsd:sequence>
+            <xsd:element name="OverriteCondition" type="WeaponStatusConfig_WeaponStatus_OverriteCondition" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="class" type="xsd:string" use="required" />
+        <xsd:attribute name="inWeaponDurationTime" type="xsd:float" use="required" />
+        <xsd:attribute name="outWeaponDurationTime" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WeaponStatusConfig_WeaponStatus_OverriteCondition">
+        <xsd:attribute name="inWeaponDurationTime" type="xsd:float" use="required" />
+        <xsd:attribute name="outWeaponDurationTime" type="xsd:float" use="required" />
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="WeaponStatusConfig" type="WeaponStatusConfig" />
+</xsd:schema>

@@ -1,0 +1,29 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/SkillCameraEffectList"
+            targetNamespace="https://vezel.dev/novadrop/dc/SkillCameraEffectList"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="SkillCameraEffectList">
+        <xsd:sequence>
+            <xsd:element name="CameraShake" type="SkillCameraEffectList_CameraShake" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SkillCameraEffectList_CameraShake">
+        <xsd:attribute name="duration" type="xsd:int" use="required" />
+        <xsd:attribute name="innerRadius" type="xsd:float" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="outerRadius" type="xsd:float" use="required" />
+        <xsd:attribute name="power" type="xsd:float" use="required" />
+        <xsd:attribute name="shakeId" type="xsd:int" use="required" />
+        <xsd:attribute name="speed" type="xsd:float" use="required" />
+        <xsd:attribute name="startCondition" type="xsd:string" use="required" />
+        <xsd:attribute name="startTime" type="xsd:int" use="required" />
+        <xsd:attribute name="startValue" type="xsd:int" />
+        <xsd:attribute name="targetType" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="SkillCameraEffectList" type="SkillCameraEffectList" />
+</xsd:schema>

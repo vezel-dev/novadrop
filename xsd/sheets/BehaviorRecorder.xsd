@@ -1,0 +1,107 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/BehaviorRecorder"
+            targetNamespace="https://vezel.dev/novadrop/dc/BehaviorRecorder"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="BehaviorRecorder">
+        <xsd:sequence>
+            <xsd:element name="Recorder" type="BehaviorRecorder_Recorder" />
+        </xsd:sequence>
+
+        <xsd:attribute name="huntingZoneId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BehaviorRecorder_Recorder">
+        <xsd:sequence>
+            <xsd:element name="Effect" type="BehaviorRecorder_Recorder_Effect" maxOccurs="unbounded" />
+            <xsd:element name="Record" type="BehaviorRecorder_Recorder_Record" maxOccurs="unbounded" />
+            <xsd:element name="Root" type="BehaviorRecorder_Recorder_Root" />
+        </xsd:sequence>
+
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BehaviorRecorder_Recorder_Effect">
+        <xsd:sequence>
+            <xsd:element name="DoeeAbnormality" type="BehaviorRecorder_Recorder_Effect_DoeeAbnormality" minOccurs="0" />
+            <xsd:element name="DoeeBonusDamage" type="BehaviorRecorder_Recorder_Effect_DoeeBonusDamage" minOccurs="0" />
+            <xsd:element name="DoerAbnormality" type="BehaviorRecorder_Recorder_Effect_DoerAbnormality" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BehaviorRecorder_Recorder_Effect_DoeeAbnormality">
+        <xsd:attribute name="duration" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:string" use="required" />
+        <xsd:attribute name="maxStack" type="xsd:int" use="required" />
+        <xsd:attribute name="rate" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BehaviorRecorder_Recorder_Effect_DoeeBonusDamage">
+        <xsd:attribute name="Value" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BehaviorRecorder_Recorder_Effect_DoerAbnormality">
+        <xsd:attribute name="duration" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="maxStack" type="xsd:int" use="required" />
+        <xsd:attribute name="rate" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BehaviorRecorder_Recorder_Record">
+        <xsd:sequence>
+            <xsd:element name="Pin" type="BehaviorRecorder_Recorder_Record_Pin" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BehaviorRecorder_Recorder_Record_Pin">
+        <xsd:sequence>
+            <xsd:element name="CompareCondition" type="BehaviorRecorder_Recorder_Record_Pin_CompareCondition" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="effect" type="xsd:int" />
+        <xsd:attribute name="exclusiveId" type="xsd:int" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="next" type="xsd:int" />
+        <xsd:attribute name="slot" type="xsd:int" use="required" />
+        <xsd:attribute name="timeLimit" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BehaviorRecorder_Recorder_Record_Pin_CompareCondition">
+        <xsd:attribute name="kind" type="xsd:string" use="required" />
+        <xsd:attribute name="strValue" type="xsd:string" />
+        <xsd:attribute name="target" type="xsd:string" use="required" />
+        <xsd:attribute name="value" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BehaviorRecorder_Recorder_Root">
+        <xsd:sequence>
+            <xsd:element name="Pin" type="BehaviorRecorder_Recorder_Root_Pin" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BehaviorRecorder_Recorder_Root_Pin">
+        <xsd:sequence>
+            <xsd:element name="CompareCondition" type="BehaviorRecorder_Recorder_Root_Pin_CompareCondition" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="effect" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="next" type="xsd:int" use="required" />
+        <xsd:attribute name="slot" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BehaviorRecorder_Recorder_Root_Pin_CompareCondition">
+        <xsd:attribute name="kind" type="xsd:string" use="required" />
+        <xsd:attribute name="strValue" type="xsd:string" />
+        <xsd:attribute name="target" type="xsd:string" use="required" />
+        <xsd:attribute name="value" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:element name="BehaviorRecorder" type="BehaviorRecorder" />
+</xsd:schema>

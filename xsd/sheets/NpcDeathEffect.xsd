@@ -1,0 +1,24 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/NpcDeathEffect"
+            targetNamespace="https://vezel.dev/novadrop/dc/NpcDeathEffect"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="NpcDeathEffect">
+        <xsd:sequence>
+            <xsd:element name="DeathEffect" type="NpcDeathEffect_DeathEffect" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcDeathEffect_DeathEffect"
+                     dc:keys="shapeId">
+        <xsd:attribute name="duration" type="xsd:int" />
+        <xsd:attribute name="effectId" type="xsd:int" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="shapeId" type="xsd:int" use="required" />
+        <xsd:attribute name="startTime" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:element name="NpcDeathEffect" type="NpcDeathEffect" />
+</xsd:schema>

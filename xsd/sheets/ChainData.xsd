@@ -1,0 +1,43 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ChainData"
+            targetNamespace="https://vezel.dev/novadrop/dc/ChainData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ChainData">
+        <xsd:sequence>
+            <xsd:element name="CommonData" type="ChainData_CommonData" />
+            <xsd:element name="MeshData" type="ChainData_MeshData" />
+            <xsd:element name="SpringK" type="ChainData_SpringK" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ChainData_CommonData">
+        <xsd:attribute name="boneName" type="xsd:string" use="required" />
+        <xsd:attribute name="chainCount" type="xsd:int" use="required" />
+        <xsd:attribute name="defaultDamping" type="xsd:float" use="required" />
+        <xsd:attribute name="gravity" type="xsd:float" use="required" />
+        <xsd:attribute name="springLengthRate" type="xsd:float" use="required" />
+        <xsd:attribute name="springMass" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ChainData_MeshData">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="length" type="xsd:float" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="scale" type="xsd:float" use="required" />
+        <xsd:attribute name="tickness" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ChainData_SpringK">
+        <xsd:attribute name="kDampingBend" type="xsd:float" use="required" />
+        <xsd:attribute name="kDampingShear" type="xsd:float" use="required" />
+        <xsd:attribute name="kDampingStruct" type="xsd:float" use="required" />
+        <xsd:attribute name="kSpringBend" type="xsd:float" use="required" />
+        <xsd:attribute name="kSpringShear" type="xsd:float" use="required" />
+        <xsd:attribute name="kSpringStruct" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ChainData" type="ChainData" />
+</xsd:schema>

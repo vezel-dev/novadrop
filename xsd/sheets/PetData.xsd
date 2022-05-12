@@ -1,0 +1,24 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/PetData"
+            targetNamespace="https://vezel.dev/novadrop/dc/PetData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="PetData">
+        <xsd:sequence>
+            <xsd:element name="Pet" type="PetData_Pet" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PetData_Pet">
+        <xsd:attribute name="durability" type="xsd:int" use="required" />
+        <xsd:attribute name="grade" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="maxHp" type="xsd:string" use="required" />
+        <xsd:attribute name="maxOrbSlot" type="xsd:int" use="required" />
+        <xsd:attribute name="unionPet" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:element name="PetData" type="PetData" />
+</xsd:schema>

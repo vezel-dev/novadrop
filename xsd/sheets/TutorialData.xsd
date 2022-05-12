@@ -1,0 +1,135 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/TutorialData"
+            targetNamespace="https://vezel.dev/novadrop/dc/TutorialData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="TutorialData">
+        <xsd:sequence>
+            <xsd:element name="DataList" type="TutorialData_DataList" />
+            <xsd:element name="EffectList" type="TutorialData_EffectList" />
+            <xsd:element name="PlayData" type="TutorialData_PlayData" />
+        </xsd:sequence>
+
+        <xsd:attribute name="show" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TutorialData_DataList">
+        <xsd:sequence>
+            <xsd:element name="Data" type="TutorialData_DataList_Data" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TutorialData_DataList_Data">
+        <xsd:sequence>
+            <xsd:element name="ConditionInfo" type="TutorialData_DataList_Data_ConditionInfo" />
+            <xsd:element name="GuideImage" type="TutorialData_DataList_Data_GuideImage" minOccurs="0" />
+            <xsd:element name="HelpPage" type="TutorialData_DataList_Data_HelpPage" minOccurs="0" />
+            <xsd:element name="TextList" type="TutorialData_DataList_Data_TextList" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="delayTime" type="xsd:float" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="priority" type="xsd:int" use="required" />
+        <xsd:attribute name="repeat" type="xsd:boolean" use="required" />
+        <xsd:attribute name="showDuration" type="xsd:float" use="required" />
+        <xsd:attribute name="showHelpWindow" type="xsd:boolean" />
+        <xsd:attribute name="tutorialEffectId" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TutorialData_DataList_Data_ConditionInfo">
+        <xsd:sequence>
+            <xsd:element name="ConditionList" type="TutorialData_DataList_Data_ConditionInfo_ConditionList" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TutorialData_DataList_Data_ConditionInfo_ConditionList">
+        <xsd:sequence>
+            <xsd:element name="AchievementCondition" type="TutorialData_DataList_Data_ConditionInfo_ConditionList_AchievementCondition" minOccurs="0" />
+            <xsd:element name="CharCondition" type="TutorialData_DataList_Data_ConditionInfo_ConditionList_CharCondition" minOccurs="0" />
+            <xsd:element name="GuideImageCondition" type="TutorialData_DataList_Data_ConditionInfo_ConditionList_GuideImageCondition" minOccurs="0" />
+            <xsd:element name="LoadingCondition" type="TutorialData_DataList_Data_ConditionInfo_ConditionList_LoadingCondition" minOccurs="0" />
+            <xsd:element name="QuestCondition" type="TutorialData_DataList_Data_ConditionInfo_ConditionList_QuestCondition" minOccurs="0" />
+            <xsd:element name="RandomCondition" type="TutorialData_DataList_Data_ConditionInfo_ConditionList_RandomCondition" minOccurs="0" />
+            <xsd:element name="ReputationCondition" type="TutorialData_DataList_Data_ConditionInfo_ConditionList_ReputationCondition" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TutorialData_DataList_Data_ConditionInfo_ConditionList_AchievementCondition">
+        <xsd:attribute name="achievementId" type="xsd:string" use="required" />
+        <xsd:attribute name="event" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TutorialData_DataList_Data_ConditionInfo_ConditionList_CharCondition">
+        <xsd:attribute name="class" type="xsd:string" use="required" />
+        <xsd:attribute name="gender" type="xsd:string" use="required" />
+        <xsd:attribute name="maxLevel" type="xsd:int" />
+        <xsd:attribute name="minLevel" type="xsd:int" />
+        <xsd:attribute name="race" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TutorialData_DataList_Data_ConditionInfo_ConditionList_GuideImageCondition">
+        <xsd:attribute name="bfCheckSide" type="xsd:int" use="required" />
+        <xsd:attribute name="huntingZoneId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TutorialData_DataList_Data_ConditionInfo_ConditionList_LoadingCondition">
+        <xsd:attribute name="image" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TutorialData_DataList_Data_ConditionInfo_ConditionList_QuestCondition">
+        <xsd:attribute name="event" type="xsd:string" use="required" />
+        <xsd:attribute name="questId" type="xsd:int" use="required" />
+        <xsd:attribute name="taskId" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TutorialData_DataList_Data_ConditionInfo_ConditionList_RandomCondition">
+        <xsd:attribute name="interval" type="xsd:float" use="required" />
+        <xsd:attribute name="rate" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TutorialData_DataList_Data_ConditionInfo_ConditionList_ReputationCondition">
+        <xsd:attribute name="event" type="xsd:string" use="required" />
+        <xsd:attribute name="reputationId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TutorialData_DataList_Data_GuideImage">
+        <xsd:attribute name="imageId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TutorialData_DataList_Data_HelpPage">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TutorialData_DataList_Data_TextList">
+        <xsd:sequence>
+            <xsd:element name="Text" type="TutorialData_DataList_Data_TextList_Text" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TutorialData_DataList_Data_TextList_Text">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TutorialData_EffectList">
+        <xsd:sequence>
+            <xsd:element name="Effect" type="TutorialData_EffectList_Effect" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TutorialData_EffectList_Effect">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TutorialData_PlayData">
+        <xsd:attribute name="dir" type="xsd:int" use="required" />
+        <xsd:attribute name="dungeonContinentId" type="xsd:int" use="required" />
+        <xsd:attribute name="initContinentId" type="xsd:int" use="required" />
+        <xsd:attribute name="initLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="initPos" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="TutorialData" type="TutorialData" />
+</xsd:schema>

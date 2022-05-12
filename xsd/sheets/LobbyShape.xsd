@@ -1,0 +1,76 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/LobbyShape"
+            targetNamespace="https://vezel.dev/novadrop/dc/LobbyShape"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="LobbyShape">
+        <xsd:sequence>
+            <xsd:element name="ClassRepresentativeSkills" type="LobbyShape_ClassRepresentativeSkills" />
+            <xsd:element name="SelectRace" type="LobbyShape_SelectRace" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="awakenClass" type="xsd:string" use="required" />
+        <xsd:attribute name="defaultGender" type="xsd:string" use="required" />
+        <xsd:attribute name="defaultRace" type="xsd:string" use="required" />
+        <xsd:attribute name="eventClass" type="xsd:string" use="required" />
+        <xsd:attribute name="newClass" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyShape_ClassRepresentativeSkills">
+        <xsd:sequence>
+            <xsd:element name="RepresentativeSkills" type="LobbyShape_ClassRepresentativeSkills_RepresentativeSkills" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyShape_ClassRepresentativeSkills_RepresentativeSkills">
+        <xsd:attribute name="class" type="xsd:string" use="required" />
+        <xsd:attribute name="skills" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyShape_SelectRace">
+        <xsd:sequence>
+            <xsd:element name="SelectClass" type="LobbyShape_SelectRace_SelectClass" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="available" type="xsd:boolean" use="required" />
+        <xsd:attribute name="body" type="xsd:int" use="required" />
+        <xsd:attribute name="customAttachment" type="xsd:int" />
+        <xsd:attribute name="customFace" type="xsd:int" use="required" />
+        <xsd:attribute name="customHair" type="xsd:int" />
+        <xsd:attribute name="customHairTone" type="xsd:int" />
+        <xsd:attribute name="customMakeup" type="xsd:int" use="required" />
+        <xsd:attribute name="customSkinTone" type="xsd:int" use="required" />
+        <xsd:attribute name="defaultClass" type="xsd:string" use="required" />
+        <xsd:attribute name="foot" type="xsd:int" use="required" />
+        <xsd:attribute name="gender" type="xsd:string" use="required" />
+        <xsd:attribute name="hand" type="xsd:int" use="required" />
+        <xsd:attribute name="pos" type="xsd:string" use="required" />
+        <xsd:attribute name="race" type="xsd:string" use="required" />
+        <xsd:attribute name="rot" type="xsd:string" use="required" />
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyShape_SelectRace_SelectClass">
+        <xsd:attribute name="animSet" type="xsd:string" use="required" />
+        <xsd:attribute name="animSetShare" type="xsd:string" use="required" />
+        <xsd:attribute name="available" type="xsd:boolean" use="required" />
+        <xsd:attribute name="body" type="xsd:int" use="required" />
+        <xsd:attribute name="class" type="xsd:string" use="required" />
+        <xsd:attribute name="customAttachment" type="xsd:int" />
+        <xsd:attribute name="customFace" type="xsd:int" use="required" />
+        <xsd:attribute name="customHair" type="xsd:int" />
+        <xsd:attribute name="customHairTone" type="xsd:int" />
+        <xsd:attribute name="customMakeup" type="xsd:int" use="required" />
+        <xsd:attribute name="customSkinTone" type="xsd:int" use="required" />
+        <xsd:attribute name="foot" type="xsd:int" use="required" />
+        <xsd:attribute name="hand" type="xsd:int" use="required" />
+        <xsd:attribute name="pos" type="xsd:string" use="required" />
+        <xsd:attribute name="rot" type="xsd:string" use="required" />
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+        <xsd:attribute name="weapon" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="LobbyShape" type="LobbyShape" />
+</xsd:schema>

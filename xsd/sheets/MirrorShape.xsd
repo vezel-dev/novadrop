@@ -1,0 +1,21 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/MirrorShape"
+            targetNamespace="https://vezel.dev/novadrop/dc/MirrorShape"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="MirrorShape">
+        <xsd:sequence>
+            <xsd:element name="Mirror" type="MirrorShape_Mirror" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="MirrorShape_Mirror">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="mesh" type="xsd:string" use="required" />
+        <xsd:attribute name="mirrorMI" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="MirrorShape" type="MirrorShape" />
+</xsd:schema>

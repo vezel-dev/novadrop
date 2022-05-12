@@ -1,0 +1,99 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/AIData"
+            targetNamespace="https://vezel.dev/novadrop/dc/AIData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="AIData">
+        <xsd:sequence>
+            <xsd:element name="Ai" type="AIData_Ai" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AIData_Ai">
+        <xsd:sequence>
+            <xsd:element name="CautionState" type="AIData_Ai_CautionState" minOccurs="0" />
+            <xsd:element name="CombatState" type="AIData_Ai_CombatState" minOccurs="0" />
+            <xsd:element name="EventList" type="AIData_Ai_EventList" minOccurs="0" />
+            <xsd:element name="PeaceState" type="AIData_Ai_PeaceState" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AIData_Ai_CautionState">
+        <xsd:attribute name="hpResetWhenCombatEnd" type="xsd:boolean" />
+        <xsd:attribute name="noMove" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AIData_Ai_CombatState">
+        <xsd:sequence>
+            <xsd:element name="AbsolutelyAttack" type="AIData_Ai_CombatState_AbsolutelyAttack" minOccurs="0" />
+            <xsd:element name="Avoid" type="AIData_Ai_CombatState_Avoid" />
+            <xsd:element name="CounterFlee" type="AIData_Ai_CombatState_CounterFlee" minOccurs="0" />
+            <xsd:element name="Idle" type="AIData_Ai_CombatState_Idle" />
+            <xsd:element name="MonsterSummon" type="AIData_Ai_CombatState_MonsterSummon" minOccurs="0" />
+            <xsd:element name="Move" type="AIData_Ai_CombatState_Move" />
+            <xsd:element name="Social" type="AIData_Ai_CombatState_Social" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AIData_Ai_CombatState_AbsolutelyAttack">
+        <xsd:sequence>
+            <xsd:element name="CutAllBehaviorList" type="AIData_Ai_CombatState_AbsolutelyAttack_CutAllBehaviorList" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AIData_Ai_CombatState_AbsolutelyAttack_CutAllBehaviorList">
+        <xsd:sequence>
+            <xsd:element name="CutAllBehavior" type="AIData_Ai_CombatState_AbsolutelyAttack_CutAllBehaviorList_CutAllBehavior" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AIData_Ai_CombatState_AbsolutelyAttack_CutAllBehaviorList_CutAllBehavior">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AIData_Ai_CombatState_Avoid">
+        <xsd:attribute name="avoidSkillId" type="xsd:int" use="required" />
+        <xsd:attribute name="cooltime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AIData_Ai_CombatState_CounterFlee">
+        <xsd:attribute name="recentPcBehiviorTime" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AIData_Ai_CombatState_Idle">
+        <xsd:attribute name="duration" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AIData_Ai_CombatState_MonsterSummon">
+        <xsd:attribute name="msgImmediately" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AIData_Ai_CombatState_Move">
+        <xsd:attribute name="targetDistance" type="xsd:int" use="required" />
+        <xsd:attribute name="timeout" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AIData_Ai_CombatState_Social">
+        <xsd:attribute name="socialMotionId" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AIData_Ai_EventList">
+        <xsd:sequence>
+            <xsd:element name="Event" type="AIData_Ai_EventList_Event" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AIData_Ai_EventList_Event">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AIData_Ai_PeaceState">
+        <xsd:attribute name="enable" type="xsd:boolean" />
+        <xsd:attribute name="moveInTerritory" type="xsd:boolean" />
+        <xsd:attribute name="noMove" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:element name="AIData" type="AIData" />
+</xsd:schema>

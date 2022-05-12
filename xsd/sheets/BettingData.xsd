@@ -1,0 +1,41 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/BettingData"
+            targetNamespace="https://vezel.dev/novadrop/dc/BettingData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="BettingData">
+        <xsd:sequence>
+            <xsd:element name="Betting" type="BettingData_Betting" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BettingData_Betting">
+        <xsd:sequence>
+            <xsd:element name="BettingRule" type="BettingData_Betting_BettingRule" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="inputEnable" type="xsd:boolean" use="required" />
+        <xsd:attribute name="subText" type="xsd:string" use="required" />
+        <xsd:attribute name="titleText" type="xsd:string" use="required" />
+        <xsd:attribute name="voteEnable" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BettingData_Betting_BettingRule">
+        <xsd:sequence>
+            <xsd:element name="BettingItem" type="BettingData_Betting_BettingRule_BettingItem" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BettingData_Betting_BettingRule_BettingItem">
+        <xsd:attribute name="itemTemplateId" type="xsd:int" use="required" />
+        <xsd:attribute name="maxValue" type="xsd:int" use="required" />
+        <xsd:attribute name="minValue" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+        <xsd:attribute name="unitValue" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="BettingData" type="BettingData" />
+</xsd:schema>

@@ -1,0 +1,21 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/CrestIconData"
+            targetNamespace="https://vezel.dev/novadrop/dc/CrestIconData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="CrestIconData">
+        <xsd:sequence>
+            <xsd:element name="Icon" type="CrestIconData_Icon" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CrestIconData_Icon"
+                     dc:keys="crestId">
+        <xsd:attribute name="crestId" type="xsd:int" use="required" />
+        <xsd:attribute name="iconName" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="CrestIconData" type="CrestIconData" />
+</xsd:schema>

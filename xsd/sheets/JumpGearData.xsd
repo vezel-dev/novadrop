@@ -1,0 +1,93 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/JumpGearData"
+            targetNamespace="https://vezel.dev/novadrop/dc/JumpGearData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="JumpGearData">
+        <xsd:sequence>
+            <xsd:element name="JumpGear" type="JumpGearData_JumpGear" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="JumpGearData_JumpGear">
+        <xsd:sequence>
+            <xsd:element name="JumpGearCost" type="JumpGearData_JumpGear_JumpGearCost" />
+            <xsd:element name="JumpGearHighwaySetting" type="JumpGearData_JumpGear_JumpGearHighwaySetting" minOccurs="0" />
+            <xsd:element name="JumpGearOption" type="JumpGearData_JumpGear_JumpGearOption" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="JumpGearData_JumpGear_JumpGearCost">
+        <xsd:attribute name="abnormalityId" type="xsd:string" />
+        <xsd:attribute name="abnormalityTurnoff" type="xsd:boolean" />
+        <xsd:attribute name="money" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="JumpGearData_JumpGear_JumpGearHighwaySetting">
+        <xsd:sequence>
+            <xsd:element name="HighwayState" type="JumpGearData_JumpGear_JumpGearHighwaySetting_HighwayState" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="resourceName" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="JumpGearData_JumpGear_JumpGearHighwaySetting_HighwayState">
+        <xsd:attribute name="changeMICParamValue" type="xsd:float" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="paramChangeDuration" type="xsd:float" use="required" />
+        <xsd:attribute name="time" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="JumpGearData_JumpGear_JumpGearOption">
+        <xsd:sequence>
+            <xsd:element name="State" type="JumpGearData_JumpGear_JumpGearOption_State" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="maxHeight" type="xsd:float" use="required" />
+        <xsd:attribute name="maxHeightRate" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="JumpGearData_JumpGear_JumpGearOption_State">
+        <xsd:sequence>
+            <xsd:element name="ActionCamera" type="JumpGearData_JumpGear_JumpGearOption_State_ActionCamera" minOccurs="0" />
+            <xsd:element name="AnimSeqList" type="JumpGearData_JumpGear_JumpGearOption_State_AnimSeqList" />
+            <xsd:element name="JumpGearEffect" type="JumpGearData_JumpGear_JumpGearOption_State_JumpGearEffect" minOccurs="0" />
+            <xsd:element name="PostProcess" type="JumpGearData_JumpGear_JumpGearOption_State_PostProcess" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="duration" type="xsd:float" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="JumpGearData_JumpGear_JumpGearOption_State_ActionCamera">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="JumpGearData_JumpGear_JumpGearOption_State_AnimSeqList">
+        <xsd:sequence>
+            <xsd:element name="AnimSeq" type="JumpGearData_JumpGear_JumpGearOption_State_AnimSeqList_AnimSeq" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="JumpGearData_JumpGear_JumpGearOption_State_AnimSeqList_AnimSeq">
+        <xsd:attribute name="animName" type="xsd:string" use="required" />
+        <xsd:attribute name="animRate" type="xsd:float" />
+        <xsd:attribute name="bAnimLooping" type="xsd:boolean" use="required" />
+        <xsd:attribute name="duration" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="JumpGearData_JumpGear_JumpGearOption_State_JumpGearEffect">
+        <xsd:attribute name="designPlayRate" type="xsd:float" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="JumpGearData_JumpGear_JumpGearOption_State_PostProcess">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="JumpGearData" type="JumpGearData" />
+</xsd:schema>

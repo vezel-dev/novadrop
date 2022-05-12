@@ -1,0 +1,125 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/CameraData"
+            targetNamespace="https://vezel.dev/novadrop/dc/CameraData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="CameraData">
+        <xsd:sequence>
+            <xsd:element name="Camera" type="CameraData_Camera" maxOccurs="unbounded" />
+            <xsd:element name="CameraEffectList" type="CameraData_CameraEffectList" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CameraData_Camera">
+        <xsd:sequence>
+            <xsd:element name="Collection" type="CameraData_Camera_Collection" minOccurs="0" />
+            <xsd:element name="Conversation" type="CameraData_Camera_Conversation" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="attachDist" type="xsd:float" />
+        <xsd:attribute name="attachPitch" type="xsd:float" />
+        <xsd:attribute name="attachYaw" type="xsd:float" />
+        <xsd:attribute name="extraHeight" type="xsd:float" />
+        <xsd:attribute name="extraOffset" type="xsd:float" />
+        <xsd:attribute name="fov" type="xsd:float" use="required" />
+        <xsd:attribute name="moveSpeed" type="xsd:float" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="repositionExp" type="xsd:float" />
+        <xsd:attribute name="rotateExp" type="xsd:int" />
+        <xsd:attribute name="rotateSpeed" type="xsd:float" use="required" />
+        <xsd:attribute name="timeScale" type="xsd:float" />
+        <xsd:attribute name="warmingUpExp" type="xsd:float" />
+        <xsd:attribute name="warmingUpTime" type="xsd:float" />
+        <xsd:attribute name="zoomExp" type="xsd:float" use="required" />
+        <xsd:attribute name="zoomSpeed" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CameraData_Camera_Collection">
+        <xsd:attribute name="attachDist" type="xsd:float" use="required" />
+        <xsd:attribute name="attachPitch" type="xsd:float" use="required" />
+        <xsd:attribute name="attachYaw" type="xsd:float" use="required" />
+        <xsd:attribute name="extraHeight" type="xsd:float" use="required" />
+        <xsd:attribute name="extraOffset" type="xsd:float" use="required" />
+        <xsd:attribute name="fov" type="xsd:float" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="rotateExp" type="xsd:int" use="required" />
+        <xsd:attribute name="rotateSpeed" type="xsd:float" use="required" />
+        <xsd:attribute name="warmingUpExp" type="xsd:float" use="required" />
+        <xsd:attribute name="warmingUpTime" type="xsd:float" use="required" />
+        <xsd:attribute name="zoomExp" type="xsd:float" use="required" />
+        <xsd:attribute name="zoomSpeed" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CameraData_Camera_Conversation">
+        <xsd:sequence>
+            <xsd:element name="Data" type="CameraData_Camera_Conversation_Data" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="attachDist" type="xsd:float" use="required" />
+        <xsd:attribute name="attachPitch" type="xsd:float" use="required" />
+        <xsd:attribute name="attachYaw" type="xsd:float" use="required" />
+        <xsd:attribute name="extraHeight" type="xsd:float" use="required" />
+        <xsd:attribute name="extraOffset" type="xsd:float" use="required" />
+        <xsd:attribute name="fov" type="xsd:float" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="rotateExp" type="xsd:int" use="required" />
+        <xsd:attribute name="rotateSpeed" type="xsd:float" use="required" />
+        <xsd:attribute name="warmingUpExp" type="xsd:float" use="required" />
+        <xsd:attribute name="warmingUpTime" type="xsd:float" use="required" />
+        <xsd:attribute name="zoomExp" type="xsd:float" use="required" />
+        <xsd:attribute name="zoomSpeed" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CameraData_Camera_Conversation_Data">
+        <xsd:attribute name="absoluteRotation" type="xsd:boolean" />
+        <xsd:attribute name="attachDist" type="xsd:float" use="required" />
+        <xsd:attribute name="attachPitch" type="xsd:float" use="required" />
+        <xsd:attribute name="attachYaw" type="xsd:float" use="required" />
+        <xsd:attribute name="extraHeight" type="xsd:float" use="required" />
+        <xsd:attribute name="extraOffset" type="xsd:float" use="required" />
+        <xsd:attribute name="fov" type="xsd:float" use="required" />
+        <xsd:attribute name="huntingZoneId" type="xsd:int" use="required" />
+        <xsd:attribute name="maxPitch" type="xsd:float" />
+        <xsd:attribute name="maxZoom" type="xsd:float" />
+        <xsd:attribute name="minPitch" type="xsd:float" />
+        <xsd:attribute name="minZoom" type="xsd:float" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="rotateExp" type="xsd:int" use="required" />
+        <xsd:attribute name="rotateSpeed" type="xsd:float" use="required" />
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+        <xsd:attribute name="warmingUpExp" type="xsd:float" use="required" />
+        <xsd:attribute name="warmingUpTime" type="xsd:float" use="required" />
+        <xsd:attribute name="zoomExp" type="xsd:float" use="required" />
+        <xsd:attribute name="zoomSpeed" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CameraData_CameraEffectList">
+        <xsd:sequence>
+            <xsd:element name="CameraEffect" type="CameraData_CameraEffectList_CameraEffect" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CameraData_CameraEffectList_CameraEffect">
+        <xsd:sequence>
+            <xsd:element name="Update" type="CameraData_CameraEffectList_CameraEffect_Update" />
+        </xsd:sequence>
+
+        <xsd:attribute name="duration" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="innerRadius" type="xsd:float" use="required" />
+        <xsd:attribute name="name" type="xsd:string" />
+        <xsd:attribute name="outerRadius" type="xsd:float" use="required" />
+        <xsd:attribute name="power" type="xsd:float" use="required" />
+        <xsd:attribute name="speed" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CameraData_CameraEffectList_CameraEffect_Update">
+        <xsd:attribute name="fov" type="xsd:boolean" use="required" />
+        <xsd:attribute name="location" type="xsd:boolean" use="required" />
+        <xsd:attribute name="rotation" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="CameraData" type="CameraData" />
+</xsd:schema>

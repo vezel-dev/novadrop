@@ -1,0 +1,34 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/GuideEffect"
+            targetNamespace="https://vezel.dev/novadrop/dc/GuideEffect"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="GuideEffect">
+        <xsd:sequence>
+            <xsd:element name="EffectInfo" type="GuideEffect_EffectInfo" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="GuideEffect_EffectInfo">
+        <xsd:sequence>
+            <xsd:element name="ConditionInfo" type="GuideEffect_EffectInfo_ConditionInfo" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="distFromObject" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="notCareOption" type="xsd:boolean" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="GuideEffect_EffectInfo_ConditionInfo">
+        <xsd:attribute name="bfCheckSide" type="xsd:string" />
+        <xsd:attribute name="cameraOriented" type="xsd:boolean" />
+        <xsd:attribute name="condition" type="xsd:string" use="required" />
+        <xsd:attribute name="effectId" type="xsd:int" use="required" />
+        <xsd:attribute name="relatePos" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:element name="GuideEffect" type="GuideEffect" />
+</xsd:schema>

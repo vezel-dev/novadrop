@@ -1,0 +1,162 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/PoliticsData"
+            targetNamespace="https://vezel.dev/novadrop/dc/PoliticsData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="PoliticsData">
+        <xsd:sequence>
+            <xsd:element name="GuardTaxData" type="PoliticsData_GuardTaxData" />
+            <xsd:element name="LordElectionData" type="PoliticsData_LordElectionData" />
+            <xsd:element name="LordPolicyData" type="PoliticsData_LordPolicyData" />
+            <xsd:element name="ToolTipData" type="PoliticsData_ToolTipData" />
+            <xsd:element name="UIStringData" type="PoliticsData_UIStringData" />
+            <xsd:element name="UserCareerData" type="PoliticsData_UserCareerData" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PoliticsData_GuardTaxData">
+        <xsd:sequence>
+            <xsd:element name="TaxGroup" type="PoliticsData_GuardTaxData_TaxGroup" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PoliticsData_GuardTaxData_TaxGroup">
+        <xsd:sequence>
+            <xsd:element name="TaxData" type="PoliticsData_GuardTaxData_TaxGroup_TaxData" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="stringId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PoliticsData_GuardTaxData_TaxGroup_TaxData">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="maxRate" type="xsd:string" use="required" />
+        <xsd:attribute name="minRate" type="xsd:string" use="required" />
+        <xsd:attribute name="stringId" type="xsd:string" use="required" />
+        <xsd:attribute name="tooltip" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PoliticsData_LordElectionData">
+        <xsd:sequence>
+            <xsd:element name="Candidacy" type="PoliticsData_LordElectionData_Candidacy" />
+            <xsd:element name="Competition" type="PoliticsData_LordElectionData_Competition" />
+            <xsd:element name="Reign" type="PoliticsData_LordElectionData_Reign" />
+            <xsd:element name="Vote" type="PoliticsData_LordElectionData_Vote" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PoliticsData_LordElectionData_Candidacy">
+        <xsd:sequence>
+            <xsd:element name="Constraint" type="PoliticsData_LordElectionData_Candidacy_Constraint" />
+        </xsd:sequence>
+
+        <xsd:attribute name="description" type="xsd:string" use="required" />
+        <xsd:attribute name="period" type="xsd:int" use="required" />
+        <xsd:attribute name="stringId" type="xsd:string" use="required" />
+        <xsd:attribute name="tooltip" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PoliticsData_LordElectionData_Candidacy_Constraint">
+        <xsd:attribute name="requireGold" type="xsd:int" use="required" />
+        <xsd:attribute name="requireGuildLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="requireGuildMember" type="xsd:int" use="required" />
+        <xsd:attribute name="requireItemCount" type="xsd:int" use="required" />
+        <xsd:attribute name="requireItemTemplateId" type="xsd:int" use="required" />
+        <xsd:attribute name="requireUserLevel" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PoliticsData_LordElectionData_Competition">
+        <xsd:sequence>
+            <xsd:element name="LordGuildWar" type="PoliticsData_LordElectionData_Competition_LordGuildWar" />
+            <xsd:element name="VoteRewardMail" type="PoliticsData_LordElectionData_Competition_VoteRewardMail" />
+        </xsd:sequence>
+
+        <xsd:attribute name="description" type="xsd:string" use="required" />
+        <xsd:attribute name="period" type="xsd:int" use="required" />
+        <xsd:attribute name="stringId" type="xsd:string" use="required" />
+        <xsd:attribute name="tooltip" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PoliticsData_LordElectionData_Competition_LordGuildWar">
+        <xsd:attribute name="scoreCanGainTooltip" type="xsd:string" use="required" />
+        <xsd:attribute name="scoreTooltip" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PoliticsData_LordElectionData_Competition_VoteRewardMail">
+        <xsd:attribute name="addItemAmount" type="xsd:int" use="required" />
+        <xsd:attribute name="addItemTemplateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PoliticsData_LordElectionData_Reign">
+        <xsd:sequence>
+            <xsd:element name="GuardInfoWindow" type="PoliticsData_LordElectionData_Reign_GuardInfoWindow" />
+        </xsd:sequence>
+
+        <xsd:attribute name="description" type="xsd:string" use="required" />
+        <xsd:attribute name="stringId" type="xsd:string" use="required" />
+        <xsd:attribute name="tooltip" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PoliticsData_LordElectionData_Reign_GuardInfoWindow">
+        <xsd:attribute name="behaviorPoints" type="xsd:string" use="required" />
+        <xsd:attribute name="behaviorPointsText" type="xsd:string" use="required" />
+        <xsd:attribute name="behaviorPointsTooltip" type="xsd:string" use="required" />
+        <xsd:attribute name="behaviorRank" type="xsd:string" use="required" />
+        <xsd:attribute name="behaviorRankText" type="xsd:string" use="required" />
+        <xsd:attribute name="behaviorRankTooltip" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PoliticsData_LordElectionData_Vote">
+        <xsd:attribute name="candidateScoreTooltip" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PoliticsData_LordPolicyData">
+        <xsd:sequence>
+            <xsd:element name="PolicyData" type="PoliticsData_LordPolicyData_PolicyData" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PoliticsData_LordPolicyData_PolicyData">
+        <xsd:sequence>
+            <xsd:element name="PolicyItem" type="PoliticsData_LordPolicyData_PolicyData_PolicyItem" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="default" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="stringId" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PoliticsData_LordPolicyData_PolicyData_PolicyItem">
+        <xsd:attribute name="fee" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="period" type="xsd:int" use="required" />
+        <xsd:attribute name="stringId" type="xsd:string" use="required" />
+        <xsd:attribute name="tooltip" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PoliticsData_ToolTipData">
+        <xsd:attribute name="tooltipBallot" type="xsd:string" use="required" />
+        <xsd:attribute name="tooltipBattleField" type="xsd:string" use="required" />
+        <xsd:attribute name="tooltipGuildWar" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PoliticsData_UIStringData">
+        <xsd:attribute name="lowRankerExpectGuard" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PoliticsData_UserCareerData">
+        <xsd:sequence>
+            <xsd:element name="Career" type="PoliticsData_UserCareerData_Career" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PoliticsData_UserCareerData_Career">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="stringId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="PoliticsData" type="PoliticsData" />
+</xsd:schema>

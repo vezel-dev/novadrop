@@ -1,0 +1,141 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/LobbyPCSelection"
+            targetNamespace="https://vezel.dev/novadrop/dc/LobbyPCSelection"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="LobbyPCSelection">
+        <xsd:sequence>
+            <xsd:element name="AnimationList" type="LobbyPCSelection_AnimationList" />
+            <xsd:element name="CameraPath" type="LobbyPCSelection_CameraPath" />
+            <xsd:element name="DeletionEffect" type="LobbyPCSelection_DeletionEffect" />
+            <xsd:element name="NormalEffect" type="LobbyPCSelection_NormalEffect" />
+            <xsd:element name="PCSlot" type="LobbyPCSelection_PCSlot" />
+            <xsd:element name="PlayLightMatinee" type="LobbyPCSelection_PlayLightMatinee" />
+            <xsd:element name="SelectionEffect" type="LobbyPCSelection_SelectionEffect" />
+            <xsd:element name="SoundQueue" type="LobbyPCSelection_SoundQueue" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyPCSelection_AnimationList">
+        <xsd:sequence>
+            <xsd:element name="EnterMotion" type="LobbyPCSelection_AnimationList_EnterMotion" />
+            <xsd:element name="IdleMotion" type="LobbyPCSelection_AnimationList_IdleMotion" />
+            <xsd:element name="SelectMotion" type="LobbyPCSelection_AnimationList_SelectMotion" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyPCSelection_AnimationList_EnterMotion">
+        <xsd:sequence>
+            <xsd:element name="Info" type="LobbyPCSelection_AnimationList_EnterMotion_Info" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyPCSelection_AnimationList_EnterMotion_Info">
+        <xsd:attribute name="animName" type="xsd:string" use="required" />
+        <xsd:attribute name="animRate" type="xsd:float" use="required" />
+        <xsd:attribute name="genderInfo" type="xsd:string" use="required" />
+        <xsd:attribute name="raceInfo" type="xsd:string" use="required" />
+        <xsd:attribute name="weaponIn" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyPCSelection_AnimationList_IdleMotion">
+        <xsd:sequence>
+            <xsd:element name="Info" type="LobbyPCSelection_AnimationList_IdleMotion_Info" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyPCSelection_AnimationList_IdleMotion_Info">
+        <xsd:attribute name="animName" type="xsd:string" use="required" />
+        <xsd:attribute name="animRate" type="xsd:float" use="required" />
+        <xsd:attribute name="genderInfo" type="xsd:string" use="required" />
+        <xsd:attribute name="raceInfo" type="xsd:string" use="required" />
+        <xsd:attribute name="weaponIn" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyPCSelection_AnimationList_SelectMotion">
+        <xsd:sequence>
+            <xsd:element name="Info" type="LobbyPCSelection_AnimationList_SelectMotion_Info" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyPCSelection_AnimationList_SelectMotion_Info">
+        <xsd:attribute name="animName" type="xsd:string" use="required" />
+        <xsd:attribute name="animRate" type="xsd:float" use="required" />
+        <xsd:attribute name="genderInfo" type="xsd:string" use="required" />
+        <xsd:attribute name="raceInfo" type="xsd:string" use="required" />
+        <xsd:attribute name="weaponIn" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyPCSelection_CameraPath">
+        <xsd:sequence>
+            <xsd:element name="Path" type="LobbyPCSelection_CameraPath_Path" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyPCSelection_CameraPath_Path">
+        <xsd:attribute name="fromCamera" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="pathName" type="xsd:string" use="required" />
+        <xsd:attribute name="toCamera" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyPCSelection_DeletionEffect">
+        <xsd:attribute name="nameColor" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyPCSelection_NormalEffect">
+        <xsd:attribute name="nameColor" type="xsd:string" use="required" />
+        <xsd:attribute name="restBonusNameColor" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyPCSelection_PCSlot">
+        <xsd:sequence>
+            <xsd:element name="Slot" type="LobbyPCSelection_PCSlot_Slot" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="maxCharacterPerLobby" type="xsd:int" use="required" />
+        <xsd:attribute name="overlayColor" type="xsd:string" use="required" />
+        <xsd:attribute name="overlayDuration" type="xsd:float" use="required" />
+        <xsd:attribute name="overlayPower" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyPCSelection_PCSlot_Slot">
+        <xsd:attribute name="dir" type="xsd:float" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="pos" type="xsd:string" use="required" />
+        <xsd:attribute name="scale" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyPCSelection_PlayLightMatinee">
+        <xsd:sequence>
+            <xsd:element name="LightMatinee" type="LobbyPCSelection_PlayLightMatinee_LightMatinee" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyPCSelection_PlayLightMatinee_LightMatinee">
+        <xsd:attribute name="pathName" type="xsd:string" use="required" />
+        <xsd:attribute name="status" type="xsd:string" use="required" />
+        <xsd:attribute name="toCamera" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyPCSelection_SelectionEffect">
+        <xsd:attribute name="effectId" type="xsd:int" use="required" />
+        <xsd:attribute name="nameColor" type="xsd:string" use="required" />
+        <xsd:attribute name="restBonusNameColor" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyPCSelection_SoundQueue">
+        <xsd:sequence>
+            <xsd:element name="Sound" type="LobbyPCSelection_SoundQueue_Sound" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="LobbyPCSelection_SoundQueue_Sound">
+        <xsd:attribute name="music" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="LobbyPCSelection" type="LobbyPCSelection" />
+</xsd:schema>

@@ -1,0 +1,311 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ArtConfig"
+            targetNamespace="https://vezel.dev/novadrop/dc/ArtConfig"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ArtConfig">
+        <xsd:sequence>
+            <xsd:element name="AttackAnimRate" type="ArtConfig_AttackAnimRate" />
+            <xsd:element name="AvatarChangeScript" type="ArtConfig_AvatarChangeScript" />
+            <xsd:element name="BarrierFieldList" type="ArtConfig_BarrierFieldList" />
+            <xsd:element name="CacheBarrierFieldData" type="ArtConfig_CacheBarrierFieldData" />
+            <xsd:element name="CacheBerserkRageWeaponData" type="ArtConfig_CacheBerserkRageWeaponData" />
+            <xsd:element name="CacheEffectList" type="ArtConfig_CacheEffectList" />
+            <xsd:element name="ChangeNpcDespawnScript" type="ArtConfig_ChangeNpcDespawnScript" />
+            <xsd:element name="CharView" type="ArtConfig_CharView" />
+            <xsd:element name="CollectSocial" type="ArtConfig_CollectSocial" />
+            <xsd:element name="CollectSocialOfServant" type="ArtConfig_CollectSocialOfServant" />
+            <xsd:element name="DefaultBlendTimeList" type="ArtConfig_DefaultBlendTimeList" />
+            <xsd:element name="EffectRescale" type="ArtConfig_EffectRescale" />
+            <xsd:element name="FakeShadowEffect" type="ArtConfig_FakeShadowEffect" />
+            <xsd:element name="HitOverlayList" type="ArtConfig_HitOverlayList" />
+            <xsd:element name="MoveAnimRate" type="ArtConfig_MoveAnimRate" />
+            <xsd:element name="PCDespawnEffect" type="ArtConfig_PCDespawnEffect" />
+            <xsd:element name="PCSpawnEffect" type="ArtConfig_PCSpawnEffect" />
+            <xsd:element name="QuestNpcDespawnScript" type="ArtConfig_QuestNpcDespawnScript" />
+            <xsd:element name="QuestNpcSpawnEffect" type="ArtConfig_QuestNpcSpawnEffect" />
+            <xsd:element name="ShowQuestMsg" type="ArtConfig_ShowQuestMsg" />
+            <xsd:element name="SunDistance" type="ArtConfig_SunDistance" />
+            <xsd:element name="VignettingWhenDead" type="ArtConfig_VignettingWhenDead" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_AttackAnimRate">
+        <xsd:sequence>
+            <xsd:element name="Fast" type="ArtConfig_AttackAnimRate_Fast" />
+            <xsd:element name="Slow" type="ArtConfig_AttackAnimRate_Slow" />
+        </xsd:sequence>
+
+        <xsd:attribute name="minimumInterval" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_AttackAnimRate_Fast">
+        <xsd:attribute name="downTime" type="xsd:float" use="required" />
+        <xsd:attribute name="upTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_AttackAnimRate_Slow">
+        <xsd:attribute name="upTime" type="xsd:int" use="required" />
+        <xsd:attribute name="zeroTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_AvatarChangeScript">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_BarrierFieldList">
+        <xsd:sequence>
+            <xsd:element name="BarrierField" type="ArtConfig_BarrierFieldList_BarrierField" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_BarrierFieldList_BarrierField">
+        <xsd:sequence>
+            <xsd:element name="ShaderSetting" type="ArtConfig_BarrierFieldList_BarrierField_ShaderSetting" />
+        </xsd:sequence>
+
+        <xsd:attribute name="basicActionId" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="npcShapeId" type="xsd:int" use="required" />
+        <xsd:attribute name="position" type="xsd:string" use="required" />
+        <xsd:attribute name="rotationX" type="xsd:float" use="required" />
+        <xsd:attribute name="scaleFactor" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_BarrierFieldList_BarrierField_ShaderSetting">
+        <xsd:attribute name="barrierDestroyTime" type="xsd:float" use="required" />
+        <xsd:attribute name="barrierHitTime" type="xsd:float" use="required" />
+        <xsd:attribute name="barrierOffTime" type="xsd:float" use="required" />
+        <xsd:attribute name="barrierOnTime" type="xsd:float" use="required" />
+        <xsd:attribute name="shaders" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_CacheBarrierFieldData">
+        <xsd:sequence>
+            <xsd:element name="BarrierField" type="ArtConfig_CacheBarrierFieldData_BarrierField" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_CacheBarrierFieldData_BarrierField">
+        <xsd:attribute name="npcShapeId" type="xsd:int" use="required" />
+        <xsd:attribute name="shaders" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_CacheBerserkRageWeaponData">
+        <xsd:sequence>
+            <xsd:element name="CacheBerserkRageWeapon" type="ArtConfig_CacheBerserkRageWeaponData_CacheBerserkRageWeapon" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_CacheBerserkRageWeaponData_CacheBerserkRageWeapon">
+        <xsd:attribute name="mesh" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_CacheEffectList">
+        <xsd:sequence>
+            <xsd:element name="CacheEffect" type="ArtConfig_CacheEffectList_CacheEffect" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_CacheEffectList_CacheEffect">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_ChangeNpcDespawnScript">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_CharView">
+        <xsd:attribute name="blend" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_CollectSocial">
+        <xsd:attribute name="fail" type="xsd:int" use="required" />
+        <xsd:attribute name="success" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_CollectSocialOfServant">
+        <xsd:attribute name="fail" type="xsd:int" use="required" />
+        <xsd:attribute name="success" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_DefaultBlendTimeList">
+        <xsd:sequence>
+            <xsd:element name="DefaultBlendTime" type="ArtConfig_DefaultBlendTimeList_DefaultBlendTime" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_DefaultBlendTimeList_DefaultBlendTime">
+        <xsd:attribute name="blendTime" type="xsd:float" use="required" />
+        <xsd:attribute name="class" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_EffectRescale">
+        <xsd:attribute name="power" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_FakeShadowEffect">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_HitOverlayList">
+        <xsd:sequence>
+            <xsd:element name="HitOverlay" type="ArtConfig_HitOverlayList_HitOverlay" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_HitOverlayList_HitOverlay">
+        <xsd:attribute name="b" type="xsd:float" use="required" />
+        <xsd:attribute name="duration" type="xsd:float" use="required" />
+        <xsd:attribute name="g" type="xsd:float" use="required" />
+        <xsd:attribute name="power" type="xsd:float" use="required" />
+        <xsd:attribute name="r" type="xsd:float" use="required" />
+        <xsd:attribute name="target" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_MoveAnimRate">
+        <xsd:attribute name="moveSpeedFactor" type="xsd:float" use="required" />
+        <xsd:attribute name="scaleFactor" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_PCDespawnEffect">
+        <xsd:attribute name="enterEffectId" type="xsd:int" use="required" />
+        <xsd:attribute name="summonEffectId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_PCSpawnEffect">
+        <xsd:attribute name="enterEffectId" type="xsd:int" use="required" />
+        <xsd:attribute name="summonEffectId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_QuestNpcDespawnScript">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_QuestNpcSpawnEffect">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_ShowQuestMsg">
+        <xsd:sequence>
+            <xsd:element name="DailyQuest" type="ArtConfig_ShowQuestMsg_DailyQuest" />
+            <xsd:element name="GuildQuest" type="ArtConfig_ShowQuestMsg_GuildQuest" />
+            <xsd:element name="ImportantQuest" type="ArtConfig_ShowQuestMsg_ImportantQuest" />
+            <xsd:element name="MissionQuest" type="ArtConfig_ShowQuestMsg_MissionQuest" />
+            <xsd:element name="NormalQuest" type="ArtConfig_ShowQuestMsg_NormalQuest" />
+            <xsd:element name="RecommendedQuest" type="ArtConfig_ShowQuestMsg_RecommendedQuest" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_ShowQuestMsg_DailyQuest">
+        <xsd:attribute name="endRes" type="xsd:string" use="required" />
+        <xsd:attribute name="markerHeight" type="xsd:int" use="required" />
+        <xsd:attribute name="markerWidth" type="xsd:int" use="required" />
+        <xsd:attribute name="progressRes" type="xsd:string" use="required" />
+        <xsd:attribute name="repeatProgressRes" type="xsd:string" use="required" />
+        <xsd:attribute name="repeatStartRes" type="xsd:string" use="required" />
+        <xsd:attribute name="startRes" type="xsd:string" use="required" />
+        <xsd:attribute name="subTitleColor" type="xsd:string" use="required" />
+        <xsd:attribute name="subTitleSize" type="xsd:int" use="required" />
+        <xsd:attribute name="taskColor" type="xsd:string" use="required" />
+        <xsd:attribute name="taskSize" type="xsd:int" use="required" />
+        <xsd:attribute name="titleColor" type="xsd:string" use="required" />
+        <xsd:attribute name="titleSize" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_ShowQuestMsg_GuildQuest">
+        <xsd:attribute name="endRes" type="xsd:string" use="required" />
+        <xsd:attribute name="markerHeight" type="xsd:int" use="required" />
+        <xsd:attribute name="markerWidth" type="xsd:int" use="required" />
+        <xsd:attribute name="progressRes" type="xsd:string" use="required" />
+        <xsd:attribute name="repeatProgressRes" type="xsd:string" use="required" />
+        <xsd:attribute name="repeatStartRes" type="xsd:string" use="required" />
+        <xsd:attribute name="startRes" type="xsd:string" use="required" />
+        <xsd:attribute name="subTitleColor" type="xsd:string" use="required" />
+        <xsd:attribute name="subTitleSize" type="xsd:int" use="required" />
+        <xsd:attribute name="taskColor" type="xsd:string" use="required" />
+        <xsd:attribute name="taskSize" type="xsd:int" use="required" />
+        <xsd:attribute name="titleColor" type="xsd:string" use="required" />
+        <xsd:attribute name="titleSize" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_ShowQuestMsg_ImportantQuest">
+        <xsd:attribute name="endRes" type="xsd:string" use="required" />
+        <xsd:attribute name="markerHeight" type="xsd:int" use="required" />
+        <xsd:attribute name="markerWidth" type="xsd:int" use="required" />
+        <xsd:attribute name="progressRes" type="xsd:string" use="required" />
+        <xsd:attribute name="repeatProgressRes" type="xsd:string" use="required" />
+        <xsd:attribute name="repeatStartRes" type="xsd:string" use="required" />
+        <xsd:attribute name="startRes" type="xsd:string" use="required" />
+        <xsd:attribute name="subTitleColor" type="xsd:string" use="required" />
+        <xsd:attribute name="subTitleSize" type="xsd:int" use="required" />
+        <xsd:attribute name="taskColor" type="xsd:string" use="required" />
+        <xsd:attribute name="taskSize" type="xsd:int" use="required" />
+        <xsd:attribute name="titleColor" type="xsd:string" use="required" />
+        <xsd:attribute name="titleSize" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_ShowQuestMsg_MissionQuest">
+        <xsd:attribute name="endRes" type="xsd:string" use="required" />
+        <xsd:attribute name="markerHeight" type="xsd:int" use="required" />
+        <xsd:attribute name="markerWidth" type="xsd:int" use="required" />
+        <xsd:attribute name="progressRes" type="xsd:string" use="required" />
+        <xsd:attribute name="repeatProgressRes" type="xsd:string" use="required" />
+        <xsd:attribute name="repeatStartRes" type="xsd:string" use="required" />
+        <xsd:attribute name="startRes" type="xsd:string" use="required" />
+        <xsd:attribute name="subTitleColor" type="xsd:string" use="required" />
+        <xsd:attribute name="subTitleSize" type="xsd:int" use="required" />
+        <xsd:attribute name="taskColor" type="xsd:string" use="required" />
+        <xsd:attribute name="taskSize" type="xsd:int" use="required" />
+        <xsd:attribute name="titleColor" type="xsd:string" use="required" />
+        <xsd:attribute name="titleSize" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_ShowQuestMsg_NormalQuest">
+        <xsd:attribute name="endRes" type="xsd:string" use="required" />
+        <xsd:attribute name="markerHeight" type="xsd:int" use="required" />
+        <xsd:attribute name="markerWidth" type="xsd:int" use="required" />
+        <xsd:attribute name="progressRes" type="xsd:string" use="required" />
+        <xsd:attribute name="repeatProgressRes" type="xsd:string" use="required" />
+        <xsd:attribute name="repeatStartRes" type="xsd:string" use="required" />
+        <xsd:attribute name="startRes" type="xsd:string" use="required" />
+        <xsd:attribute name="subTitleColor" type="xsd:string" use="required" />
+        <xsd:attribute name="subTitleSize" type="xsd:int" use="required" />
+        <xsd:attribute name="taskColor" type="xsd:string" use="required" />
+        <xsd:attribute name="taskSize" type="xsd:int" use="required" />
+        <xsd:attribute name="titleColor" type="xsd:string" use="required" />
+        <xsd:attribute name="titleSize" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_ShowQuestMsg_RecommendedQuest">
+        <xsd:attribute name="endRes" type="xsd:string" use="required" />
+        <xsd:attribute name="markerHeight" type="xsd:int" use="required" />
+        <xsd:attribute name="markerWidth" type="xsd:int" use="required" />
+        <xsd:attribute name="progressRes" type="xsd:string" use="required" />
+        <xsd:attribute name="repeatProgressRes" type="xsd:string" use="required" />
+        <xsd:attribute name="repeatStartRes" type="xsd:string" use="required" />
+        <xsd:attribute name="startRes" type="xsd:string" use="required" />
+        <xsd:attribute name="subTitleColor" type="xsd:string" use="required" />
+        <xsd:attribute name="subTitleSize" type="xsd:int" use="required" />
+        <xsd:attribute name="taskColor" type="xsd:string" use="required" />
+        <xsd:attribute name="taskSize" type="xsd:int" use="required" />
+        <xsd:attribute name="titleColor" type="xsd:string" use="required" />
+        <xsd:attribute name="titleSize" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_SunDistance">
+        <xsd:attribute name="sunDist" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ArtConfig_VignettingWhenDead">
+        <xsd:attribute name="a" type="xsd:float" use="required" />
+        <xsd:attribute name="b" type="xsd:float" use="required" />
+        <xsd:attribute name="g" type="xsd:float" use="required" />
+        <xsd:attribute name="r" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ArtConfig" type="ArtConfig" />
+</xsd:schema>

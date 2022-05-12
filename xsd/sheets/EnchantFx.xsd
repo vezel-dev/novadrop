@@ -1,0 +1,55 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/EnchantFx"
+            targetNamespace="https://vezel.dev/novadrop/dc/EnchantFx"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="EnchantFx">
+        <xsd:sequence>
+            <xsd:element name="EnchantData" type="EnchantFx_EnchantData" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantFx_EnchantData">
+        <xsd:sequence>
+            <xsd:element name="PerLevel" type="EnchantFx_EnchantData_PerLevel" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantFx_EnchantData_PerLevel">
+        <xsd:sequence>
+            <xsd:element name="Fx" type="EnchantFx_EnchantData_PerLevel_Fx" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="level" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantFx_EnchantData_PerLevel_Fx">
+        <xsd:sequence>
+            <xsd:element name="FxNumber" type="EnchantFx_EnchantData_PerLevel_Fx_FxNumber" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="weaponPosition" type="xsd:string" use="required" />
+        <xsd:attribute name="weaponStatus" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantFx_EnchantData_PerLevel_Fx_FxNumber">
+        <xsd:attribute name="deco1" type="xsd:string" use="required" />
+        <xsd:attribute name="deco2" type="xsd:string" use="required" />
+        <xsd:attribute name="flame" type="xsd:string" use="required" />
+        <xsd:attribute name="fxBoneName" type="xsd:string" />
+        <xsd:attribute name="fxOffset" type="xsd:string" use="required" />
+        <xsd:attribute name="fxPlayRate" type="xsd:float" use="required" />
+        <xsd:attribute name="fxResource" type="xsd:string" use="required" />
+        <xsd:attribute name="fxRotate" type="xsd:string" use="required" />
+        <xsd:attribute name="fxScale" type="xsd:string" use="required" />
+        <xsd:attribute name="glow" type="xsd:string" use="required" />
+        <xsd:attribute name="spark" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="EnchantFx" type="EnchantFx" />
+</xsd:schema>

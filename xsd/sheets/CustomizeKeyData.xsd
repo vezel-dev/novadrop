@@ -1,0 +1,30 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/CustomizeKeyData"
+            targetNamespace="https://vezel.dev/novadrop/dc/CustomizeKeyData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="CustomizeKeyData">
+        <xsd:sequence>
+            <xsd:element name="CustomizeGroup" type="CustomizeKeyData_CustomizeGroup" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CustomizeKeyData_CustomizeGroup">
+        <xsd:sequence>
+            <xsd:element name="CustomizeKey" type="CustomizeKeyData_CustomizeGroup_CustomizeKey" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CustomizeKeyData_CustomizeGroup_CustomizeKey">
+        <xsd:attribute name="command" type="xsd:string" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="keymapName" type="xsd:string" use="required" />
+        <xsd:attribute name="uiName" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:element name="CustomizeKeyData" type="CustomizeKeyData" />
+</xsd:schema>

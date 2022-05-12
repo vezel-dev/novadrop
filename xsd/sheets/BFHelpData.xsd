@@ -1,0 +1,32 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/BFHelpData"
+            targetNamespace="https://vezel.dev/novadrop/dc/BFHelpData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="BFHelpData">
+        <xsd:sequence>
+            <xsd:element name="BFHelp" type="BFHelpData_BFHelp" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BFHelpData_BFHelp">
+        <xsd:sequence>
+            <xsd:element name="HelpIcon" type="BFHelpData_BFHelp_HelpIcon" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="backgroundImage" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="titleStringId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="BFHelpData_BFHelp_HelpIcon">
+        <xsd:attribute name="imagePath" type="xsd:string" use="required" />
+        <xsd:attribute name="imageStringId" type="xsd:int" use="required" />
+        <xsd:attribute name="mapPos" type="xsd:string" use="required" />
+        <xsd:attribute name="showInfoString" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:element name="BFHelpData" type="BFHelpData" />
+</xsd:schema>

@@ -1,0 +1,720 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/WorldData"
+            targetNamespace="https://vezel.dev/novadrop/dc/WorldData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="WorldData">
+        <xsd:sequence>
+            <xsd:element name="AbnormalityEffectType" type="WorldData_AbnormalityEffectType" />
+            <xsd:element name="AbnormalityUI" type="WorldData_AbnormalityUI" />
+            <xsd:element name="ActionKey" type="WorldData_ActionKey" />
+            <xsd:element name="AutoLogout" type="WorldData_AutoLogout" />
+            <xsd:element name="AutoRefreshServerList" type="WorldData_AutoRefreshServerList" />
+            <xsd:element name="BookmarkTeleport" type="WorldData_BookmarkTeleport" />
+            <xsd:element name="ChangeColor" type="WorldData_ChangeColor" />
+            <xsd:element name="ChangeLook" type="WorldData_ChangeLook" />
+            <xsd:element name="ChapterHouse" type="WorldData_ChapterHouse" />
+            <xsd:element name="ChatBanTime" type="WorldData_ChatBanTime" />
+            <xsd:element name="ChatConfig" type="WorldData_ChatConfig" />
+            <xsd:element name="ChronoScrollPetition" type="WorldData_ChronoScrollPetition" />
+            <xsd:element name="ClientLeaveWorld" type="WorldData_ClientLeaveWorld" />
+            <xsd:element name="CollisionRule" type="WorldData_CollisionRule" />
+            <xsd:element name="CriticalSoundConfig" type="WorldData_CriticalSoundConfig" />
+            <xsd:element name="CustomItemCrystalsWarning" type="WorldData_CustomItemCrystalsWarning" />
+            <xsd:element name="DamagePenetrationConst" type="WorldData_DamagePenetrationConst" />
+            <xsd:element name="Death" type="WorldData_Death" />
+            <xsd:element name="DungeonConfig" type="WorldData_DungeonConfig" />
+            <xsd:element name="DungeonResonance" type="WorldData_DungeonResonance" />
+            <xsd:element name="EnchantIni" type="WorldData_EnchantIni" />
+            <xsd:element name="FollowConfig" type="WorldData_FollowConfig" />
+            <xsd:element name="Gachabox" type="WorldData_Gachabox" />
+            <xsd:element name="GuildRecommendation" type="WorldData_GuildRecommendation" />
+            <xsd:element name="HealAdjust" type="WorldData_HealAdjust" />
+            <xsd:element name="Homunculus" type="WorldData_Homunculus" />
+            <xsd:element name="LinkGuide" type="WorldData_LinkGuide" />
+            <xsd:element name="MagicalHealAdjust" type="WorldData_MagicalHealAdjust" />
+            <xsd:element name="MiniReactionPush" type="WorldData_MiniReactionPush" />
+            <xsd:element name="MoneyString" type="WorldData_MoneyString" />
+            <xsd:element name="MoveConfig" type="WorldData_MoveConfig" />
+            <xsd:element name="NearTown" type="WorldData_NearTown" />
+            <xsd:element name="PCCollisionCheckInAction" type="WorldData_PCCollisionCheckInAction" />
+            <xsd:element name="Petition" type="WorldData_Petition" />
+            <xsd:element name="PvEServer" type="WorldData_PvEServer" />
+            <xsd:element name="QuestCompensationDecrease" type="WorldData_QuestCompensationDecrease" />
+            <xsd:element name="QuestDifficultyByLevelDiff" type="WorldData_QuestDifficultyByLevelDiff" />
+            <xsd:element name="QuestPriority" type="WorldData_QuestPriority" />
+            <xsd:element name="ReactionCancel" type="WorldData_ReactionCancel" />
+            <xsd:element name="RestrictionOpenList" type="WorldData_RestrictionOpenList" />
+            <xsd:element name="SealItem" type="WorldData_SealItem" />
+            <xsd:element name="SeasonType" type="WorldData_SeasonType" />
+            <xsd:element name="SkillConfig" type="WorldData_SkillConfig" />
+            <xsd:element name="SkillDamageTypeConstant" type="WorldData_SkillDamageTypeConstant" />
+            <xsd:element name="StackSystem" type="WorldData_StackSystem" />
+            <xsd:element name="Stamina" type="WorldData_Stamina" />
+            <xsd:element name="StatByLevel" type="WorldData_StatByLevel" />
+            <xsd:element name="StormEffect" type="WorldData_StormEffect" />
+            <xsd:element name="SuperArmor" type="WorldData_SuperArmor" />
+            <xsd:element name="SwimStartDepthList" type="WorldData_SwimStartDepthList" />
+            <xsd:element name="TCat" type="WorldData_TCat" />
+            <xsd:element name="TradeBroker" type="WorldData_TradeBroker" />
+            <xsd:element name="TutorialPlay" type="WorldData_TutorialPlay" />
+            <xsd:element name="UnidentifyScroll" type="WorldData_UnidentifyScroll" />
+            <xsd:element name="UserLevelLimit" type="WorldData_UserLevelLimit" />
+            <xsd:element name="UserWarningHp" type="WorldData_UserWarningHp" />
+            <xsd:element name="VillagePos" type="WorldData_VillagePos" />
+            <xsd:element name="WeakPointSystem" type="WorldData_WeakPointSystem" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_AbnormalityEffectType">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="linkWeaponEnchantLevel" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_AbnormalityUI">
+        <xsd:attribute name="deletePeriod" type="xsd:int" use="required" />
+        <xsd:attribute name="focusUILimitNum" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_ActionKey">
+        <xsd:sequence>
+            <xsd:element name="ActionType" type="WorldData_ActionKey_ActionType" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="rangeStep" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_ActionKey_ActionType">
+        <xsd:attribute name="activeRange" type="xsd:float" use="required" />
+        <xsd:attribute name="activeVolumeHeight" type="xsd:float" />
+        <xsd:attribute name="autoInteractionDist" type="xsd:float" />
+        <xsd:attribute name="interactionDist" type="xsd:float" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="priority" type="xsd:int" use="required" />
+        <xsd:attribute name="useAngle" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_AutoLogout">
+        <xsd:attribute name="autoLogoutTimeInLobby" type="xsd:int" use="required" />
+        <xsd:attribute name="autoLogoutTimeInWorld" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_AutoRefreshServerList">
+        <xsd:attribute name="sec" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_BookmarkTeleport">
+        <xsd:attribute name="maxTeleportPosCount" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_ChangeColor">
+        <xsd:attribute name="progressTime" type="xsd:float" use="required" />
+        <xsd:attribute name="socialOnFail" type="xsd:int" use="required" />
+        <xsd:attribute name="socialOnProgress" type="xsd:int" use="required" />
+        <xsd:attribute name="socialOnSuccess" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_ChangeLook">
+        <xsd:attribute name="progressTime" type="xsd:int" use="required" />
+        <xsd:attribute name="socialOnFail" type="xsd:int" use="required" />
+        <xsd:attribute name="socialOnProgress" type="xsd:int" use="required" />
+        <xsd:attribute name="socialOnSuccess" type="xsd:int" use="required" />
+        <xsd:attribute name="value" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_ChapterHouse">
+        <xsd:attribute name="maxTabCount" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_ChatBanTime">
+        <xsd:sequence>
+            <xsd:element name="Item" type="WorldData_ChatBanTime_Item" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_ChatBanTime_Item">
+        <xsd:attribute name="seconds" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_ChatConfig">
+        <xsd:sequence>
+            <xsd:element name="ChatSound" type="WorldData_ChatConfig_ChatSound" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_ChatConfig_ChatSound">
+        <xsd:attribute name="noticeSoundId" type="xsd:int" use="required" />
+        <xsd:attribute name="whisperSoundId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_ChronoScrollPetition">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="time" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_ClientLeaveWorld" />
+
+    <xsd:complexType name="WorldData_CollisionRule">
+        <xsd:attribute name="collideInDarkRift" type="xsd:boolean" use="required" />
+        <xsd:attribute name="collideInRaid" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_CriticalSoundConfig">
+        <xsd:sequence>
+            <xsd:element name="CriticalSound" type="WorldData_CriticalSoundConfig_CriticalSound" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_CriticalSoundConfig_CriticalSound">
+        <xsd:attribute name="class" type="xsd:string" use="required" />
+        <xsd:attribute name="soundCue" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_CustomItemCrystalsWarning">
+        <xsd:sequence>
+            <xsd:element name="Warning" type="WorldData_CustomItemCrystalsWarning_Warning" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_CustomItemCrystalsWarning_Warning">
+        <xsd:attribute name="maxLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="minLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="target" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_DamagePenetrationConst">
+        <xsd:attribute name="value" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_Death">
+        <xsd:attribute name="dimConditionValue" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_DungeonConfig">
+        <xsd:sequence>
+            <xsd:element name="UnavailableItems" type="WorldData_DungeonConfig_UnavailableItems" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_DungeonConfig_UnavailableItems">
+        <xsd:sequence>
+            <xsd:element name="Item" type="WorldData_DungeonConfig_UnavailableItems_Item" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_DungeonConfig_UnavailableItems_Item">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_DungeonResonance">
+        <xsd:sequence>
+            <xsd:element name="Variant" type="WorldData_DungeonResonance_Variant" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_DungeonResonance_Variant">
+        <xsd:sequence>
+            <xsd:element name="DungeonResonanceEntranceItem" type="WorldData_DungeonResonance_Variant_DungeonResonanceEntranceItem" />
+            <xsd:element name="DungeonResonanceWarningTime" type="WorldData_DungeonResonance_Variant_DungeonResonanceWarningTime" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="isChooseDungeonMode" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_DungeonResonance_Variant_DungeonResonanceEntranceItem">
+        <xsd:sequence>
+            <xsd:element name="EntranceItem" type="WorldData_DungeonResonance_Variant_DungeonResonanceEntranceItem_EntranceItem" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_DungeonResonance_Variant_DungeonResonanceEntranceItem_EntranceItem">
+        <xsd:sequence>
+            <xsd:element name="DefaultMaterial" type="WorldData_DungeonResonance_Variant_DungeonResonanceEntranceItem_EntranceItem_DefaultMaterial" />
+            <xsd:element name="SubstitutionalMaterial" type="WorldData_DungeonResonance_Variant_DungeonResonanceEntranceItem_EntranceItem_SubstitutionalMaterial" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_DungeonResonance_Variant_DungeonResonanceEntranceItem_EntranceItem_DefaultMaterial">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_DungeonResonance_Variant_DungeonResonanceEntranceItem_EntranceItem_SubstitutionalMaterial">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="priority" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_DungeonResonance_Variant_DungeonResonanceWarningTime">
+        <xsd:attribute name="value" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_EnchantIni">
+        <xsd:sequence>
+            <xsd:element name="Resource" type="WorldData_EnchantIni_Resource" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_EnchantIni_Resource">
+        <xsd:attribute name="effectOnSucess" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_FollowConfig">
+        <xsd:attribute name="arriveDistanceThreshold" type="xsd:float" use="required" />
+        <xsd:attribute name="giveupFollowDistanceThreshold" type="xsd:float" use="required" />
+        <xsd:attribute name="maxFollowDistanceThreshold" type="xsd:float" use="required" />
+        <xsd:attribute name="minFollowDistanceThreshold" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_Gachabox">
+        <xsd:attribute name="maxContinuousOpenNumberGachabox" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_GuildRecommendation">
+        <xsd:attribute name="coolTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_HealAdjust">
+        <xsd:attribute name="archer" type="xsd:string" use="required" />
+        <xsd:attribute name="assassin" type="xsd:string" use="required" />
+        <xsd:attribute name="berserker" type="xsd:string" use="required" />
+        <xsd:attribute name="elementalist" type="xsd:string" use="required" />
+        <xsd:attribute name="engineer" type="xsd:string" use="required" />
+        <xsd:attribute name="fighter" type="xsd:string" use="required" />
+        <xsd:attribute name="glaiver" type="xsd:string" use="required" />
+        <xsd:attribute name="lancer" type="xsd:string" use="required" />
+        <xsd:attribute name="priest" type="xsd:string" use="required" />
+        <xsd:attribute name="slayer" type="xsd:string" use="required" />
+        <xsd:attribute name="sorcerer" type="xsd:string" use="required" />
+        <xsd:attribute name="soulless" type="xsd:string" use="required" />
+        <xsd:attribute name="warrior" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_Homunculus">
+        <xsd:attribute name="promotionMemo" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_LinkGuide">
+        <xsd:sequence>
+            <xsd:element name="DeleteLink" type="WorldData_LinkGuide_DeleteLink" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_LinkGuide_DeleteLink">
+        <xsd:attribute name="range" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_MagicalHealAdjust">
+        <xsd:attribute name="archer" type="xsd:string" use="required" />
+        <xsd:attribute name="assassin" type="xsd:string" use="required" />
+        <xsd:attribute name="berserker" type="xsd:string" use="required" />
+        <xsd:attribute name="elementalist" type="xsd:string" use="required" />
+        <xsd:attribute name="engineer" type="xsd:string" use="required" />
+        <xsd:attribute name="fighter" type="xsd:string" use="required" />
+        <xsd:attribute name="glaiver" type="xsd:string" use="required" />
+        <xsd:attribute name="lancer" type="xsd:string" use="required" />
+        <xsd:attribute name="priest" type="xsd:string" use="required" />
+        <xsd:attribute name="slayer" type="xsd:string" use="required" />
+        <xsd:attribute name="sorcerer" type="xsd:string" use="required" />
+        <xsd:attribute name="soulless" type="xsd:string" use="required" />
+        <xsd:attribute name="warrior" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_MiniReactionPush">
+        <xsd:sequence>
+            <xsd:element name="Target" type="WorldData_MiniReactionPush_Target" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_MiniReactionPush_Target">
+        <xsd:attribute name="distance" type="xsd:float" use="required" />
+        <xsd:attribute name="duration" type="xsd:int" use="required" />
+        <xsd:attribute name="initAcc" type="xsd:int" use="required" />
+        <xsd:attribute name="initVel" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_MoneyString">
+        <xsd:sequence>
+            <xsd:element name="MoneyString" type="WorldData_MoneyString_MoneyString" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_MoneyString_MoneyString">
+        <xsd:sequence>
+            <xsd:element name="Copper" type="WorldData_MoneyString_MoneyString_Copper" />
+            <xsd:element name="Gold" type="WorldData_MoneyString_MoneyString_Gold" />
+            <xsd:element name="Silver" type="WorldData_MoneyString_MoneyString_Silver" />
+        </xsd:sequence>
+
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_MoneyString_MoneyString_Copper">
+        <xsd:attribute name="end" type="xsd:string" use="required" />
+        <xsd:attribute name="start" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_MoneyString_MoneyString_Gold">
+        <xsd:attribute name="end" type="xsd:string" use="required" />
+        <xsd:attribute name="start" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_MoneyString_MoneyString_Silver">
+        <xsd:attribute name="end" type="xsd:string" use="required" />
+        <xsd:attribute name="start" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_MoveConfig">
+        <xsd:attribute name="airFriction" type="xsd:float" use="required" />
+        <xsd:attribute name="climbingSpeed" type="xsd:float" use="required" />
+        <xsd:attribute name="fallingAngle" type="xsd:float" use="required" />
+        <xsd:attribute name="fallingDamageHeight" type="xsd:float" use="required" />
+        <xsd:attribute name="fallingLandingMotionHeight" type="xsd:float" use="required" />
+        <xsd:attribute name="fallingSpeed" type="xsd:float" use="required" />
+        <xsd:attribute name="fallingStartHeight" type="xsd:float" use="required" />
+        <xsd:attribute name="jumpDuration" type="xsd:int" use="required" />
+        <xsd:attribute name="jumpFallingStartHeight" type="xsd:float" use="required" />
+        <xsd:attribute name="jumpHeight" type="xsd:float" use="required" />
+        <xsd:attribute name="movingDefenceForwardSpeed" type="xsd:int" use="required" />
+        <xsd:attribute name="movingDefenceMaxRotationAngle" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_NearTown">
+        <xsd:attribute name="countDownSec" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_PCCollisionCheckInAction">
+        <xsd:attribute name="distance" type="xsd:int" use="required" />
+        <xsd:attribute name="thresholdSpeed" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_Petition">
+        <xsd:sequence>
+            <xsd:element name="Terapedia" type="WorldData_Petition_Terapedia" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_Petition_Terapedia">
+        <xsd:attribute name="url" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_PvEServer">
+        <xsd:sequence>
+            <xsd:element name="MerchantVillagerException" type="WorldData_PvEServer_MerchantVillagerException" />
+            <xsd:element name="QuestException" type="WorldData_PvEServer_QuestException" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_PvEServer_MerchantVillagerException">
+        <xsd:attribute name="menuId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_PvEServer_QuestException">
+        <xsd:attribute name="questId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_QuestCompensationDecrease">
+        <xsd:sequence>
+            <xsd:element name="CompensationDecrease" type="WorldData_QuestCompensationDecrease_CompensationDecrease" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_QuestCompensationDecrease_CompensationDecrease"
+                     dc:keys="numberOver">
+        <xsd:attribute name="decreaseRatio" type="xsd:float" use="required" />
+        <xsd:attribute name="numberOver" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_QuestDifficultyByLevelDiff">
+        <xsd:attribute name="easyMax" type="xsd:int" use="required" />
+        <xsd:attribute name="hardMax" type="xsd:int" use="required" />
+        <xsd:attribute name="normalMax" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_QuestPriority">
+        <xsd:sequence>
+            <xsd:element name="Kind" type="WorldData_QuestPriority_Kind" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_QuestPriority_Kind">
+        <xsd:sequence>
+            <xsd:element name="State" type="WorldData_QuestPriority_Kind_State" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="property" type="xsd:int" use="required" />
+        <xsd:attribute name="value" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_QuestPriority_Kind_State">
+        <xsd:attribute name="icon" type="xsd:string" />
+        <xsd:attribute name="marker" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="property" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_ReactionCancel">
+        <xsd:attribute name="defaultCancelTime" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_RestrictionOpenList">
+        <xsd:sequence>
+            <xsd:element name="RestrictionOpen" type="WorldData_RestrictionOpenList_RestrictionOpen" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_RestrictionOpenList_RestrictionOpen">
+        <xsd:sequence>
+            <xsd:element name="BuyListException" type="WorldData_RestrictionOpenList_RestrictionOpen_BuyListException" />
+            <xsd:element name="CollectionException" type="WorldData_RestrictionOpenList_RestrictionOpen_CollectionException" minOccurs="0" />
+            <xsd:element name="HuntingZoneException" type="WorldData_RestrictionOpenList_RestrictionOpen_HuntingZoneException" />
+            <xsd:element name="PegasusException" type="WorldData_RestrictionOpenList_RestrictionOpen_PegasusException" />
+        </xsd:sequence>
+
+        <xsd:attribute name="level" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_RestrictionOpenList_RestrictionOpen_BuyListException">
+        <xsd:attribute name="itemId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_RestrictionOpenList_RestrictionOpen_CollectionException">
+        <xsd:sequence>
+            <xsd:element name="ContinentList" type="WorldData_RestrictionOpenList_RestrictionOpen_CollectionException_ContinentList" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_RestrictionOpenList_RestrictionOpen_CollectionException_ContinentList">
+        <xsd:sequence>
+            <xsd:element name="Continent" type="WorldData_RestrictionOpenList_RestrictionOpen_CollectionException_ContinentList_Continent" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_RestrictionOpenList_RestrictionOpen_CollectionException_ContinentList_Continent">
+        <xsd:sequence>
+            <xsd:element name="Territory" type="WorldData_RestrictionOpenList_RestrictionOpen_CollectionException_ContinentList_Continent_Territory" />
+        </xsd:sequence>
+
+        <xsd:attribute name="continentId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_RestrictionOpenList_RestrictionOpen_CollectionException_ContinentList_Continent_Territory">
+        <xsd:attribute name="territoryId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_RestrictionOpenList_RestrictionOpen_HuntingZoneException">
+        <xsd:attribute name="hzId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_RestrictionOpenList_RestrictionOpen_PegasusException">
+        <xsd:attribute name="pegasusId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_SealItem">
+        <xsd:attribute name="socialOnProgress" type="xsd:int" use="required" />
+        <xsd:attribute name="socialOnSuccess" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_SeasonType">
+        <xsd:sequence>
+            <xsd:element name="Season" type="WorldData_SeasonType_Season" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="latestSeasonId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_SeasonType_Season">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_SkillConfig">
+        <xsd:sequence>
+            <xsd:element name="AutoToggleOffSkill" type="WorldData_SkillConfig_AutoToggleOffSkill" maxOccurs="unbounded" />
+            <xsd:element name="DisableInBattleField" type="WorldData_SkillConfig_DisableInBattleField" maxOccurs="unbounded" />
+            <xsd:element name="DisableInDungeon" type="WorldData_SkillConfig_DisableInDungeon" maxOccurs="unbounded" />
+            <xsd:element name="DisableInLawlessArea" type="WorldData_SkillConfig_DisableInLawlessArea" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_SkillConfig_AutoToggleOffSkill">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_SkillConfig_DisableInBattleField">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_SkillConfig_DisableInDungeon">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_SkillConfig_DisableInLawlessArea">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_SkillDamageTypeConstant">
+        <xsd:attribute name="skillDamageTypeDefenceConst" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_StackSystem">
+        <xsd:sequence>
+            <xsd:element name="Sorcerer" type="WorldData_StackSystem_Sorcerer" />
+            <xsd:element name="Warrior" type="WorldData_StackSystem_Warrior" />
+        </xsd:sequence>
+
+        <xsd:attribute name="updateInterval" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_StackSystem_Sorcerer">
+        <xsd:sequence>
+            <xsd:element name="AllSlotEffect" type="WorldData_StackSystem_Sorcerer_AllSlotEffect" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_StackSystem_Sorcerer_AllSlotEffect">
+        <xsd:sequence>
+            <xsd:element name="Effect" type="WorldData_StackSystem_Sorcerer_AllSlotEffect_Effect" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_StackSystem_Sorcerer_AllSlotEffect_Effect">
+        <xsd:attribute name="abnormalityId" type="xsd:int" use="required" />
+        <xsd:attribute name="abnormalityStack" type="xsd:int" use="required" />
+        <xsd:attribute name="effectScale" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_StackSystem_Warrior">
+        <xsd:attribute name="periodSecondBeforeBlink" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_Stamina">
+        <xsd:sequence>
+            <xsd:element name="Archer" type="WorldData_Stamina_Archer" />
+            <xsd:element name="Engineer" type="WorldData_Stamina_Engineer" />
+            <xsd:element name="Fighter" type="WorldData_Stamina_Fighter" />
+            <xsd:element name="Lancer" type="WorldData_Stamina_Lancer" />
+            <xsd:element name="Warrior" type="WorldData_Stamina_Warrior" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_Stamina_Archer">
+        <xsd:attribute name="maxST" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_Stamina_Engineer">
+        <xsd:attribute name="maxST" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_Stamina_Fighter">
+        <xsd:attribute name="stDecreaseTime" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_Stamina_Lancer">
+        <xsd:attribute name="maxST" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_Stamina_Warrior">
+        <xsd:attribute name="maxST" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_StatByLevel">
+        <xsd:sequence>
+            <xsd:element name="Stat" type="WorldData_StatByLevel_Stat" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_StatByLevel_Stat">
+        <xsd:attribute name="antiReactionAdjForGrade" type="xsd:int" use="required" />
+        <xsd:attribute name="expNeeded" type="xsd:string" use="required" />
+        <xsd:attribute name="level" type="xsd:int" use="required" />
+        <xsd:attribute name="levelupMinStatistics" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_StormEffect">
+        <xsd:attribute name="distance" type="xsd:float" use="required" />
+        <xsd:attribute name="downAcc" type="xsd:float" use="required" />
+        <xsd:attribute name="downRotate" type="xsd:float" use="required" />
+        <xsd:attribute name="downSpeed" type="xsd:float" use="required" />
+        <xsd:attribute name="fluctuation" type="xsd:float" use="required" />
+        <xsd:attribute name="fluctuationRate" type="xsd:float" use="required" />
+        <xsd:attribute name="fluctuationRotate" type="xsd:string" use="required" />
+        <xsd:attribute name="upAcc" type="xsd:float" use="required" />
+        <xsd:attribute name="upRotate" type="xsd:float" use="required" />
+        <xsd:attribute name="upSpeed" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_SuperArmor">
+        <xsd:attribute name="inaccessibleDistanceForLarge" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_SwimStartDepthList">
+        <xsd:sequence>
+            <xsd:element name="SwimStartDepth" type="WorldData_SwimStartDepthList_SwimStartDepth" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_SwimStartDepthList_SwimStartDepth">
+        <xsd:attribute name="gender" type="xsd:string" use="required" />
+        <xsd:attribute name="height" type="xsd:float" use="required" />
+        <xsd:attribute name="race" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_TCat">
+        <xsd:attribute name="showTCatInInventory" type="xsd:boolean" use="required" />
+        <xsd:attribute name="useInGameStoreCoin" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_TradeBroker">
+        <xsd:attribute name="expireDays" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_TutorialPlay">
+        <xsd:attribute name="activated" type="xsd:boolean" use="required" />
+        <xsd:attribute name="entryMsgId" type="xsd:int" use="required" />
+        <xsd:attribute name="entryMsgTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_UnidentifyScroll">
+        <xsd:sequence>
+            <xsd:element name="Item" type="WorldData_UnidentifyScroll_Item" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_UnidentifyScroll_Item">
+        <xsd:attribute name="grade" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="rank" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_UserLevelLimit">
+        <xsd:attribute name="value" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_UserWarningHp">
+        <xsd:attribute name="percent" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_VillagePos">
+        <xsd:sequence>
+            <xsd:element name="Tomb" type="WorldData_VillagePos_Tomb" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_VillagePos_Tomb">
+        <xsd:attribute name="areaName" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_WeakPointSystem">
+        <xsd:sequence>
+            <xsd:element name="Archer" type="WorldData_WeakPointSystem_Archer" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorldData_WeakPointSystem_Archer" />
+
+    <xsd:element name="WorldData" type="WorldData" />
+</xsd:schema>

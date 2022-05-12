@@ -1,0 +1,22 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/AttachEffectCondition"
+            targetNamespace="https://vezel.dev/novadrop/dc/AttachEffectCondition"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="AttachEffectCondition">
+        <xsd:sequence>
+            <xsd:element name="EffectCondition" type="AttachEffectCondition_EffectCondition" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AttachEffectCondition_EffectCondition"
+                     dc:keys="id">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="overlap" type="xsd:boolean" />
+    </xsd:complexType>
+
+    <xsd:element name="AttachEffectCondition" type="AttachEffectCondition" />
+</xsd:schema>

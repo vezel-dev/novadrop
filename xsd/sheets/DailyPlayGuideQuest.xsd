@@ -1,0 +1,56 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/DailyPlayGuideQuest"
+            targetNamespace="https://vezel.dev/novadrop/dc/DailyPlayGuideQuest"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="DailyPlayGuideQuest">
+        <xsd:sequence>
+            <xsd:element name="Quest" type="DailyPlayGuideQuest_Quest" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DailyPlayGuideQuest_Quest">
+        <xsd:sequence>
+            <xsd:element name="TaskPart" type="DailyPlayGuideQuest_Quest_TaskPart" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="autoStartType" type="xsd:int" use="required" />
+        <xsd:attribute name="groupId" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="maxLevel" type="xsd:int" />
+        <xsd:attribute name="minLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" />
+        <xsd:attribute name="overLevel" type="xsd:int" />
+        <xsd:attribute name="realHuntingZoneId" type="xsd:int" use="required" />
+        <xsd:attribute name="suitableLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="suitableMemberCount" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DailyPlayGuideQuest_Quest_TaskPart">
+        <xsd:attribute name="collectionId" type="xsd:int" />
+        <xsd:attribute name="count" type="xsd:int" />
+        <xsd:attribute name="failOnUserDead" type="xsd:boolean" />
+        <xsd:attribute name="groupName" type="xsd:string" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="itemIconId" type="xsd:int" />
+        <xsd:attribute name="itemName" type="xsd:string" />
+        <xsd:attribute name="itemTemplateId" type="xsd:int" />
+        <xsd:attribute name="journal" type="xsd:string" />
+        <xsd:attribute name="monsterHuntingZoneId" type="xsd:int" />
+        <xsd:attribute name="monsterTemplateId" type="xsd:int" />
+        <xsd:attribute name="partyConstraint" type="xsd:string" />
+        <xsd:attribute name="probability" type="xsd:float" />
+        <xsd:attribute name="returnTaskId" type="xsd:int" />
+        <xsd:attribute name="seqDistribution" type="xsd:boolean" />
+        <xsd:attribute name="targetHuntingZoneId" type="xsd:int" />
+        <xsd:attribute name="targetNpcTemplateId" type="xsd:int" />
+        <xsd:attribute name="taskId" type="xsd:int" />
+        <xsd:attribute name="type" type="xsd:string" />
+        <xsd:attribute name="unitedParty" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:element name="DailyPlayGuideQuest" type="DailyPlayGuideQuest" />
+</xsd:schema>

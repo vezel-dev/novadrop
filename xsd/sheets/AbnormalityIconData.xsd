@@ -1,0 +1,21 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/AbnormalityIconData"
+            targetNamespace="https://vezel.dev/novadrop/dc/AbnormalityIconData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="AbnormalityIconData">
+        <xsd:sequence>
+            <xsd:element name="Icon" type="AbnormalityIconData_Icon" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AbnormalityIconData_Icon"
+                     dc:keys="abnormalityId">
+        <xsd:attribute name="abnormalityId" type="xsd:int" use="required" />
+        <xsd:attribute name="iconName" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:element name="AbnormalityIconData" type="AbnormalityIconData" />
+</xsd:schema>

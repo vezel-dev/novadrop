@@ -1,0 +1,57 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ServantData"
+            targetNamespace="https://vezel.dev/novadrop/dc/ServantData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ServantData">
+        <xsd:sequence>
+            <xsd:element name="Servant" type="ServantData_Servant" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantData_Servant">
+        <xsd:sequence>
+            <xsd:element name="Ability" type="ServantData_Servant_Ability" minOccurs="0" />
+            <xsd:element name="Animation" type="ServantData_Servant_Animation" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="PartnerSkill" type="ServantData_Servant_PartnerSkill" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="cameraZOffset" type="xsd:float" />
+        <xsd:attribute name="defaultName" type="xsd:string" use="required" />
+        <xsd:attribute name="enableSRGB" type="xsd:boolean" />
+        <xsd:attribute name="huntingZoneId" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="maxEnergy" type="xsd:int" use="required" />
+        <xsd:attribute name="maxLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="mentListId" type="xsd:int" use="required" />
+        <xsd:attribute name="nearFrustumOffset" type="xsd:float" />
+        <xsd:attribute name="npcTemplateId" type="xsd:int" use="required" />
+        <xsd:attribute name="rareGrade" type="xsd:int" use="required" />
+        <xsd:attribute name="servantIconName" type="xsd:string" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+        <xsd:attribute name="wearableStyleId" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantData_Servant_Ability">
+        <xsd:attribute name="maxCount" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantData_Servant_Animation">
+        <xsd:attribute name="itemLooting" type="xsd:string" />
+        <xsd:attribute name="move" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantData_Servant_PartnerSkill">
+        <xsd:sequence>
+            <xsd:element name="ActiveSkill" type="ServantData_Servant_PartnerSkill_ActiveSkill" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ServantData_Servant_PartnerSkill_ActiveSkill">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ServantData" type="ServantData" />
+</xsd:schema>

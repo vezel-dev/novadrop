@@ -1,0 +1,34 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/CardCombineList"
+            targetNamespace="https://vezel.dev/novadrop/dc/CardCombineList"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="CardCombineList">
+        <xsd:sequence>
+            <xsd:element name="CombineList" type="CardCombineList_CombineList" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CardCombineList_CombineList">
+        <xsd:sequence>
+            <xsd:element name="BasePassivity" type="CardCombineList_CombineList_BasePassivity" maxOccurs="unbounded" />
+            <xsd:element name="BonusPassivity" type="CardCombineList_CombineList_BonusPassivity" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="cardCategory" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CardCombineList_CombineList_BasePassivity">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CardCombineList_CombineList_BonusPassivity">
+        <xsd:attribute name="allCardMinLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="CardCombineList" type="CardCombineList" />
+</xsd:schema>

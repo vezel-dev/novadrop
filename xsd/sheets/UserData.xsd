@@ -1,0 +1,65 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/UserData"
+            targetNamespace="https://vezel.dev/novadrop/dc/UserData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="UserData">
+        <xsd:sequence>
+            <xsd:element name="Template" type="UserData_Template" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="huntingZoneId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="UserData_Template">
+        <xsd:sequence>
+            <xsd:element name="ManaPoint" type="UserData_Template_ManaPoint" />
+            <xsd:element name="NamePlate" type="UserData_Template_NamePlate" />
+            <xsd:element name="RangeAtkSkillList" type="UserData_Template_RangeAtkSkillList" minOccurs="0" />
+            <xsd:element name="RangerOnly" type="UserData_Template_RangerOnly" />
+            <xsd:element name="Reaction" type="UserData_Template_Reaction" />
+        </xsd:sequence>
+
+        <xsd:attribute name="basicActionId" type="xsd:int" use="required" />
+        <xsd:attribute name="class" type="xsd:string" use="required" />
+        <xsd:attribute name="gender" type="xsd:string" use="required" />
+        <xsd:attribute name="heightWhenClimbing" type="xsd:float" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="race" type="xsd:string" use="required" />
+        <xsd:attribute name="shapeId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="UserData_Template_ManaPoint">
+        <xsd:attribute name="recoveryStartTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="UserData_Template_NamePlate">
+        <xsd:attribute name="deathNameplateHeight" type="xsd:int" />
+        <xsd:attribute name="nameplateHeight" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="UserData_Template_RangeAtkSkillList">
+        <xsd:sequence>
+            <xsd:element name="RangeAtkSkill" type="UserData_Template_RangeAtkSkillList_RangeAtkSkill" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="UserData_Template_RangeAtkSkillList_RangeAtkSkill">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="lv" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="UserData_Template_RangerOnly">
+        <xsd:attribute name="criticalBonus" type="xsd:int" use="required" />
+        <xsd:attribute name="duration" type="xsd:int" use="required" />
+        <xsd:attribute name="maxContinuousHit" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="UserData_Template_Reaction">
+        <xsd:attribute name="maxAdditionalGauge" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="UserData" type="UserData" />
+</xsd:schema>

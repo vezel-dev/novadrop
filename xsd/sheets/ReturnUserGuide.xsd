@@ -1,0 +1,35 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ReturnUserGuide"
+            targetNamespace="https://vezel.dev/novadrop/dc/ReturnUserGuide"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ReturnUserGuide">
+        <xsd:sequence>
+            <xsd:element name="Gift" type="ReturnUserGuide_Gift" maxOccurs="unbounded" />
+            <xsd:element name="RemainQuest" type="ReturnUserGuide_RemainQuest" />
+        </xsd:sequence>
+
+        <xsd:attribute name="autoTeleportCountDownSec" type="xsd:int" use="required" />
+        <xsd:attribute name="maxLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="minLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="period" type="xsd:int" use="required" />
+        <xsd:attribute name="uiOpenPeriod" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ReturnUserGuide_Gift">
+        <xsd:attribute name="count" type="xsd:int" use="required" />
+        <xsd:attribute name="itemTemplateId" type="xsd:int" use="required" />
+        <xsd:attribute name="maxLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="minLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="title" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ReturnUserGuide_RemainQuest">
+        <xsd:attribute name="questList" type="xsd:string" use="required" />
+        <xsd:attribute name="remainNumber" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ReturnUserGuide" type="ReturnUserGuide" />
+</xsd:schema>

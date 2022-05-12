@@ -1,0 +1,22 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/AutoWorldProfileResult"
+            targetNamespace="https://vezel.dev/novadrop/dc/AutoWorldProfileResult"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="AutoWorldProfileResult">
+        <xsd:sequence>
+            <xsd:element name="World" type="AutoWorldProfileResult_World" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AutoWorldProfileResult_World">
+        <xsd:attribute name="continent" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="pos" type="xsd:string" use="required" />
+        <xsd:attribute name="totalStaticTextureSize" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="AutoWorldProfileResult" type="AutoWorldProfileResult" />
+</xsd:schema>

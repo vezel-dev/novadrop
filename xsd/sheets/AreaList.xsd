@@ -1,0 +1,73 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/AreaList"
+            targetNamespace="https://vezel.dev/novadrop/dc/AreaList"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="AreaList">
+        <xsd:sequence>
+            <xsd:element name="Continent" type="AreaList_Continent" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AreaList_Continent">
+        <xsd:sequence>
+            <xsd:element name="Area" type="AreaList_Continent_Area" maxOccurs="unbounded" />
+            <xsd:element name="ChannelContinent" type="AreaList_Continent_ChannelContinent" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="IntroMovie" type="AreaList_Continent_IntroMovie" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="desc" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="originZoneX" type="xsd:int" use="required" />
+        <xsd:attribute name="originZoneY" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AreaList_Continent_Area">
+        <xsd:sequence>
+            <xsd:element name="Zones" type="AreaList_Continent_Area_Zones" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="superlow" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AreaList_Continent_Area_Zones">
+        <xsd:sequence>
+            <xsd:element name="Zone" type="AreaList_Continent_Area_Zones_Zone" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AreaList_Continent_Area_Zones_Zone">
+        <xsd:attribute name="x" type="xsd:int" use="required" />
+        <xsd:attribute name="y" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AreaList_Continent_ChannelContinent">
+        <xsd:sequence>
+            <xsd:element name="Area" type="AreaList_Continent_ChannelContinent_Area" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="desc" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AreaList_Continent_ChannelContinent_Area">
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AreaList_Continent_IntroMovie">
+        <xsd:sequence>
+            <xsd:element name="AlwaysLoading" type="AreaList_Continent_IntroMovie_AlwaysLoading" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AreaList_Continent_IntroMovie_AlwaysLoading">
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="AreaList" type="AreaList" />
+</xsd:schema>

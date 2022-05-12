@@ -1,0 +1,56 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/WorkObjectData"
+            targetNamespace="https://vezel.dev/novadrop/dc/WorkObjectData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="WorkObjectData">
+        <xsd:sequence>
+            <xsd:element name="WorkObject" type="WorkObjectData_WorkObject" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="WorkObjectData_WorkObject">
+        <xsd:sequence>
+            <xsd:element name="ActionScript" type="WorkObjectData_WorkObject_ActionScript" minOccurs="0" />
+            <xsd:element name="NamePlate" type="WorkObjectData_WorkObject_NamePlate" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Work" type="WorkObjectData_WorkObject_Work" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="despawnAfterWork" type="xsd:boolean" use="required" />
+        <xsd:attribute name="firstTaskId" type="xsd:int" use="required" />
+        <xsd:attribute name="isForQuestId" type="xsd:int" use="required" />
+        <xsd:attribute name="isWideBroadcaster" type="xsd:boolean" />
+        <xsd:attribute name="keyItemAmount" type="xsd:int" />
+        <xsd:attribute name="keyItemId" type="xsd:int" />
+        <xsd:attribute name="lastTaskId" type="xsd:int" use="required" />
+        <xsd:attribute name="prepareDuration" type="xsd:int" use="required" />
+        <xsd:attribute name="scale" type="xsd:float" />
+        <xsd:attribute name="shapeId" type="xsd:int" use="required" />
+        <xsd:attribute name="socialMotionId" type="xsd:int" use="required" />
+        <xsd:attribute name="templateId" type="xsd:int" use="required" />
+        <xsd:attribute name="volumeActiveHalfHeight" type="xsd:float" />
+        <xsd:attribute name="volumeActiveRange" type="xsd:float" />
+        <xsd:attribute name="volumeInteractionDist" type="xsd:float" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorkObjectData_WorkObject_ActionScript">
+        <xsd:attribute name="end" type="xsd:int" use="required" />
+        <xsd:attribute name="start" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorkObjectData_WorkObject_NamePlate">
+        <xsd:attribute name="nameplateHeight" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="WorkObjectData_WorkObject_Work">
+        <xsd:attribute name="amountMax" type="xsd:int" use="required" />
+        <xsd:attribute name="amountMin" type="xsd:int" use="required" />
+        <xsd:attribute name="itemId" type="xsd:int" use="required" />
+        <xsd:attribute name="prob" type="xsd:float" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="WorkObjectData" type="WorkObjectData" />
+</xsd:schema>

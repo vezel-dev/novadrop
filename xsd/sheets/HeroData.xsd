@@ -1,0 +1,134 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/HeroData"
+            targetNamespace="https://vezel.dev/novadrop/dc/HeroData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="HeroData">
+        <xsd:sequence>
+            <xsd:element name="Template" type="HeroData_Template" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="huntingZoneId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroData_Template">
+        <xsd:sequence>
+            <xsd:element name="CombatPropensity" type="HeroData_Template_CombatPropensity" />
+            <xsd:element name="DefaultShortcutData" type="HeroData_Template_DefaultShortcutData" />
+            <xsd:element name="DefaultSkillList" type="HeroData_Template_DefaultSkillList" />
+            <xsd:element name="ManaPoint" type="HeroData_Template_ManaPoint" />
+            <xsd:element name="NamePlate" type="HeroData_Template_NamePlate" />
+            <xsd:element name="RangeAtkSkillList" type="HeroData_Template_RangeAtkSkillList" />
+            <xsd:element name="Reaction" type="HeroData_Template_Reaction" />
+            <xsd:element name="StackSystem" type="HeroData_Template_StackSystem" minOccurs="0" />
+            <xsd:element name="Stat" type="HeroData_Template_Stat" />
+            <xsd:element name="StatByLevelTable" type="HeroData_Template_StatByLevelTable" />
+        </xsd:sequence>
+
+        <xsd:attribute name="basicActionId" type="xsd:int" use="required" />
+        <xsd:attribute name="class" type="xsd:string" use="required" />
+        <xsd:attribute name="classType" type="xsd:int" use="required" />
+        <xsd:attribute name="deathEffectId" type="xsd:int" use="required" />
+        <xsd:attribute name="defaultSkinId" type="xsd:int" use="required" />
+        <xsd:attribute name="desc" type="xsd:string" use="required" />
+        <xsd:attribute name="gender" type="xsd:string" use="required" />
+        <xsd:attribute name="heroSkinGroup" type="xsd:string" use="required" />
+        <xsd:attribute name="iconResource" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="promotionHero" type="xsd:boolean" />
+        <xsd:attribute name="race" type="xsd:string" use="required" />
+        <xsd:attribute name="referenceClass" type="xsd:string" use="required" />
+        <xsd:attribute name="staminaType" type="xsd:int" use="required" />
+        <xsd:attribute name="thumbnailPath" type="xsd:string" use="required" />
+        <xsd:attribute name="useStack" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroData_Template_CombatPropensity">
+        <xsd:attribute name="attack" type="xsd:int" use="required" />
+        <xsd:attribute name="crowdControl" type="xsd:int" use="required" />
+        <xsd:attribute name="move" type="xsd:int" use="required" />
+        <xsd:attribute name="operationDifficulty" type="xsd:int" use="required" />
+        <xsd:attribute name="survival" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroData_Template_DefaultShortcutData">
+        <xsd:sequence>
+            <xsd:element name="Shortcut" type="HeroData_Template_DefaultShortcutData_Shortcut" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroData_Template_DefaultShortcutData_Shortcut">
+        <xsd:attribute name="column" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="inputString" type="xsd:int" use="required" />
+        <xsd:attribute name="line" type="xsd:int" use="required" />
+        <xsd:attribute name="sequence" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroData_Template_DefaultSkillList">
+        <xsd:attribute name="activeSkillIdList" type="xsd:string" use="required" />
+        <xsd:attribute name="passiveSkillIdList" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroData_Template_ManaPoint">
+        <xsd:attribute name="recoveryStartTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroData_Template_NamePlate">
+        <xsd:attribute name="deathNameplateHeight" type="xsd:int" use="required" />
+        <xsd:attribute name="nameplateHeight" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroData_Template_RangeAtkSkillList">
+        <xsd:sequence>
+            <xsd:element name="RangeAtkSkill" type="HeroData_Template_RangeAtkSkillList_RangeAtkSkill" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroData_Template_RangeAtkSkillList_RangeAtkSkill">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="lv" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroData_Template_Reaction">
+        <xsd:attribute name="maxAdditionalGauge" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroData_Template_StackSystem">
+        <xsd:sequence>
+            <xsd:element name="Warrior" type="HeroData_Template_StackSystem_Warrior" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroData_Template_StackSystem_Warrior">
+        <xsd:attribute name="maxStackPoint" type="xsd:int" use="required" />
+        <xsd:attribute name="minStackPointRequire" type="xsd:int" use="required" />
+        <xsd:attribute name="periodSecondBeforeBlink" type="xsd:int" use="required" />
+        <xsd:attribute name="stackPointPeriod" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroData_Template_Stat">
+        <xsd:attribute name="atk" type="xsd:int" use="required" />
+        <xsd:attribute name="attackSpeed" type="xsd:int" use="required" />
+        <xsd:attribute name="def" type="xsd:int" use="required" />
+        <xsd:attribute name="runSpeed" type="xsd:int" use="required" />
+        <xsd:attribute name="walkSpeed" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroData_Template_StatByLevelTable">
+        <xsd:sequence>
+            <xsd:element name="StatByLevel" type="HeroData_Template_StatByLevelTable_StatByLevel" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HeroData_Template_StatByLevelTable_StatByLevel">
+        <xsd:attribute name="atk" type="xsd:int" />
+        <xsd:attribute name="def" type="xsd:int" />
+        <xsd:attribute name="level" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="HeroData" type="HeroData" />
+</xsd:schema>

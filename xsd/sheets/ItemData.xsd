@@ -1,0 +1,134 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ItemData"
+            targetNamespace="https://vezel.dev/novadrop/dc/ItemData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ItemData">
+        <xsd:sequence>
+            <xsd:element name="Item" type="ItemData_Item" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ItemData_Item"
+                     dc:keys="id">
+        <xsd:attribute name="accessoryColorId" type="xsd:string" />
+        <xsd:attribute name="artisanable" type="xsd:boolean" />
+        <xsd:attribute name="autoPickUp" type="xsd:boolean" />
+        <xsd:attribute name="autoPickUpEffectId" type="xsd:int" />
+        <xsd:attribute name="awakenable" type="xsd:boolean" />
+        <xsd:attribute name="backplatemix" type="xsd:boolean" />
+        <xsd:attribute name="boundType" type="xsd:string" />
+        <xsd:attribute name="buyPrice" type="xsd:string" />
+        <xsd:attribute name="category" type="xsd:string" />
+        <xsd:attribute name="changeColorEnable" type="xsd:boolean" />
+        <xsd:attribute name="changeEnchantFxId" type="xsd:int" />
+        <xsd:attribute name="changeLook" type="xsd:boolean" />
+        <xsd:attribute name="combatItemArg1" type="xsd:int" />
+        <xsd:attribute name="combatItemArg2" type="xsd:int" />
+        <xsd:attribute name="combatItemArg3" type="xsd:int" />
+        <xsd:attribute name="combatItemArg4" type="xsd:string" />
+        <xsd:attribute name="combatItemArg5" type="xsd:string" />
+        <xsd:attribute name="combatItemSubType" type="xsd:string" />
+        <xsd:attribute name="combatItemType" type="xsd:string" use="required" />
+        <xsd:attribute name="combineOptionValue" type="xsd:int" />
+        <xsd:attribute name="conversionSmallGroup" type="xsd:int" />
+        <xsd:attribute name="coolTime" type="xsd:int" />
+        <xsd:attribute name="coolTimeGroup" type="xsd:int" use="required" />
+        <xsd:attribute name="customizingString" type="xsd:boolean" />
+        <xsd:attribute name="decompositionId" type="xsd:int" />
+        <xsd:attribute name="defaultValue" type="xsd:int" />
+        <xsd:attribute name="destroyable" type="xsd:boolean" />
+        <xsd:attribute name="dismantlable" type="xsd:boolean" use="required" />
+        <xsd:attribute name="dropEffect" type="xsd:string" />
+        <xsd:attribute name="dropEffectOnlyWhenMine" type="xsd:boolean" />
+        <xsd:attribute name="dropIdentify" type="xsd:boolean" />
+        <xsd:attribute name="dropSilhouette" type="xsd:string" />
+        <xsd:attribute name="dropSound" type="xsd:string" use="required" />
+        <xsd:attribute name="dropType" type="xsd:int" />
+        <xsd:attribute name="dualOptionAble" type="xsd:boolean" />
+        <xsd:attribute name="enchantEnable" type="xsd:boolean" />
+        <xsd:attribute name="enchantEquipPart" type="xsd:string" />
+        <xsd:attribute name="enchantMove" type="xsd:int" />
+        <xsd:attribute name="equipSound" type="xsd:string" use="required" />
+        <xsd:attribute name="equipmentSetId" type="xsd:int" />
+        <xsd:attribute name="extractLook" type="xsd:boolean" />
+        <xsd:attribute name="gambleItemGrade" type="xsd:int" />
+        <xsd:attribute name="gambleItemType" type="xsd:string" />
+        <xsd:attribute name="guildWarehouseStorable" type="xsd:boolean" use="required" />
+        <xsd:attribute name="icon" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="isEnableResonanceSeal" type="xsd:boolean" />
+        <xsd:attribute name="isMaterialEquip" type="xsd:boolean" />
+        <xsd:attribute name="isPvpEquipment" type="xsd:boolean" />
+        <xsd:attribute name="isReputation" type="xsd:boolean" />
+        <xsd:attribute name="itemMixId" type="xsd:int" />
+        <xsd:attribute name="level" type="xsd:int" />
+        <xsd:attribute name="linkCardId" type="xsd:int" />
+        <xsd:attribute name="linkChangeColorListId" type="xsd:int" />
+        <xsd:attribute name="linkCrestId" type="xsd:int" />
+        <xsd:attribute name="linkCustomizingId" type="xsd:int" />
+        <xsd:attribute name="linkEnchantId" type="xsd:int" />
+        <xsd:attribute name="linkEquipmentExpId" type="xsd:int" />
+        <xsd:attribute name="linkEquipmentGroupId" type="xsd:int" />
+        <xsd:attribute name="linkEquipmentId" type="xsd:int" />
+        <xsd:attribute name="linkLookInfoId" type="xsd:int" />
+        <xsd:attribute name="linkMasterpieceEnchantId" type="xsd:int" />
+        <xsd:attribute name="linkMasterpiecePassivityCategoryId" type="xsd:string" />
+        <xsd:attribute name="linkMasterpiecePassivityId" type="xsd:string" />
+        <xsd:attribute name="linkMaterialEnchantId" type="xsd:int" />
+        <xsd:attribute name="linkMaterialRepairId" type="xsd:int" />
+        <xsd:attribute name="linkPassivityCategoryId" type="xsd:string" />
+        <xsd:attribute name="linkPassivityId" type="xsd:string" />
+        <xsd:attribute name="linkPetAdultId" type="xsd:int" />
+        <xsd:attribute name="linkPetOrbId" type="xsd:int" />
+        <xsd:attribute name="linkRawStoneId" type="xsd:int" />
+        <xsd:attribute name="linkSkillId" type="xsd:int" />
+        <xsd:attribute name="linkSkillPeriodDay" type="xsd:int" />
+        <xsd:attribute name="linkSocialId" type="xsd:int" />
+        <xsd:attribute name="lootEffect" type="xsd:int" />
+        <xsd:attribute name="masterpieceBasicStatRevise" type="xsd:string" />
+        <xsd:attribute name="masterpieceRate" type="xsd:float" />
+        <xsd:attribute name="maxStack" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="nonOwnershipItemDropEffect" type="xsd:string" />
+        <xsd:attribute name="obtainable" type="xsd:boolean" use="required" />
+        <xsd:attribute name="optionResetDisable" type="xsd:boolean" />
+        <xsd:attribute name="periodByWebAdmin" type="xsd:boolean" />
+        <xsd:attribute name="periodInMinute" type="xsd:int" />
+        <xsd:attribute name="periodItemCategoryId" type="xsd:int" />
+        <xsd:attribute name="preSetEnchant" type="xsd:int" />
+        <xsd:attribute name="rank" type="xsd:int" use="required" />
+        <xsd:attribute name="rareGrade" type="xsd:int" use="required" />
+        <xsd:attribute name="requiredClass" type="xsd:string" />
+        <xsd:attribute name="requiredEquipmentType" type="xsd:string" use="required" />
+        <xsd:attribute name="requiredGender" type="xsd:string" />
+        <xsd:attribute name="requiredGuildLevel" type="xsd:int" />
+        <xsd:attribute name="requiredLevel" type="xsd:int" />
+        <xsd:attribute name="requiredMaxLevel" type="xsd:int" />
+        <xsd:attribute name="requiredRace" type="xsd:string" />
+        <xsd:attribute name="requiredUserStatus" type="xsd:string" />
+        <xsd:attribute name="ridingUseable" type="xsd:boolean" />
+        <xsd:attribute name="searchable" type="xsd:boolean" use="required" />
+        <xsd:attribute name="seasonId" type="xsd:string" />
+        <xsd:attribute name="sellPrice" type="xsd:string" />
+        <xsd:attribute name="slotLimit" type="xsd:int" use="required" />
+        <xsd:attribute name="sortingNumber" type="xsd:int" />
+        <xsd:attribute name="storeSellable" type="xsd:boolean" use="required" />
+        <xsd:attribute name="styleCostumeId" type="xsd:int" />
+        <xsd:attribute name="tradable" type="xsd:boolean" use="required" />
+        <xsd:attribute name="tradeBrokerTradable" type="xsd:boolean" />
+        <xsd:attribute name="unbindCount" type="xsd:int" />
+        <xsd:attribute name="unbindEnchant" type="xsd:int" />
+        <xsd:attribute name="unidentifiedItemGrade" type="xsd:int" />
+        <xsd:attribute name="unionVenderTradeable" type="xsd:boolean" />
+        <xsd:attribute name="uniqueEquippedItem" type="xsd:boolean" />
+        <xsd:attribute name="useOnlyTerritory" type="xsd:boolean" />
+        <xsd:attribute name="usedSound" type="xsd:string" />
+        <xsd:attribute name="userWarehouseStorable" type="xsd:boolean" />
+        <xsd:attribute name="warehouseStorable" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ItemData" type="ItemData" />
+</xsd:schema>

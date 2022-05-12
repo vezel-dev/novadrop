@@ -1,0 +1,39 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/AnimationData"
+            targetNamespace="https://vezel.dev/novadrop/dc/AnimationData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="AnimationData">
+        <xsd:sequence>
+            <xsd:element name="AnimSet" type="AnimationData_AnimSet" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AnimationData_AnimSet">
+        <xsd:sequence>
+            <xsd:element name="Animation" type="AnimationData_AnimSet_Animation" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AnimationData_AnimSet_Animation">
+        <xsd:attribute name="animDuration" type="xsd:int" use="required" />
+        <xsd:attribute name="moveDir" type="xsd:int" use="required" />
+        <xsd:attribute name="moveDistance1" type="xsd:float" use="required" />
+        <xsd:attribute name="moveDistance2" type="xsd:float" use="required" />
+        <xsd:attribute name="moveDistance3" type="xsd:float" use="required" />
+        <xsd:attribute name="moveDistance4" type="xsd:float" use="required" />
+        <xsd:attribute name="moveDistance5" type="xsd:float" use="required" />
+        <xsd:attribute name="moveDistance6" type="xsd:float" use="required" />
+        <xsd:attribute name="moveDistance7" type="xsd:float" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="rootMotion" type="xsd:boolean" use="required" />
+        <xsd:attribute name="rootRotate" type="xsd:boolean" use="required" />
+        <xsd:attribute name="rotateYaw" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="AnimationData" type="AnimationData" />
+</xsd:schema>

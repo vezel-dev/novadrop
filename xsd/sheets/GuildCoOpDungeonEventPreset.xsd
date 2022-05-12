@@ -1,0 +1,20 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/GuildCoOpDungeonEventPreset"
+            targetNamespace="https://vezel.dev/novadrop/dc/GuildCoOpDungeonEventPreset"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="GuildCoOpDungeonEventPreset">
+        <xsd:sequence>
+            <xsd:element name="Preset" type="GuildCoOpDungeonEventPreset_Preset" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="GuildCoOpDungeonEventPreset_Preset">
+        <xsd:attribute name="icon" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="GuildCoOpDungeonEventPreset" type="GuildCoOpDungeonEventPreset" />
+</xsd:schema>

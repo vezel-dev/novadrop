@@ -1,0 +1,23 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/AccountData"
+            targetNamespace="https://vezel.dev/novadrop/dc/AccountData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="AccountData">
+        <xsd:sequence>
+            <xsd:element name="Account" type="AccountData_Account" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AccountData_Account">
+        <xsd:attribute name="arbiter" type="xsd:string" use="required" />
+        <xsd:attribute name="character" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:string" use="required" />
+        <xsd:attribute name="ip" type="xsd:string" use="required" />
+        <xsd:attribute name="port" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="AccountData" type="AccountData" />
+</xsd:schema>

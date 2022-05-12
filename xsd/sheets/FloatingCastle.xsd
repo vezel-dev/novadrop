@@ -1,0 +1,49 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/FloatingCastle"
+            targetNamespace="https://vezel.dev/novadrop/dc/FloatingCastle"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="FloatingCastle">
+        <xsd:sequence>
+            <xsd:element name="Castle" type="FloatingCastle_Castle" maxOccurs="unbounded" />
+            <xsd:element name="CommonConfig" type="FloatingCastle_CommonConfig" />
+        </xsd:sequence>
+
+        <xsd:attribute name="active" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="FloatingCastle_Castle"
+                     dc:keys="id">
+        <xsd:sequence>
+            <xsd:element name="RenderOption" type="FloatingCastle_Castle_RenderOption" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="continentId" type="xsd:int" use="required" />
+        <xsd:attribute name="grade" type="xsd:int" use="required" />
+        <xsd:attribute name="groupName" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="levelName" type="xsd:string" use="required" />
+        <xsd:attribute name="shapeId" type="xsd:int" use="required" />
+        <xsd:attribute name="stringId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="FloatingCastle_Castle_RenderOption">
+        <xsd:attribute name="baseLevelLoadedWeight" type="xsd:float" use="required" />
+        <xsd:attribute name="baseLevelVisibleWeight" type="xsd:float" use="required" />
+        <xsd:attribute name="cullDistanceWeight" type="xsd:float" use="required" />
+        <xsd:attribute name="maxDistanceWeight" type="xsd:float" use="required" />
+        <xsd:attribute name="skyOffset" type="xsd:float" use="required" />
+        <xsd:attribute name="superLowLevelLoadedWeight" type="xsd:float" use="required" />
+        <xsd:attribute name="superLowLevelVisibleWeight" type="xsd:float" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+        <xsd:attribute name="volumeLoadDistance" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="FloatingCastle_CommonConfig">
+        <xsd:attribute name="partsChangeCoolTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="FloatingCastle" type="FloatingCastle" />
+</xsd:schema>

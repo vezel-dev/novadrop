@@ -1,0 +1,53 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/ItemMixData"
+            targetNamespace="https://vezel.dev/novadrop/dc/ItemMixData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="ItemMixData">
+        <xsd:sequence>
+            <xsd:element name="Common" type="ItemMixData_Common" minOccurs="0" />
+            <xsd:element name="ItemMix" type="ItemMixData_ItemMix" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ItemMixData_Common">
+        <xsd:attribute name="failedSocial" type="xsd:int" use="required" />
+        <xsd:attribute name="progressSocial" type="xsd:int" use="required" />
+        <xsd:attribute name="progressTime" type="xsd:int" use="required" />
+        <xsd:attribute name="successSocial" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ItemMixData_ItemMix">
+        <xsd:sequence>
+            <xsd:element name="Materials" type="ItemMixData_ItemMix_Materials" minOccurs="0" />
+            <xsd:element name="Result" type="ItemMixData_ItemMix_Result" />
+        </xsd:sequence>
+
+        <xsd:attribute name="itemMixId" type="xsd:int" use="required" />
+        <xsd:attribute name="progressSocial" type="xsd:int" />
+        <xsd:attribute name="progressTime" type="xsd:int" />
+        <xsd:attribute name="successRate" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ItemMixData_ItemMix_Materials">
+        <xsd:sequence>
+            <xsd:element name="Material" type="ItemMixData_ItemMix_Materials_Material" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ItemMixData_ItemMix_Materials_Material">
+        <xsd:attribute name="count" type="xsd:int" use="required" />
+        <xsd:attribute name="itemId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ItemMixData_ItemMix_Result">
+        <xsd:attribute name="failedCount" type="xsd:int" />
+        <xsd:attribute name="failedItemId" type="xsd:int" />
+        <xsd:attribute name="successCount" type="xsd:int" use="required" />
+        <xsd:attribute name="successItemId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="ItemMixData" type="ItemMixData" />
+</xsd:schema>

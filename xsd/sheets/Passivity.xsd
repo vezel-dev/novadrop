@@ -1,0 +1,47 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/Passivity"
+            targetNamespace="https://vezel.dev/novadrop/dc/Passivity"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="Passivity">
+        <xsd:sequence>
+            <xsd:element name="Passive" type="Passivity_Passive" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Passivity_Passive"
+                     dc:keys="id">
+        <xsd:attribute name="abnormalityCategory" type="xsd:int" />
+        <xsd:attribute name="abnormalityKind" type="xsd:int" />
+        <xsd:attribute name="balancedByTargetCount" type="xsd:boolean" use="required" />
+        <xsd:attribute name="banSkillCategory" type="xsd:string" />
+        <xsd:attribute name="condition" type="xsd:int" use="required" />
+        <xsd:attribute name="conditionCategory" type="xsd:string" />
+        <xsd:attribute name="conditionValue" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="isHidePassive" type="xsd:boolean" />
+        <xsd:attribute name="judgmentOnce" type="xsd:boolean" use="required" />
+        <xsd:attribute name="kind" type="xsd:int" use="required" />
+        <xsd:attribute name="method" type="xsd:int" use="required" />
+        <xsd:attribute name="mobSize" type="xsd:string" />
+        <xsd:attribute name="mySkillCategory" type="xsd:int" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="needHaveAbnormalId" type="xsd:int" />
+        <xsd:attribute name="passiveTransSkillIdTo" type="xsd:int" />
+        <xsd:attribute name="passiveTransSkillIdsFrom" type="xsd:string" />
+        <xsd:attribute name="passivityChangeId" type="xsd:int" />
+        <xsd:attribute name="passivityChangeTime" type="xsd:int" />
+        <xsd:attribute name="passivityTypeOnTBA" type="xsd:int" />
+        <xsd:attribute name="prevPassivityId" type="xsd:int" />
+        <xsd:attribute name="prob" type="xsd:float" use="required" />
+        <xsd:attribute name="targetSpeciesId" type="xsd:string" />
+        <xsd:attribute name="tickInterval" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:int" use="required" />
+        <xsd:attribute name="value" type="xsd:string" use="required" />
+        <xsd:attribute name="vehicleLevel" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:element name="Passivity" type="Passivity" />
+</xsd:schema>

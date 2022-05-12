@@ -1,0 +1,330 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/AiTemplate"
+            targetNamespace="https://vezel.dev/novadrop/dc/AiTemplate"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="AiTemplate">
+        <xsd:sequence>
+            <xsd:element name="Ai" type="AiTemplate_Ai" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai">
+        <xsd:sequence>
+            <xsd:element name="CautionState" type="AiTemplate_Ai_CautionState" />
+            <xsd:element name="CombatState" type="AiTemplate_Ai_CombatState" />
+            <xsd:element name="PeaceState" type="AiTemplate_Ai_PeaceState" />
+        </xsd:sequence>
+
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CautionState">
+        <xsd:sequence>
+            <xsd:element name="ActiveMove" type="AiTemplate_Ai_CautionState_ActiveMove" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="alertAngle" type="xsd:int" use="required" />
+        <xsd:attribute name="alertRadius" type="xsd:int" use="required" />
+        <xsd:attribute name="avoidSkill" type="xsd:int" use="required" />
+        <xsd:attribute name="checkInterval" type="xsd:int" use="required" />
+        <xsd:attribute name="probActiveMove" type="xsd:float" use="required" />
+        <xsd:attribute name="probAvoid" type="xsd:float" use="required" />
+        <xsd:attribute name="rotateAngle" type="xsd:int" use="required" />
+        <xsd:attribute name="rotateTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CautionState_ActiveMove">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState">
+        <xsd:sequence>
+            <xsd:element name="Attack" type="AiTemplate_Ai_CombatState_Attack" />
+            <xsd:element name="Avoid" type="AiTemplate_Ai_CombatState_Avoid" />
+            <xsd:element name="Cooperation" type="AiTemplate_Ai_CombatState_Cooperation" />
+            <xsd:element name="Idle" type="AiTemplate_Ai_CombatState_Idle" />
+            <xsd:element name="Move" type="AiTemplate_Ai_CombatState_Move" />
+            <xsd:element name="PatternList" type="AiTemplate_Ai_CombatState_PatternList" />
+            <xsd:element name="ShorttermTarget" type="AiTemplate_Ai_CombatState_ShorttermTarget" />
+            <xsd:element name="Social" type="AiTemplate_Ai_CombatState_Social" />
+        </xsd:sequence>
+
+        <xsd:attribute name="playSocialWhenFirstAggro" type="xsd:boolean" use="required" />
+        <xsd:attribute name="watchRotateAngle" type="xsd:int" use="required" />
+        <xsd:attribute name="watchRotateTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_Attack">
+        <xsd:sequence>
+            <xsd:element name="TensionList" type="AiTemplate_Ai_CombatState_Attack_TensionList" />
+            <xsd:element name="WorkList" type="AiTemplate_Ai_CombatState_Attack_WorkList" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_Attack_TensionList">
+        <xsd:sequence>
+            <xsd:element name="Tension" type="AiTemplate_Ai_CombatState_Attack_TensionList_Tension" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_Attack_TensionList_Tension">
+        <xsd:sequence>
+            <xsd:element name="Info" type="AiTemplate_Ai_CombatState_Attack_TensionList_Tension_Info" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_Attack_TensionList_Tension_Info">
+        <xsd:attribute name="distanceRate" type="xsd:float" use="required" />
+        <xsd:attribute name="prob" type="xsd:float" use="required" />
+        <xsd:attribute name="workId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_Attack_WorkList">
+        <xsd:sequence>
+            <xsd:element name="Work" type="AiTemplate_Ai_CombatState_Attack_WorkList_Work" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_Attack_WorkList_Work">
+        <xsd:attribute name="angerBehaviorId" type="xsd:int" use="required" />
+        <xsd:attribute name="angerBehaviorType" type="xsd:string" use="required" />
+        <xsd:attribute name="coolTime" type="xsd:int" use="required" />
+        <xsd:attribute name="distanceRate" type="xsd:float" use="required" />
+        <xsd:attribute name="distanceType" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="isDirectionRevision" type="xsd:boolean" use="required" />
+        <xsd:attribute name="nextAttackId" type="xsd:int" use="required" />
+        <xsd:attribute name="nextAttackProb" type="xsd:float" use="required" />
+        <xsd:attribute name="normalBehaviorId" type="xsd:int" use="required" />
+        <xsd:attribute name="normalBehaviorType" type="xsd:string" use="required" />
+        <xsd:attribute name="offFlockOnAngerMode" type="xsd:boolean" use="required" />
+        <xsd:attribute name="offFlockOnNormalMode" type="xsd:boolean" use="required" />
+        <xsd:attribute name="preProcess" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_Avoid">
+        <xsd:attribute name="avoidSkillId" type="xsd:int" use="required" />
+        <xsd:attribute name="cooltime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_Cooperation">
+        <xsd:sequence>
+            <xsd:element name="ReceiveOrderList" type="AiTemplate_Ai_CombatState_Cooperation_ReceiveOrderList" />
+            <xsd:element name="TensionList" type="AiTemplate_Ai_CombatState_Cooperation_TensionList" />
+            <xsd:element name="WorkList" type="AiTemplate_Ai_CombatState_Cooperation_WorkList" />
+        </xsd:sequence>
+
+        <xsd:attribute name="concurrentAttackDuration" type="xsd:int" use="required" />
+        <xsd:attribute name="escapeDuration" type="xsd:int" use="required" />
+        <xsd:attribute name="sequentialAttackDelay" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_Cooperation_ReceiveOrderList">
+        <xsd:sequence>
+            <xsd:element name="ReceiveOrder" type="AiTemplate_Ai_CombatState_Cooperation_ReceiveOrderList_ReceiveOrder" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_Cooperation_ReceiveOrderList_ReceiveOrder">
+        <xsd:attribute name="attackId" type="xsd:int" use="required" />
+        <xsd:attribute name="formationAttackId" type="xsd:int" use="required" />
+        <xsd:attribute name="formationAttackProb" type="xsd:int" use="required" />
+        <xsd:attribute name="formationCheckTime" type="xsd:int" use="required" />
+        <xsd:attribute name="orderId" type="xsd:int" use="required" />
+        <xsd:attribute name="prob" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_Cooperation_TensionList">
+        <xsd:sequence>
+            <xsd:element name="Tension" type="AiTemplate_Ai_CombatState_Cooperation_TensionList_Tension" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_Cooperation_TensionList_Tension">
+        <xsd:sequence>
+            <xsd:element name="Info" type="AiTemplate_Ai_CombatState_Cooperation_TensionList_Tension_Info" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_Cooperation_TensionList_Tension_Info">
+        <xsd:attribute name="distanceRate" type="xsd:float" use="required" />
+        <xsd:attribute name="prob" type="xsd:int" use="required" />
+        <xsd:attribute name="workId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_Cooperation_WorkList">
+        <xsd:sequence>
+            <xsd:element name="Work" type="AiTemplate_Ai_CombatState_Cooperation_WorkList_Work" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_Cooperation_WorkList_Work">
+        <xsd:attribute name="angerBehaviorId" type="xsd:int" use="required" />
+        <xsd:attribute name="angerBehaviorType" type="xsd:string" use="required" />
+        <xsd:attribute name="coolTime" type="xsd:int" use="required" />
+        <xsd:attribute name="distanceRate" type="xsd:float" use="required" />
+        <xsd:attribute name="distanceType" type="xsd:int" use="required" />
+        <xsd:attribute name="formationId" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="isDirectionRevision" type="xsd:boolean" use="required" />
+        <xsd:attribute name="nextAttackId" type="xsd:int" use="required" />
+        <xsd:attribute name="nextAttackProb" type="xsd:int" use="required" />
+        <xsd:attribute name="normalBehaviorId" type="xsd:int" use="required" />
+        <xsd:attribute name="normalBehaviorType" type="xsd:string" use="required" />
+        <xsd:attribute name="offFlockOnAngerMode" type="xsd:boolean" use="required" />
+        <xsd:attribute name="offFlockOnNormalMode" type="xsd:boolean" use="required" />
+        <xsd:attribute name="orderType" type="xsd:string" use="required" />
+        <xsd:attribute name="preProcess" type="xsd:int" use="required" />
+        <xsd:attribute name="sendOrderId" type="xsd:int" use="required" />
+        <xsd:attribute name="sendOrderMaxCount" type="xsd:int" use="required" />
+        <xsd:attribute name="sendOrderRange" type="xsd:int" use="required" />
+        <xsd:attribute name="sendOrderRefTarget" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_Idle">
+        <xsd:attribute name="duration" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_Move">
+        <xsd:attribute name="targetDistance" type="xsd:int" use="required" />
+        <xsd:attribute name="timeout" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_PatternList">
+        <xsd:sequence>
+            <xsd:element name="Pattern" type="AiTemplate_Ai_CombatState_PatternList_Pattern" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_PatternList_Pattern">
+        <xsd:sequence>
+            <xsd:element name="AngerMode" type="AiTemplate_Ai_CombatState_PatternList_Pattern_AngerMode" />
+            <xsd:element name="NormalMode" type="AiTemplate_Ai_CombatState_PatternList_Pattern_NormalMode" />
+        </xsd:sequence>
+
+        <xsd:attribute name="default" type="xsd:boolean" />
+        <xsd:attribute name="maxHpRatio" type="xsd:float" />
+        <xsd:attribute name="minHpRatio" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_PatternList_Pattern_AngerMode">
+        <xsd:sequence>
+            <xsd:element name="Incline" type="AiTemplate_Ai_CombatState_PatternList_Pattern_AngerMode_Incline" />
+            <xsd:element name="Tension" type="AiTemplate_Ai_CombatState_PatternList_Pattern_AngerMode_Tension" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_PatternList_Pattern_AngerMode_Incline">
+        <xsd:attribute name="attackProb" type="xsd:float" use="required" />
+        <xsd:attribute name="avoidProb" type="xsd:int" use="required" />
+        <xsd:attribute name="cooperationProb" type="xsd:float" use="required" />
+        <xsd:attribute name="moveProb" type="xsd:int" use="required" />
+        <xsd:attribute name="shorttermTargetProb" type="xsd:float" use="required" />
+        <xsd:attribute name="socialProb" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_PatternList_Pattern_AngerMode_Tension">
+        <xsd:attribute name="attackTension" type="xsd:int" use="required" />
+        <xsd:attribute name="cooperationTension" type="xsd:int" use="required" />
+        <xsd:attribute name="shorttermTargetTension" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_PatternList_Pattern_NormalMode">
+        <xsd:sequence>
+            <xsd:element name="Incline" type="AiTemplate_Ai_CombatState_PatternList_Pattern_NormalMode_Incline" />
+            <xsd:element name="Tension" type="AiTemplate_Ai_CombatState_PatternList_Pattern_NormalMode_Tension" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_PatternList_Pattern_NormalMode_Incline">
+        <xsd:attribute name="attackProb" type="xsd:float" use="required" />
+        <xsd:attribute name="avoidProb" type="xsd:int" use="required" />
+        <xsd:attribute name="cooperationProb" type="xsd:float" use="required" />
+        <xsd:attribute name="moveProb" type="xsd:int" use="required" />
+        <xsd:attribute name="shorttermTargetProb" type="xsd:float" use="required" />
+        <xsd:attribute name="socialProb" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_PatternList_Pattern_NormalMode_Tension">
+        <xsd:attribute name="attackTension" type="xsd:int" use="required" />
+        <xsd:attribute name="cooperationTension" type="xsd:int" use="required" />
+        <xsd:attribute name="shorttermTargetTension" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_ShorttermTarget">
+        <xsd:sequence>
+            <xsd:element name="StTensionList" type="AiTemplate_Ai_CombatState_ShorttermTarget_StTensionList" />
+            <xsd:element name="StWorkList" type="AiTemplate_Ai_CombatState_ShorttermTarget_StWorkList" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_ShorttermTarget_StTensionList">
+        <xsd:sequence>
+            <xsd:element name="StTension" type="AiTemplate_Ai_CombatState_ShorttermTarget_StTensionList_StTension" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_ShorttermTarget_StTensionList_StTension">
+        <xsd:sequence>
+            <xsd:element name="Info" type="AiTemplate_Ai_CombatState_ShorttermTarget_StTensionList_StTension_Info" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_ShorttermTarget_StTensionList_StTension_Info">
+        <xsd:attribute name="prob" type="xsd:float" use="required" />
+        <xsd:attribute name="stWorkId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_ShorttermTarget_StWorkList">
+        <xsd:sequence>
+            <xsd:element name="StWork" type="AiTemplate_Ai_CombatState_ShorttermTarget_StWorkList_StWork" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_ShorttermTarget_StWorkList_StWork">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="immediateAttackId" type="xsd:int" use="required" />
+        <xsd:attribute name="preProcess" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_CombatState_Social">
+        <xsd:attribute name="socialMotionId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_PeaceState">
+        <xsd:sequence>
+            <xsd:element name="RandomMove" type="AiTemplate_Ai_PeaceState_RandomMove" />
+        </xsd:sequence>
+
+        <xsd:attribute name="checkInterval" type="xsd:int" use="required" />
+        <xsd:attribute name="maxLeaderDistance" type="xsd:int" use="required" />
+        <xsd:attribute name="minLeaderDistance" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_PeaceState_RandomMove">
+        <xsd:sequence>
+            <xsd:element name="Social" type="AiTemplate_Ai_PeaceState_RandomMove_Social" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="moveMaxDistance" type="xsd:int" use="required" />
+        <xsd:attribute name="moveMinDistance" type="xsd:int" use="required" />
+        <xsd:attribute name="moveRadius" type="xsd:int" use="required" />
+        <xsd:attribute name="probMove" type="xsd:float" use="required" />
+        <xsd:attribute name="probSocial" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="AiTemplate_Ai_PeaceState_RandomMove_Social">
+        <xsd:attribute name="motionId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="AiTemplate" type="AiTemplate" />
+</xsd:schema>

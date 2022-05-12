@@ -1,0 +1,22 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/QuestFieldData"
+            targetNamespace="https://vezel.dev/novadrop/dc/QuestFieldData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="QuestFieldData">
+        <xsd:sequence>
+            <xsd:element name="QuestField" type="QuestFieldData_QuestField" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="QuestFieldData_QuestField">
+        <xsd:attribute name="continentId" type="xsd:int" use="required" />
+        <xsd:attribute name="exitContinentId" type="xsd:int" use="required" />
+        <xsd:attribute name="exitPos" type="xsd:string" use="required" />
+        <xsd:attribute name="startPos" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="QuestFieldData" type="QuestFieldData" />
+</xsd:schema>

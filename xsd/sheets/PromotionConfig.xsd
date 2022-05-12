@@ -1,0 +1,68 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/PromotionConfig"
+            targetNamespace="https://vezel.dev/novadrop/dc/PromotionConfig"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="PromotionConfig">
+        <xsd:sequence>
+            <xsd:element name="LimitInfoList" type="PromotionConfig_LimitInfoList" />
+            <xsd:element name="PromotionList" type="PromotionConfig_PromotionList" />
+            <xsd:element name="ResetArtisanGradeItem" type="PromotionConfig_ResetArtisanGradeItem" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PromotionConfig_LimitInfoList">
+        <xsd:sequence>
+            <xsd:element name="LimitInfoData" type="PromotionConfig_LimitInfoList_LimitInfoData" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PromotionConfig_LimitInfoList_LimitInfoData">
+        <xsd:attribute name="grade" type="xsd:int" use="required" />
+        <xsd:attribute name="limit" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PromotionConfig_PromotionList">
+        <xsd:sequence>
+            <xsd:element name="PromotionData" type="PromotionConfig_PromotionList_PromotionData" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PromotionConfig_PromotionList_PromotionData">
+        <xsd:sequence>
+            <xsd:element name="Condition" type="PromotionConfig_PromotionList_PromotionData_Condition" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="accomplishPoint" type="xsd:int" use="required" />
+        <xsd:attribute name="grade" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="stringId" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PromotionConfig_PromotionList_PromotionData_Condition">
+        <xsd:attribute name="addPoint" type="xsd:int" use="required" />
+        <xsd:attribute name="critical" type="xsd:boolean" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="maxPoint" type="xsd:int" use="required" />
+        <xsd:attribute name="recipeId" type="xsd:string" use="required" />
+        <xsd:attribute name="stringId" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="PromotionConfig_ResetArtisanGradeItem">
+        <xsd:sequence>
+            <xsd:element name="ItemTemplate" type="PromotionConfig_ResetArtisanGradeItem_ItemTemplate" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PromotionConfig_ResetArtisanGradeItem_ItemTemplate">
+        <xsd:attribute name="grade" type="xsd:int" use="required" />
+        <xsd:attribute name="itemTemplateId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="PromotionConfig" type="PromotionConfig" />
+</xsd:schema>

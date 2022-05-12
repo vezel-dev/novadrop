@@ -1,0 +1,45 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/TexturedFonts"
+            targetNamespace="https://vezel.dev/novadrop/dc/TexturedFonts"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="TexturedFonts">
+        <xsd:sequence>
+            <xsd:element name="Font" type="TexturedFonts_Font" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TexturedFonts_Font">
+        <xsd:sequence>
+            <xsd:element name="Character" type="TexturedFonts_Font_Character" maxOccurs="unbounded" />
+            <xsd:element name="CriticalBG" type="TexturedFonts_Font_CriticalBG" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="kerning" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="scale" type="xsd:float" use="required" />
+        <xsd:attribute name="sizeX" type="xsd:int" use="required" />
+        <xsd:attribute name="sizeY" type="xsd:int" use="required" />
+        <xsd:attribute name="textureRes" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TexturedFonts_Font_Character">
+        <xsd:attribute name="code" type="xsd:string" use="required" />
+        <xsd:attribute name="u1" type="xsd:int" use="required" />
+        <xsd:attribute name="u2" type="xsd:int" use="required" />
+        <xsd:attribute name="v1" type="xsd:int" use="required" />
+        <xsd:attribute name="v2" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="TexturedFonts_Font_CriticalBG">
+        <xsd:attribute name="digit" type="xsd:int" use="required" />
+        <xsd:attribute name="u1" type="xsd:int" use="required" />
+        <xsd:attribute name="u2" type="xsd:int" use="required" />
+        <xsd:attribute name="v1" type="xsd:int" use="required" />
+        <xsd:attribute name="v2" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="TexturedFonts" type="TexturedFonts" />
+</xsd:schema>

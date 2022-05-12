@@ -1,0 +1,31 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/EnchantRecommendation"
+            targetNamespace="https://vezel.dev/novadrop/dc/EnchantRecommendation"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="EnchantRecommendation">
+        <xsd:sequence>
+            <xsd:element name="AwakenTarget" type="EnchantRecommendation_AwakenTarget" />
+            <xsd:element name="Target" type="EnchantRecommendation_Target" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantRecommendation_AwakenTarget">
+        <xsd:attribute name="scrollSeq" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="EnchantRecommendation_Target">
+        <xsd:attribute name="enchantCountMax" type="xsd:int" use="required" />
+        <xsd:attribute name="enchantCountMin" type="xsd:int" use="required" />
+        <xsd:attribute name="materialRareGradeSeq" type="xsd:string" use="required" />
+        <xsd:attribute name="rankMax" type="xsd:int" use="required" />
+        <xsd:attribute name="rankMin" type="xsd:int" use="required" />
+        <xsd:attribute name="scrollItemSet" type="xsd:int" use="required" />
+        <xsd:attribute name="scrollSeq" type="xsd:string" use="required" />
+        <xsd:attribute name="storeName" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="EnchantRecommendation" type="EnchantRecommendation" />
+</xsd:schema>

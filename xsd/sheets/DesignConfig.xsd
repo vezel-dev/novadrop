@@ -1,0 +1,39 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/DesignConfig"
+            targetNamespace="https://vezel.dev/novadrop/dc/DesignConfig"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="DesignConfig">
+        <xsd:sequence>
+            <xsd:element name="Balloon" type="DesignConfig_Balloon" />
+            <xsd:element name="ComboDelay" type="DesignConfig_ComboDelay" />
+            <xsd:element name="DefencePush" type="DesignConfig_DefencePush" />
+            <xsd:element name="QuickMenu" type="DesignConfig_QuickMenu" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DesignConfig_Balloon">
+        <xsd:attribute name="dungeonRankDialogColor" type="xsd:string" use="required" />
+        <xsd:attribute name="dungeonRankDialogSize" type="xsd:int" use="required" />
+        <xsd:attribute name="questDialogColor" type="xsd:string" use="required" />
+        <xsd:attribute name="questDialogSize" type="xsd:int" use="required" />
+        <xsd:attribute name="villagerDialogColor" type="xsd:string" use="required" />
+        <xsd:attribute name="villagerDialogSize" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DesignConfig_ComboDelay">
+        <xsd:attribute name="time" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DesignConfig_DefencePush">
+        <xsd:attribute name="rate" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DesignConfig_QuickMenu">
+        <xsd:attribute name="targetUpdateTime" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="DesignConfig" type="DesignConfig" />
+</xsd:schema>

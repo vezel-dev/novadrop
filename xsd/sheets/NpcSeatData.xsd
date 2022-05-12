@@ -1,0 +1,78 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/NpcSeatData"
+            targetNamespace="https://vezel.dev/novadrop/dc/NpcSeatData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="NpcSeatData">
+        <xsd:sequence>
+            <xsd:element name="Seat" type="NpcSeatData_Seat" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcSeatData_Seat">
+        <xsd:sequence>
+            <xsd:element name="AirShipData" type="NpcSeatData_Seat_AirShipData" minOccurs="0" />
+            <xsd:element name="Camera" type="NpcSeatData_Seat_Camera" />
+            <xsd:element name="CannonData" type="NpcSeatData_Seat_CannonData" minOccurs="0" />
+        </xsd:sequence>
+
+        <xsd:attribute name="cameraAttachBone" type="xsd:string" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="skillsetId" type="xsd:int" use="required" />
+        <xsd:attribute name="type" type="xsd:string" use="required" />
+        <xsd:attribute name="userAttachBone" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcSeatData_Seat_AirShipData">
+        <xsd:attribute name="AirShipGetoffPos" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcSeatData_Seat_Camera">
+        <xsd:attribute name="height" type="xsd:float" />
+        <xsd:attribute name="offset" type="xsd:float" use="required" />
+        <xsd:attribute name="pitchDecreaseRate" type="xsd:float" use="required" />
+        <xsd:attribute name="pitchDefault" type="xsd:int" use="required" />
+        <xsd:attribute name="zoomMax" type="xsd:float" use="required" />
+        <xsd:attribute name="zoomMin" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcSeatData_Seat_CannonData">
+        <xsd:sequence>
+            <xsd:element name="RotatePitch" type="NpcSeatData_Seat_CannonData_RotatePitch" />
+            <xsd:element name="RotateYaw" type="NpcSeatData_Seat_CannonData_RotateYaw" />
+        </xsd:sequence>
+
+        <xsd:attribute name="aimDecalEffectId" type="xsd:int" use="required" />
+        <xsd:attribute name="aimTrailEffectId" type="xsd:int" use="required" />
+        <xsd:attribute name="bulletPower" type="xsd:float" use="required" />
+        <xsd:attribute name="bulletSize" type="xsd:float" />
+        <xsd:attribute name="fireBone" type="xsd:string" use="required" />
+        <xsd:attribute name="gravity" type="xsd:int" />
+        <xsd:attribute name="maxRange" type="xsd:float" />
+        <xsd:attribute name="realtimeBullet" type="xsd:boolean" />
+        <xsd:attribute name="referenceBone" type="xsd:string" use="required" />
+        <xsd:attribute name="soundId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcSeatData_Seat_CannonData_RotatePitch">
+        <xsd:attribute name="boneName" type="xsd:string" use="required" />
+        <xsd:attribute name="default" type="xsd:int" use="required" />
+        <xsd:attribute name="max" type="xsd:int" use="required" />
+        <xsd:attribute name="min" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="speed" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="NpcSeatData_Seat_CannonData_RotateYaw">
+        <xsd:attribute name="boneName" type="xsd:string" use="required" />
+        <xsd:attribute name="default" type="xsd:int" use="required" />
+        <xsd:attribute name="max" type="xsd:int" use="required" />
+        <xsd:attribute name="min" type="xsd:int" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="speed" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="NpcSeatData" type="NpcSeatData" />
+</xsd:schema>

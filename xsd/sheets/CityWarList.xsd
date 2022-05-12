@@ -1,0 +1,41 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/CityWarList"
+            targetNamespace="https://vezel.dev/novadrop/dc/CityWarList"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="CityWarList">
+        <xsd:sequence>
+            <xsd:element name="CityWar" type="CityWarList_CityWar" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CityWarList_CityWar">
+        <xsd:sequence>
+            <xsd:element name="ReviveUIStr" type="CityWarList_CityWar_ReviveUIStr" />
+            <xsd:element name="SpawnNpcTable" type="CityWarList_CityWar_SpawnNpcTable" />
+        </xsd:sequence>
+
+        <xsd:attribute name="continentId" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="stringId" type="xsd:int" use="required" />
+        <xsd:attribute name="useWeaponOutMotion" type="xsd:boolean" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CityWarList_CityWar_ReviveUIStr">
+        <xsd:sequence>
+            <xsd:element name="ListMenu" type="CityWarList_CityWar_ReviveUIStr_ListMenu" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CityWarList_CityWar_ReviveUIStr_ListMenu">
+        <xsd:attribute name="index" type="xsd:int" use="required" />
+        <xsd:attribute name="stringId" type="xsd:int" use="required" />
+        <xsd:attribute name="toolTipId" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="CityWarList_CityWar_SpawnNpcTable" />
+
+    <xsd:element name="CityWarList" type="CityWarList" />
+</xsd:schema>

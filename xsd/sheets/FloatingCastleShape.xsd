@@ -1,0 +1,68 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/FloatingCastleShape"
+            targetNamespace="https://vezel.dev/novadrop/dc/FloatingCastleShape"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="FloatingCastleShape">
+        <xsd:sequence>
+            <xsd:element name="Shape" type="FloatingCastleShape_Shape" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="FloatingCastleShape_Shape">
+        <xsd:sequence>
+            <xsd:element name="PartsSlotList" type="FloatingCastleShape_Shape_PartsSlotList" />
+            <xsd:element name="PreviewCamera" type="FloatingCastleShape_Shape_PreviewCamera" />
+        </xsd:sequence>
+
+        <xsd:attribute name="defaultBodyPartsId" type="xsd:int" use="required" />
+        <xsd:attribute name="defaultCastlePartsId" type="xsd:int" use="required" />
+        <xsd:attribute name="defaultWallPartsId" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="namePlateHeight" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="FloatingCastleShape_Shape_PartsSlotList">
+        <xsd:sequence>
+            <xsd:element name="PartsSlot" type="FloatingCastleShape_Shape_PartsSlotList_PartsSlot" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="FloatingCastleShape_Shape_PartsSlotList_PartsSlot">
+        <xsd:attribute name="boneName" type="xsd:string" use="required" />
+        <xsd:attribute name="defaultPartsId" type="xsd:int" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="location" type="xsd:string" use="required" />
+        <xsd:attribute name="position" type="xsd:string" use="required" />
+        <xsd:attribute name="slot" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="FloatingCastleShape_Shape_PreviewCamera">
+        <xsd:sequence>
+            <xsd:element name="Default" type="FloatingCastleShape_Shape_PreviewCamera_Default" />
+            <xsd:element name="Limit" type="FloatingCastleShape_Shape_PreviewCamera_Limit" />
+        </xsd:sequence>
+
+        <xsd:attribute name="moveRate" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="FloatingCastleShape_Shape_PreviewCamera_Default">
+        <xsd:attribute name="defaultDistance" type="xsd:float" use="required" />
+        <xsd:attribute name="defaultPitch" type="xsd:float" use="required" />
+        <xsd:attribute name="defaultYaw" type="xsd:float" use="required" />
+        <xsd:attribute name="defaultZ" type="xsd:float" use="required" />
+        <xsd:attribute name="screenXmax" type="xsd:float" use="required" />
+        <xsd:attribute name="screenXmin" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="FloatingCastleShape_Shape_PreviewCamera_Limit">
+        <xsd:attribute name="maxDistance" type="xsd:float" use="required" />
+        <xsd:attribute name="maxZ" type="xsd:float" use="required" />
+        <xsd:attribute name="minDistance" type="xsd:float" use="required" />
+        <xsd:attribute name="minZ" type="xsd:float" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="FloatingCastleShape" type="FloatingCastleShape" />
+</xsd:schema>

@@ -1,0 +1,42 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/EquipmentLookInfoData"
+            targetNamespace="https://vezel.dev/novadrop/dc/EquipmentLookInfoData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="EquipmentLookInfoData">
+        <xsd:sequence>
+            <xsd:element name="LookInfo" type="EquipmentLookInfoData_LookInfo" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EquipmentLookInfoData_LookInfo"
+                     dc:keys="id">
+        <xsd:attribute name="amanFemalePartid" type="xsd:int" />
+        <xsd:attribute name="amanMalePartid" type="xsd:int" />
+        <xsd:attribute name="assassin_poporiFemalePartid" type="xsd:int" />
+        <xsd:attribute name="barakaMalePartid" type="xsd:int" />
+        <xsd:attribute name="castanicFemalePartid" type="xsd:int" />
+        <xsd:attribute name="castanicMalePartid" type="xsd:int" />
+        <xsd:attribute name="engineer_castanicFemalePartid" type="xsd:int" />
+        <xsd:attribute name="engineer_highelfFemalePartid" type="xsd:int" />
+        <xsd:attribute name="engineer_poporiFemalePartid" type="xsd:int" />
+        <xsd:attribute name="fighter_humanFemalePartid" type="xsd:int" />
+        <xsd:attribute name="fighter_humanMalePartid" type="xsd:int" />
+        <xsd:attribute name="fighter_poporiFemalePartid" type="xsd:int" />
+        <xsd:attribute name="fighter_poporiMalePartid" type="xsd:int" />
+        <xsd:attribute name="glaiver_castanicFemalePartid" type="xsd:int" />
+        <xsd:attribute name="glaiver_poporiFemalePartid" type="xsd:int" />
+        <xsd:attribute name="highelfFemalePartid" type="xsd:int" />
+        <xsd:attribute name="highelfMalePartid" type="xsd:int" />
+        <xsd:attribute name="humanFemalePartid" type="xsd:int" />
+        <xsd:attribute name="humanMalePartid" type="xsd:int" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="poporiFemalePartid" type="xsd:int" />
+        <xsd:attribute name="poporiMalePartid" type="xsd:int" />
+        <xsd:attribute name="soulless_poporiFemalePartid" type="xsd:int" />
+    </xsd:complexType>
+
+    <xsd:element name="EquipmentLookInfoData" type="EquipmentLookInfoData" />
+</xsd:schema>

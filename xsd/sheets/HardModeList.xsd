@@ -1,0 +1,45 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/HardModeList"
+            targetNamespace="https://vezel.dev/novadrop/dc/HardModeList"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="HardModeList">
+        <xsd:sequence>
+            <xsd:element name="HardMode" type="HardModeList_HardMode" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HardModeList_HardMode">
+        <xsd:sequence>
+            <xsd:element name="UI_Information" type="HardModeList_HardMode_UI_Information" />
+        </xsd:sequence>
+
+        <xsd:attribute name="continentId" type="xsd:int" use="required" />
+        <xsd:attribute name="maxDifficulty" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HardModeList_HardMode_UI_Information">
+        <xsd:sequence>
+            <xsd:element name="Difficulty" type="HardModeList_HardMode_UI_Information_Difficulty" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="imgUrl" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HardModeList_HardMode_UI_Information_Difficulty">
+        <xsd:sequence>
+            <xsd:element name="Item" type="HardModeList_HardMode_UI_Information_Difficulty_Item" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+
+        <xsd:attribute name="itemLevel" type="xsd:int" use="required" />
+        <xsd:attribute name="level" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="HardModeList_HardMode_UI_Information_Difficulty_Item">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="HardModeList" type="HardModeList" />
+</xsd:schema>

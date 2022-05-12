@@ -1,0 +1,25 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/UnidentifiedItemData"
+            targetNamespace="https://vezel.dev/novadrop/dc/UnidentifiedItemData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="UnidentifiedItemData">
+        <xsd:sequence>
+            <xsd:element name="Unidentified" type="UnidentifiedItemData_Unidentified" maxOccurs="unbounded" />
+            <xsd:element name="UnidentifyMaterial" type="UnidentifiedItemData_UnidentifyMaterial" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="UnidentifiedItemData_Unidentified">
+        <xsd:attribute name="stringId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:complexType name="UnidentifiedItemData_UnidentifyMaterial">
+        <xsd:attribute name="defaultMaterialCount" type="xsd:int" use="required" />
+        <xsd:attribute name="materialItemId" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="UnidentifiedItemData" type="UnidentifiedItemData" />
+</xsd:schema>

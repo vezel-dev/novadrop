@@ -1,0 +1,47 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:dc="https://vezel.dev/novadrop/dc"
+            xmlns="https://vezel.dev/novadrop/dc/DynamicGeoData"
+            targetNamespace="https://vezel.dev/novadrop/dc/DynamicGeoData"
+            xsi:schemaLocation="https://vezel.dev/novadrop/dc ../DataCenter.xsd"
+            elementFormDefault="qualified">
+    <xsd:complexType name="DynamicGeoData">
+        <xsd:sequence>
+            <xsd:element name="DoorList" type="DynamicGeoData_DoorList" minOccurs="0" />
+            <xsd:element name="ShuttleList" type="DynamicGeoData_ShuttleList" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DynamicGeoData_DoorList">
+        <xsd:sequence>
+            <xsd:element name="Door" type="DynamicGeoData_DoorList_Door" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DynamicGeoData_DoorList_Door">
+        <xsd:attribute name="animSet" type="xsd:string" use="required" />
+        <xsd:attribute name="animTree" type="xsd:string" use="required" />
+        <xsd:attribute name="dir" type="xsd:int" use="required" />
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="mesh" type="xsd:string" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="phat" type="xsd:string" use="required" />
+        <xsd:attribute name="pos" type="xsd:string" use="required" />
+        <xsd:attribute name="scale" type="xsd:float" />
+    </xsd:complexType>
+
+    <xsd:complexType name="DynamicGeoData_ShuttleList">
+        <xsd:sequence>
+            <xsd:element name="Shuttle" type="DynamicGeoData_ShuttleList_Shuttle" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DynamicGeoData_ShuttleList_Shuttle">
+        <xsd:attribute name="id" type="xsd:int" use="required" />
+        <xsd:attribute name="mesh" type="xsd:string" use="required" />
+        <xsd:attribute name="name" type="xsd:string" use="required" />
+        <xsd:attribute name="sound" type="xsd:string" use="required" />
+    </xsd:complexType>
+
+    <xsd:element name="DynamicGeoData" type="DynamicGeoData" />
+</xsd:schema>
