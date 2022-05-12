@@ -15,6 +15,8 @@ abstract class ImmutableDataCenterNode : DataCenterNode
         set => throw new NotSupportedException();
     }
 
+    public override sealed bool IsImmutable => true;
+
     public ImmutableDataCenterNode(object parent, string name, DataCenterValue value, DataCenterKeys keys)
         : base(parent, name, value, keys)
     {

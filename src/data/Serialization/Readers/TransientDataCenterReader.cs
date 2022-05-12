@@ -25,6 +25,8 @@ sealed class TransientDataCenterReader : DataCenterReader
             name,
             value,
             keys,
+            (raw.AttributeCount - (value.IsNull ? 0 : 1)) != 0,
+            raw.ChildCount != 0,
             () =>
             {
                 var dict = new Dictionary<string, DataCenterValue>(raw.AttributeCount);

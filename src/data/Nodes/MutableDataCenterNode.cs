@@ -9,6 +9,8 @@ abstract class MutableDataCenterNode : DataCenterNode
 
     public abstract override List<DataCenterNode> Children { get; }
 
+    public override sealed bool IsImmutable => false;
+
     public MutableDataCenterNode(object parent, string name, DataCenterValue value, DataCenterKeys keys)
         : base(parent, name, value, keys)
     {

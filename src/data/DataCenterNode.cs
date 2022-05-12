@@ -9,6 +9,12 @@ public abstract class DataCenterNode
 
     public string Name { get; }
 
+    public virtual DataCenterValue Value
+    {
+        get => _value;
+        set => _value = value;
+    }
+
     public virtual DataCenterKeys Keys
     {
         get => _keys;
@@ -22,13 +28,13 @@ public abstract class DataCenterNode
 
     public abstract IReadOnlyDictionary<string, DataCenterValue> Attributes { get; }
 
+    public virtual bool HasAttributes => Attributes.Count != 0;
+
     public abstract IReadOnlyCollection<DataCenterNode> Children { get; }
 
-    public virtual DataCenterValue Value
-    {
-        get => _value;
-        set => _value = value;
-    }
+    public virtual bool HasChildren => Children.Count != 0;
+
+    public abstract bool IsImmutable { get; }
 
     public DataCenterValue this[string name]
     {
