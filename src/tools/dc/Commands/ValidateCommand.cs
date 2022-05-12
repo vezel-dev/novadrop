@@ -47,8 +47,6 @@ sealed class ValidateCommand : Command
                         }
                     });
 
-                var count = problems.Select(tup => tup.File).Distinct();
-
                 if (problems.Count != 0)
                 {
                     foreach (var nameGroup in problems.GroupBy(tup => tup.File.Directory!.Name))
@@ -90,7 +88,9 @@ sealed class ValidateCommand : Command
 
                 sw.Stop();
 
-                Console.WriteLine($"{count}/{files.Length} data sheets validated in {sw.Elapsed}.");
+                Console.WriteLine(
+                    $"{files.Length - problems.Select(tup => tup.File).Distinct().Count()}/{files.Length} data " +
+                    $"sheets validated in {sw.Elapsed}.");
             },
             inputArg);
     }
