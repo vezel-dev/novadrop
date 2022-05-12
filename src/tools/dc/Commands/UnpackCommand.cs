@@ -105,7 +105,7 @@ sealed class UnpackCommand : Command
                                     await xmlWriter.WriteStringAsync(current.Value);
 
                                 if (current.HasChildren)
-                                    foreach (var child in current.Children)
+                                    foreach (var child in current.Children.OrderBy(n => n.Name, StringComparer.Ordinal))
                                         await WriteSheetAsync(child, false);
 
                                 await xmlWriter.WriteEndElementAsync();
