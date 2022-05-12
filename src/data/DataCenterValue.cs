@@ -247,7 +247,7 @@ public readonly struct DataCenterValue : IComparable<DataCenterValue>, IEquatabl
             DataCenterTypeCode.Int32 => As<int>().ToString(CultureInfo.InvariantCulture),
             DataCenterTypeCode.Single => As<float>().ToString(CultureInfo.InvariantCulture),
             DataCenterTypeCode.String => _stringValue!,
-            DataCenterTypeCode.Boolean => As<bool>().ToString(),
+            DataCenterTypeCode.Boolean => As<bool>() ? "true" : "false", // Avoid "True" and "False".
             _ => "null",
         };
     }
