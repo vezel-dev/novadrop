@@ -65,8 +65,11 @@ sealed class UnpackCommand : Command
                     Async = true,
                 };
 
+                // Official data center files have some empty sheets at the root that are safe to drop.
+                var realSheets = sheets.Where(n => n.HasAttributes || n.HasChildren || n.Value != null).ToArray();
+
                 await Parallel.ForEachAsync(
-                    sheets
+                    realSheets
                         .GroupBy(n => n.Name, (name, elems) => elems.Select((n, i) => (Node: n, Index: i)))
                         .SelectMany(elems => elems),
                     cancellationToken,
@@ -119,7 +122,7 @@ sealed class UnpackCommand : Command
 
                 sw.Stop();
 
-                Console.WriteLine($"Unpacked {sheets.Count} data sheets in {sw.Elapsed}.");
+                Console.WriteLine($"Unpacked {realSheets.Length} data sheets in {sw.Elapsed}.");
             },
             inputArg,
             outputArg,
