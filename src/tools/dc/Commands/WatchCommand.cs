@@ -249,22 +249,6 @@ sealed class WatchCommand : Command
 
                         validator.Initialize();
 
-                        DataCenterValue AttributeToValue(XAttribute attribute)
-                        {
-                            var name = attribute.Name;
-                            var value = validator.ValidateAttribute(
-                                name.LocalName, name.NamespaceName, attribute.Value, null)!;
-
-                            return value switch
-                            {
-                                int i => i,
-                                float f => f,
-                                string s => s,
-                                bool b => b,
-                                _ => 42, // Dummy value in case of validation failure.
-                            };
-                        }
-
                         var keyCache = new Dictionary<(string?, string?, string?, string?), DataCenterKeys>();
                         var info = new XmlSchemaInfo();
 
@@ -290,7 +274,7 @@ sealed class WatchCommand : Command
                             {
                                 // This call has to be synchronized for the root element since multiple threads will be
                                 // creating child nodes on it.
-                                current = parent.CreateChild(element.Name.LocalName);
+                                current = parent.CreateChild(name.LocalName);
                             }
                             finally
                             {
@@ -298,10 +282,22 @@ sealed class WatchCommand : Command
                                     Monitor.Exit(root);
                             }
 
-                            foreach (var attr in element
-                                .Attributes()
-                                .Where(a => !a.IsNamespaceDeclaration && a.Name.Namespace == XNamespace.None))
-                                current.AddAttribute(attr.Name.LocalName, AttributeToValue(attr));
+                            foreach (var attr in element.Attributes().Where(
+                                a => !a.IsNamespaceDeclaration && a.Name.Namespace == XNamespace.None))
+                            {
+                                var attrName = attr.Name;
+                                var attrValue = validator.ValidateAttribute(
+                                    attrName.LocalName, attrName.NamespaceName, attr.Value, null)!;
+
+                                current.AddAttribute(attr.Name.LocalName, attrValue switch
+                                {
+                                    int i => i,
+                                    float f => f,
+                                    string s => s,
+                                    bool b => b,
+                                    _ => 42, // Dummy value in case of validation failure.
+                                });
+                            }
 
                             validator.ValidateEndOfAttributes(null);
 
@@ -342,7 +338,10 @@ sealed class WatchCommand : Command
                                 }
                             }
 
-                            current.Value = validator.ValidateEndElement(null)?.ToString();
+                            var value = validator.ValidateEndElement(null)?.ToString();
+
+                            if (!string.IsNullOrEmpty(value))
+                                current.Value = value;
 
                             return current;
                         }

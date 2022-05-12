@@ -36,7 +36,7 @@ sealed class UnpackCommand : Command
                 {
                     await using var inXsd = Assembly.GetExecutingAssembly().GetManifestResourceStream(name);
 
-                    // TODO: Remove this when we finish all XSDs.
+                    // Is this not a data sheet we recognize?
                     if (inXsd == null)
                         return;
 
