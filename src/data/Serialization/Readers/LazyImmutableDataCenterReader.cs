@@ -34,7 +34,7 @@ sealed class LazyImmutableDataCenterReader : DataCenterReader
                     keys,
                     () =>
                     {
-                        var dict = new Dictionary<string, DataCenterValue>(raw.AttributeCount);
+                        var dict = new OrderedDictionary<string, DataCenterValue>(raw.AttributeCount);
 
                         ForEachAttribute(raw, dict, static (dict, name, value) =>
                         {

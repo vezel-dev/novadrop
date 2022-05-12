@@ -9,4 +9,12 @@ TERA's data center files.</PackageDescription>
         <PackageId>Vezel.Novadrop.Data</PackageId>
         <RootNamespace>Vezel.Novadrop.Data</RootNamespace>
     </PropertyGroup>
+
+    <ItemGroup>
+        <Using Include="Microsoft.Collections.Extensions" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Experimental.Collections" />
+    </ItemGroup>
 </Project>

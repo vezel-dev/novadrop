@@ -5,7 +5,7 @@ namespace Vezel.Novadrop.Data.Nodes;
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
 abstract class MutableDataCenterNode : DataCenterNode
 {
-    public abstract override Dictionary<string, DataCenterValue> Attributes { get; }
+    public abstract override OrderedDictionary<string, DataCenterValue> Attributes { get; }
 
     public abstract override List<DataCenterNode> Children { get; }
 
@@ -58,16 +58,14 @@ abstract class MutableDataCenterNode : DataCenterNode
         _ = name != DataCenterConstants.ValueAttributeName ? true : throw new ArgumentException(null, nameof(name));
         _ = !value.IsNull ? true : throw new ArgumentException(null, nameof(value));
 
-        ref var entry = ref CollectionsMarshal.GetValueRefOrAddDefault(Attributes, name, out var exists);
+        Attributes[name] = value;
 
-        if (!exists && Attributes.Count == DataCenterAddress.MaxValue.ElementIndex + 2)
+        if (Attributes.Count == DataCenterAddress.MaxValue.ElementIndex + 2)
         {
             _ = Attributes.Remove(name);
 
             throw new InvalidOperationException();
         }
-
-        entry = value;
     }
 
     public override sealed bool RemoveAttribute(string name)

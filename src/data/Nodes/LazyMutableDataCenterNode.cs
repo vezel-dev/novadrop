@@ -3,11 +3,11 @@ namespace Vezel.Novadrop.Data.Nodes;
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
 sealed class LazyMutableDataCenterNode : MutableDataCenterNode
 {
-    public override Dictionary<string, DataCenterValue> Attributes => _attributes!.Value;
+    public override OrderedDictionary<string, DataCenterValue> Attributes => _attributes!.Value;
 
     public override List<DataCenterNode> Children => _children!.Value;
 
-    readonly Lazy<Dictionary<string, DataCenterValue>>? _attributes;
+    readonly Lazy<OrderedDictionary<string, DataCenterValue>>? _attributes;
 
     readonly Lazy<List<DataCenterNode>>? _children;
 
@@ -16,7 +16,7 @@ sealed class LazyMutableDataCenterNode : MutableDataCenterNode
         string name,
         string? value,
         DataCenterKeys keys,
-        Func<Dictionary<string, DataCenterValue>> getAttributes,
+        Func<OrderedDictionary<string, DataCenterValue>> getAttributes,
         Func<List<DataCenterNode>> getChildren)
         : base(parent, name, value, keys)
     {

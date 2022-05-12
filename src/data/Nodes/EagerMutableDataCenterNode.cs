@@ -3,7 +3,7 @@ namespace Vezel.Novadrop.Data.Nodes;
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
 sealed class EagerMutableDataCenterNode : MutableDataCenterNode
 {
-    public override Dictionary<string, DataCenterValue> Attributes { get; }
+    public override OrderedDictionary<string, DataCenterValue> Attributes { get; }
 
     public override List<DataCenterNode> Children { get; } = new();
 

@@ -4,6 +4,8 @@
                         Version="1.17.0" />
         <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Scripting"
                         Version="4.1.0" />
+        <PackageVersion Include="Microsoft.Experimental.Collections"
+                        Version="1.0.6-e190117-3" />
         <PackageVersion Include="Microsoft.SourceLink.GitHub"
                         Version="1.1.1" />
         <PackageVersion Include="Microsoft.VisualStudio.Threading.Analyzers"

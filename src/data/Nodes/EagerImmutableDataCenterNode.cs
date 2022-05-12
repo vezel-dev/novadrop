@@ -16,7 +16,7 @@ sealed class EagerImmutableDataCenterNode : ImmutableDataCenterNode
     {
     }
 
-    public void Initialize(Dictionary<string, DataCenterValue> attributes, List<DataCenterNode> children)
+    public void Initialize(OrderedDictionary<string, DataCenterValue> attributes, List<DataCenterNode> children)
     {
         _attributes = attributes;
         _children = children;
