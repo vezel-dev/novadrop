@@ -8,7 +8,7 @@ sealed class DataCenterKeysTableReader
 {
     readonly DataCenterSimpleRegion<DataCenterRawKeys> _keys = new(false);
 
-    readonly List<DataCenterKeys?> _cache = new(ushort.MaxValue);
+    readonly ConcurrentDictionary<int, DataCenterKeys> _cache = new();
 
     readonly DataCenterStringTableReader _names;
 
@@ -20,36 +20,37 @@ sealed class DataCenterKeysTableReader
     public async ValueTask ReadAsync(DataCenterBinaryReader reader, CancellationToken cancellationToken)
     {
         await _keys.ReadAsync(reader, cancellationToken).ConfigureAwait(false);
-
-        for (var i = 0; i < _keys.Elements.Count; i++)
-            _cache.Add(null);
     }
 
     public DataCenterKeys GetKeys(int index)
     {
-        if (index >= _keys.Elements.Count)
-            throw new InvalidDataException($"Keys table index {index} is out of bounds (0..{_keys.Elements.Count}).");
+        return index < _keys.Elements.Count
+            ? _cache.GetOrAdd(
+                index,
+                i =>
+                {
+                    string? GetName(int index)
+                    {
+                        var nameIdx = index - 1;
 
-        string? GetName(int index)
-        {
-            var nameIdx = index - 1;
+                        if (nameIdx == -1)
+                            return null;
 
-            if (nameIdx == -1)
-                return null;
+                        var name = _names.GetString(nameIdx);
 
-            var name = _names.GetString(nameIdx);
+                        return name != DataCenterConstants.ValueAttributeName
+                            ? name
+                            : throw new InvalidDataException($"Key entry refers to illegal attribute name '{name}'.");
+                    }
 
-            return name != DataCenterConstants.ValueAttributeName
-                ? name
-                : throw new InvalidDataException($"Key entry refers to illegal attribute name '{name}'.");
-        }
+                    var raw = _keys.Elements[i];
 
-        if (_cache[index] is DataCenterKeys keys)
-            return keys;
-
-        var raw = _keys.Elements[index];
-
-        return _cache[index] =
-            new(GetName(raw.NameIndex1), GetName(raw.NameIndex2), GetName(raw.NameIndex3), GetName(raw.NameIndex4));
+                    return new(
+                        GetName(raw.NameIndex1),
+                        GetName(raw.NameIndex2),
+                        GetName(raw.NameIndex3),
+                        GetName(raw.NameIndex4));
+                })
+            : throw new InvalidDataException($"Keys table index {index} is out of bounds (0..{_keys.Elements.Count}).");
     }
 }

@@ -5,7 +5,7 @@ namespace Vezel.Novadrop.Data.Serialization.Readers;
 
 sealed class LazyImmutableDataCenterReader : DataCenterReader
 {
-    readonly Dictionary<DataCenterAddress, LazyImmutableDataCenterNode> _cache = new();
+    readonly ConcurrentDictionary<DataCenterAddress, LazyImmutableDataCenterNode> _cache = new();
 
     public LazyImmutableDataCenterReader(DataCenterLoadOptions options)
         : base(options)
@@ -20,37 +20,40 @@ sealed class LazyImmutableDataCenterReader : DataCenterReader
         DataCenterValue value,
         DataCenterKeys keys)
     {
-        LazyImmutableDataCenterNode node = null!;
-
-        node = new LazyImmutableDataCenterNode(
-            parent,
-            name,
-            value,
-            keys,
-            () =>
+        // This may result in redundant node allocations, but that has no side effects anyway, and only one wins.
+        return _cache.GetOrAdd(
+            address,
+            _ =>
             {
-                var dict = new Dictionary<string, DataCenterValue>(raw.AttributeCount);
+                LazyImmutableDataCenterNode node = null!;
 
-                ForEachAttribute(raw, dict, static (dict, name, value) =>
-                {
-                    if (!dict.TryAdd(name, value))
-                        throw new InvalidDataException($"Attribute named '{name}' was already recorded earlier.");
-                });
+                return node = new LazyImmutableDataCenterNode(
+                    parent,
+                    name,
+                    value,
+                    keys,
+                    () =>
+                    {
+                        var dict = new Dictionary<string, DataCenterValue>(raw.AttributeCount);
 
-                return dict;
-            },
-            () =>
-            {
-                var list = new List<DataCenterNode>(raw.ChildCount);
+                        ForEachAttribute(raw, dict, static (dict, name, value) =>
+                        {
+                            if (!dict.TryAdd(name, value))
+                                throw new InvalidDataException(
+                                    $"Attribute named '{name}' was already recorded earlier.");
+                        });
 
-                ForEachChild(raw, node, list, static (list, node) => list.Add(node));
+                        return dict;
+                    },
+                    () =>
+                    {
+                        var list = new List<DataCenterNode>(raw.ChildCount);
 
-                return list;
+                        ForEachChild(raw, node, list, static (list, node) => list.Add(node));
+
+                        return list;
+                    });
             });
-
-        _cache.Add(address, node);
-
-        return node;
     }
 
     protected override LazyImmutableDataCenterNode? ResolveNode(DataCenterAddress address, object parent)

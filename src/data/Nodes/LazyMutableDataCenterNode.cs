@@ -20,7 +20,7 @@ sealed class LazyMutableDataCenterNode : MutableDataCenterNode
         Func<List<DataCenterNode>> getChildren)
         : base(parent, name, value, keys)
     {
-        _attributes = new(getAttributes, false);
-        _children = new(getChildren, false);
+        _attributes = new(getAttributes);
+        _children = new(getChildren);
     }
 }
