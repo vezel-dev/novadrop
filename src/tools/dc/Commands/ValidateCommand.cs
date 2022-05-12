@@ -77,7 +77,7 @@ sealed class ValidateCommand : Command
                             var remainingProblems = fileGroup.Count() - shownProblems.Length;
 
                             if (remainingProblems != 0)
-                                Console.WriteLine($"    ... {remainingProblems} more problems ...");
+                                Console.WriteLine($"    ... {remainingProblems} more problem(s) ...");
                         }
 
                         context.ExitCode = 1;

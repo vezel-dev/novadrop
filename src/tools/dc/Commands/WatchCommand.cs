@@ -175,14 +175,14 @@ sealed class WatchCommand : Command
                             _ => throw new InvalidOperationException(), // Impossible.
                         };
 
-                    var finalChanges = changes.Where(kvp => kvp.Value is not null or ChangeState.Unchanged).ToArray();
+                    var finalChanges = changes.Where(kvp => kvp.Value is not (null or ChangeState.Unchanged)).ToArray();
 
                     if (finalChanges.Length == 0)
                         continue;
 
-                    Console.WriteLine($"{finalChanges.Length} data sheet changes detected:");
+                    Console.WriteLine($"{finalChanges.Length} data sheet change(s) detected:");
 
-                    var shownChanges = finalChanges.Take(25).ToArray();
+                    var shownChanges = finalChanges.Take(10).ToArray();
 
                     foreach (var (path, state) in shownChanges)
                     {
@@ -191,7 +191,7 @@ sealed class WatchCommand : Command
                             ChangeState.Created => ('+', ConsoleColor.Green),
                             ChangeState.Modified => ('*', ConsoleColor.Yellow),
                             ChangeState.Deleted => ('-', ConsoleColor.Yellow),
-                            _ => throw new InvalidOperationException(), // Impossible.
+                            var s => throw new InvalidDataException(s.ToString()),
                         };
 
                         Console.ForegroundColor = color;
@@ -202,10 +202,10 @@ sealed class WatchCommand : Command
                     var remainingChanges = finalChanges.Length - shownChanges.Length;
 
                     if (remainingChanges != 0)
-                        Console.WriteLine($"  ... {remainingChanges} more changes ...");
+                        Console.WriteLine($"  ... {remainingChanges} more change(s) ...");
 
                     Console.WriteLine();
-                    Console.WriteLine("Applying data sheet changes to in-memory tree...");
+                    Console.WriteLine("Applying data sheet change(s) to in-memory tree...");
 
                     var sw1 = Stopwatch.StartNew();
 
@@ -442,7 +442,7 @@ sealed class WatchCommand : Command
                                 var remainingProblems = fileGroup.Count() - shownProblems.Length;
 
                                 if (remainingProblems != 0)
-                                    Console.WriteLine($"    ... {remainingProblems} more problems ...");
+                                    Console.WriteLine($"    ... {remainingProblems} more problem(s) ...");
                             }
                         }
 

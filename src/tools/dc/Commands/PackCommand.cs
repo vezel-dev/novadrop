@@ -201,7 +201,7 @@ sealed class PackCommand : Command
                             var remainingProblems = fileGroup.Count() - shownProblems.Length;
 
                             if (remainingProblems != 0)
-                                Console.WriteLine($"    ... {remainingProblems} more problems ...");
+                                Console.WriteLine($"    ... {remainingProblems} more problem(s) ...");
                         }
                     }
 
