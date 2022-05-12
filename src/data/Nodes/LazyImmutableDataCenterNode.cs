@@ -14,7 +14,7 @@ sealed class LazyImmutableDataCenterNode : ImmutableDataCenterNode
     public LazyImmutableDataCenterNode(
         object parent,
         string name,
-        DataCenterValue value,
+        string? value,
         DataCenterKeys keys,
         Func<IReadOnlyDictionary<string, DataCenterValue>> getAttributes,
         Func<IReadOnlyCollection<DataCenterNode>> getChildren)

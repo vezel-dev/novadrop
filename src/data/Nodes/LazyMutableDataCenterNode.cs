@@ -14,7 +14,7 @@ sealed class LazyMutableDataCenterNode : MutableDataCenterNode
     public LazyMutableDataCenterNode(
         object parent,
         string name,
-        DataCenterValue value,
+        string? value,
         DataCenterKeys keys,
         Func<Dictionary<string, DataCenterValue>> getAttributes,
         Func<List<DataCenterNode>> getChildren)

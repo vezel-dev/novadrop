@@ -15,7 +15,7 @@ sealed class EagerMutableDataCenterReader : DataCenterReader
         DataCenterRawNode raw,
         object parent,
         string name,
-        DataCenterValue value,
+        string? value,
         DataCenterKeys keys)
     {
         var node = new EagerMutableDataCenterNode(parent, name, value, keys, raw.AttributeCount, raw.ChildCount);

@@ -97,8 +97,12 @@ sealed class UnpackCommand : Command
                                     foreach (var (name, attr) in current.Attributes)
                                         await xmlWriter.WriteAttributeStringAsync(null, name, null, attr.ToString());
 
-                                if (current.Value is { IsNull: false } v)
-                                    await xmlWriter.WriteStringAsync(v.ToString());
+                                // Some ~225 nodes in official data center files have __value__ set even when they have
+                                // children, but the strings are random symbols or broken XML tags. The fact that they
+                                // are included is most likely a bug in the software used to pack those files. So, just
+                                // drop the value in these cases.
+                                if (current.Value != null && !current.HasChildren)
+                                    await xmlWriter.WriteStringAsync(current.Value);
 
                                 if (current.HasChildren)
                                     foreach (var child in current.Children)

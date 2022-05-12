@@ -11,7 +11,7 @@ sealed class EagerImmutableDataCenterNode : ImmutableDataCenterNode
 
     IReadOnlyCollection<DataCenterNode>? _children;
 
-    public EagerImmutableDataCenterNode(object parent, string name, DataCenterValue value, DataCenterKeys keys)
+    public EagerImmutableDataCenterNode(object parent, string name, string? value, DataCenterKeys keys)
         : base(parent, name, value, keys)
     {
     }

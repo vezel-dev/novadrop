@@ -166,15 +166,7 @@ sealed class PackCommand : Command
                                 }
                             }
 
-                            // TODO: This is wrong; we should only support string and mixed content.
-                            current.Value = validator.ValidateEndElement(null) switch
-                            {
-                                int i => i,
-                                float f => f,
-                                string s => s,
-                                bool b => b,
-                                _ => default,
-                            };
+                            current.Value = validator.ValidateEndElement(null)?.ToString();
                         }
 
                         ElementToNode(doc.Root!, root, true);

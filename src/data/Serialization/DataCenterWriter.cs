@@ -138,8 +138,8 @@ sealed class DataCenterWriter
         {
             var attributes = new Dictionary<string, DataCenterValue>(node.Attributes);
 
-            if (node.Value is { IsNull: false } val)
-                attributes.Add(DataCenterConstants.ValueAttributeName, val);
+            if (node.Value != null)
+                attributes.Add(DataCenterConstants.ValueAttributeName, node.Value);
 
             var rawAttributes = attributes
                 .Select(kvp => (_names.GetString(kvp.Key).Index, kvp.Value))

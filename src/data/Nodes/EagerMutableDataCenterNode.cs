@@ -10,7 +10,7 @@ sealed class EagerMutableDataCenterNode : MutableDataCenterNode
     public EagerMutableDataCenterNode(
         object parent,
         string name,
-        DataCenterValue value,
+        string? value,
         DataCenterKeys keys,
         int attributeCount,
         int childCount)

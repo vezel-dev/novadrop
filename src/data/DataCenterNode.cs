@@ -9,7 +9,7 @@ public abstract class DataCenterNode
 
     public string Name { get; }
 
-    public virtual DataCenterValue Value
+    public virtual string? Value
     {
         get => _value;
         set => _value = value;
@@ -44,11 +44,11 @@ public abstract class DataCenterNode
 
     readonly object _parent;
 
-    DataCenterValue _value;
+    string? _value;
 
     DataCenterKeys _keys;
 
-    private protected DataCenterNode(object parent, string name, DataCenterValue value, DataCenterKeys keys)
+    private protected DataCenterNode(object parent, string name, string? value, DataCenterKeys keys)
     {
         _parent = parent;
         Name = name;

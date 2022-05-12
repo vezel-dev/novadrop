@@ -342,14 +342,7 @@ sealed class WatchCommand : Command
                                 }
                             }
 
-                            current.Value = validator.ValidateEndElement(null) switch
-                            {
-                                int i => i,
-                                float f => f,
-                                string s => s,
-                                bool b => b,
-                                _ => default,
-                            };
+                            current.Value = validator.ValidateEndElement(null)?.ToString();
 
                             return current;
                         }

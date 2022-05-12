@@ -34,7 +34,7 @@ abstract class DataCenterReader
         DataCenterRawNode raw,
         object parent,
         string name,
-        DataCenterValue value,
+        string? value,
         DataCenterKeys keys);
 
     protected abstract DataCenterNode? ResolveNode(DataCenterAddress address, object parent);
@@ -51,6 +51,8 @@ abstract class DataCenterReader
             // Node value attributes are handled in CreateNode.
             if (name != DataCenterConstants.ValueAttributeName)
                 action(state, name, value);
+            else if (i != raw.AttributeCount - 1)
+                throw new InvalidDataException($"Special '{name}' attribute is not sorted last.");
         }
     }
 
@@ -175,7 +177,7 @@ abstract class DataCenterReader
 
         // Note: Padding1 and Padding2 are allowed to contain garbage. Do not check.
 
-        var value = default(DataCenterValue);
+        var value = default(string?);
 
         // The node value attribute, if present, is always last.
         if (attrCount != 0)
@@ -184,7 +186,14 @@ abstract class DataCenterReader
                 new(attrAddr.SegmentIndex, (ushort)(attrAddr.ElementIndex + attrCount - 1)));
 
             if (attrName == DataCenterConstants.ValueAttributeName)
-                value = attrValue;
+            {
+                if (!attrValue.IsString)
+                    throw new InvalidDataException(
+                        $"Special '{attrName}' attribute has invalid type {attrValue.TypeCode} " +
+                        $"(expected {DataCenterTypeCode.String}).");
+
+                value = attrValue.AsString;
+            }
         }
 
         return AllocateNode(address, raw, parent, name, value, _keys.GetKeys((keysInfo & 0b1111111111110000) >> 4));

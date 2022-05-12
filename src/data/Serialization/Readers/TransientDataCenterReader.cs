@@ -15,7 +15,7 @@ sealed class TransientDataCenterReader : DataCenterReader
         DataCenterRawNode raw,
         object parent,
         string name,
-        DataCenterValue value,
+        string? value,
         DataCenterKeys keys)
     {
         TransientDataCenterNode node = null!;
@@ -25,7 +25,7 @@ sealed class TransientDataCenterReader : DataCenterReader
             name,
             value,
             keys,
-            (raw.AttributeCount - (value.IsNull ? 0 : 1)) != 0,
+            (raw.AttributeCount - (value != null ? 1 : 0)) != 0,
             raw.ChildCount != 0,
             () =>
             {

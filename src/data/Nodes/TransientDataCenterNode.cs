@@ -18,7 +18,7 @@ sealed class TransientDataCenterNode : ImmutableDataCenterNode
     public TransientDataCenterNode(
         object parent,
         string name,
-        DataCenterValue value,
+        string? value,
         DataCenterKeys keys,
         bool hasAttributes,
         bool hasChildren,

@@ -3,7 +3,7 @@ namespace Vezel.Novadrop.Data.Nodes;
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
 abstract class ImmutableDataCenterNode : DataCenterNode
 {
-    public override sealed DataCenterValue Value
+    public override sealed string? Value
     {
         get => base.Value;
         set => throw new NotSupportedException();
@@ -17,7 +17,7 @@ abstract class ImmutableDataCenterNode : DataCenterNode
 
     public override sealed bool IsImmutable => true;
 
-    public ImmutableDataCenterNode(object parent, string name, DataCenterValue value, DataCenterKeys keys)
+    public ImmutableDataCenterNode(object parent, string name, string? value, DataCenterKeys keys)
         : base(parent, name, value, keys)
     {
     }

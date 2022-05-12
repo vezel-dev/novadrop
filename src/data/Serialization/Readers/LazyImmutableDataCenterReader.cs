@@ -17,7 +17,7 @@ sealed class LazyImmutableDataCenterReader : DataCenterReader
         DataCenterRawNode raw,
         object parent,
         string name,
-        DataCenterValue value,
+        string? value,
         DataCenterKeys keys)
     {
         // This may result in redundant node allocations, but that has no side effects anyway, and only one wins.

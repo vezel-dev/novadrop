@@ -445,6 +445,8 @@ nodes, such as `Foo` in this example:
 </Foo>
 ```
 
+Note that the `__value__` attribute, if present, may only be a string.
+
 #### Value Hash
 
 The `data_center_value_hash` function is a bizarre variant of CRC32 and is
