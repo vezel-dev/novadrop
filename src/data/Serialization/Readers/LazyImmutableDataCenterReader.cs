@@ -40,10 +40,11 @@ sealed class LazyImmutableDataCenterReader : DataCenterReader
                     () =>
                     {
                         var attributes = _emptyAttributes;
+                        var attrCount = raw.AttributeCount - (value != null ? 1 : 0);
 
-                        if (raw.AttributeCount - (value != null ? 1 : 0) != 0)
+                        if (attrCount != 0)
                         {
-                            attributes = new OrderedDictionary<string, DataCenterValue>(raw.AttributeCount);
+                            attributes = new OrderedDictionary<string, DataCenterValue>(attrCount);
 
                             ReadAttributes(raw, attributes, static (attributes, name, value) =>
                             {

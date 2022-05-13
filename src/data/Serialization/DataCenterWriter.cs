@@ -143,18 +143,28 @@ sealed class DataCenterWriter
 
             if (node.HasAttributes || node.Value != null)
             {
-                var attributes = node.HasAttributes ? new Dictionary<string, DataCenterValue>(node.Attributes) : new();
+                var attributes = new List<KeyValuePair<int, DataCenterValue>>();
+
+                void AddAttribute(string name, DataCenterValue value)
+                {
+                    attributes.Add(new(_names.GetString(name).Index, value));
+                }
+
+                if (node.HasAttributes)
+                    foreach (var (name, value) in node.Attributes)
+                        AddAttribute(name, value);
 
                 if (node.Value != null)
-                    attributes.Add(DataCenterConstants.ValueAttributeName, node.Value);
+                    AddAttribute(DataCenterConstants.ValueAttributeName, node.Value);
+
+                attributes.Sort((x, y) => x.Key.CompareTo(y.Key));
 
                 attrCount = attributes.Count;
                 attrAddr = AllocateRange(_attributes, attrCount, "Attribute");
 
-                foreach (var (i, index, value) in attributes
-                    .Select(kvp => (_names.GetString(kvp.Key).Index, kvp.Value))
-                    .OrderBy(tup => tup.Index)
-                    .Select((tup, i) => (i, tup.Index, tup.Value)))
+                var i = 0;
+
+                foreach (var (index, value) in attributes)
                 {
                     var (code, ext) = value.TypeCode switch
                     {
@@ -203,6 +213,8 @@ sealed class DataCenterWriter
                         TypeInfo = (ushort)(ext << 2 | code),
                         Value = result,
                     });
+
+                    i++;
                 }
             }
 

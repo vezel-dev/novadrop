@@ -28,7 +28,8 @@ sealed class LazyMutableDataCenterReader : DataCenterReader
             keys,
             () =>
             {
-                var attributes = new OrderedDictionary<string, DataCenterValue>(raw.AttributeCount);
+                var attributes = new OrderedDictionary<string, DataCenterValue>(
+                    raw.AttributeCount - (value != null ? 1 : 0));
 
                 ReadAttributes(raw, attributes, static (attributes, name, value) =>
                 {
