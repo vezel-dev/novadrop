@@ -25,8 +25,7 @@ sealed class UnpackCommand : Command
                 var dc = await DataCenter.LoadAsync(
                     stream,
                     new DataCenterLoadOptions()
-                        .WithStrict(strict)
-                        .WithMutability(DataCenterMutability.Immutable),
+                        .WithStrict(strict),
                     cancellationToken);
 
                 output.Create();
