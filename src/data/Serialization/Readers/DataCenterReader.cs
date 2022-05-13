@@ -185,7 +185,7 @@ abstract class DataCenterReader
                 throw new InvalidDataException($"Cannot read {childCount} contiguous nodes at {childAddr}.");
         }
 
-        var value = default(string?);
+        var value = default(string);
 
         // The node value attribute, if present, is always last.
         if (attrCount != 0)

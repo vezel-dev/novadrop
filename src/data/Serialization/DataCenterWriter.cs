@@ -65,10 +65,6 @@ sealed class DataCenterWriter
             where T : unmanaged, IDataCenterItem<T>
         {
             var max = DataCenterAddress.MaxValue;
-
-            if (count == 0)
-                return max;
-
             var segIdx = 0;
             var elemIdx = 0;
             var segment = default(DataCenterRegion<T>);
@@ -156,8 +152,9 @@ sealed class DataCenterWriter
                 attrAddr = AllocateRange(_attributes, attrCount, "Attribute");
 
                 foreach (var (i, index, value) in attributes
-                    .Select((kvp, i) => (i, _names.GetString(kvp.Key).Index, kvp.Value))
-                    .OrderBy(tup => tup.Index))
+                    .Select(kvp => (_names.GetString(kvp.Key).Index, kvp.Value))
+                    .OrderBy(tup => tup.Index)
+                    .Select((tup, i) => (i, tup.Index, tup.Value)))
                 {
                     var (code, ext) = value.TypeCode switch
                     {
