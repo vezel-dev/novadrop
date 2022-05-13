@@ -52,11 +52,13 @@ sealed class DataCenterWriter
             AddName(keys.AttributeName3);
             AddName(keys.AttributeName4);
 
-            foreach (var (key, _) in node.Attributes)
-                AddName(key);
+            if (node.HasAttributes)
+                foreach (var (key, _) in node.Attributes)
+                    AddName(key);
 
-            foreach (var child in node.Children)
-                AddNames(child);
+            if (node.HasChildren)
+                foreach (var child in node.Children)
+                    AddNames(child);
         }
 
         static DataCenterAddress AllocateRange<T>(DataCenterSegmentedRegion<T> region, int count, string description)
