@@ -18,7 +18,8 @@ sealed class LazyImmutableDataCenterReader : DataCenterReader
         object parent,
         string name,
         string? value,
-        DataCenterKeys keys)
+        DataCenterKeys keys,
+        CancellationToken cancellationToken)
     {
         // This may result in redundant node allocations, but that has no side effects anyway, and only one wins.
         return _cache.GetOrAdd(
@@ -36,7 +37,7 @@ sealed class LazyImmutableDataCenterReader : DataCenterReader
                     {
                         var dict = new OrderedDictionary<string, DataCenterValue>(raw.AttributeCount);
 
-                        ForEachAttribute(raw, dict, static (dict, name, value) =>
+                        ReadAttributes(raw, dict, static (dict, name, value) =>
                         {
                             if (!dict.TryAdd(name, value))
                                 throw new InvalidDataException(
@@ -49,15 +50,17 @@ sealed class LazyImmutableDataCenterReader : DataCenterReader
                     {
                         var list = new List<DataCenterNode>(raw.ChildCount);
 
-                        ForEachChild(raw, node, list, static (list, node) => list.Add(node));
+                        ReadChildren(raw, node, list, static (list, node) => list.Add(node), default);
 
                         return list;
                     });
             });
     }
 
-    protected override LazyImmutableDataCenterNode? ResolveNode(DataCenterAddress address, object parent)
+    protected override LazyImmutableDataCenterNode? ResolveNode(
+        DataCenterAddress address, object parent, CancellationToken cancellationToken)
     {
-        return _cache.GetValueOrDefault(address) ?? Unsafe.As<LazyImmutableDataCenterNode>(CreateNode(address, parent));
+        return _cache.GetValueOrDefault(address) ??
+            Unsafe.As<LazyImmutableDataCenterNode>(CreateNode(address, parent, default));
     }
 }

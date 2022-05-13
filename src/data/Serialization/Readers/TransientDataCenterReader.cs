@@ -16,7 +16,8 @@ sealed class TransientDataCenterReader : DataCenterReader
         object parent,
         string name,
         string? value,
-        DataCenterKeys keys)
+        DataCenterKeys keys,
+        CancellationToken cancellationToken)
     {
         TransientDataCenterNode node = null!;
 
@@ -31,7 +32,7 @@ sealed class TransientDataCenterReader : DataCenterReader
             {
                 var dict = new OrderedDictionary<string, DataCenterValue>(raw.AttributeCount);
 
-                ForEachAttribute(raw, dict, static (dict, name, value) =>
+                ReadAttributes(raw, dict, static (dict, name, value) =>
                 {
                     if (!dict.TryAdd(name, value))
                         throw new InvalidDataException($"Attribute named '{name}' was already recorded earlier.");
@@ -43,14 +44,15 @@ sealed class TransientDataCenterReader : DataCenterReader
             {
                 var list = new List<DataCenterNode>(raw.ChildCount);
 
-                ForEachChild(raw, node, list, static (list, node) => list.Add(node));
+                ReadChildren(raw, node, list, static (list, node) => list.Add(node), default);
 
                 return list;
             });
     }
 
-    protected override DataCenterNode? ResolveNode(DataCenterAddress address, object parent)
+    protected override DataCenterNode? ResolveNode(
+        DataCenterAddress address, object parent, CancellationToken cancellationToken)
     {
-        return CreateNode(address, parent);
+        return CreateNode(address, parent, default);
     }
 }

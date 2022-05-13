@@ -18,7 +18,8 @@ sealed class EagerImmutableDataCenterReader : DataCenterReader
         object parent,
         string name,
         string? value,
-        DataCenterKeys keys)
+        DataCenterKeys keys,
+        CancellationToken cancellationToken)
     {
         var node = new EagerImmutableDataCenterNode(parent, name, value, keys);
 
@@ -26,7 +27,7 @@ sealed class EagerImmutableDataCenterReader : DataCenterReader
 
         var dict = new OrderedDictionary<string, DataCenterValue>(raw.AttributeCount);
 
-        ForEachAttribute(raw, dict, static (dict, name, value) =>
+        ReadAttributes(raw, dict, static (dict, name, value) =>
         {
             if (!dict.TryAdd(name, value))
                 throw new InvalidDataException($"Attribute named '{name}' was already recorded earlier.");
@@ -34,15 +35,17 @@ sealed class EagerImmutableDataCenterReader : DataCenterReader
 
         var list = new List<DataCenterNode>(raw.ChildCount);
 
-        ForEachChild(raw, node, list, static (list, node) => list.Add(node));
+        ReadChildren(raw, node, list, static (list, node) => list.Add(node), cancellationToken);
 
         node.Initialize(dict, list);
 
         return node;
     }
 
-    protected override EagerImmutableDataCenterNode? ResolveNode(DataCenterAddress address, object parent)
+    protected override EagerImmutableDataCenterNode? ResolveNode(
+        DataCenterAddress address, object parent, CancellationToken cancellationToken)
     {
-        return _cache.GetValueOrDefault(address) ?? Unsafe.As<EagerImmutableDataCenterNode>(CreateNode(address, parent));
+        return _cache.GetValueOrDefault(address) ??
+            Unsafe.As<EagerImmutableDataCenterNode>(CreateNode(address, parent, cancellationToken));
     }
 }

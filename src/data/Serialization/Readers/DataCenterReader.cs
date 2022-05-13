@@ -35,11 +35,13 @@ abstract class DataCenterReader
         object parent,
         string name,
         string? value,
-        DataCenterKeys keys);
+        DataCenterKeys keys,
+        CancellationToken cancellationToken);
 
-    protected abstract DataCenterNode? ResolveNode(DataCenterAddress address, object parent);
+    protected abstract DataCenterNode? ResolveNode(
+        DataCenterAddress address, object parent, CancellationToken cancellationToken);
 
-    protected void ForEachAttribute<T>(DataCenterRawNode raw, T state, Action<T, string, DataCenterValue> action)
+    protected void ReadAttributes<T>(DataCenterRawNode raw, T state, Action<T, string, DataCenterValue> action)
     {
         var addr = raw.AttributeAddress;
 
@@ -56,13 +58,19 @@ abstract class DataCenterReader
         }
     }
 
-    protected void ForEachChild<T>(DataCenterRawNode raw, object parent, T state, Action<T, DataCenterNode> action)
+    protected void ReadChildren<T>(
+        DataCenterRawNode raw,
+        object parent,
+        T state,
+        Action<T, DataCenterNode> action,
+        CancellationToken cancellationToken)
     {
         var addr = raw.ChildAddress;
 
         for (var i = 0; i < raw.ChildCount; i++)
         {
-            var child = ResolveNode(new DataCenterAddress(addr.SegmentIndex, (ushort)(addr.ElementIndex + i)), parent);
+            var child = ResolveNode(
+                new DataCenterAddress(addr.SegmentIndex, (ushort)(addr.ElementIndex + i)), parent, cancellationToken);
 
             // Discard empty nodes.
             if (child != null)
@@ -133,8 +141,10 @@ abstract class DataCenterReader
         return (_names.GetString(rawAttr.NameIndex - 1), result);
     }
 
-    protected DataCenterNode? CreateNode(DataCenterAddress address, object parent)
+    protected DataCenterNode? CreateNode(DataCenterAddress address, object parent, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var raw = _nodes.GetElement(address);
 
         var nameIdx = raw.NameIndex - 1;
@@ -196,7 +206,8 @@ abstract class DataCenterReader
             }
         }
 
-        return AllocateNode(address, raw, parent, name, value, _keys.GetKeys((keysInfo & 0b1111111111110000) >> 4));
+        return AllocateNode(
+            address, raw, parent, name, value, _keys.GetKeys((keysInfo & 0b1111111111110000) >> 4), cancellationToken);
     }
 
     public Task<DataCenterNode> ReadAsync(Stream stream, DataCenter center, CancellationToken cancellationToken)
@@ -235,7 +246,7 @@ abstract class DataCenterReader
                     }
                 }
 
-                var root = CreateNode(DataCenterAddress.MinValue, center);
+                var root = CreateNode(DataCenterAddress.MinValue, center, cancellationToken);
 
                 return root switch
                 {

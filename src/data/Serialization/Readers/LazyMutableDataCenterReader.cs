@@ -16,7 +16,8 @@ sealed class LazyMutableDataCenterReader : DataCenterReader
         object parent,
         string name,
         string? value,
-        DataCenterKeys keys)
+        DataCenterKeys keys,
+        CancellationToken cancellationToken)
     {
         LazyMutableDataCenterNode node = null!;
 
@@ -29,7 +30,7 @@ sealed class LazyMutableDataCenterReader : DataCenterReader
             {
                 var dict = new OrderedDictionary<string, DataCenterValue>(raw.AttributeCount);
 
-                ForEachAttribute(raw, dict, static (dict, name, value) =>
+                ReadAttributes(raw, dict, static (dict, name, value) =>
                 {
                     if (!dict.TryAdd(name, value))
                         throw new InvalidDataException($"Attribute named '{name}' was already recorded earlier.");
@@ -41,14 +42,15 @@ sealed class LazyMutableDataCenterReader : DataCenterReader
             {
                 var list = new List<DataCenterNode>(raw.ChildCount);
 
-                ForEachChild(raw, node, list, static (list, node) => list.Add(node));
+                ReadChildren(raw, node, list, static (list, node) => list.Add(node), default);
 
                 return list;
             });
     }
 
-    protected override LazyImmutableDataCenterNode? ResolveNode(DataCenterAddress address, object parent)
+    protected override LazyImmutableDataCenterNode? ResolveNode(
+        DataCenterAddress address, object parent, CancellationToken cancellationToken)
     {
-        return Unsafe.As<LazyImmutableDataCenterNode>(CreateNode(address, parent));
+        return Unsafe.As<LazyImmutableDataCenterNode>(CreateNode(address, parent, default));
     }
 }

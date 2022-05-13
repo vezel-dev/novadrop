@@ -16,23 +16,25 @@ sealed class EagerMutableDataCenterReader : DataCenterReader
         object parent,
         string name,
         string? value,
-        DataCenterKeys keys)
+        DataCenterKeys keys,
+        CancellationToken cancellationToken)
     {
         var node = new EagerMutableDataCenterNode(parent, name, value, keys, raw.AttributeCount, raw.ChildCount);
 
-        ForEachAttribute(raw, node.Attributes, static (dict, name, value) =>
+        ReadAttributes(raw, node.Attributes, static (dict, name, value) =>
         {
             if (!dict.TryAdd(name, value))
                 throw new InvalidDataException($"Attribute named '{name}' was already recorded earlier.");
         });
 
-        ForEachChild(raw, node, node.Children, static (list, node) => list.Add(node));
+        ReadChildren(raw, node, node.Children, static (list, node) => list.Add(node), cancellationToken);
 
         return node;
     }
 
-    protected override EagerMutableDataCenterNode? ResolveNode(DataCenterAddress address, object parent)
+    protected override EagerMutableDataCenterNode? ResolveNode(
+        DataCenterAddress address, object parent, CancellationToken cancellationToken)
     {
-        return Unsafe.As<EagerMutableDataCenterNode>(CreateNode(address, parent));
+        return Unsafe.As<EagerMutableDataCenterNode>(CreateNode(address, parent, cancellationToken));
     }
 }
