@@ -21,13 +21,13 @@ sealed class EagerMutableDataCenterReader : DataCenterReader
     {
         var node = new EagerMutableDataCenterNode(parent, name, value, keys, raw.AttributeCount, raw.ChildCount);
 
-        ReadAttributes(raw, node.Attributes, static (dict, name, value) =>
+        ReadAttributes(raw, node.Attributes, static (attributes, name, value) =>
         {
-            if (!dict.TryAdd(name, value))
+            if (!attributes.TryAdd(name, value))
                 throw new InvalidDataException($"Attribute named '{name}' was already recorded earlier.");
         });
 
-        ReadChildren(raw, node, node.Children, static (list, node) => list.Add(node), cancellationToken);
+        ReadChildren(raw, node, node.Children, static (children, node) => children.Add(node), cancellationToken);
 
         return node;
     }

@@ -85,6 +85,9 @@ public abstract class DataCenterNode
         {
             var current = work.Dequeue();
 
+            if (!current.HasChildren)
+                continue;
+
             foreach (var elem in current.Children)
             {
                 yield return elem;

@@ -56,10 +56,13 @@ sealed class VerifyCommand : Command
                 void ForceLoad(DataCenterNode node)
                 {
                     nodes++;
-                    attrs += node.Attributes.Count;
 
-                    foreach (var child in node.Children)
-                        ForceLoad(child);
+                    if (node.HasAttributes)
+                        attrs += node.Attributes.Count;
+
+                    if (node.HasChildren)
+                        foreach (var child in node.Children)
+                            ForceLoad(child);
                 }
 
                 ForceLoad(dc.Root);

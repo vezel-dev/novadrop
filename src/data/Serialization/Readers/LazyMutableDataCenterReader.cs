@@ -28,23 +28,23 @@ sealed class LazyMutableDataCenterReader : DataCenterReader
             keys,
             () =>
             {
-                var dict = new OrderedDictionary<string, DataCenterValue>(raw.AttributeCount);
+                var attributes = new OrderedDictionary<string, DataCenterValue>(raw.AttributeCount);
 
-                ReadAttributes(raw, dict, static (dict, name, value) =>
+                ReadAttributes(raw, attributes, static (attributes, name, value) =>
                 {
-                    if (!dict.TryAdd(name, value))
+                    if (!attributes.TryAdd(name, value))
                         throw new InvalidDataException($"Attribute named '{name}' was already recorded earlier.");
                 });
 
-                return dict;
+                return attributes;
             },
             () =>
             {
-                var list = new List<DataCenterNode>(raw.ChildCount);
+                var children = new List<DataCenterNode>(raw.ChildCount);
 
-                ReadChildren(raw, node, list, static (list, node) => list.Add(node), default);
+                ReadChildren(raw, node, children, static (children, node) => children.Add(node), default);
 
-                return list;
+                return children;
             });
     }
 
