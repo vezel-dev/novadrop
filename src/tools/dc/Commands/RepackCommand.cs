@@ -10,7 +10,7 @@ sealed class RepackCommand : Command
         var strictOpt = new Option<bool>("--strict", () => false, "Enable strict verification");
         var levelOpt = new Option<CompressionLevel>(
             "--compression",
-            () => CompressionLevel.Fastest,
+            () => CompressionLevel.Optimal,
             "Set compression level");
 
         Add(inputArg);
@@ -44,7 +44,8 @@ sealed class RepackCommand : Command
 
                 await dc.SaveAsync(
                     outStream,
-                    new DataCenterSaveOptions().WithCompressionLevel(level),
+                    new DataCenterSaveOptions()
+                        .WithCompressionLevel(level),
                     cancellationToken);
 
                 sw.Stop();

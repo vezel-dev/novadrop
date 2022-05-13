@@ -214,7 +214,8 @@ sealed class PackCommand : Command
 
                 await dc.SaveAsync(
                     stream,
-                    new DataCenterSaveOptions().WithCompressionLevel(level),
+                    new DataCenterSaveOptions()
+                        .WithCompressionLevel(level),
                     cancellationToken);
 
                 sw.Stop();

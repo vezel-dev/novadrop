@@ -464,7 +464,8 @@ sealed class WatchCommand : Command
                     // TODO: What if this fails?
                     await dc.SaveAsync(
                         stream,
-                        new DataCenterSaveOptions().WithCompressionLevel(level),
+                        new DataCenterSaveOptions()
+                            .WithCompressionLevel(level),
                         cancellationToken);
 
                     sw2.Stop();

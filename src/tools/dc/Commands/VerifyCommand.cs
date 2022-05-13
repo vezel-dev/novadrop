@@ -46,7 +46,8 @@ sealed class VerifyCommand : Command
 
                 var dc = await DataCenter.LoadAsync(
                     stream,
-                    new DataCenterLoadOptions().WithStrict(strict),
+                    new DataCenterLoadOptions()
+                        .WithStrict(strict),
                     cancellationToken);
 
                 var nodes = 0;
