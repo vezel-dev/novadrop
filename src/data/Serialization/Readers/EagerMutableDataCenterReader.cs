@@ -19,15 +19,19 @@ sealed class EagerMutableDataCenterReader : DataCenterReader
         DataCenterKeys keys,
         CancellationToken cancellationToken)
     {
-        var node = new EagerMutableDataCenterNode(parent, name, value, keys, raw.AttributeCount, raw.ChildCount);
+        var attrCount = raw.AttributeCount - (value != null ? 1 : 0);
+        var childCount = raw.ChildCount;
+        var node = new EagerMutableDataCenterNode(parent, name, value, keys, attrCount, childCount);
 
-        ReadAttributes(raw, node.Attributes, static (attributes, name, value) =>
-        {
-            if (!attributes.TryAdd(name, value))
-                throw new InvalidDataException($"Attribute named '{name}' was already recorded earlier.");
-        });
+        if (attrCount != 0)
+            ReadAttributes(raw, node.Attributes, static (attributes, name, value) =>
+            {
+                if (!attributes.TryAdd(name, value))
+                    throw new InvalidDataException($"Attribute named '{name}' was already recorded earlier.");
+            });
 
-        ReadChildren(raw, node, node.Children, static (children, node) => children.Add(node), cancellationToken);
+        if (childCount != 0)
+            ReadChildren(raw, node, node.Children, static (children, node) => children.Add(node), cancellationToken);
 
         return node;
     }
