@@ -21,52 +21,20 @@ sealed class DataCenterWriter
 
     readonly DataCenterFooter _footer = new();
 
-    readonly Comparer<DataCenterNode> _comparer;
-
     readonly DataCenterSaveOptions _options;
 
     public DataCenterWriter(DataCenterSaveOptions options)
     {
         _keys = new(_names);
-        _comparer = Comparer<DataCenterNode>.Create((x, y) =>
-        {
-            var cmp = _names.GetString(x.Name).Index.CompareTo(_names.GetString(y.Name).Index);
-
-            if (!(x.HasAttributes || y.HasAttributes))
-                return cmp;
-
-            // Note that the node value attribute cannot be a key.
-            var attrsA = x.Attributes;
-            var attrsB = y.Attributes;
-
-            int CompareBy(string? name)
-            {
-                return name != null ? attrsA.GetValueOrDefault(name).CompareTo(attrsB.GetValueOrDefault(name)) : 0;
-            }
-
-            var keys = x.Keys;
-
-            if (cmp == 0)
-                cmp = CompareBy(keys.AttributeName1);
-
-            if (cmp == 0)
-                cmp = CompareBy(keys.AttributeName2);
-
-            if (cmp == 0)
-                cmp = CompareBy(keys.AttributeName3);
-
-            if (cmp == 0)
-                cmp = CompareBy(keys.AttributeName4);
-
-            return cmp;
-        });
         _options = options;
     }
 
-    void ProcessTree(DataCenterNode root)
+    void ProcessTree(DataCenterNode root, CancellationToken cancellationToken)
     {
         void AddNames(DataCenterNode node)
         {
+            cancellationToken.ThrowIfCancellationRequested();
+
             void AddName(string? name)
             {
                 if (name is not (null or DataCenterConstants.RootNodeName or DataCenterConstants.ValueAttributeName))
@@ -138,8 +106,43 @@ sealed class DataCenterWriter
             return new DataCenterAddress((ushort)segIdx, (ushort)elemIdx);
         }
 
-        void EmitTree(DataCenterNode node, DataCenterAddress address)
+        var comparer = Comparer<DataCenterNode>.Create((x, y) =>
         {
+            var cmp = _names.GetString(x.Name).Index.CompareTo(_names.GetString(y.Name).Index);
+
+            if (!(x.HasAttributes || y.HasAttributes))
+                return cmp;
+
+            // Note that the node value attribute cannot be a key.
+            var attrsA = x.Attributes;
+            var attrsB = y.Attributes;
+
+            int CompareBy(string? name)
+            {
+                return name != null ? attrsA.GetValueOrDefault(name).CompareTo(attrsB.GetValueOrDefault(name)) : 0;
+            }
+
+            var keys = x.Keys;
+
+            if (cmp == 0)
+                cmp = CompareBy(keys.AttributeName1);
+
+            if (cmp == 0)
+                cmp = CompareBy(keys.AttributeName2);
+
+            if (cmp == 0)
+                cmp = CompareBy(keys.AttributeName3);
+
+            if (cmp == 0)
+                cmp = CompareBy(keys.AttributeName4);
+
+            return cmp;
+        });
+
+        void WriteTree(DataCenterNode node, DataCenterAddress address)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
             var attributes = new Dictionary<string, DataCenterValue>(node.Attributes);
 
             if (node.Value != null)
@@ -198,13 +201,14 @@ sealed class DataCenterWriter
                         TypeInfo = (ushort)(ext << 2 | code),
                         Value = result,
                     };
-                }).ToArray();
+                })
+                .ToArray();
 
             var children = node.Children;
             var caddr = InsertElements(_nodes, new DataCenterRawNode[children.Count], "Node");
 
-            foreach (var (i, child) in children.OrderBy(x => x, _comparer).Select((x, i) => (i, x)))
-                EmitTree(child, new DataCenterAddress(caddr.SegmentIndex, (ushort)(caddr.ElementIndex + i)));
+            foreach (var (i, child) in children.OrderBy(x => x, comparer).Select((x, i) => (i, x)))
+                WriteTree(child, new DataCenterAddress(caddr.SegmentIndex, (ushort)(caddr.ElementIndex + i)));
 
             var keys = node.Keys;
             var elem = new DataCenterRawNode
@@ -232,7 +236,7 @@ sealed class DataCenterWriter
         _ = _names.AddString(DataCenterConstants.RootNodeName);
         _ = _names.AddString(DataCenterConstants.ValueAttributeName);
 
-        EmitTree(root, InsertElements(_nodes, new DataCenterRawNode[1], "Node"));
+        WriteTree(root, InsertElements(_nodes, new DataCenterRawNode[1], "Node"));
     }
 
     [SuppressMessage("", "CA5401")]
@@ -241,7 +245,7 @@ sealed class DataCenterWriter
         return Task.Run(
             async () =>
             {
-                ProcessTree(center.Root);
+                ProcessTree(center.Root, cancellationToken);
 
                 // Write the uncompressed data center into memory first so that we can write the uncompressed size
                 // before we write the zlib header. Sadness.
