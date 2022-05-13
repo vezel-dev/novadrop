@@ -5,10 +5,17 @@ sealed class RepackCommand : Command
     public RepackCommand()
         : base("repack", "Repack the contents of a data center file.")
     {
-        var inputArg = new Argument<FileInfo>("input", "Input file");
-        var outputArg = new Argument<FileInfo>("output", "Output file");
-        var strictOpt = new Option<bool>("--strict", () => false, "Enable strict verification");
-        var levelOpt = new Option<CompressionLevel>(
+        var inputArg = new Argument<FileInfo>(
+            "input",
+            "Input file");
+        var outputArg = new Argument<FileInfo>(
+            "output",
+            "Output file");
+        var strictOpt = new Option<bool>(
+            "--strict",
+            () => false,
+            "Enable strict verification");
+        var compressionOpt = new Option<CompressionLevel>(
             "--compression",
             () => CompressionLevel.Optimal,
             "Set compression level");
@@ -16,14 +23,14 @@ sealed class RepackCommand : Command
         Add(inputArg);
         Add(outputArg);
         Add(strictOpt);
-        Add(levelOpt);
+        Add(compressionOpt);
 
         this.SetHandler(
             async (
                 FileInfo input,
                 FileInfo output,
                 bool strict,
-                CompressionLevel level,
+                CompressionLevel compression,
                 CancellationToken cancellationToken) =>
             {
                 Console.WriteLine($"Repacking '{input}' to '{output}'...");
@@ -45,7 +52,7 @@ sealed class RepackCommand : Command
                 await dc.SaveAsync(
                     outStream,
                     new DataCenterSaveOptions()
-                        .WithCompressionLevel(level),
+                        .WithCompressionLevel(compression),
                     cancellationToken);
 
                 sw.Stop();
@@ -55,6 +62,6 @@ sealed class RepackCommand : Command
             inputArg,
             outputArg,
             strictOpt,
-            levelOpt);
+            compressionOpt);
     }
 }

@@ -6,14 +6,22 @@ sealed class VerifyCommand : Command
     public VerifyCommand()
         : base("verify", "Verify the format integrity of a data center file.")
     {
-        var inputArg = new Argument<FileInfo>("input", "Input file");
-        var strictOpt = new Option<bool>("--strict", () => true, "Enable strict verification");
+        var inputArg = new Argument<FileInfo>(
+            "input",
+            "Input file");
+        var strictOpt = new Option<bool>(
+            "--strict",
+            () => true,
+            "Enable strict verification");
 
         Add(inputArg);
         Add(strictOpt);
 
         this.SetHandler(
-            async (FileInfo input, bool strict, CancellationToken cancellationToken) =>
+            async (
+                FileInfo input,
+                bool strict,
+                CancellationToken cancellationToken) =>
             {
                 Console.WriteLine($"Verifying '{input}'...");
 
