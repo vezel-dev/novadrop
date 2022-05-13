@@ -185,8 +185,6 @@ abstract class DataCenterReader
                 throw new InvalidDataException($"Cannot read {childCount} contiguous nodes at {childAddr}.");
         }
 
-        // Note: Padding1 and Padding2 are allowed to contain garbage. Do not check.
-
         var value = default(string?);
 
         // The node value attribute, if present, is always last.
@@ -205,6 +203,8 @@ abstract class DataCenterReader
                 value = attrValue.AsString;
             }
         }
+
+        // Note: Padding1 and Padding2 are allowed to contain garbage. Do not check.
 
         return AllocateNode(
             address, raw, parent, name, value, _keys.GetKeys((keysInfo & 0b1111111111110000) >> 4), cancellationToken);

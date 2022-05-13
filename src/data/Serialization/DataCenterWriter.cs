@@ -59,15 +59,12 @@ sealed class DataCenterWriter
                 AddNames(child);
         }
 
-        static DataCenterAddress InsertElements<T>(
-            DataCenterSegmentedRegion<T> region,
-            IReadOnlyCollection<T> items,
-            string description)
+        static DataCenterAddress AllocateRange<T>(DataCenterSegmentedRegion<T> region, int count, string description)
             where T : unmanaged, IDataCenterItem<T>
         {
             var max = DataCenterAddress.MaxValue;
 
-            if (items.Count == 0)
+            if (count == 0)
                 return max;
 
             var segIdx = 0;
@@ -79,7 +76,7 @@ sealed class DataCenterWriter
             {
                 var seg = region.Segments[segIdx];
 
-                if (seg.Elements.Count + items.Count <= max.ElementIndex)
+                if (seg.Elements.Count + count <= max.ElementIndex)
                 {
                     elemIdx = seg.Elements.Count;
                     segment = seg;
@@ -100,10 +97,10 @@ sealed class DataCenterWriter
                 region.Segments.Add(segment);
             }
 
-            foreach (var item in items)
-                segment.Elements.Add(item);
+            for (var i = 0; i < count; i++)
+                segment.Elements.Add(default);
 
-            return new DataCenterAddress((ushort)segIdx, (ushort)elemIdx);
+            return new((ushort)segIdx, (ushort)elemIdx);
         }
 
         var comparer = Comparer<DataCenterNode>.Create((x, y) =>
@@ -143,17 +140,23 @@ sealed class DataCenterWriter
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var attributes = new Dictionary<string, DataCenterValue>(node.Attributes);
+            var attrCount = 0;
+            var attrAddr = DataCenterAddress.MaxValue;
 
-            if (node.Value != null)
-                attributes.Add(DataCenterConstants.ValueAttributeName, node.Value);
+            if (node.HasAttributes || node.Value != null)
+            {
+                var attributes = node.HasAttributes ? new Dictionary<string, DataCenterValue>(node.Attributes) : new();
 
-            var rawAttributes = attributes
-                .Select(kvp => (_names.GetString(kvp.Key).Index, kvp.Value))
-                .OrderBy(tup => tup.Index)
-                .Select(tup =>
+                if (node.Value != null)
+                    attributes.Add(DataCenterConstants.ValueAttributeName, node.Value);
+
+                attrCount = attributes.Count;
+                attrAddr = AllocateRange(_attributes, attrCount, "Attribute");
+
+                foreach (var (i, index, value) in attributes
+                    .Select((kvp, i) => (i, _names.GetString(kvp.Key).Index, kvp.Value))
+                    .OrderBy(tup => tup.Index))
                 {
-                    var value = tup.Value;
                     var (code, ext) = value.TypeCode switch
                     {
                         DataCenterTypeCode.Int32 => (1, 0),
@@ -195,23 +198,32 @@ sealed class DataCenterWriter
                             throw new InvalidOperationException(); // Impossible.
                     }
 
-                    return new DataCenterRawAttribute
+                    _attributes.SetElement(new(attrAddr.SegmentIndex, (ushort)(attrAddr.ElementIndex + i)), new()
                     {
-                        NameIndex = (ushort)tup.Index,
+                        NameIndex = (ushort)index,
                         TypeInfo = (ushort)(ext << 2 | code),
                         Value = result,
-                    };
-                })
-                .ToArray();
+                    });
+                }
+            }
 
-            var children = node.Children;
-            var caddr = InsertElements(_nodes, new DataCenterRawNode[children.Count], "Node");
+            var childCount = 0;
+            var childAddr = DataCenterAddress.MaxValue;
 
-            foreach (var (i, child) in children.OrderBy(x => x, comparer).Select((x, i) => (i, x)))
-                WriteTree(child, new DataCenterAddress(caddr.SegmentIndex, (ushort)(caddr.ElementIndex + i)));
+            if (node.HasChildren)
+            {
+                var children = node.Children;
+
+                childCount = children.Count;
+                childAddr = AllocateRange(_nodes, childCount, "Node");
+
+                foreach (var (i, child) in children.OrderBy(n => n, comparer).Select((n, i) => (i, n)))
+                    WriteTree(child, new(childAddr.SegmentIndex, (ushort)(childAddr.ElementIndex + i)));
+            }
 
             var keys = node.Keys;
-            var elem = new DataCenterRawNode
+
+            _nodes.SetElement(address, new()
             {
                 NameIndex = (ushort)_names.GetString(node.Name).Index,
                 KeysInfo = (ushort)(_keys.AddKeys(
@@ -219,13 +231,11 @@ sealed class DataCenterWriter
                     keys.AttributeName2,
                     keys.AttributeName3,
                     keys.AttributeName4) << 4),
-                AttributeCount = (ushort)attributes.Count,
-                ChildCount = (ushort)children.Count,
-                AttributeAddress = InsertElements(_attributes, rawAttributes, "Attribute"),
-                ChildAddress = caddr,
-            };
-
-            _nodes.SetElement(address, elem);
+                AttributeCount = (ushort)attrCount,
+                ChildCount = (ushort)childCount,
+                AttributeAddress = attrAddr,
+                ChildAddress = childAddr,
+            });
         }
 
         // The tree needs to be sorted according to the index of name strings. So we must walk the entire tree and
@@ -236,7 +246,7 @@ sealed class DataCenterWriter
         _ = _names.AddString(DataCenterConstants.RootNodeName);
         _ = _names.AddString(DataCenterConstants.ValueAttributeName);
 
-        WriteTree(root, InsertElements(_nodes, new DataCenterRawNode[1], "Node"));
+        WriteTree(root, AllocateRange(_nodes, 1, "Node"));
     }
 
     [SuppressMessage("", "CA5401")]
