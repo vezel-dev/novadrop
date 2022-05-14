@@ -13,8 +13,13 @@ static class Program
 
     static int Main(string[] args)
     {
-        var outputArg = new Argument<DirectoryInfo>("output", () => new("out"), "Output directory");
-        var pidArg = new Argument<int?>("pid", "TERA process ID");
+        var outputArg = new Argument<DirectoryInfo>(
+            "output",
+            () => new("out"),
+            "Output directory");
+        var pidArg = new Argument<int?>(
+            "pid",
+            "TERA process ID");
         var cmd = new RootCommand("Extract useful data from a running TERA client.")
         {
             outputArg,
@@ -39,6 +44,8 @@ static class Program
 
                 Console.WriteLine($"Attaching to TERA process {proc.Id}...");
 
+                var sw1 = Stopwatch.StartNew();
+
                 var native = new NativeProcess(proc);
 
                 output.Create();
@@ -48,7 +55,11 @@ static class Program
 
                 foreach (var scanner in _scanners.Span)
                 {
-                    Console.WriteLine($"Running {scanner.GetType().Name}...");
+                    var name = scanner.GetType().Name;
+
+                    Console.WriteLine($"Running {name}...");
+
+                    var sw2 = Stopwatch.StartNew();
 
                     try
                     {
@@ -58,9 +69,15 @@ static class Program
                     {
                         exceptions.Add(ex);
                     }
+
+                    sw2.Stop();
+
+                    Console.WriteLine($"Finished running {name} in {sw2.Elapsed}...");
                 }
 
-                Console.WriteLine($"Wrote results to directory: {output}");
+                sw1.Stop();
+
+                Console.WriteLine($"Wrote results to directory '{output}' in {sw1.Elapsed}.");
 
                 if (exceptions.Count != 0)
                     throw new AggregateException(null, exceptions);
