@@ -22,16 +22,16 @@ sealed class SystemMessageScanner : IScanner
     public unsafe void Run(ScanContext context)
     {
         var process = context.Process;
-        var module = process.MainModule;
+        var exe = process.MainModule;
 
         Console.WriteLine("Searching for system message name function...");
 
-        var o = module.Search(_pattern).Cast<nuint?>().FirstOrDefault();
+        var o = exe.Search(_pattern).Cast<nuint?>().FirstOrDefault();
 
         if (o is not nuint off)
             throw new ApplicationException("Could not find system message name function.");
 
-        var count = module.Read<uint>(off + 6);
+        var count = exe.Read<uint>(off + 6);
 
         if (count < 4000)
             throw new ApplicationException("Could not read system message count.");
@@ -47,7 +47,7 @@ sealed class SystemMessageScanner : IScanner
                 new MemoryWindow(process, args, (nuint)sizeof(ThreadArgs)).Write(0, new ThreadArgs
                 {
                     Count = count,
-                    Results = results,
+                    Results = (nuint)results,
                 });
 
                 using var code = DynamicCode.Create(process, asm =>
@@ -63,7 +63,7 @@ sealed class SystemMessageScanner : IScanner
                     asm.mov(r12, rcx);
                     asm.mov(r13, __dword_ptr[r12 + (long)Marshal.OffsetOf<ThreadArgs>(nameof(ThreadArgs.Count))]);
                     asm.mov(r14, __qword_ptr[r12 + (long)Marshal.OffsetOf<ThreadArgs>(nameof(ThreadArgs.Results))]);
-                    asm.mov(r15, module.ToAddress(off));
+                    asm.mov(r15, (nuint)exe.ToAddress(off));
                     asm.mov(rdi, 0);
 
                     asm.Label(ref loop);
@@ -86,7 +86,7 @@ sealed class SystemMessageScanner : IScanner
                     asm.ret();
                 });
 
-                var ret = code.Call(args);
+                var ret = code.Call((nuint)args);
 
                 if (ret != 42)
                     throw new ApplicationException($"Could not remotely retrieve system message table ({ret}).");
@@ -96,7 +96,8 @@ sealed class SystemMessageScanner : IScanner
 
                 for (var i = 0u; i < count; i++)
                 {
-                    if (!module.TryGetOffset(resultsWindow.Read<nuint>((nuint)sizeof(nuint) * i), out var offset))
+                    if (!exe.TryGetOffset(
+                        (NativeAddress)resultsWindow.Read<nuint>((nuint)sizeof(nuint) * i), out var offset))
                         throw new ApplicationException("Could not read system message strings.");
 
                     var sb = new StringBuilder(128);
@@ -104,7 +105,7 @@ sealed class SystemMessageScanner : IScanner
 
                     while (true)
                     {
-                        var ch = module.Read<char>(offset + sizeof(char) * j);
+                        var ch = exe.Read<char>(offset + sizeof(char) * j);
 
                         if (ch == '\0')
                             break;

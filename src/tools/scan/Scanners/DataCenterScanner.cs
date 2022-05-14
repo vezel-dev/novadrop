@@ -16,16 +16,16 @@ sealed class DataCenterScanner : IScanner
 
     public void Run(ScanContext context)
     {
-        var module = context.Process.MainModule;
+        var exe = context.Process.MainModule;
 
         Console.WriteLine("Searching for data center decryption function...");
 
-        var o = module.Search(_pattern).Cast<nuint?>().FirstOrDefault();
+        var o = exe.Search(_pattern).Cast<nuint?>().FirstOrDefault();
 
         if (o is not nuint off)
             throw new ApplicationException("Could not find data center decryption function.");
 
-        var decoder = Iced.Intel.Decoder.Create(64, new MemoryWindowCodeReader(module.Slice(off)));
+        var decoder = Iced.Intel.Decoder.Create(64, new MemoryWindowCodeReader(exe.Slice(off)));
 
         byte[]? ReadKey()
         {

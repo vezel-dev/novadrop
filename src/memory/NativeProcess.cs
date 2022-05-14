@@ -47,10 +47,10 @@ public sealed class NativeProcess
 
     MemoryWindow WrapModule(ProcessModule module)
     {
-        return new(this, (nuint)(nint)module.BaseAddress, (nuint)module.ModuleMemorySize);
+        return new(this, (NativeAddress)(nuint)(nint)module.BaseAddress, (nuint)module.ModuleMemorySize);
     }
 
-    public unsafe nuint Alloc(nuint length, MemoryProtection protection)
+    public unsafe NativeAddress Alloc(nuint length, MemoryProtection protection)
     {
         return VirtualAllocEx(
             Handle,
@@ -58,41 +58,41 @@ public sealed class NativeProcess
             length,
             VIRTUAL_ALLOCATION_TYPE.MEM_COMMIT | VIRTUAL_ALLOCATION_TYPE.MEM_RESERVE,
             TranslateProtection(protection)) is var ptr && ptr != null
-            ? (nuint)ptr
+            ? new((nuint)ptr)
             : throw new Win32Exception();
     }
 
-    public unsafe void Free(nuint address)
+    public unsafe void Free(NativeAddress address)
     {
-        if (!VirtualFreeEx(Handle, (void*)address, 0, VIRTUAL_FREE_TYPE.MEM_RELEASE))
+        if (!VirtualFreeEx(Handle, (void*)(nuint)address, 0, VIRTUAL_FREE_TYPE.MEM_RELEASE))
             throw new Win32Exception();
     }
 
-    public unsafe void Protect(nuint address, nuint length, MemoryProtection protection)
+    public unsafe void Protect(NativeAddress address, nuint length, MemoryProtection protection)
     {
-        if (!VirtualProtectEx(Handle, (void*)address, length, TranslateProtection(protection), out _))
+        if (!VirtualProtectEx(Handle, (void*)(nuint)address, length, TranslateProtection(protection), out _))
             throw new Win32Exception();
     }
 
-    public unsafe void Read(nuint address, Span<byte> buffer)
+    public unsafe void Read(NativeAddress address, Span<byte> buffer)
     {
         lock (_lock)
             fixed (byte* p = buffer)
-                if (!ReadProcessMemory(Handle, (void*)address, p, (nuint)buffer.Length, null))
+                if (!ReadProcessMemory(Handle, (void*)(nuint)address, p, (nuint)buffer.Length, null))
                     throw new Win32Exception();
     }
 
-    public unsafe void Write(nuint address, ReadOnlySpan<byte> buffer)
+    public unsafe void Write(NativeAddress address, ReadOnlySpan<byte> buffer)
     {
         lock (_lock)
             fixed (byte* p = buffer)
-                if (!WriteProcessMemory(Handle, (void*)address, p, (nuint)buffer.Length, null))
+                if (!WriteProcessMemory(Handle, (void*)(nuint)address, p, (nuint)buffer.Length, null))
                     throw new Win32Exception();
     }
 
-    public unsafe void Flush(nuint address, nuint length)
+    public unsafe void Flush(NativeAddress address, nuint length)
     {
-        if (!FlushInstructionCache(Handle, (void*)address, length))
+        if (!FlushInstructionCache(Handle, (void*)(nuint)address, length))
             throw new Win32Exception();
     }
 

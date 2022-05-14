@@ -55,7 +55,7 @@ public sealed class DynamicCode : IDisposable
         try
         {
             // Now assemble the code into the process for real.
-            _ = asm.Assemble(windowWriter, ptr);
+            _ = asm.Assemble(windowWriter, (nuint)ptr);
 
             // Fill the rest with interrupt instructions to catch mistakes.
             for (nuint i = 0; i < windowWriter.CurrentWindow.Length; i++)
@@ -80,7 +80,7 @@ public sealed class DynamicCode : IDisposable
             Window.Process.Handle,
             null,
             0,
-            (delegate* unmanaged[Stdcall]<void*, uint>)Window.Address,
+            (delegate* unmanaged[Stdcall]<void*, uint>)(nuint)Window.Address,
             (void*)parameter,
             0,
             null);

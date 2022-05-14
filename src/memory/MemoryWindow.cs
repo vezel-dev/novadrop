@@ -4,13 +4,13 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>
 {
     public NativeProcess Process { get; }
 
-    public nuint Address { get; }
+    public NativeAddress Address { get; }
 
     public nuint Length { get; }
 
     public bool IsEmpty => Length == 0;
 
-    public MemoryWindow(NativeProcess process, nuint address, nuint length)
+    public MemoryWindow(NativeProcess process, NativeAddress address, nuint length)
     {
         ArgumentNullException.ThrowIfNull(process);
 
@@ -29,7 +29,7 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>
         return !left.Equals(right);
     }
 
-    public bool ContainsAddress(nuint address)
+    public bool ContainsAddress(NativeAddress address)
     {
         return address >= Address && address < Address + Length;
     }
@@ -44,21 +44,21 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>
         return offset <= Length && length <= Length - offset;
     }
 
-    public nuint ToAddress(nuint offset)
+    public NativeAddress ToAddress(nuint offset)
     {
         _ = ContainsOffset(offset) ? true : throw new ArgumentOutOfRangeException(nameof(offset));
 
         return Address + offset;
     }
 
-    public unsafe nuint ToOffset(nuint address)
+    public unsafe nuint ToOffset(NativeAddress address)
     {
         _ = ContainsAddress(address) ? true : throw new ArgumentOutOfRangeException(nameof(address));
 
-        return address - Address;
+        return (nuint)(address - Address);
     }
 
-    public bool TryGetAddress(nuint offset, out nuint address)
+    public bool TryGetAddress(nuint offset, out NativeAddress address)
     {
         try
         {
@@ -72,7 +72,7 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>
         }
     }
 
-    public bool TryGetOffset(nuint address, out nuint offset)
+    public bool TryGetOffset(NativeAddress address, out nuint offset)
     {
         try
         {

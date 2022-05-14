@@ -14,21 +14,19 @@ sealed class ClientVersionScanner : IScanner
 
     public void Run(ScanContext context)
     {
-        var module = context.Process.MainModule;
+        var exe = context.Process.MainModule;
 
         Console.WriteLine("Searching for client version reporting function...");
 
-        var o = module.Search(_pattern).Cast<nuint?>().FirstOrDefault();
+        var o = exe.Search(_pattern).Cast<nuint?>().FirstOrDefault();
 
         if (o is not nuint off)
             throw new ApplicationException("Could not find client version reporting function.");
 
         int? ReadVersion(nuint offset)
         {
-            return module.TryGetOffset(
-                module.ToAddress(offset + sizeof(uint)) + module.Read<uint>(offset),
-                out var verOff)
-                ? module.Read<int>(verOff)
+            return exe.TryGetOffset(exe.ToAddress(offset + sizeof(uint)) + exe.Read<uint>(offset), out var verOff)
+                ? exe.Read<int>(verOff)
                 : null;
         }
 
