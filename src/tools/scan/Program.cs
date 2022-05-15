@@ -15,7 +15,6 @@ static class Program
     {
         var outputArg = new Argument<DirectoryInfo>(
             "output",
-            () => new("out"),
             "Output directory");
         var pidArg = new Argument<int?>(
             "pid",
