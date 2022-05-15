@@ -83,8 +83,9 @@ struct DataCenterHeader
 `timestamp` is a Unix timestamp indicating when the file was produced.
 
 `unknown1`, `unknown2`, `unknown3`, and `unknown4` are all always `0`. They are
-actually part of a tree structure describing the types of the data tree, but
-official data centers never include the type tree.
+actually part of a tree structure describing the
+[XSD](https://www.w3.org/TR/xmlschema-1) schema of the data tree, but official
+data centers never include this information.
 
 `client_version` is usually (but not always) the value sent by the client in the
 `C_CHECK_VERSION` packet.
