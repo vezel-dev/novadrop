@@ -14,8 +14,6 @@ public sealed class NativeProcess
 
     public IEnumerable<MemoryWindow> Modules => Process.Modules.Cast<ProcessModule>().Select(WrapModule);
 
-    readonly object _lock = new();
-
     public NativeProcess(Process process)
     {
         ArgumentNullException.ThrowIfNull(process);
@@ -76,18 +74,16 @@ public sealed class NativeProcess
 
     public unsafe void Read(NativeAddress address, Span<byte> buffer)
     {
-        lock (_lock)
-            fixed (byte* p = buffer)
-                if (!ReadProcessMemory(Handle, (void*)(nuint)address, p, (nuint)buffer.Length, null))
-                    throw new Win32Exception();
+        fixed (byte* p = buffer)
+            if (!ReadProcessMemory(Handle, (void*)(nuint)address, p, (nuint)buffer.Length, null))
+                throw new Win32Exception();
     }
 
     public unsafe void Write(NativeAddress address, ReadOnlySpan<byte> buffer)
     {
-        lock (_lock)
-            fixed (byte* p = buffer)
-                if (!WriteProcessMemory(Handle, (void*)(nuint)address, p, (nuint)buffer.Length, null))
-                    throw new Win32Exception();
+        fixed (byte* p = buffer)
+            if (!WriteProcessMemory(Handle, (void*)(nuint)address, p, (nuint)buffer.Length, null))
+                throw new Win32Exception();
     }
 
     public unsafe void Flush(NativeAddress address, nuint length)
