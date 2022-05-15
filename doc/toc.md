@@ -12,6 +12,7 @@
 
 * [Vezel.Novadrop.Data](libraries/data.md)
 * [Vezel.Novadrop.Launcher](libraries/launcher.md)
+* [Vezel.Novadrop.Memory](libraries/memory.md)
 * [Vezel.Novadrop.Net](libraries/net.md)
 
 ## Tools

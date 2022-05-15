@@ -26,6 +26,9 @@ This project offers the following packages:
   center files.
 * [Vezel.Novadrop.Launcher](https://www.nuget.org/packages/Vezel.Novadrop.Launcher):
   Provides APIs for interacting with the TERA client launcher.
+* [Vezel.Novadrop.Memory](https://www.nuget.org/packages/Vezel.Novadrop.Memory):
+  Provides support for manipulating local and remote process memory for the
+  purpose of reverse engineering
 * [Vezel.Novadrop.Net](https://www.nuget.org/packages/Vezel.Novadrop.Net):
   Provides support for TERA's network protocol.
 

@@ -1,6 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <AssemblyName>Vezel.Novadrop.Memory</AssemblyName>
+        <IsPackable>true</IsPackable>
+        <PackageDescription>$(PackageDescription)
+
+This package provides support for manipulating local and remote process memory
+for the purpose of reverse engineering.</PackageDescription>
+        <PackageId>Vezel.Novadrop.Memory</PackageId>
         <RootNamespace>Vezel.Novadrop.Memory</RootNamespace>
     </PropertyGroup>
 

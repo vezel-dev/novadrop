@@ -39,5 +39,6 @@ jobs:
                       novadrop-scan
                       Vezel.Novadrop.Data
                       Vezel.Novadrop.Launcher
+                      Vezel.Novadrop.Memory
                       Vezel.Novadrop.Net
                   keep: 25

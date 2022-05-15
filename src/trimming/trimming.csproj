@@ -17,12 +17,14 @@
     <ItemGroup>
         <TrimmerRootAssembly Include="Vezel.Novadrop.Data" />
         <TrimmerRootAssembly Include="Vezel.Novadrop.Launcher" />
+        <TrimmerRootAssembly Include="Vezel.Novadrop.Memory" />
         <TrimmerRootAssembly Include="Vezel.Novadrop.Net" />
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="../data/data.csproj" />
         <ProjectReference Include="../launcher/launcher.csproj" />
+        <ProjectReference Include="../memory/memory.csproj" />
         <ProjectReference Include="../net/net.csproj" />
     </ItemGroup>
 </Project>

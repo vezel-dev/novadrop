@@ -42,6 +42,8 @@ This project offers the following packages:
 | [![novadrop-scan][scan-img]][scan-pkg] | Provides the .NET global tool for extracting useful data from a running TERA client. | ![Downloads][scan-dls] |
 | [![Vezel.Novadrop.Data][data-img]][data-pkg] | Provides support for creating, reading, modifying, and writing TERA's data center files. | ![Downloads][data-dls] |
 | [![Vezel.Novadrop.Launcher][launcher-img]][launcher-pkg] | Provides APIs for interacting with the TERA client launcher. | ![Downloads][launcher-dls] |
+| [![Vezel.Novadrop.Memory][memory-img]][memory-pkg] | Provides support for manipulating local and remote process memory
+for the purpose of reverse engineering. | ![Downloads][memory-dls] |
 | [![Vezel.Novadrop.Net][net-img]][net-pkg] | Provides support for TERA's network protocol. | ![Downloads][net-dls] |
 
 [dc-pkg]: https://www.nuget.org/packages/novadrop-dc
@@ -49,6 +51,7 @@ This project offers the following packages:
 [scan-pkg]: https://www.nuget.org/packages/novadrop-scan
 [data-pkg]: https://www.nuget.org/packages/Vezel.Novadrop.Data
 [launcher-pkg]: https://www.nuget.org/packages/Vezel.Novadrop.Launcher
+[memory-pkg]: https://www.nuget.org/packages/Vezel.Novadrop.Memory
 [net-pkg]: https://www.nuget.org/packages/Vezel.Novadrop.Net
 
 [dc-img]: https://img.shields.io/nuget/v/novadrop-dc?label=novadrop-dc
@@ -56,6 +59,7 @@ This project offers the following packages:
 [scan-img]: https://img.shields.io/nuget/v/novadrop-scan?label=novadrop-scan
 [data-img]: https://img.shields.io/nuget/v/Vezel.Novadrop.Data?label=Vezel.Novadrop.Data
 [launcher-img]: https://img.shields.io/nuget/v/Vezel.Novadrop.Launcher?label=Vezel.Novadrop.Launcher
+[memory-img]: https://img.shields.io/nuget/v/Vezel.Novadrop.Memory?label=Vezel.Novadrop.Memory
 [net-img]: https://img.shields.io/nuget/v/Vezel.Novadrop.Net?label=Vezel.Novadrop.Net
 
 [dc-dls]: https://img.shields.io/nuget/dt/novadrop-dc?label=
@@ -63,6 +67,7 @@ This project offers the following packages:
 [scan-dls]: https://img.shields.io/nuget/dt/novadrop-scan?label=
 [data-dls]: https://img.shields.io/nuget/dt/Vezel.Novadrop.Data?label=
 [launcher-dls]: https://img.shields.io/nuget/dt/Vezel.Novadrop.Launcher?label=
+[memory-dls]: https://img.shields.io/nuget/dt/Vezel.Novadrop.Memory?label=
 [net-dls]: https://img.shields.io/nuget/dt/Vezel.Novadrop.Net?label=
 
 To install a tool package in a project, run `dotnet tool install <name>`. To
