@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <AssemblyName>novadrop-launch</AssemblyName>
+        <AssemblyName>novadrop-run</AssemblyName>
         <PackageDescription>$(PackageDescription)
 
 This package provides the .NET global tool for launching the TERA client
 manually from the command line.</PackageDescription>
-        <PackageId>novadrop-launch</PackageId>
+        <PackageId>novadrop-run</PackageId>
     </PropertyGroup>
 
     <ItemGroup>

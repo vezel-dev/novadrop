@@ -38,34 +38,47 @@ This project offers the following packages:
 | Package | Description | Downloads |
 | -: | - | :- |
 | [![novadrop-dc][dc-img]][dc-pkg] | Provides the .NET global tool for manipulating TERA's data center files. | ![Downloads][dc-dls] |
-| [![novadrop-launch][launch-img]][launch-pkg] | Provides the .NET global tool for launching the TERA client manually from the command line. | ![Downloads][launch-dls] |
+| [![novadrop-gpk][gpk-img]][gpk-pkg] | Provides the .NET global tool for manipulating TERA's GPK archive files. | ![Downloads][gpk-dls] |
+| [![novadrop-rsc][rsc-img]][rsc-pkg] | Provides the .NET global tool for manipulating TERA's resource container files. | ![Downloads][rsc-dls] |
+| [![novadrop-run][run-img]][run-pkg] | Provides the .NET global tool for launching the TERA client manually from the command line. | ![Downloads][run-dls] |
 | [![novadrop-scan][scan-img]][scan-pkg] | Provides the .NET global tool for extracting useful data from a running TERA client. | ![Downloads][scan-dls] |
 | [![Vezel.Novadrop.Data][data-img]][data-pkg] | Provides support for creating, reading, modifying, and writing TERA's data center files. | ![Downloads][data-dls] |
-| [![Vezel.Novadrop.Launcher][launcher-img]][launcher-pkg] | Provides APIs for interacting with the TERA client launcher. | ![Downloads][launcher-dls] |
+| [![Vezel.Novadrop.IO][io-img]][io-pkg] | Provides support for creating, reading, modifying, and writing
+TERA's various archive formats. | ![Downloads][io-dls] |
+| [![Vezel.Novadrop.Launcher][launcher-img]][launcher-pkg] | Provides support for interacting with the TERA client launcher. | ![Downloads][launcher-dls] |
 | [![Vezel.Novadrop.Memory][memory-img]][memory-pkg] | Provides support for manipulating local and remote process memory
 for the purpose of reverse engineering. | ![Downloads][memory-dls] |
 | [![Vezel.Novadrop.Net][net-img]][net-pkg] | Provides support for TERA's network protocol. | ![Downloads][net-dls] |
 
 [dc-pkg]: https://www.nuget.org/packages/novadrop-dc
-[launch-pkg]: https://www.nuget.org/packages/novadrop-launch
+[gpk-pkg]: https://www.nuget.org/packages/novadrop-gpk
+[rsc-pkg]: https://www.nuget.org/packages/novadrop-rsc
+[run-pkg]: https://www.nuget.org/packages/novadrop-run
 [scan-pkg]: https://www.nuget.org/packages/novadrop-scan
 [data-pkg]: https://www.nuget.org/packages/Vezel.Novadrop.Data
+[io-pkg]: https://www.nuget.org/packages/Vezel.Novadrop.IO
 [launcher-pkg]: https://www.nuget.org/packages/Vezel.Novadrop.Launcher
 [memory-pkg]: https://www.nuget.org/packages/Vezel.Novadrop.Memory
 [net-pkg]: https://www.nuget.org/packages/Vezel.Novadrop.Net
 
 [dc-img]: https://img.shields.io/nuget/v/novadrop-dc?label=novadrop-dc
-[launch-img]: https://img.shields.io/nuget/v/novadrop-launch?label=novadrop-launch
+[gpk-img]: https://img.shields.io/nuget/v/novadrop-gpk?label=novadrop-gpk
+[rsc-img]: https://img.shields.io/nuget/v/novadrop-rsc?label=novadrop-rsc
+[run-img]: https://img.shields.io/nuget/v/novadrop-run?label=novadrop-run
 [scan-img]: https://img.shields.io/nuget/v/novadrop-scan?label=novadrop-scan
 [data-img]: https://img.shields.io/nuget/v/Vezel.Novadrop.Data?label=Vezel.Novadrop.Data
+[io-img]: https://img.shields.io/nuget/v/Vezel.Novadrop.IO?label=Vezel.Novadrop.IO
 [launcher-img]: https://img.shields.io/nuget/v/Vezel.Novadrop.Launcher?label=Vezel.Novadrop.Launcher
 [memory-img]: https://img.shields.io/nuget/v/Vezel.Novadrop.Memory?label=Vezel.Novadrop.Memory
 [net-img]: https://img.shields.io/nuget/v/Vezel.Novadrop.Net?label=Vezel.Novadrop.Net
 
 [dc-dls]: https://img.shields.io/nuget/dt/novadrop-dc?label=
-[launch-dls]: https://img.shields.io/nuget/dt/novadrop-launch?label=
+[gpk-dls]: https://img.shields.io/nuget/dt/novadrop-gpk?label=
+[rsc-dls]: https://img.shields.io/nuget/dt/novadrop-rsc?label=
+[run-dls]: https://img.shields.io/nuget/dt/novadrop-run?label=
 [scan-dls]: https://img.shields.io/nuget/dt/novadrop-scan?label=
 [data-dls]: https://img.shields.io/nuget/dt/Vezel.Novadrop.Data?label=
+[io-dls]: https://img.shields.io/nuget/dt/Vezel.Novadrop.IO?label=
 [launcher-dls]: https://img.shields.io/nuget/dt/Vezel.Novadrop.Launcher?label=
 [memory-dls]: https://img.shields.io/nuget/dt/Vezel.Novadrop.Memory?label=
 [net-dls]: https://img.shields.io/nuget/dt/Vezel.Novadrop.Net?label=

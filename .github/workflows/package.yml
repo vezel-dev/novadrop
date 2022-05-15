@@ -35,9 +35,12 @@ jobs:
               with:
                   names: |
                       novadrop-dc
-                      novadrop-launch
+                      novadrop-gpk
+                      novadrop-rsc
+                      novadrop-run
                       novadrop-scan
                       Vezel.Novadrop.Data
+                      Vezel.Novadrop.IO
                       Vezel.Novadrop.Launcher
                       Vezel.Novadrop.Memory
                       Vezel.Novadrop.Net

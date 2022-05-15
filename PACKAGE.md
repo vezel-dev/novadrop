@@ -16,7 +16,11 @@ This project offers the following packages:
 
 * [novadrop-dc](https://www.nuget.org/packages/novadrop-dc): Provides the .NET
   global tool for manipulating TERA's data center files.
-* [novadrop-launch](https://www.nuget.org/packages/novadrop-launch): Provides
+* [novadrop-gpk](https://www.nuget.org/packages/novadrop-gpk): Provides the .NET
+  global tool for manipulating TERA's GPK archive files.
+* [novadrop-rsc](https://www.nuget.org/packages/novadrop-rsc): Provides the .NET
+  global tool for manipulating TERA's resource container files.
+* [novadrop-run](https://www.nuget.org/packages/novadrop-run): Provides
   the .NET global tool for launching the TERA client manually from the command
   line.
 * [novadrop-scan](https://www.nuget.org/packages/novadrop-scan): Provides the
@@ -24,8 +28,11 @@ This project offers the following packages:
 * [Vezel.Novadrop.Data](https://www.nuget.org/packages/Vezel.Novadrop.Data):
   Provides support for creating, reading, modifying, and writing TERA's data
   center files.
+* [Vezel.Novadrop.IO](https://www.nuget.org/packages/Vezel.Novadrop.IO):
+  Provides support for creating, reading, modifying, and writing TERA's various
+  archive formats.
 * [Vezel.Novadrop.Launcher](https://www.nuget.org/packages/Vezel.Novadrop.Launcher):
-  Provides APIs for interacting with the TERA client launcher.
+  Provides support for interacting with the TERA client launcher.
 * [Vezel.Novadrop.Memory](https://www.nuget.org/packages/Vezel.Novadrop.Memory):
   Provides support for manipulating local and remote process memory for the
   purpose of reverse engineering

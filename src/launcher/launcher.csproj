@@ -4,7 +4,7 @@
         <IsPackable>true</IsPackable>
         <PackageDescription>$(PackageDescription)
 
-This package provides APIs for interacting with the TERA client launcher.</PackageDescription>
+This package provides support for interacting with the TERA client launcher.</PackageDescription>
         <PackageId>Vezel.Novadrop.Launcher</PackageId>
         <RootNamespace>Vezel.Novadrop.Launcher</RootNamespace>
     </PropertyGroup>
