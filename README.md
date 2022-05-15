@@ -43,11 +43,9 @@ This project offers the following packages:
 | [![novadrop-run][run-img]][run-pkg] | Provides the .NET global tool for launching the TERA client manually from the command line. | ![Downloads][run-dls] |
 | [![novadrop-scan][scan-img]][scan-pkg] | Provides the .NET global tool for extracting useful data from a running TERA client. | ![Downloads][scan-dls] |
 | [![Vezel.Novadrop.Data][data-img]][data-pkg] | Provides support for creating, reading, modifying, and writing TERA's data center files. | ![Downloads][data-dls] |
-| [![Vezel.Novadrop.IO][io-img]][io-pkg] | Provides support for creating, reading, modifying, and writing
-TERA's various archive formats. | ![Downloads][io-dls] |
+| [![Vezel.Novadrop.IO][io-img]][io-pkg] | Provides support for creating, reading, modifying, and writing TERA's various archive formats. | ![Downloads][io-dls] |
 | [![Vezel.Novadrop.Launcher][launcher-img]][launcher-pkg] | Provides support for interacting with the TERA client launcher. | ![Downloads][launcher-dls] |
-| [![Vezel.Novadrop.Memory][memory-img]][memory-pkg] | Provides support for manipulating local and remote process memory
-for the purpose of reverse engineering. | ![Downloads][memory-dls] |
+| [![Vezel.Novadrop.Memory][memory-img]][memory-pkg] | Provides support for manipulating local and remote process memory for the purpose of reverse engineering. | ![Downloads][memory-dls] |
 | [![Vezel.Novadrop.Net][net-img]][net-pkg] | Provides support for TERA's network protocol. | ![Downloads][net-dls] |
 
 [dc-pkg]: https://www.nuget.org/packages/novadrop-dc
