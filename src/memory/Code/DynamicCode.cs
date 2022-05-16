@@ -8,6 +8,8 @@ public sealed class DynamicCode : IDisposable
 
     public nuint Length { get; }
 
+    int _disposed;
+
     DynamicCode(MemoryWindow window, nuint length)
     {
         Window = window;
@@ -22,12 +24,14 @@ public sealed class DynamicCode : IDisposable
     public void Dispose()
     {
         Free();
+
         GC.SuppressFinalize(this);
     }
 
     void Free()
     {
-        Window.Process.Free(Window.Address);
+        if (Interlocked.Exchange(ref _disposed, 1) == 0)
+            Window.Process.Free(Window.Address);
     }
 
     public static unsafe DynamicCode Create(NativeProcess process, Action<Assembler> assembler)
@@ -76,6 +80,8 @@ public sealed class DynamicCode : IDisposable
 
     public unsafe uint Call(nuint parameter)
     {
+        _ = _disposed == 0 ? true : throw new ObjectDisposedException(GetType().Name);
+
         using var handle = CreateRemoteThread(
             Window.Process.Handle,
             null,
