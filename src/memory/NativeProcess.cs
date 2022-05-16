@@ -4,7 +4,7 @@ using static Windows.Win32.WindowsPInvoke;
 
 namespace Vezel.Novadrop.Memory;
 
-public sealed class NativeProcess
+public sealed class NativeProcess : IDisposable
 {
     public Process Process { get; }
 
@@ -13,6 +13,8 @@ public sealed class NativeProcess
     public MemoryWindow MainModule => WrapModule(Process.MainModule!);
 
     public IEnumerable<MemoryWindow> Modules => Process.Modules.Cast<ProcessModule>().Select(WrapModule);
+
+    int _disposed;
 
     public NativeProcess(Process process)
     {
@@ -24,6 +26,18 @@ public sealed class NativeProcess
 
         if (Handle.IsInvalid)
             throw new Win32Exception();
+    }
+
+    ~NativeProcess()
+    {
+        Free();
+    }
+
+    public void Dispose()
+    {
+        Free();
+
+        GC.SuppressFinalize(this);
     }
 
     static PAGE_PROTECTION_FLAGS TranslateProtection(MemoryProtection protection)
@@ -43,6 +57,12 @@ public sealed class NativeProcess
         };
     }
 
+    void Free()
+    {
+        if (Interlocked.Exchange(ref _disposed, 1) == 0)
+            Handle.Dispose();
+    }
+
     MemoryWindow WrapModule(ProcessModule module)
     {
         return new(this, (NativeAddress)(nuint)(nint)module.BaseAddress, (nuint)module.ModuleMemorySize);
@@ -50,6 +70,8 @@ public sealed class NativeProcess
 
     public unsafe NativeAddress Alloc(nuint length, MemoryProtection protection)
     {
+        _ = _disposed == 0 ? true : throw new ObjectDisposedException(GetType().Name);
+
         return VirtualAllocEx(
             Handle,
             null,
@@ -62,18 +84,24 @@ public sealed class NativeProcess
 
     public unsafe void Free(NativeAddress address)
     {
+        _ = _disposed == 0 ? true : throw new ObjectDisposedException(GetType().Name);
+
         if (!VirtualFreeEx(Handle, (void*)(nuint)address, 0, VIRTUAL_FREE_TYPE.MEM_RELEASE))
             throw new Win32Exception();
     }
 
     public unsafe void Protect(NativeAddress address, nuint length, MemoryProtection protection)
     {
+        _ = _disposed == 0 ? true : throw new ObjectDisposedException(GetType().Name);
+
         if (!VirtualProtectEx(Handle, (void*)(nuint)address, length, TranslateProtection(protection), out _))
             throw new Win32Exception();
     }
 
     public unsafe void Read(NativeAddress address, Span<byte> buffer)
     {
+        _ = _disposed == 0 ? true : throw new ObjectDisposedException(GetType().Name);
+
         fixed (byte* p = buffer)
             if (!ReadProcessMemory(Handle, (void*)(nuint)address, p, (nuint)buffer.Length, null))
                 throw new Win32Exception();
@@ -81,6 +109,8 @@ public sealed class NativeProcess
 
     public unsafe void Write(NativeAddress address, ReadOnlySpan<byte> buffer)
     {
+        _ = _disposed == 0 ? true : throw new ObjectDisposedException(GetType().Name);
+
         fixed (byte* p = buffer)
             if (!WriteProcessMemory(Handle, (void*)(nuint)address, p, (nuint)buffer.Length, null))
                 throw new Win32Exception();
@@ -88,6 +118,8 @@ public sealed class NativeProcess
 
     public unsafe void Flush(NativeAddress address, nuint length)
     {
+        _ = _disposed == 0 ? true : throw new ObjectDisposedException(GetType().Name);
+
         if (!FlushInstructionCache(Handle, (void*)(nuint)address, length))
             throw new Win32Exception();
     }

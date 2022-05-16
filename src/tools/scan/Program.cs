@@ -45,7 +45,7 @@ static class Program
 
                 var sw1 = Stopwatch.StartNew();
 
-                var native = new NativeProcess(proc);
+                using var native = new NativeProcess(proc);
 
                 output.Create();
 
