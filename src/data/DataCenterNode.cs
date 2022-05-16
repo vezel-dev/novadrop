@@ -56,47 +56,6 @@ public abstract class DataCenterNode
         _keys = keys;
     }
 
-    public IEnumerable<DataCenterNode> Ancestors()
-    {
-        var current = this;
-
-        while ((current = current.Parent) != null)
-            yield return current;
-    }
-
-    public IEnumerable<DataCenterNode> Siblings()
-    {
-        var parent = Parent;
-
-        if (parent == null)
-            yield break;
-
-        foreach (var elem in parent.Children.Where(x => x != this))
-            yield return elem;
-    }
-
-    public IEnumerable<DataCenterNode> Descendants()
-    {
-        var work = new Queue<DataCenterNode>();
-
-        work.Enqueue(this);
-
-        while (work.Count != 0)
-        {
-            var current = work.Dequeue();
-
-            if (!current.HasChildren)
-                continue;
-
-            foreach (var elem in current.Children)
-            {
-                yield return elem;
-
-                work.Enqueue(elem);
-            }
-        }
-    }
-
     public abstract DataCenterNode CreateChild(string name);
 
     public abstract bool RemoveChild(DataCenterNode node);

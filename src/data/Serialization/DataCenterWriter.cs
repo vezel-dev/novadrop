@@ -170,7 +170,7 @@ sealed class DataCenterWriter
                     {
                         DataCenterTypeCode.Int32 => (1, 0),
                         DataCenterTypeCode.Single => (2, 0),
-                        DataCenterTypeCode.String => (3, DataCenterHash.ComputeValueHash(value.AsString)),
+                        DataCenterTypeCode.String => (3, DataCenterHash.ComputeValueHash(value.UnsafeAsString)),
                         DataCenterTypeCode.Boolean => (1, 1),
                         _ => throw new InvalidOperationException(), // Impossible.
                     };
@@ -179,16 +179,15 @@ sealed class DataCenterWriter
 
                     switch (value.TypeCode)
                     {
+                        // DataCenterValue internally normalizes values of these types to the representation we want to
+                        // write to the attribute, so we can just (re)interpret the value as int.
                         case DataCenterTypeCode.Int32:
-                            result = value.AsInt32;
-                            break;
                         case DataCenterTypeCode.Single:
-                            var f = value.AsSingle;
-
-                            result = Unsafe.As<float, int>(ref f);
+                        case DataCenterTypeCode.Boolean:
+                            result = value.UnsafeAsInt32;
                             break;
                         case DataCenterTypeCode.String:
-                            var addr = _values.AddString(value.AsString).Address;
+                            var addr = _values.AddString(value.UnsafeAsString).Address;
                             var segIdx = addr.SegmentIndex;
                             var elemIdx = addr.ElementIndex;
 
@@ -199,9 +198,6 @@ sealed class DataCenterWriter
                             }
 
                             result = elemIdx << 16 | segIdx;
-                            break;
-                        case DataCenterTypeCode.Boolean:
-                            result = value.AsBoolean ? 1 : 0;
                             break;
                         default:
                             throw new InvalidOperationException(); // Impossible.

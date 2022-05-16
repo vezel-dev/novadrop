@@ -5,7 +5,7 @@ public readonly struct DataCenterValue : IComparable<DataCenterValue>, IEquatabl
 {
     public DataCenterTypeCode TypeCode { get; }
 
-    public bool IsNull => TypeCode == DataCenterTypeCode.None;
+    public bool IsNull => TypeCode == DataCenterTypeCode.Null;
 
     public bool IsInt32 => TypeCode == DataCenterTypeCode.Int32;
 
@@ -15,41 +15,50 @@ public readonly struct DataCenterValue : IComparable<DataCenterValue>, IEquatabl
 
     public bool IsBoolean => TypeCode == DataCenterTypeCode.Boolean;
 
-    public object Value
+    public object? Value
     {
         get
         {
             return TypeCode switch
             {
-                DataCenterTypeCode.Int32 => As<int>(),
-                DataCenterTypeCode.Single => As<float>(),
-                DataCenterTypeCode.String => _stringValue!,
-                DataCenterTypeCode.Boolean => As<bool>(),
-                _ => throw new InvalidOperationException("Value is null."),
+                DataCenterTypeCode.Int32 => UnsafeAsInt32,
+                DataCenterTypeCode.Single => UnsafeAsSingle,
+                DataCenterTypeCode.String => UnsafeAsString,
+                DataCenterTypeCode.Boolean => UnsafeAsBoolean,
+                _ => null,
             };
         }
     }
 
     public int AsInt32 =>
         IsInt32
-            ? _primitiveValue
+            ? UnsafeAsInt32
             : throw new InvalidOperationException($"Value is not of type {DataCenterTypeCode.Int32}.");
 
     public float AsSingle =>
         IsSingle
-            ? As<float>()
+            ? UnsafeAsSingle
             : throw new InvalidOperationException($"Value is not of type {DataCenterTypeCode.Single}.");
 
     public string AsString =>
         IsString
-            ? _stringValue!
+            ? UnsafeAsString
             : throw new InvalidOperationException($"Value is not of type {DataCenterTypeCode.String}.");
 
     public bool AsBoolean =>
         IsBoolean
-            ? As<bool>()
+            ? UnsafeAsBoolean
             : throw new InvalidOperationException($"Value is not of type {DataCenterTypeCode.Boolean}.");
 
+    internal int UnsafeAsInt32 => _primitiveValue;
+
+    internal float UnsafeAsSingle => Unsafe.As<int, float>(ref Unsafe.AsRef(_primitiveValue));
+
+    internal string UnsafeAsString => _stringValue!;
+
+    internal bool UnsafeAsBoolean => Unsafe.As<int, bool>(ref Unsafe.AsRef(_primitiveValue));
+
+    [SuppressMessage("", "IDE0032")]
     readonly int _primitiveValue;
 
     readonly string? _stringValue;
@@ -152,61 +161,14 @@ public readonly struct DataCenterValue : IComparable<DataCenterValue>, IEquatabl
         return left.CompareTo(right) >= 0;
     }
 
-    T As<T>()
-        where T : unmanaged
-    {
-        return Unsafe.As<int, T>(ref Unsafe.AsRef(_primitiveValue));
-    }
-
-    public int ToInt32(int? fallback = null)
-    {
-        return TypeCode switch
-        {
-            DataCenterTypeCode.Int32 => As<int>(),
-            DataCenterTypeCode.Single => (int)As<float>(),
-            DataCenterTypeCode.String =>
-                int.TryParse(_stringValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out var i)
-                    ? i
-                    : fallback ?? throw new InvalidCastException(),
-            var t => throw new InvalidCastException($"Cannot cast value of type {t} to {typeof(int)}."),
-        };
-    }
-
-    public float ToSingle(float? fallback = null)
-    {
-        return TypeCode switch
-        {
-            DataCenterTypeCode.Int32 => As<int>(),
-            DataCenterTypeCode.Single => As<float>(),
-            DataCenterTypeCode.String =>
-                float.TryParse(_stringValue, NumberStyles.Float, CultureInfo.InvariantCulture, out var f)
-                    ? f
-                    : fallback ?? throw new InvalidCastException(),
-            var t => throw new InvalidCastException($"Cannot cast value of type {t} to {typeof(float)}."),
-        };
-    }
-
-    public bool ToBoolean(bool? fallback = null)
-    {
-        return TypeCode switch
-        {
-            DataCenterTypeCode.String =>
-                bool.TryParse(_stringValue, out var b)
-                    ? b
-                    : fallback ?? throw new InvalidCastException(),
-            DataCenterTypeCode.Boolean => As<bool>(),
-            var t => throw new InvalidCastException($"Cannot cast value of type {t} to {typeof(bool)}."),
-        };
-    }
-
     public int CompareTo(DataCenterValue other)
     {
         return TypeCode != other.TypeCode ? TypeCode.CompareTo(other.TypeCode) : TypeCode switch
         {
-            DataCenterTypeCode.Int32 => As<int>().CompareTo(other.As<int>()),
-            DataCenterTypeCode.Single => As<float>().CompareTo(other.As<float>()),
-            DataCenterTypeCode.String => string.CompareOrdinal(_stringValue, other._stringValue),
-            DataCenterTypeCode.Boolean => As<bool>().CompareTo(other.As<bool>()),
+            DataCenterTypeCode.Int32 => UnsafeAsInt32.CompareTo(other.UnsafeAsInt32),
+            DataCenterTypeCode.Single => UnsafeAsSingle.CompareTo(other.UnsafeAsSingle),
+            DataCenterTypeCode.String => string.CompareOrdinal(UnsafeAsString, other.UnsafeAsString),
+            DataCenterTypeCode.Boolean => UnsafeAsBoolean.CompareTo(other.UnsafeAsBoolean),
             _ => 0,
         };
     }
@@ -215,10 +177,10 @@ public readonly struct DataCenterValue : IComparable<DataCenterValue>, IEquatabl
     {
         return TypeCode == other.TypeCode && TypeCode switch
         {
-            DataCenterTypeCode.Int32 => As<int>() == other.As<int>(),
-            DataCenterTypeCode.Single => As<float>() == other.As<float>(),
-            DataCenterTypeCode.String => _stringValue == other._stringValue,
-            DataCenterTypeCode.Boolean => As<bool>() == other.As<bool>(),
+            DataCenterTypeCode.Int32 => UnsafeAsInt32 == other.UnsafeAsInt32,
+            DataCenterTypeCode.Single => UnsafeAsSingle == other.UnsafeAsSingle,
+            DataCenterTypeCode.String => UnsafeAsString == other.UnsafeAsString,
+            DataCenterTypeCode.Boolean => UnsafeAsBoolean == other.UnsafeAsBoolean,
             _ => true,
         };
     }
@@ -232,10 +194,10 @@ public readonly struct DataCenterValue : IComparable<DataCenterValue>, IEquatabl
     {
         return TypeCode switch
         {
-            DataCenterTypeCode.Int32 => HashCode.Combine(As<int>()),
-            DataCenterTypeCode.Single => HashCode.Combine(As<float>()),
-            DataCenterTypeCode.String => HashCode.Combine(_stringValue),
-            DataCenterTypeCode.Boolean => HashCode.Combine(As<bool>()),
+            DataCenterTypeCode.Int32 => HashCode.Combine(UnsafeAsInt32),
+            DataCenterTypeCode.Single => HashCode.Combine(UnsafeAsSingle),
+            DataCenterTypeCode.String => HashCode.Combine(UnsafeAsString),
+            DataCenterTypeCode.Boolean => HashCode.Combine(UnsafeAsBoolean),
             _ => 0,
         };
     }
@@ -244,10 +206,10 @@ public readonly struct DataCenterValue : IComparable<DataCenterValue>, IEquatabl
     {
         return TypeCode switch
         {
-            DataCenterTypeCode.Int32 => As<int>().ToString(CultureInfo.InvariantCulture),
-            DataCenterTypeCode.Single => As<float>().ToString(CultureInfo.InvariantCulture),
-            DataCenterTypeCode.String => _stringValue!,
-            DataCenterTypeCode.Boolean => As<bool>() ? "true" : "false", // Avoid "True" and "False".
+            DataCenterTypeCode.Int32 => UnsafeAsInt32.ToString(CultureInfo.InvariantCulture),
+            DataCenterTypeCode.Single => UnsafeAsSingle.ToString(CultureInfo.InvariantCulture),
+            DataCenterTypeCode.String => UnsafeAsString,
+            DataCenterTypeCode.Boolean => UnsafeAsBoolean ? "true" : "false", // Avoid "True" and "False".
             _ => "null",
         };
     }

@@ -200,7 +200,7 @@ abstract class DataCenterReader
                         $"Special '{attrName}' attribute has invalid type {attrValue.TypeCode} " +
                         $"(expected {DataCenterTypeCode.String}).");
 
-                value = attrValue.AsString;
+                value = attrValue.UnsafeAsString;
             }
         }
 

@@ -2,7 +2,7 @@ namespace Vezel.Novadrop.Data;
 
 public enum DataCenterTypeCode : byte
 {
-    None,
+    Null,
     Int32,
     Single,
     String,
