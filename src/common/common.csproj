@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <AssemblyName>Vezel.Novadrop.Common</AssemblyName>
+        <IsPackable>true</IsPackable>
+        <PackageDescription>$(PackageDescription)
+
+This package provides common functionality used by all Novadrop packages.</PackageDescription>
+        <PackageId>Vezel.Novadrop.Common</PackageId>
+        <RootNamespace>Vezel.Novadrop</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="Vezel.Novadrop.Client" />
+        <InternalsVisibleTo Include="Vezel.Novadrop.Formats" />
+        <InternalsVisibleTo Include="Vezel.Novadrop.Net" />
+    </ItemGroup>
+</Project>

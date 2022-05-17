@@ -17,6 +17,6 @@ running TERA client.</PackageDescription>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="../../memory/memory.csproj" />
+        <ProjectReference Include="../../client/client.csproj" />
     </ItemGroup>
 </Project>

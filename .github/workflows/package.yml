@@ -39,9 +39,8 @@ jobs:
                       novadrop-rsc
                       novadrop-run
                       novadrop-scan
-                      Vezel.Novadrop.Data
-                      Vezel.Novadrop.IO
-                      Vezel.Novadrop.Launcher
-                      Vezel.Novadrop.Memory
+                      Vezel.Novadrop.Client
+                      Vezel.Novadrop.Common
+                      Vezel.Novadrop.Formats
                       Vezel.Novadrop.Net
                   keep: 25

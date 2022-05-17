@@ -1,0 +1,3 @@
+# Vezel.Novadrop.Client
+
+TODO

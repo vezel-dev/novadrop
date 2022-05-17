@@ -3,12 +3,12 @@
         <AssemblyName>novadrop-run</AssemblyName>
         <PackageDescription>$(PackageDescription)
 
-This package provides the .NET global tool for launching the TERA client
-manually from the command line.</PackageDescription>
+This package provides the .NET global tool for launching the TERA client from
+the command line.</PackageDescription>
         <PackageId>novadrop-run</PackageId>
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="../../launcher/launcher.csproj" />
+        <ProjectReference Include="../../client/client.csproj" />
     </ItemGroup>
 </Project>

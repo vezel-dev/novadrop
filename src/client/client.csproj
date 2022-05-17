@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <AssemblyName>Vezel.Novadrop.Client</AssemblyName>
+        <IsPackable>true</IsPackable>
+        <PackageDescription>$(PackageDescription)
+
+This package provides support for interacting with the TERA launcher and client.</PackageDescription>
+        <PackageId>Vezel.Novadrop.Client</PackageId>
+        <RootNamespace>Vezel.Novadrop</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Using Include="Iced.Intel" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="../common/common.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Iced" />
+        <PackageReference Include="Microsoft.Windows.CsWin32"
+                          PrivateAssets="all" />
+        <PackageReference Include="Microsoft.Windows.SDK.Win32Docs"
+                          PrivateAssets="all" />
+        <PackageReference Include="Microsoft.Windows.SDK.Win32Metadata"
+                          PrivateAssets="all" />
+    </ItemGroup>
+</Project>

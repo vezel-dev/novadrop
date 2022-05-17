@@ -15,18 +15,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <TrimmerRootAssembly Include="Vezel.Novadrop.Data" />
-        <TrimmerRootAssembly Include="Vezel.Novadrop.IO" />
-        <TrimmerRootAssembly Include="Vezel.Novadrop.Launcher" />
-        <TrimmerRootAssembly Include="Vezel.Novadrop.Memory" />
+        <TrimmerRootAssembly Include="Vezel.Novadrop.Client" />
+        <TrimmerRootAssembly Include="Vezel.Novadrop.Common" />
+        <TrimmerRootAssembly Include="Vezel.Novadrop.Formats" />
         <TrimmerRootAssembly Include="Vezel.Novadrop.Net" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="../data/data.csproj" />
-        <ProjectReference Include="../io/io.csproj" />
-        <ProjectReference Include="../launcher/launcher.csproj" />
-        <ProjectReference Include="../memory/memory.csproj" />
+        <ProjectReference Include="../client/client.csproj" />
+        <ProjectReference Include="../common/common.csproj" />
+        <ProjectReference Include="../formats/formats.csproj" />
         <ProjectReference Include="../net/net.csproj" />
     </ItemGroup>
 </Project>

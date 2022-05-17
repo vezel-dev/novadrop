@@ -19,6 +19,6 @@ files.</PackageDescription>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="../../data/data.csproj" />
+        <ProjectReference Include="../../formats/formats.csproj" />
     </ItemGroup>
 </Project>

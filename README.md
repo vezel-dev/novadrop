@@ -40,12 +40,11 @@ This project offers the following packages:
 | [![novadrop-dc][dc-img]][dc-pkg] | Provides the .NET global tool for manipulating TERA's data center files. | ![Downloads][dc-dls] |
 | [![novadrop-gpk][gpk-img]][gpk-pkg] | Provides the .NET global tool for manipulating TERA's GPK archive files. | ![Downloads][gpk-dls] |
 | [![novadrop-rsc][rsc-img]][rsc-pkg] | Provides the .NET global tool for manipulating TERA's resource container files. | ![Downloads][rsc-dls] |
-| [![novadrop-run][run-img]][run-pkg] | Provides the .NET global tool for launching the TERA client manually from the command line. | ![Downloads][run-dls] |
+| [![novadrop-run][run-img]][run-pkg] | Provides the .NET global tool for launching the TERA client from the command line. | ![Downloads][run-dls] |
 | [![novadrop-scan][scan-img]][scan-pkg] | Provides the .NET global tool for extracting useful data from a running TERA client. | ![Downloads][scan-dls] |
-| [![Vezel.Novadrop.Data][data-img]][data-pkg] | Provides support for creating, reading, modifying, and writing TERA's data center files. | ![Downloads][data-dls] |
-| [![Vezel.Novadrop.IO][io-img]][io-pkg] | Provides support for creating, reading, modifying, and writing TERA's various archive formats. | ![Downloads][io-dls] |
-| [![Vezel.Novadrop.Launcher][launcher-img]][launcher-pkg] | Provides support for interacting with the TERA client launcher. | ![Downloads][launcher-dls] |
-| [![Vezel.Novadrop.Memory][memory-img]][memory-pkg] | Provides support for manipulating local and remote process memory for the purpose of reverse engineering. | ![Downloads][memory-dls] |
+| [![Vezel.Novadrop.Client][client-img]][client-pkg] | Provides support for interacting with the TERA launcher and client. | ![Downloads][client-dls] |
+| [![Vezel.Novadrop.Common][common-img]][common-pkg] | Provides common functionality used by all Novadrop packages. | ![Downloads][common-dls] |
+| [![Vezel.Novadrop.Formats][formats-img]][formats-pkg] | Provides support for TERA's various file formats. | ![Downloads][formats-dls] |
 | [![Vezel.Novadrop.Net][net-img]][net-pkg] | Provides support for TERA's network protocol. | ![Downloads][net-dls] |
 
 [dc-pkg]: https://www.nuget.org/packages/novadrop-dc
@@ -53,10 +52,9 @@ This project offers the following packages:
 [rsc-pkg]: https://www.nuget.org/packages/novadrop-rsc
 [run-pkg]: https://www.nuget.org/packages/novadrop-run
 [scan-pkg]: https://www.nuget.org/packages/novadrop-scan
-[data-pkg]: https://www.nuget.org/packages/Vezel.Novadrop.Data
-[io-pkg]: https://www.nuget.org/packages/Vezel.Novadrop.IO
-[launcher-pkg]: https://www.nuget.org/packages/Vezel.Novadrop.Launcher
-[memory-pkg]: https://www.nuget.org/packages/Vezel.Novadrop.Memory
+[client-pkg]: https://www.nuget.org/packages/Vezel.Novadrop.Client
+[common-pkg]: https://www.nuget.org/packages/Vezel.Novadrop.Common
+[formats-pkg]: https://www.nuget.org/packages/Vezel.Novadrop.Formats
 [net-pkg]: https://www.nuget.org/packages/Vezel.Novadrop.Net
 
 [dc-img]: https://img.shields.io/nuget/v/novadrop-dc?label=novadrop-dc
@@ -64,10 +62,9 @@ This project offers the following packages:
 [rsc-img]: https://img.shields.io/nuget/v/novadrop-rsc?label=novadrop-rsc
 [run-img]: https://img.shields.io/nuget/v/novadrop-run?label=novadrop-run
 [scan-img]: https://img.shields.io/nuget/v/novadrop-scan?label=novadrop-scan
-[data-img]: https://img.shields.io/nuget/v/Vezel.Novadrop.Data?label=Vezel.Novadrop.Data
-[io-img]: https://img.shields.io/nuget/v/Vezel.Novadrop.IO?label=Vezel.Novadrop.IO
-[launcher-img]: https://img.shields.io/nuget/v/Vezel.Novadrop.Launcher?label=Vezel.Novadrop.Launcher
-[memory-img]: https://img.shields.io/nuget/v/Vezel.Novadrop.Memory?label=Vezel.Novadrop.Memory
+[client-img]: https://img.shields.io/nuget/v/Vezel.Novadrop.Client?label=Vezel.Novadrop.Client
+[common-img]: https://img.shields.io/nuget/v/Vezel.Novadrop.Common?label=Vezel.Novadrop.Common
+[formats-img]: https://img.shields.io/nuget/v/Vezel.Novadrop.Formats?label=Vezel.Novadrop.Formats
 [net-img]: https://img.shields.io/nuget/v/Vezel.Novadrop.Net?label=Vezel.Novadrop.Net
 
 [dc-dls]: https://img.shields.io/nuget/dt/novadrop-dc?label=
@@ -75,10 +72,9 @@ This project offers the following packages:
 [rsc-dls]: https://img.shields.io/nuget/dt/novadrop-rsc?label=
 [run-dls]: https://img.shields.io/nuget/dt/novadrop-run?label=
 [scan-dls]: https://img.shields.io/nuget/dt/novadrop-scan?label=
-[data-dls]: https://img.shields.io/nuget/dt/Vezel.Novadrop.Data?label=
-[io-dls]: https://img.shields.io/nuget/dt/Vezel.Novadrop.IO?label=
-[launcher-dls]: https://img.shields.io/nuget/dt/Vezel.Novadrop.Launcher?label=
-[memory-dls]: https://img.shields.io/nuget/dt/Vezel.Novadrop.Memory?label=
+[client-dls]: https://img.shields.io/nuget/dt/Vezel.Novadrop.Client?label=
+[common-dls]: https://img.shields.io/nuget/dt/Vezel.Novadrop.Common?label=
+[formats-dls]: https://img.shields.io/nuget/dt/Vezel.Novadrop.Formats?label=
 [net-dls]: https://img.shields.io/nuget/dt/Vezel.Novadrop.Net?label=
 
 To install a tool package in a project, run `dotnet tool install <name>`. To

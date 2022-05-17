@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <AssemblyName>Vezel.Novadrop.Formats</AssemblyName>
+        <IsPackable>true</IsPackable>
+        <PackageDescription>$(PackageDescription)
+
+This package provides support for TERA's various file formats.</PackageDescription>
+        <PackageId>Vezel.Novadrop.Formats</PackageId>
+        <RootNamespace>Vezel.Novadrop</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Using Include="Microsoft.Collections.Extensions" />
+        <Using Include="Vezel.Novadrop.IO" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="../common/common.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Experimental.Collections" />
+    </ItemGroup>
+</Project>

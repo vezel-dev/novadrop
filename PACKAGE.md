@@ -21,21 +21,15 @@ This project offers the following packages:
 * [novadrop-rsc](https://www.nuget.org/packages/novadrop-rsc): Provides the .NET
   global tool for manipulating TERA's resource container files.
 * [novadrop-run](https://www.nuget.org/packages/novadrop-run): Provides
-  the .NET global tool for launching the TERA client manually from the command
-  line.
+  the .NET global tool for launching the TERA client from the command line.
 * [novadrop-scan](https://www.nuget.org/packages/novadrop-scan): Provides the
   .NET global tool for extracting useful data from a running TERA client.
-* [Vezel.Novadrop.Data](https://www.nuget.org/packages/Vezel.Novadrop.Data):
-  Provides support for creating, reading, modifying, and writing TERA's data
-  center files.
-* [Vezel.Novadrop.IO](https://www.nuget.org/packages/Vezel.Novadrop.IO):
-  Provides support for creating, reading, modifying, and writing TERA's various
-  archive formats.
-* [Vezel.Novadrop.Launcher](https://www.nuget.org/packages/Vezel.Novadrop.Launcher):
-  Provides support for interacting with the TERA client launcher.
-* [Vezel.Novadrop.Memory](https://www.nuget.org/packages/Vezel.Novadrop.Memory):
-  Provides support for manipulating local and remote process memory for the
-  purpose of reverse engineering
+* [Vezel.Novadrop.Client](https://www.nuget.org/packages/Vezel.Novadrop.Client):
+  Provides support for interacting with the TERA launcher and client.
+* [Vezel.Novadrop.Common](https://www.nuget.org/packages/Vezel.Novadrop.Common):
+  Provides common functionality used by all Novadrop packages.
+* [Vezel.Novadrop.Formats](https://www.nuget.org/packages/Vezel.Novadrop.Data):
+  Provides support for TERA's various file formats.
 * [Vezel.Novadrop.Net](https://www.nuget.org/packages/Vezel.Novadrop.Net):
   Provides support for TERA's network protocol.
 

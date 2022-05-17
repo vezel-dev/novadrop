@@ -9,6 +9,6 @@ files.</PackageDescription>
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="../../io/io.csproj" />
+        <ProjectReference Include="../../formats/formats.csproj" />
     </ItemGroup>
 </Project>

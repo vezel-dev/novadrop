@@ -6,6 +6,10 @@
 
 This package provides support for TERA's network protocol.</PackageDescription>
         <PackageId>Vezel.Novadrop.Net</PackageId>
-        <RootNamespace>Vezel.Novadrop.Net</RootNamespace>
+        <RootNamespace>Vezel.Novadrop</RootNamespace>
     </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="../common/common.csproj" />
+    </ItemGroup>
 </Project>

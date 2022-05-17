@@ -4,16 +4,17 @@
 
 ## Game
 
-* [Data Center](game/data.md)
-* [Launcher Protocol](game/launcher.md)
-* [Network Protocol](game/network.md)
+* [Data Center Format](game/data-center-format.md)
+* [Package Format](game/package-format.md)
+* [Resource Container Format](game/resource-container-format.md)
+* [Launcher/Client Protocol](game/launcher-client-protocol.md)
+* [Network Protocol](game/network-protocol.md)
 
 ## Libraries
 
-* [Vezel.Novadrop.Data](libraries/data.md)
-* [Vezel.Novadrop.IO](libraries/io.md)
-* [Vezel.Novadrop.Launcher](libraries/launcher.md)
-* [Vezel.Novadrop.Memory](libraries/memory.md)
+* [Vezel.Novadrop.Client](libraries/client.md)
+* [Vezel.Novadrop.Common](libraries/common.md)
+* [Vezel.Novadrop.Formats](libraries/formats.md)
 * [Vezel.Novadrop.Net](libraries/net.md)
 
 ## Tools
