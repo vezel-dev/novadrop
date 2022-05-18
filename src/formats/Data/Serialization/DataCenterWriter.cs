@@ -171,7 +171,7 @@ sealed class DataCenterWriter
                         DataCenterTypeCode.Single => (2, 0),
                         DataCenterTypeCode.String => (3, DataCenterHash.ComputeValueHash(value.UnsafeAsString)),
                         DataCenterTypeCode.Boolean => (1, 1),
-                        _ => throw new InvalidOperationException(), // Impossible.
+                        _ => throw new UnreachableException(),
                     };
 
                     int result;
@@ -199,7 +199,7 @@ sealed class DataCenterWriter
                             result = elemIdx << 16 | segIdx;
                             break;
                         default:
-                            throw new InvalidOperationException(); // Impossible.
+                            throw new UnreachableException();
                     }
 
                     _attributes.SetElement(new(attrAddr.SegmentIndex, (ushort)(attrAddr.ElementIndex + i)), new()

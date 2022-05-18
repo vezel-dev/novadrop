@@ -68,7 +68,7 @@ sealed class WatchCommand : Command
                             (DataSheetState.Deleted, DataSheetState.Modified) => DataSheetState.Modified,
                             (DataSheetState.Deleted, DataSheetState.Deleted) => DataSheetState.Deleted,
 
-                            _ => throw new InvalidOperationException(), // Impossible.
+                            _ => throw new UnreachableException(),
                         };
 
                     var finalChanges = changes.Where(

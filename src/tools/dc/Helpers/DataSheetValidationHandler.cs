@@ -34,7 +34,7 @@ sealed class DataSheetValidationHandler : IDisposable
                 {
                     XmlSeverityType.Error => ('E', ConsoleColor.Red),
                     XmlSeverityType.Warning => ('W', ConsoleColor.Yellow),
-                    _ => throw new InvalidOperationException(), // Impossible.
+                    _ => throw new UnreachableException(),
                 };
 
                 Console.ForegroundColor = color;
