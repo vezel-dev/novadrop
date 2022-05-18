@@ -55,4 +55,16 @@ sealed class StreamBinaryReader
 
         return BinaryPrimitives.ReadDoubleLittleEndian(_buffer.Span);
     }
+
+    public async ValueTask<string> ReadStringAsync(CancellationToken cancellationToken)
+    {
+        var sb = new StringBuilder(1024);
+
+        char c;
+
+        while ((c = (char)await ReadUInt16Async(cancellationToken).ConfigureAwait(false)) != '\0')
+            _ = sb.Append(c);
+
+        return sb.ToString();
+    }
 }

@@ -41,4 +41,12 @@ sealed class StreamBinaryWriter
 
         await WriteAsync(_buffer[..sizeof(double)], cancellationToken).ConfigureAwait(false);
     }
+
+    public async ValueTask WriteStringAsync(string value, CancellationToken cancellationToken)
+    {
+        foreach (var c in value)
+            await WriteUInt16Async(c, cancellationToken).ConfigureAwait(false);
+
+        await WriteUInt16Async(0, cancellationToken).ConfigureAwait(false);
+    }
 }
