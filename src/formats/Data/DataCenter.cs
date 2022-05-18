@@ -6,13 +6,13 @@ namespace Vezel.Novadrop.Data;
 
 public sealed class DataCenter
 {
-    public static ReadOnlyMemory<byte> LatestEncryptionKey { get; } = new byte[]
+    public static ReadOnlyMemory<byte> LatestKey { get; } = new byte[]
     {
         0x33, 0x47, 0xa1, 0x74, 0xf9, 0x04, 0x0d, 0x47,
         0x68, 0xa0, 0xb0, 0x55, 0x58, 0xdc, 0x86, 0x6b,
     };
 
-    public static ReadOnlyMemory<byte> LatestEncryptionIV { get; } = new byte[]
+    public static ReadOnlyMemory<byte> LatestIV { get; } = new byte[]
     {
         0xe4, 0x90, 0x56, 0x28, 0x21, 0xaf, 0x3e, 0x11,
         0x76, 0xc9, 0x8d, 0x3c, 0xb9, 0xec, 0x46, 0x01,
