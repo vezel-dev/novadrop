@@ -9,6 +9,10 @@ container files.</PackageDescription>
     </PropertyGroup>
 
     <ItemGroup>
+        <Using Include="Vezel.Novadrop.Resources" />
+    </ItemGroup>
+
+    <ItemGroup>
         <ProjectReference Include="../../formats/formats.csproj" />
     </ItemGroup>
 </Project>
