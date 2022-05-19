@@ -5,7 +5,7 @@ a structured protocol that can be serialized and deserialized automatically
 based on uniform packet definitions; no special serialization logic is required
 for any fields.
 
-* C/C++-like primitive types, `enum`s, `struct`s, and `union`s will be used.
+* C/C++-like primitive types and `struct`s will be used.
 * `bool` is equivalent to `uint8_t` but only allows the values `true` (`1`) and
   `false` (`0`).
 * Integers (`uint8_t`, `int8_t`, `uint16_t`, `int16_t`, etc) are little endian.

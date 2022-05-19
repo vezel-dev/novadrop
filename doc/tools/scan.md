@@ -9,6 +9,7 @@ Currently, it can extract the following:
 
 * The client versions reported in the `C_CHECK_VERSION` packet.
 * The data center encryption key and initialization vector.
+* The resource container encryption key.
 * The system message table used for the `S_SYSTEM_MESSAGE` packet.
 
 The `output` argument specifies a directory where result files will be written
