@@ -143,33 +143,63 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>
         return offsets;
     }
 
-    public void Read(nuint offset, Span<byte> buffer)
+    public bool TryRead(nuint offset, Span<byte> buffer)
     {
-        _ = ContainsRange(offset, (nuint)buffer.Length) ? true : throw new ArgumentOutOfRangeException(nameof(offset));
+        if (!ContainsRange(offset, (nuint)buffer.Length))
+            return false;
 
         Process.Read(ToAddress(offset), buffer);
+
+        return true;
+    }
+
+    public unsafe bool TryRead<T>(nuint offset, out T value)
+        where T : unmanaged
+    {
+        value = default;
+
+        return TryRead(offset, MemoryMarshal.AsBytes(MemoryMarshal.CreateSpan(ref value, 1)));
+    }
+
+    public void Read(nuint offset, Span<byte> buffer)
+    {
+        if (!TryRead(offset, buffer))
+            throw new ArgumentOutOfRangeException(nameof(offset));
     }
 
     public unsafe T Read<T>(nuint offset)
         where T : unmanaged
     {
-        Unsafe.SkipInit(out T result);
-        Read(offset, new(&result, sizeof(T)));
+        return TryRead<T>(offset, out var value) ? value : throw new ArgumentOutOfRangeException(nameof(offset));
+    }
 
-        return result;
+    public bool TryWrite(nuint offset, ReadOnlySpan<byte> buffer)
+    {
+        if (!ContainsRange(offset, (nuint)buffer.Length))
+            return false;
+
+        Process.Write(ToAddress(offset), buffer);
+
+        return true;
+    }
+
+    public bool TryWrite<T>(nuint offset, T value)
+        where T : unmanaged
+    {
+        return TryWrite(offset, MemoryMarshal.AsBytes(MemoryMarshal.CreateReadOnlySpan(ref value, 1)));
     }
 
     public void Write(nuint offset, ReadOnlySpan<byte> buffer)
     {
-        _ = ContainsRange(offset, (nuint)buffer.Length) ? true : throw new ArgumentOutOfRangeException(nameof(offset));
-
-        Process.Write(ToAddress(offset), buffer);
+        if (!TryWrite(offset, buffer))
+            throw new ArgumentOutOfRangeException(nameof(offset));
     }
 
     public unsafe void Write<T>(nuint offset, T value)
         where T : unmanaged
     {
-        Write(offset, new(&value, sizeof(T)));
+        if (!TryWrite(offset, value))
+            throw new ArgumentOutOfRangeException(nameof(offset));
     }
 
     public bool Equals(MemoryWindow other)
