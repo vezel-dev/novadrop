@@ -1,6 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <AssemblyName>novadrop-gpk</AssemblyName>
+        <!-- TODO: Ship this package. -->
+        <IsPackable>false</IsPackable>
         <PackageDescription>$(PackageDescription)
 
 This package provides the .NET global tool for manipulating TERA's GPK archive
