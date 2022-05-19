@@ -50,6 +50,8 @@ static class Program
 
                 output.Create();
 
+                Console.WriteLine();
+
                 var context = new ScanContext(native, output);
                 var exceptions = new List<ApplicationException>();
 
@@ -73,6 +75,7 @@ static class Program
                     sw2.Stop();
 
                     Console.WriteLine($"Finished running {name} in {sw2.Elapsed}...");
+                    Console.WriteLine();
                 }
 
                 sw1.Stop();
