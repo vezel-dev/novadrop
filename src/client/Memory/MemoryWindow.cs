@@ -100,27 +100,51 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>
 
     public IEnumerable<nuint> Search(ReadOnlyMemory<byte?> pattern)
     {
-        // TODO: Optimize this mess.
+        var window = this;
+        var offsets = new List<nuint>();
 
-        for (nuint offset = 0; ContainsRange(offset, (nuint)pattern.Length); offset++)
+        _ = Parallel.For(0, (long)Length, (i, state) =>
         {
-            var span = pattern.Span;
+            var offset = (nuint)i;
+            var length = pattern.Length;
+
+            if (!window.ContainsRange(offset, (nuint)length))
+            {
+                state.Break();
+
+                return;
+            }
+
+            var patternSpan = pattern.Span;
+            var candidateSpan = length <= 256 ? stackalloc byte[length] : new byte[length];
+
+            if (!window.TryRead(offset, candidateSpan))
+            {
+                state.Break();
+
+                return;
+            }
+
             var match = true;
 
-            for (var i = 0; i < span.Length; i++)
+            for (var j = 0; j < length; j++)
             {
-                var b = span[i];
+                var b = Unsafe.Add(ref MemoryMarshal.GetReference(patternSpan), j);
 
-                if (b != null && Read<byte>(offset + (nuint)i) != b)
+                if (b != null && Unsafe.Add(ref MemoryMarshal.GetReference(candidateSpan), j) != b)
                 {
                     match = false;
+
                     break;
                 }
             }
 
             if (match)
-                yield return offset;
-        }
+                lock (offsets)
+                    offsets.Add(offset);
+        });
+
+        return offsets;
     }
 
     public void Read(nuint offset, Span<byte> buffer)
