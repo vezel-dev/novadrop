@@ -44,46 +44,42 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>
         return offset <= Length && length <= Length - offset;
     }
 
-    public NativeAddress ToAddress(nuint offset)
-    {
-        _ = ContainsOffset(offset) ? true : throw new ArgumentOutOfRangeException(nameof(offset));
-
-        return Address + offset;
-    }
-
-    public unsafe nuint ToOffset(NativeAddress address)
-    {
-        _ = ContainsAddress(address) ? true : throw new ArgumentOutOfRangeException(nameof(address));
-
-        return (nuint)(address - Address);
-    }
-
     public bool TryGetAddress(nuint offset, out NativeAddress address)
     {
-        try
+        if (ContainsOffset(offset))
         {
-            address = ToAddress(offset);
+            address = Address + offset;
+
             return true;
         }
-        catch (ArgumentOutOfRangeException)
-        {
-            address = default;
-            return false;
-        }
+
+        address = default;
+
+        return false;
     }
 
     public bool TryGetOffset(NativeAddress address, out nuint offset)
     {
-        try
+        if (ContainsAddress(address))
         {
-            offset = ToOffset(address);
+            offset = (nuint)(address - Address);
+
             return true;
         }
-        catch (ArgumentOutOfRangeException)
-        {
-            offset = default;
-            return false;
-        }
+
+        offset = 0;
+
+        return false;
+    }
+
+    public NativeAddress ToAddress(nuint offset)
+    {
+        return TryGetAddress(offset, out var addr) ? addr : throw new ArgumentOutOfRangeException(nameof(offset));
+    }
+
+    public unsafe nuint ToOffset(NativeAddress address)
+    {
+        return TryGetOffset(address, out var off) ? off : throw new ArgumentOutOfRangeException(nameof(address));
     }
 
     public MemoryWindow Slice(nuint offset)
