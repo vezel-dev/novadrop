@@ -4,14 +4,14 @@ sealed class DataCenterScanner : IScanner
 {
     static readonly ReadOnlyMemory<byte?> _pattern = new byte?[]
     {
-        0x41, 0xc7, 0x43, null, null, null, null, null, // mov dword ptr [r11 - <offset>], <value>
-        0x41, 0xc7, 0x43, null, null, null, null, null, // mov dword ptr [r11 - <offset>], <value>
-        0x41, 0xc7, 0x43, null, null, null, null, null, // mov dword ptr [r11 - <offset>], <value>
-        0x41, 0xc7, 0x43, null, null, null, null, null, // mov dword ptr [r11 - <offset>], <value>
-        0x41, 0xc7, 0x43, null, null, null, null, null, // mov dword ptr [r11 - <offset>], <value>
-        0x41, 0xc7, 0x43, null, null, null, null, null, // mov dword ptr [r11 - <offset>], <value>
-        0x41, 0xc7, 0x43, null, null, null, null, null, // mov dword ptr [r11 - <offset>], <value>
-        0x41, 0xc7, 0x43, null, null, null, null, null, // mov dword ptr [r11 - <offset>], <value>
+        0x41, 0xc7, 0x43, null, null, null, null, null, // mov dword ptr [r11 - <disp>], <imm>
+        0x41, 0xc7, 0x43, null, null, null, null, null, // mov dword ptr [r11 - <disp>], <imm>
+        0x41, 0xc7, 0x43, null, null, null, null, null, // mov dword ptr [r11 - <disp>], <imm>
+        0x41, 0xc7, 0x43, null, null, null, null, null, // mov dword ptr [r11 - <disp>], <imm>
+        0x41, 0xc7, 0x43, null, null, null, null, null, // mov dword ptr [r11 - <disp>], <imm>
+        0x41, 0xc7, 0x43, null, null, null, null, null, // mov dword ptr [r11 - <disp>], <imm>
+        0x41, 0xc7, 0x43, null, null, null, null, null, // mov dword ptr [r11 - <disp>], <imm>
+        0x41, 0xc7, 0x43, null, null, null, null, null, // mov dword ptr [r11 - <disp>], <imm>
     };
 
     public void Run(ScanContext context)
@@ -20,49 +20,28 @@ sealed class DataCenterScanner : IScanner
 
         Console.WriteLine("Searching for data center decryption function...");
 
-        var o = exe.Search(_pattern).Cast<nuint?>().FirstOrDefault();
+        var offsets = exe.Search(_pattern).ToArray();
 
-        if (o is not nuint off)
+        if (offsets.Length != 1)
             throw new ApplicationException("Could not find data center decryption function.");
 
-        var decoder = Iced.Intel.Decoder.Create(64, new MemoryWindowCodeReader(exe.Slice(off)));
-
-        byte[]? ReadKey()
+        var off = offsets[0];
+        var arrays = new uint[] { 0, 32 }.Select(idx =>
         {
-            using var stream = new MemoryStream(16);
-            using var writer = new BinaryWriter(stream);
+            var baseOff = off + idx;
+            var span = (stackalloc uint[4]);
 
-            for (var i = 0; i < 4; i++)
-            {
-                decoder.Decode(out var insn);
+            for (var i = 0; i < span.Length; i++)
+                span[i] = exe.Read<uint>(baseOff + 8 * (uint)i + 4);
 
-                if (insn.Code != Code.Mov_rm32_imm32 || insn.MemoryBase != Register.R11)
-                    return null;
-
-                writer.Write(insn.Immediate32);
-            }
-
-            return stream.ToArray();
-        }
-
-        if (ReadKey() is not byte[] key)
-            throw new ApplicationException("Could not find data center key.");
-
-        if (ReadKey() is not byte[] iv)
-            throw new ApplicationException("Could not find data center IV.");
-
-        static string StringizeKey(byte[] key)
-        {
-            return string.Join(" ", key.Select(x => x.ToString("x2", CultureInfo.InvariantCulture)));
-        }
-
-        Console.WriteLine($"Found data center key: {StringizeKey(key)}");
-        Console.WriteLine($"Found data center IV: {StringizeKey(iv)}");
-
-        File.WriteAllLines(Path.Combine(context.Output.FullName, "DataCenterKeys.txt"), new[]
-        {
-            string.Join(", ", key.Select(x => $"0x{x:x2}")),
-            string.Join(", ", iv.Select(x => $"0x{x:x2}")),
+            return MemoryMarshal.AsBytes(span).ToArray();
         });
+
+        var strArrays = arrays.Select(k => string.Join(" ", k.Select(b => $"{b:x2}"))).ToArray();
+
+        Console.WriteLine($"Found data center key: {strArrays[0]}");
+        Console.WriteLine($"Found data center IV: {strArrays[1]}");
+
+        File.WriteAllLines(Path.Combine(context.Output.FullName, "DataCenterKeys.txt"), strArrays);
     }
 }

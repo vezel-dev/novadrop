@@ -1,22 +1,15 @@
-using static Iced.Intel.AssemblerRegisters;
-
 namespace Vezel.Novadrop.Scanners;
 
 sealed class SystemMessageScanner : IScanner
 {
-    struct ThreadArgs
-    {
-        public uint Count;
-
-        public nuint Results;
-    }
-
     static readonly ReadOnlyMemory<byte?> _pattern = new byte?[]
     {
-        0x85, 0xc9,                         // test ecx, eax
-        0x78, 0x17,                         // js short 0x17
-        0x81, 0xf9, null, null, null, null, // cmp ecx, <count>
-        0x73, 0x0f,                         // jae short 0xf
+        0x85, 0xc9,                               // test ecx, eax
+        0x78, 0x17,                               // js short 0x17
+        0x81, 0xf9, null, null, null, null,       // cmp ecx, <imm>
+        0x73, 0x0f,                               // jnb short 0xf
+        0x48, 0x63, 0xc1,                         // movsxd rax, ecx
+        0x48, 0x8d, 0x0d, null, null, null, null, // lea rcx, [rip + <disp>]
     };
 
     public unsafe void Run(ScanContext context)
@@ -26,112 +19,55 @@ sealed class SystemMessageScanner : IScanner
 
         Console.WriteLine("Searching for system message name function...");
 
-        var o = exe.Search(_pattern).Cast<nuint?>().FirstOrDefault();
+        var offsets = exe.Search(_pattern).ToArray();
 
-        if (o is not nuint off)
+        if (offsets.Length != 1)
             throw new ApplicationException("Could not find system message name function.");
 
+        var off = offsets[0];
         var count = exe.Read<uint>(off + 6);
 
         if (count < 4000)
             throw new ApplicationException("Could not read system message count.");
 
-        var results = process.Alloc((nuint)sizeof(nuint) * count, MemoryProtection.Read | MemoryProtection.Write);
+        var dispOff = off + 18;
 
-        try
+        // Resolve the RIP displacement in the instruction to an absolute address.
+        var tableAddr = exe.ToAddress(dispOff + sizeof(uint)) + exe.Read<uint>(dispOff);
+
+        if (!exe.TryGetOffset(tableAddr, out var tableOff))
+            throw new ApplicationException("Could not find system message table.");
+
+        var messages = new Dictionary<string, uint>((int)count);
+
+        for (var i = 0u; i < count; i++)
         {
-            var args = process.Alloc((nuint)sizeof(ThreadArgs), MemoryProtection.Read | MemoryProtection.Write);
+            if (!exe.TryRead<nuint>(tableOff + (uint)sizeof(nuint) * i, out var strAddr))
+                throw new ApplicationException("Could not index system message table.");
 
-            try
+            if (!exe.TryGetOffset((NativeAddress)strAddr, out var strOff))
+                throw new ApplicationException("Could not find system message name.");
+
+            var sb = new StringBuilder(128);
+
+            for (var j = 0u; ; j++)
             {
-                new MemoryWindow(process, args, (nuint)sizeof(ThreadArgs)).Write(0, new ThreadArgs
-                {
-                    Count = count,
-                    Results = (nuint)results,
-                });
+                if (!exe.TryRead<char>(strOff + sizeof(char) * j, out var ch))
+                    throw new ApplicationException("Could not read system message name.");
 
-                using var code = DynamicCode.Create(process, asm =>
-                {
-                    var loop = asm.CreateLabel();
+                if (ch == '\0')
+                    break;
 
-                    asm.push(r12);
-                    asm.push(r13);
-                    asm.push(r14);
-                    asm.push(r15);
-                    asm.push(rdi);
-
-                    asm.mov(r12, rcx);
-                    asm.mov(r13, __dword_ptr[r12 + (long)Marshal.OffsetOf<ThreadArgs>(nameof(ThreadArgs.Count))]);
-                    asm.mov(r14, __qword_ptr[r12 + (long)Marshal.OffsetOf<ThreadArgs>(nameof(ThreadArgs.Results))]);
-                    asm.mov(r15, (nuint)exe.ToAddress(off));
-                    asm.mov(rdi, 0);
-
-                    asm.Label(ref loop);
-
-                    asm.mov(rcx, rdi);
-                    asm.call(r15);
-                    asm.mov(__qword_ptr[r14 + rdi * sizeof(nuint)], rax);
-
-                    asm.inc(rdi);
-                    asm.cmp(rdi, r13);
-                    asm.jb(loop);
-
-                    asm.pop(rdi);
-                    asm.pop(r12);
-                    asm.pop(r13);
-                    asm.pop(r14);
-                    asm.pop(r15);
-
-                    asm.mov(rax, 42);
-                    asm.ret();
-                });
-
-                var ret = code.Call((nuint)args);
-
-                if (ret != 42)
-                    throw new ApplicationException($"Could not remotely retrieve system message table ({ret}).");
-
-                var messages = new Dictionary<string, uint>((int)count);
-                var resultsWindow = new MemoryWindow(process, results, (nuint)sizeof(nuint) * count);
-
-                for (var i = 0u; i < count; i++)
-                {
-                    if (!exe.TryGetOffset(
-                        (NativeAddress)resultsWindow.Read<nuint>((nuint)sizeof(nuint) * i), out var offset))
-                        throw new ApplicationException("Could not read system message strings.");
-
-                    var sb = new StringBuilder(128);
-                    var j = 0u;
-
-                    while (true)
-                    {
-                        var ch = exe.Read<char>(offset + sizeof(char) * j);
-
-                        if (ch == '\0')
-                            break;
-
-                        _ = sb.Append(ch);
-
-                        j++;
-                    }
-
-                    messages.Add(sb.ToString(), i);
-                }
-
-                Console.WriteLine($"Found system messages: {count}");
-
-                File.WriteAllLines(
-                    Path.Combine(context.Output.FullName, "SystemMessages.txt"),
-                    messages.OrderBy(x => x.Key).Select(x => $"[\"{x.Key}\"] = {x.Value},"));
+                _ = sb.Append(ch);
             }
-            finally
-            {
-                process.Free(args);
-            }
+
+            messages.Add(sb.ToString(), i);
         }
-        finally
-        {
-            process.Free(results);
-        }
+
+        Console.WriteLine($"Found system messages: {count}");
+
+        File.WriteAllLines(
+            Path.Combine(context.Output.FullName, "SystemMessages.txt"),
+            messages.OrderBy(x => x.Key).Select(x => $"{x.Key} = {x.Value}"));
     }
 }

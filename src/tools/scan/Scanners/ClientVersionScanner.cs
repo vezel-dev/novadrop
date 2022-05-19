@@ -4,12 +4,11 @@ sealed class ClientVersionScanner : IScanner
 {
     static readonly ReadOnlyMemory<byte?> _pattern = new byte?[]
     {
-        0x74, 0x72,                         // je short 0x72
-        0x8b, 0x05, null, null, null, null, // mov eax, dword ptr [rip + <offset>]
+        0x8b, 0x05, null, null, null, null, // mov eax, dword ptr [rip + <disp>]
         0xba, 0x14, 0x00, 0x00, 0x00,       // mov edx, 0x14
-        0x89, 0x05, null, null, null, null, // mov dword ptr [rip + <offset>], eax
+        0x89, 0x05, null, null, null, null, // mov dword ptr [rip + <disp>], eax
         0x45, 0x33, 0xc0,                   // xor r8d, r8d
-        0x8b, 0x05, null, null, null, null, // mov eax, dword ptr [rip + <offset>]
+        0x8b, 0x05, null, null, null, null, // mov eax, dword ptr [rip + <disp>]
     };
 
     public void Run(ScanContext context)
@@ -18,34 +17,34 @@ sealed class ClientVersionScanner : IScanner
 
         Console.WriteLine("Searching for client version reporting function...");
 
-        var o = exe.Search(_pattern).Cast<nuint?>().FirstOrDefault();
+        var offsets = exe.Search(_pattern).ToArray();
 
-        if (o is not nuint off)
+        if (offsets.Length != 1)
             throw new ApplicationException("Could not find client version reporting function.");
 
-        int? ReadVersion(nuint offset)
+        var off = offsets[0];
+        var vers = new uint[] { 2, 22 }.Select(idx =>
         {
-            return exe.TryGetOffset(exe.ToAddress(offset + sizeof(uint)) + exe.Read<uint>(offset), out var verOff)
-                ? exe.Read<int>(verOff)
-                : null;
-        }
+            var dispOff = off + idx;
 
-        var v1 = ReadVersion(off + 4);
+            // Resolve the RIP displacement in the instruction to an absolute address.
+            var verAddr = exe.ToAddress(dispOff + sizeof(uint)) + exe.Read<uint>(dispOff);
 
-        if (v1 is not int ver1)
-            throw new ApplicationException("Could not read the first client version value.");
-
-        var v2 = ReadVersion(off + 24);
-
-        if (v2 is not int ver2 || ver2 == 0)
-            throw new ApplicationException("Could not read the second client version value.");
-
-        Console.WriteLine($"Found client versions: {ver1}, {ver2}");
-
-        File.WriteAllLines(Path.Combine(context.Output.FullName, "ClientVersions.txt"), new[]
-        {
-            ver1.ToString(CultureInfo.InvariantCulture),
-            ver2.ToString(CultureInfo.InvariantCulture),
+            return exe.TryGetOffset(verAddr, out var verOff)
+                ? exe.TryRead<int>(verOff, out var ver)
+                    ? ver
+                    : 0
+                : 0;
         });
+
+        if (vers.Any(v => v == 0))
+            throw new ApplicationException("Could not read client version values.");
+
+        foreach (var ver in vers)
+            Console.WriteLine($"Found client version: {ver}");
+
+        File.WriteAllLines(
+            Path.Combine(context.Output.FullName, "ClientVersions.txt"),
+            vers.Select(v => v.ToString(CultureInfo.InvariantCulture)));
     }
 }
