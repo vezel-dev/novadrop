@@ -1,6 +1,7 @@
 # Data Center Format
 
-This page describes the packed data center format used by TERA.
+This page describes the encrypted and compressed data center format used by
+TERA.
 
 * C/C++-like primitive types, `enum`s, `struct`s, and `union`s will be used.
 * `bool` is equivalent to `uint8_t` but only allows the values `true` (`1`) and
@@ -31,7 +32,7 @@ The overall structure can be described like this:
 ```cpp
 struct DataCenterFile
 {
-    DataCenterPackedHeader packed_header;
+    DataCenterCompressionHeader compression_header;
     DataCenterHeader header;
     DataCenterSimpleRegion<DataCenterKey, false> keys;
     DataCenterSegmentedRegion<DataCenterAttribute> attributes;
@@ -42,12 +43,12 @@ struct DataCenterFile
 };
 ```
 
-### Packed Header
+### Compression Header
 
 After decryption, there is a small header of the form:
 
 ```cpp
-struct DataCenterPackedHeader
+struct DataCenterCompressionHeader
 {
     uint32_t uncompressed_size;
     uint16_t zlib_header;
