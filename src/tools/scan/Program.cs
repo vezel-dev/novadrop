@@ -8,6 +8,7 @@ static class Program
     {
         new ClientVersionScanner(),
         new DataCenterScanner(),
+        new ResourceContainerScanner(),
         new SystemMessageScanner(),
     };
 
