@@ -32,7 +32,7 @@ public sealed class DataCenter
         var aes = Aes.Create();
 
         aes.Mode = CipherMode.CFB;
-        aes.Padding = PaddingMode.Zeros;
+        aes.Padding = PaddingMode.None;
         aes.FeedbackSize = 128;
         aes.Key = key.ToArray();
         aes.IV = iv.ToArray();

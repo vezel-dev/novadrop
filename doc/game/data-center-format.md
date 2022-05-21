@@ -18,8 +18,8 @@ various, seemingly random places.
 
 Data center files are encrypted with the
 [AES](https://www.nist.gov/publications/advanced-encryption-standard-aes)
-algorithm in CFB mode, using zero-padding, and with block, key, and feedback
-sizes all set to 128 bits.
+algorithm in CFB mode and with block, key, and feedback sizes all set to 128
+bits. No padding is done for the final block.
 
 The encryption key and initialization vector can both be extracted from a
 running TERA client, e.g. with the [novadrop-scan](../tools/scan.md) tool. These

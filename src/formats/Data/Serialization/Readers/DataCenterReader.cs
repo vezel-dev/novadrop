@@ -1,3 +1,4 @@
+using Vezel.Novadrop.Cryptography;
 using Vezel.Novadrop.Data.Serialization.Items;
 using Vezel.Novadrop.Data.Serialization.Regions;
 using Vezel.Novadrop.Data.Serialization.Tables;
@@ -216,7 +217,8 @@ abstract class DataCenterReader
             {
                 using var aes = DataCenter.CreateCipher(_options.Key, _options.IV);
                 using var decryptor = aes.CreateDecryptor();
-                var cryptoStream = new CryptoStream(stream, decryptor, CryptoStreamMode.Read, true);
+                using var padder = new PaddingCryptoTransform(decryptor);
+                var cryptoStream = new CryptoStream(stream, padder, CryptoStreamMode.Read, true);
 
                 await using (cryptoStream.ConfigureAwait(false))
                 {
