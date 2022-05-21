@@ -8,6 +8,7 @@ sealed class ResourceContainerScanner : IScanner
         0x48, 0x8d, 0x1d, null, null, null, null, // lea rbx, [rip + <disp>]
     };
 
+    [SuppressMessage("", "CA1308")]
     public void Run(ScanContext context)
     {
         var exe = context.Process.MainModule;
@@ -37,7 +38,7 @@ sealed class ResourceContainerScanner : IScanner
         if (keys.Any(k => k == null))
             throw new ApplicationException("Could not find resource container keys.");
 
-        var strKeys = keys.Select(k => string.Join(" ", k!.Select(b => $"{b:x2}"))).ToArray();
+        var strKeys = keys.Select(k => Convert.ToHexString(k!).ToLowerInvariant()).ToArray();
 
         foreach (var key in strKeys)
             Console.WriteLine($"Found resource container key: {key}");

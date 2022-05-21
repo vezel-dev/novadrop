@@ -40,6 +40,7 @@ sealed class ClientVersionScanner : IScanner
         if (vers.Any(v => v == 0))
             throw new ApplicationException("Could not read client version values.");
 
+        // The first is game message table version, the second is system message table version.
         foreach (var ver in vers)
             Console.WriteLine($"Found client version: {ver}");
 

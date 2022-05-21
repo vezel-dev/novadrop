@@ -14,6 +14,7 @@ sealed class DataCenterScanner : IScanner
         0x41, 0xc7, 0x43, null, null, null, null, null, // mov dword ptr [r11 - <disp>], <imm>
     };
 
+    [SuppressMessage("", "CA1308")]
     public void Run(ScanContext context)
     {
         var exe = context.Process.MainModule;
@@ -37,7 +38,7 @@ sealed class DataCenterScanner : IScanner
             return MemoryMarshal.AsBytes(span).ToArray();
         });
 
-        var strArrays = arrays.Select(k => string.Join(" ", k.Select(b => $"{b:x2}"))).ToArray();
+        var strArrays = arrays.Select(k => Convert.ToHexString(k).ToLowerInvariant()).ToArray();
 
         Console.WriteLine($"Found data center key: {strArrays[0]}");
         Console.WriteLine($"Found data center IV: {strArrays[1]}");
