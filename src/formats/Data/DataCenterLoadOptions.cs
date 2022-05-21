@@ -6,9 +6,9 @@ public sealed class DataCenterLoadOptions
 
     public ReadOnlyMemory<byte> IV { get; private set; } = DataCenter.LatestIV;
 
-    public DataCenterLoaderMode Mode { get; private set; }
-
     public bool Strict { get; private set; }
+
+    public DataCenterLoaderMode Mode { get; private set; }
 
     public DataCenterMutability Mutability { get; private set; }
 
@@ -18,8 +18,8 @@ public sealed class DataCenterLoadOptions
         {
             Key = Key,
             IV = IV,
-            Mode = Mode,
             Strict = Strict,
+            Mode = Mode,
             Mutability = Mutability,
         };
     }
@@ -46,6 +46,15 @@ public sealed class DataCenterLoadOptions
         return options;
     }
 
+    public DataCenterLoadOptions WithStrict(bool strict)
+    {
+        var options = Clone();
+
+        options.Strict = strict;
+
+        return options;
+    }
+
     public DataCenterLoadOptions WithLoaderMode(DataCenterLoaderMode mode)
     {
         _ = Enum.IsDefined(mode) ? true : throw new ArgumentOutOfRangeException(nameof(mode));
@@ -53,15 +62,6 @@ public sealed class DataCenterLoadOptions
         var options = Clone();
 
         options.Mode = mode;
-
-        return options;
-    }
-
-    public DataCenterLoadOptions WithStrict(bool strict)
-    {
-        var options = Clone();
-
-        options.Strict = strict;
 
         return options;
     }

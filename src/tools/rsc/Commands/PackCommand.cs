@@ -7,19 +7,27 @@ sealed class PackCommand : Command
     {
         var inputArg = new Argument<DirectoryInfo>(
             "input",
-            "Input directory");
+            "Input directory")
+            .ExistingOnly();
         var outputArg = new Argument<FileInfo>(
             "output",
-            "Output file");
+            "Output file")
+            .LegalFilePathsOnly();
+        var encryptionKeyOpt = new HexStringOption(
+            "--encryption-key",
+            ResourceContainer.LatestKey,
+            "Encryption key");
 
         Add(inputArg);
         Add(outputArg);
+        Add(encryptionKeyOpt);
 
         this.SetHandler(
             async (
                 InvocationContext context,
                 DirectoryInfo input,
                 FileInfo output,
+                ReadOnlyMemory<byte> encryptionKey,
                 CancellationToken cancellationToken) =>
             {
                 Console.WriteLine($"Packing '{input}' to '{output}'...");
@@ -44,13 +52,18 @@ sealed class PackCommand : Command
 
                 await using var stream = File.Open(output.FullName, FileMode.Create, FileAccess.Write);
 
-                await rc.SaveAsync(stream, new ResourceContainerSaveOptions(), cancellationToken);
+                await rc.SaveAsync(
+                    stream,
+                    new ResourceContainerSaveOptions()
+                        .WithKey(encryptionKey.Span),
+                    cancellationToken);
 
                 sw.Stop();
 
                 Console.WriteLine($"Packed {files.Length} entries in {sw.Elapsed}.");
             },
             inputArg,
-            outputArg);
+            outputArg,
+            encryptionKeyOpt);
     }
 }

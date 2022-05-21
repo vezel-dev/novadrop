@@ -8,18 +8,31 @@ sealed class VerifyCommand : Command
     {
         var inputArg = new Argument<FileInfo>(
             "input",
-            "Input file");
+            "Input file")
+            .ExistingOnly();
+        var decryptionKeyOpt = new HexStringOption(
+            "--decryption-key",
+            DataCenter.LatestKey,
+            "Decryption key");
+        var decryptionIVOpt = new HexStringOption(
+            "--decryption-IV",
+            DataCenter.LatestIV,
+            "Decryption IV");
         var strictOpt = new Option<bool>(
             "--strict",
             () => true,
             "Enable strict verification");
 
         Add(inputArg);
+        Add(decryptionKeyOpt);
+        Add(decryptionIVOpt);
         Add(strictOpt);
 
         this.SetHandler(
             async (
                 FileInfo input,
+                ReadOnlyMemory<byte> decryptionKey,
+                ReadOnlyMemory<byte> decryptionIV,
                 bool strict,
                 CancellationToken cancellationToken) =>
             {
@@ -55,6 +68,8 @@ sealed class VerifyCommand : Command
                 var dc = await DataCenter.LoadAsync(
                     stream,
                     new DataCenterLoadOptions()
+                        .WithKey(decryptionKey.Span)
+                        .WithIV(decryptionIV.Span)
                         .WithStrict(strict),
                     cancellationToken);
 
@@ -80,6 +95,8 @@ sealed class VerifyCommand : Command
                 Console.WriteLine($"Verified {nodes} nodes and {attrs} attributes in {sw.Elapsed}.");
             },
             inputArg,
+            decryptionKeyOpt,
+            decryptionIVOpt,
             strictOpt);
     }
 }

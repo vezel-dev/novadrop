@@ -7,10 +7,16 @@ sealed class UnpackCommand : Command
     {
         var inputArg = new Argument<FileInfo>(
             "input",
-            "Input file");
+            "Input file")
+            .ExistingOnly();
         var outputArg = new Argument<DirectoryInfo>(
             "output",
-            "Output directory");
+            "Output directory")
+            .LegalFilePathsOnly();
+        var decryptionKeyOpt = new HexStringOption(
+            "--decryption-key",
+            ResourceContainer.LatestKey,
+            "Decryption key");
         var strictOpt = new Option<bool>(
             "--strict",
             () => false,
@@ -18,12 +24,14 @@ sealed class UnpackCommand : Command
 
         Add(inputArg);
         Add(outputArg);
+        Add(decryptionKeyOpt);
         Add(strictOpt);
 
         this.SetHandler(
             async (
                 FileInfo input,
                 DirectoryInfo output,
+                ReadOnlyMemory<byte> decryptionKey,
                 bool strict,
                 CancellationToken cancellationToken) =>
             {
@@ -36,6 +44,7 @@ sealed class UnpackCommand : Command
                 var rc = await ResourceContainer.LoadAsync(
                     stream,
                     new ResourceContainerLoadOptions()
+                        .WithKey(decryptionKey.Span)
                         .WithStrict(strict),
                     cancellationToken);
 
@@ -58,6 +67,7 @@ sealed class UnpackCommand : Command
             },
             inputArg,
             outputArg,
+            decryptionKeyOpt,
             strictOpt);
     }
 }

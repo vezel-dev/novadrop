@@ -9,24 +9,38 @@ sealed class WatchCommand : Command
     {
         var inputArg = new Argument<DirectoryInfo>(
             "input",
-            "Input directory");
+            "Input directory")
+            .ExistingOnly();
         var outputArg = new Argument<FileInfo>(
             "output",
-            "Output file");
+            "Output file")
+            .LegalFilePathsOnly();
         var compressionOpt = new Option<CompressionLevel>(
             "--compression",
             () => CompressionLevel.Fastest,
             "Set compression level");
+        var encryptionKeyOpt = new HexStringOption(
+            "--encryption-key",
+            DataCenter.LatestKey,
+            "Encryption key");
+        var encryptionIVOpt = new HexStringOption(
+            "--encryption-iv",
+            DataCenter.LatestIV,
+            "Encryption VI");
 
         Add(inputArg);
         Add(outputArg);
         Add(compressionOpt);
+        Add(encryptionKeyOpt);
+        Add(encryptionIVOpt);
 
         this.SetHandler(
             async (
                 DirectoryInfo input,
                 FileInfo output,
                 CompressionLevel compression,
+                ReadOnlyMemory<byte> encryptionKey,
+                ReadOnlyMemory<byte> encryptionIV,
                 CancellationToken cancellationToken) =>
             {
                 Console.WriteLine($"Watching for changes in '{input}' and packing to '{output}'.");
@@ -180,6 +194,8 @@ sealed class WatchCommand : Command
                     await dc.SaveAsync(
                         stream,
                         new DataCenterSaveOptions()
+                            .WithKey(encryptionKey.Span)
+                            .WithIV(encryptionIV.Span)
                             .WithCompressionLevel(compression),
                         cancellationToken);
 
@@ -190,6 +206,8 @@ sealed class WatchCommand : Command
             },
             inputArg,
             outputArg,
-            compressionOpt);
+            compressionOpt,
+            encryptionKeyOpt,
+            encryptionIVOpt);
     }
 }

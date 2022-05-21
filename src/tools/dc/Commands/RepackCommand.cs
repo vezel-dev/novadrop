@@ -7,10 +7,20 @@ sealed class RepackCommand : Command
     {
         var inputArg = new Argument<FileInfo>(
             "input",
-            "Input file");
+            "Input file")
+            .ExistingOnly();
         var outputArg = new Argument<FileInfo>(
             "output",
-            "Output file");
+            "Output file")
+            .LegalFilePathsOnly();
+        var decryptionKeyOpt = new HexStringOption(
+            "--decryption-key",
+            DataCenter.LatestKey,
+            "Decryption key");
+        var decryptionIVOpt = new HexStringOption(
+            "--decryption-IV",
+            DataCenter.LatestIV,
+            "Decryption IV");
         var strictOpt = new Option<bool>(
             "--strict",
             () => false,
@@ -19,18 +29,34 @@ sealed class RepackCommand : Command
             "--compression",
             () => CompressionLevel.Optimal,
             "Set compression level");
+        var encryptionKeyOpt = new HexStringOption(
+            "--encryption-key",
+            DataCenter.LatestKey,
+            "Encryption key");
+        var encryptionIVOpt = new HexStringOption(
+            "--encryption-iv",
+            DataCenter.LatestIV,
+            "Encryption VI");
 
         Add(inputArg);
         Add(outputArg);
+        Add(decryptionKeyOpt);
+        Add(decryptionIVOpt);
         Add(strictOpt);
         Add(compressionOpt);
+        Add(encryptionKeyOpt);
+        Add(encryptionIVOpt);
 
         this.SetHandler(
             async (
                 FileInfo input,
                 FileInfo output,
+                ReadOnlyMemory<byte> decryptionKey,
+                ReadOnlyMemory<byte> decryptionIV,
                 bool strict,
                 CompressionLevel compression,
+                ReadOnlyMemory<byte> encryptionKey,
+                ReadOnlyMemory<byte> encryptionIV,
                 CancellationToken cancellationToken) =>
             {
                 Console.WriteLine($"Repacking '{input}' to '{output}'...");
@@ -42,8 +68,10 @@ sealed class RepackCommand : Command
                 var dc = await DataCenter.LoadAsync(
                     inStream,
                     new DataCenterLoadOptions()
-                        .WithLoaderMode(DataCenterLoaderMode.Eager)
+                        .WithKey(decryptionKey.Span)
+                        .WithIV(decryptionIV.Span)
                         .WithStrict(strict)
+                        .WithLoaderMode(DataCenterLoaderMode.Eager)
                         .WithMutability(DataCenterMutability.Immutable),
                     cancellationToken);
 
@@ -52,7 +80,9 @@ sealed class RepackCommand : Command
                 await dc.SaveAsync(
                     outStream,
                     new DataCenterSaveOptions()
-                        .WithCompressionLevel(compression),
+                        .WithCompressionLevel(compression)
+                        .WithKey(encryptionKey.Span)
+                        .WithIV(encryptionIV.Span),
                     cancellationToken);
 
                 sw.Stop();
@@ -61,7 +91,11 @@ sealed class RepackCommand : Command
             },
             inputArg,
             outputArg,
+            decryptionKeyOpt,
+            decryptionIVOpt,
             strictOpt,
-            compressionOpt);
+            compressionOpt,
+            encryptionKeyOpt,
+            encryptionIVOpt);
     }
 }

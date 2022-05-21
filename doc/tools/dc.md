@@ -26,39 +26,47 @@ the resulting data sheets takes around 1 minute.
 ## novadrop-dc pack
 
 ```text
-novadrop-dc pack <input> <output> [--compression <level>]
+novadrop-dc pack <input> <output> [options...]
 ```
 
-Packs the data sheets in a directory to a data center file. Uses a medium level
-of compression by default. If validation of the data sheets fails during
-packing, a list of problems will be printed and the exit code will be non-zero.
+Packs the data sheets in a directory to a data center file. If validation of the
+data sheets fails during packing, a list of problems will be printed and the
+exit code will be non-zero.
 
 The `input` argument specifies a directory containing data sheets and schemas.
 The `output` argument specifies the path of the resulting data center file.
 
-The `compression` option can be used to override the default compression level.
+| Option | Description |
+| - | - |
+| `--compression <level>` | Specifies a compression level (defaults to `Optimal`). |
+| `--encryption-key <key>` | Specifies an encryption key (defaults to the latest known key). |
+| `--encryption-iv <iv>` | Specifies an encryption IV (defaults to the latest known IV). |
 
 ## novadrop-dc repack
 
 ```text
-novadrop-dc repack <input> <output> [--strict] [--compression <level>]
+novadrop-dc repack <input> <output> [options...]
 ```
 
-Repacks a data center file without unpacking to disk. Uses a medium level of
-compression by default. This command is primarily useful for development of
-novadrop-dc.
+Repacks a data center file without unpacking to disk. This command is primarily
+useful for development of novadrop-dc.
 
 The `input` argument specifies the input data center file. The `output` argument
 specifies the path of the resulting data center file.
 
-The `compression` option can be used to override the default compression level.
-The `strict` option enables strict format compliance checks while reading the
-input data center file.
+| Option | Description |
+| - | - |
+| `--decryption-key <key>` | Specifies a decryption key (defaults to the latest known key). |
+| `--decryption-iv <iv>` | Specifies a decryption IV (defaults to the latest known IV). |
+| `--strict` | Enables strict format compliance checks while reading the input file. |
+| `--compression <level>` | Specifies a compression level (defaults to `Optimal`). |
+| `--encryption-key <key>` | Specifies an encryption key (defaults to the latest known key). |
+| `--encryption-iv <iv>` | Specifies an encryption IV (defaults to the latest known IV). |
 
 ## novadrop-dc unpack
 
 ```text
-novadrop-dc unpack <input> <output> [--strict]
+novadrop-dc unpack <input> <output> [options...]
 ```
 
 Unpacks the data tree in a data center file to a series of data sheets and
@@ -68,8 +76,11 @@ official data center files into a form that is easily maintainable by humans.
 The `input` argument specifies the input data center file. The `output` argument
 specifies the path of the directory to extract data sheets and schemas to.
 
-The `strict` option enables strict format compliance checks while reading the
-input data center file.
+| Option | Description |
+| - | - |
+| `--decryption-key <key>` | Specifies a decryption key (defaults to the latest known key). |
+| `--decryption-iv <iv>` | Specifies a decryption IV (defaults to the latest known IV). |
+| `--strict` | Enables strict format compliance checks while reading the input file. |
 
 ## novadrop-dc validate
 
@@ -86,7 +97,7 @@ The `input` argument specifies a directory containing data sheets and schemas.
 ## novadrop-dc verify
 
 ```text
-novadrop-dc validate <input> [--strict]
+novadrop-dc validate <input> [options...]
 ```
 
 Verifies the format integrity of a data center file. This means traversing the
@@ -95,23 +106,29 @@ occur.
 
 The `input` argument specifies the input data center file.
 
-The `strict` option enables strict format compliance checks while reading the
-input data center file.
+| Option | Description |
+| - | - |
+| `--decryption-key <key>` | Specifies a decryption key (defaults to the latest known key). |
+| `--decryption-iv <iv>` | Specifies a decryption IV (defaults to the latest known IV). |
+| `--strict` | Enables strict format compliance checks while reading the input file. |
 
 ## novadrop-dc watch
 
 ```text
-novadrop-dc watch <input> <output> [--compression <level>]
+novadrop-dc watch <input> <output> [options...]
 ```
 
 Incrementally packs the data sheets in a directory to a data center file. The
 data tree will be kept in memory and continually updated according to file
 system changes detected in the given directory, thus reducing the time required
 to pack the data center file each time. If validation of changed data sheets
-fails, no packing will be attempted until the problems are addressed. Uses a low
-level of compression by default, for the sake of speed.
+fails, no packing will be attempted until the problems are addressed.
 
 The `input` argument specifies a directory containing data sheets and schemas.
 The `output` argument specifies the path of the resulting data center file.
 
-The `compression` option can be used to override the default compression level.
+| Option | Description |
+| - | - |
+| `--compression <level>` | Specifies a compression level (defaults to `Fastest`). |
+| `--encryption-key <key>` | Specifies an encryption key (defaults to the latest known key). |
+| `--encryption-iv <iv>` | Specifies an encryption IV (defaults to the latest known IV). |

@@ -8,18 +8,25 @@ sealed class VerifyCommand : Command
     {
         var inputArg = new Argument<FileInfo>(
             "input",
-            "Input file");
+            "Input file")
+            .ExistingOnly();
+        var decryptionKeyOpt = new HexStringOption(
+            "--decryption-key",
+            ResourceContainer.LatestKey,
+            "Decryption key");
         var strictOpt = new Option<bool>(
             "--strict",
             () => true,
             "Enable strict verification");
 
         Add(inputArg);
+        Add(decryptionKeyOpt);
         Add(strictOpt);
 
         this.SetHandler(
             async (
                 FileInfo input,
+                ReadOnlyMemory<byte> decryptionKey,
                 bool strict,
                 CancellationToken cancellationToken) =>
             {
@@ -55,6 +62,7 @@ sealed class VerifyCommand : Command
                 var rc = await ResourceContainer.LoadAsync(
                     stream,
                     new ResourceContainerLoadOptions()
+                        .WithKey(decryptionKey.Span)
                         .WithStrict(strict),
                     cancellationToken);
 
@@ -63,6 +71,7 @@ sealed class VerifyCommand : Command
                 Console.WriteLine($"Verified {rc.Entries.Count} entries in {sw.Elapsed}.");
             },
             inputArg,
+            decryptionKeyOpt,
             strictOpt);
     }
 }

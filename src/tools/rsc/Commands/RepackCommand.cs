@@ -7,10 +7,20 @@ sealed class RepackCommand : Command
     {
         var inputArg = new Argument<FileInfo>(
             "input",
-            "Input file");
+            "Input file")
+            .ExistingOnly();
         var outputArg = new Argument<FileInfo>(
             "output",
-            "Output file");
+            "Output file")
+            .LegalFilePathsOnly();
+        var decryptionKeyOpt = new HexStringOption(
+            "--decryption-key",
+            ResourceContainer.LatestKey,
+            "Decryption key");
+        var encryptionKeyOpt = new HexStringOption(
+            "--encryption-key",
+            ResourceContainer.LatestKey,
+            "Encryption key");
         var strictOpt = new Option<bool>(
             "--strict",
             () => false,
@@ -18,12 +28,16 @@ sealed class RepackCommand : Command
 
         Add(inputArg);
         Add(outputArg);
+        Add(decryptionKeyOpt);
+        Add(encryptionKeyOpt);
         Add(strictOpt);
 
         this.SetHandler(
             async (
                 FileInfo input,
                 FileInfo output,
+                ReadOnlyMemory<byte> decryptionKey,
+                ReadOnlyMemory<byte> encryptionKey,
                 bool strict,
                 CancellationToken cancellationToken) =>
             {
@@ -36,12 +50,17 @@ sealed class RepackCommand : Command
                 var rc = await ResourceContainer.LoadAsync(
                     inStream,
                     new ResourceContainerLoadOptions()
+                        .WithKey(decryptionKey.Span)
                         .WithStrict(strict),
                     cancellationToken);
 
                 await using var outStream = output.Open(FileMode.Create, FileAccess.Write);
 
-                await rc.SaveAsync(outStream, new ResourceContainerSaveOptions(), cancellationToken);
+                await rc.SaveAsync(
+                    outStream,
+                    new ResourceContainerSaveOptions()
+                        .WithKey(encryptionKey.Span),
+                    cancellationToken);
 
                 sw.Stop();
 
@@ -49,6 +68,8 @@ sealed class RepackCommand : Command
             },
             inputArg,
             outputArg,
+            decryptionKeyOpt,
+            encryptionKeyOpt,
             strictOpt);
     }
 }

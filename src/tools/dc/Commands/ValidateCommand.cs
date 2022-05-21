@@ -9,7 +9,8 @@ sealed class ValidateCommand : Command
     {
         var inputArg = new Argument<DirectoryInfo>(
             "input",
-            "Input directory");
+            "Input directory")
+            .ExistingOnly();
 
         Add(inputArg);
 

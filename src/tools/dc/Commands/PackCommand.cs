@@ -9,18 +9,30 @@ sealed class PackCommand : Command
     {
         var inputArg = new Argument<DirectoryInfo>(
             "input",
-            "Input directory");
+            "Input directory")
+            .ExistingOnly();
         var outputArg = new Argument<FileInfo>(
             "output",
-            "Output file");
+            "Output file")
+            .LegalFilePathsOnly();
         var compressionOpt = new Option<CompressionLevel>(
             "--compression",
             () => CompressionLevel.Optimal,
             "Set compression level");
+        var encryptionKeyOpt = new HexStringOption(
+            "--encryption-key",
+            DataCenter.LatestKey,
+            "Encryption key");
+        var encryptionIVOpt = new HexStringOption(
+            "--encryption-iv",
+            DataCenter.LatestIV,
+            "Encryption VI");
 
         Add(inputArg);
         Add(outputArg);
         Add(compressionOpt);
+        Add(encryptionKeyOpt);
+        Add(encryptionIVOpt);
 
         this.SetHandler(
             async (
@@ -28,6 +40,8 @@ sealed class PackCommand : Command
                 DirectoryInfo input,
                 FileInfo output,
                 CompressionLevel compression,
+                ReadOnlyMemory<byte> encryptionKey,
+                ReadOnlyMemory<byte> encryptionIV,
                 CancellationToken cancellationToken) =>
             {
                 Console.WriteLine($"Packing '{input}' to '{output}'...");
@@ -49,7 +63,9 @@ sealed class PackCommand : Command
                 await dc.SaveAsync(
                     stream,
                     new DataCenterSaveOptions()
-                        .WithCompressionLevel(compression),
+                        .WithCompressionLevel(compression)
+                        .WithKey(encryptionKey.Span)
+                        .WithIV(encryptionIV.Span),
                     cancellationToken);
 
                 sw.Stop();
@@ -58,6 +74,8 @@ sealed class PackCommand : Command
             },
             inputArg,
             outputArg,
-            compressionOpt);
+            compressionOpt,
+            encryptionKeyOpt,
+            encryptionIVOpt);
     }
 }
