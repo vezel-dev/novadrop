@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <AssemblyName>novadrop-run</AssemblyName>
+        <PackAsToolShimRuntimeIdentifiers>win-x64</PackAsToolShimRuntimeIdentifiers>
         <PackageDescription>$(PackageDescription)
 
 This package provides the .NET global tool for launching the TERA client from
