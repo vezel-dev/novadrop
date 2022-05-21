@@ -3,10 +3,12 @@ CreateWindowEx
 DefWindowProc
 FlushInstructionCache
 GetExitCodeThread
+GetWindowLongPtr
 OpenProcess
 ReadProcessMemory
 RegisterClassEx
 SendMessage
+SetWindowLongPtr
 UnregisterClass
 VirtualAllocEx
 VirtualFreeEx
@@ -15,8 +17,6 @@ WaitForSingleObject
 WriteProcessMemory
 
 COPYDATASTRUCT
-
-WIN32_ERROR
 
 INFINITE
 WAIT_OBJECT_0
