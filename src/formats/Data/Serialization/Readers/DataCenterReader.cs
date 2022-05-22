@@ -217,7 +217,7 @@ abstract class DataCenterReader
             {
                 using var aes = DataCenter.CreateCipher(_options.Key, _options.IV);
                 using var decryptor = aes.CreateDecryptor();
-                using var padder = new PaddingCryptoTransform(decryptor);
+                using var padder = new FakePaddingCryptoTransform(decryptor);
                 var cryptoStream = new CryptoStream(stream, padder, CryptoStreamMode.Read, true);
 
                 await using (cryptoStream.ConfigureAwait(false))

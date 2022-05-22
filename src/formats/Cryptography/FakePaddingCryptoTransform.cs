@@ -1,6 +1,6 @@
 namespace Vezel.Novadrop.Cryptography;
 
-public sealed class PaddingCryptoTransform : ICryptoTransform
+public sealed class FakePaddingCryptoTransform : ICryptoTransform
 {
     public int InputBlockSize => _transform.InputBlockSize;
 
@@ -12,14 +12,14 @@ public sealed class PaddingCryptoTransform : ICryptoTransform
 
     readonly ICryptoTransform _transform;
 
-    public PaddingCryptoTransform(ICryptoTransform transform)
+    public FakePaddingCryptoTransform(ICryptoTransform transform)
     {
         ArgumentNullException.ThrowIfNull(transform);
 
         _transform = transform;
     }
 
-    ~PaddingCryptoTransform()
+    ~FakePaddingCryptoTransform()
     {
         Dispose();
     }
@@ -40,10 +40,19 @@ public sealed class PaddingCryptoTransform : ICryptoTransform
     {
         ArgumentNullException.ThrowIfNull(inputBuffer);
 
+        // The issue we are solving here is that various algorithms (e.g. AES) only want to operate on a final block
+        // whose length is a multiple of the block size. So we create an array that satisfies that condition, copy the
+        // data we want to decrypt into it (leaving the rest zeroed), decrypt the block-sized array, and finally return
+        // only the 'real' decrypted bytes.
+
         var input = new byte[InputBlockSize];
 
         inputBuffer.AsSpan(inputOffset, inputCount).CopyTo(input);
 
-        return _transform.TransformFinalBlock(input, 0, input.Length);
+        var result = _transform.TransformFinalBlock(input, 0, input.Length);
+
+        Array.Resize(ref result, inputCount);
+
+        return result;
     }
 }

@@ -1,3 +1,4 @@
+using Vezel.Novadrop.Cryptography;
 using Vezel.Novadrop.Data.Serialization.Items;
 using Vezel.Novadrop.Data.Serialization.Regions;
 using Vezel.Novadrop.Data.Serialization.Tables;
@@ -281,7 +282,8 @@ sealed class DataCenterWriter
 
                 using var aes = DataCenter.CreateCipher(_options.Key, _options.IV);
                 using var encryptor = aes.CreateEncryptor();
-                var cryptoStream = new CryptoStream(stream, encryptor, CryptoStreamMode.Write, true);
+                using var padder = new FakePaddingCryptoTransform(encryptor);
+                var cryptoStream = new CryptoStream(stream, padder, CryptoStreamMode.Write, true);
 
                 await using (cryptoStream.ConfigureAwait(false))
                 {
