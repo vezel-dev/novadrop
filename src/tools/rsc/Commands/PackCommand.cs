@@ -24,7 +24,6 @@ sealed class PackCommand : Command
 
         this.SetHandler(
             async (
-                InvocationContext context,
                 DirectoryInfo input,
                 FileInfo output,
                 ReadOnlyMemory<byte> encryptionKey,

@@ -15,13 +15,13 @@ sealed class DataCenterScanner : IScanner
     };
 
     [SuppressMessage("", "CA1308")]
-    public void Run(ScanContext context)
+    public async Task RunAsync(ScanContext context)
     {
         var exe = context.Process.MainModule;
 
         Console.WriteLine("Searching for data center decryption function...");
 
-        var offsets = exe.Search(_pattern).ToArray();
+        var offsets = (await exe.SearchAsync(_pattern)).ToArray();
 
         if (offsets.Length != 1)
             throw new ApplicationException("Could not find data center decryption function.");
@@ -43,6 +43,6 @@ sealed class DataCenterScanner : IScanner
         Console.WriteLine($"Found data center key: {strArrays[0]}");
         Console.WriteLine($"Found data center IV: {strArrays[1]}");
 
-        File.WriteAllLines(Path.Combine(context.Output.FullName, "DataCenterKeys.txt"), strArrays);
+        await File.WriteAllLinesAsync(Path.Combine(context.Output.FullName, "DataCenterKeys.txt"), strArrays);
     }
 }

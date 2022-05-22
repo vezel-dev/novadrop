@@ -9,13 +9,13 @@ sealed class ResourceContainerScanner : IScanner
     };
 
     [SuppressMessage("", "CA1308")]
-    public void Run(ScanContext context)
+    public async Task RunAsync(ScanContext context)
     {
         var exe = context.Process.MainModule;
 
         Console.WriteLine("Searching for resource container decryption functions...");
 
-        var offsets = exe.Search(_pattern).ToArray();
+        var offsets = (await exe.SearchAsync(_pattern)).ToArray();
 
         if (offsets.Length != 2)
             throw new ApplicationException("Could not find resource container decryption functions.");
@@ -43,6 +43,6 @@ sealed class ResourceContainerScanner : IScanner
         foreach (var key in strKeys)
             Console.WriteLine($"Found resource container key: {key}");
 
-        File.WriteAllLines(Path.Combine(context.Output.FullName, "ResourceContainerKeys.txt"), strKeys);
+        await File.WriteAllLinesAsync(Path.Combine(context.Output.FullName, "ResourceContainerKeys.txt"), strKeys);
     }
 }

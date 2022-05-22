@@ -11,13 +11,13 @@ sealed class ClientVersionScanner : IScanner
         0x8b, 0x05, null, null, null, null, // mov eax, dword ptr [rip + <disp>]
     };
 
-    public void Run(ScanContext context)
+    public async Task RunAsync(ScanContext context)
     {
         var exe = context.Process.MainModule;
 
         Console.WriteLine("Searching for client version reporting function...");
 
-        var offsets = exe.Search(_pattern).ToArray();
+        var offsets = (await exe.SearchAsync(_pattern)).ToArray();
 
         if (offsets.Length != 1)
             throw new ApplicationException("Could not find client version reporting function.");
@@ -44,7 +44,7 @@ sealed class ClientVersionScanner : IScanner
         foreach (var ver in vers)
             Console.WriteLine($"Found client version: {ver}");
 
-        File.WriteAllLines(
+        await File.WriteAllLinesAsync(
             Path.Combine(context.Output.FullName, "ClientVersions.txt"),
             vers.Select(v => v.ToString(CultureInfo.InvariantCulture)));
     }

@@ -12,14 +12,14 @@ sealed class SystemMessageScanner : IScanner
         0x48, 0x8d, 0x0d, null, null, null, null, // lea rcx, [rip + <disp>]
     };
 
-    public unsafe void Run(ScanContext context)
+    public async Task RunAsync(ScanContext context)
     {
         var process = context.Process;
         var exe = process.MainModule;
 
         Console.WriteLine("Searching for system message name function...");
 
-        var offsets = exe.Search(_pattern).ToArray();
+        var offsets = (await exe.SearchAsync(_pattern)).ToArray();
 
         if (offsets.Length != 1)
             throw new ApplicationException("Could not find system message name function.");
@@ -42,7 +42,7 @@ sealed class SystemMessageScanner : IScanner
 
         for (var i = 0u; i < count; i++)
         {
-            if (!exe.TryRead<nuint>(tableOff + (uint)sizeof(nuint) * i, out var strAddr))
+            if (!exe.TryRead<nuint>(tableOff + (uint)Unsafe.SizeOf<nuint>() * i, out var strAddr))
                 throw new ApplicationException("Could not index system message table.");
 
             if (!exe.TryGetOffset((NativeAddress)strAddr, out var strOff))
@@ -66,7 +66,7 @@ sealed class SystemMessageScanner : IScanner
 
         Console.WriteLine($"Found system messages: {count}");
 
-        File.WriteAllLines(
+        await File.WriteAllLinesAsync(
             Path.Combine(context.Output.FullName, "SystemMessages.txt"),
             messages.OrderBy(x => x.Key).Select(x => $"{x.Key} = {x.Value}"));
     }

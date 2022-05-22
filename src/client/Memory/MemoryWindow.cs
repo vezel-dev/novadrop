@@ -94,33 +94,31 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>
         return new(Process, Address + offset, length);
     }
 
-    public IEnumerable<nuint> Search(ReadOnlyMemory<byte?> pattern)
+    public async Task<IEnumerable<nuint>> SearchAsync(
+        ReadOnlyMemory<byte?> pattern, CancellationToken cancellationToken = default)
     {
         var window = this;
+        var length = pattern.Length;
+
+        IEnumerable<long> EnumerateOffsets()
+        {
+            for (nuint i = 0; window.ContainsRange(i, (nuint)length); i++)
+                yield return (long)i;
+        }
+
         var offsets = new List<nuint>();
 
-        _ = Parallel.For(0, (long)Length, (i, state) =>
+        await Parallel.ForEachAsync(EnumerateOffsets(), cancellationToken, (i, ct) =>
         {
+            ct.ThrowIfCancellationRequested();
+
             var offset = (nuint)i;
-            var length = pattern.Length;
-
-            if (!window.ContainsRange(offset, (nuint)length))
-            {
-                state.Break();
-
-                return;
-            }
-
-            var patternSpan = pattern.Span;
             var candidateSpan = length <= 256 ? stackalloc byte[length] : new byte[length];
 
             if (!window.TryRead(offset, candidateSpan))
-            {
-                state.Break();
+                return default;
 
-                return;
-            }
-
+            var patternSpan = pattern.Span;
             var match = true;
 
             for (var j = 0; j < length; j++)
@@ -138,7 +136,9 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>
             if (match)
                 lock (offsets)
                     offsets.Add(offset);
-        });
+
+            return default;
+        }).ConfigureAwait(false);
 
         return offsets;
     }

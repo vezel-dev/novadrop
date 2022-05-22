@@ -12,7 +12,7 @@ static class Program
         new SystemMessageScanner(),
     };
 
-    static int Main(string[] args)
+    static Task<int> Main(string[] args)
     {
         var outputArg = new Argument<DirectoryInfo>(
             "output",
@@ -30,7 +30,10 @@ static class Program
         pidArg.SetDefaultValue(-1);
 
         cmd.SetHandler(
-            (DirectoryInfo output, int? pid) =>
+            async (
+                DirectoryInfo output,
+                int? pid,
+                CancellationToken cancellationToken) =>
             {
                 var proc = pid is int p and not -1
                     ? Process.GetProcessById(p)
@@ -55,7 +58,7 @@ static class Program
                 var context = new ScanContext(native, output);
                 var exceptions = new List<ApplicationException>();
 
-                foreach (var scanner in _scanners.Span)
+                foreach (var scanner in _scanners.ToArray())
                 {
                     var name = scanner.GetType().Name;
 
@@ -65,7 +68,7 @@ static class Program
 
                     try
                     {
-                        scanner.Run(context);
+                        await scanner.RunAsync(context);
                     }
                     catch (ApplicationException ex)
                     {
@@ -88,6 +91,6 @@ static class Program
             outputArg,
             pidArg);
 
-        return cmd.Invoke(args);
+        return cmd.InvokeAsync(args);
     }
 }
