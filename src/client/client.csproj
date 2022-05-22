@@ -15,6 +15,10 @@ This package provides support for interacting with the TERA launcher and client.
     </ItemGroup>
 
     <ItemGroup>
+        <AdditionalFiles Include="**/*.proto" />
+    </ItemGroup>
+
+    <ItemGroup>
         <ProjectReference Include="../common/common.csproj" />
     </ItemGroup>
 
@@ -25,6 +29,9 @@ This package provides support for interacting with the TERA launcher and client.
         <PackageReference Include="Microsoft.Windows.SDK.Win32Docs"
                           PrivateAssets="all" />
         <PackageReference Include="Microsoft.Windows.SDK.Win32Metadata"
+                          PrivateAssets="all" />
+        <PackageReference Include="protobuf-net" />
+        <PackageReference Include="protobuf-net.BuildTools"
                           PrivateAssets="all" />
     </ItemGroup>
 </Project>

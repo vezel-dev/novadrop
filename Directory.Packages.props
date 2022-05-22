@@ -18,6 +18,10 @@
                         Version="22.0.14-preview" />
         <PackageVersion Include="Nerdbank.GitVersioning"
                         Version="3.5.86-alpha" />
+        <PackageVersion Include="protobuf-net"
+                        Version="3.1.4" />
+        <PackageVersion Include="protobuf-net.BuildTools"
+                        Version="3.0.115" />
         <PackageVersion Include="ReadLine"
                         Version="2.0.1" />
         <PackageVersion Include="StyleCop.Analyzers"

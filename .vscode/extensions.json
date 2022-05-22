@@ -10,6 +10,7 @@
     "ms-dotnettools.csharp",
     "redhat.vscode-xml",
     "redhat.vscode-yaml",
-    "tintoy.msbuild-project-tools"
+    "tintoy.msbuild-project-tools",
+    "zxh404.vscode-proto3"
   ]
 }
