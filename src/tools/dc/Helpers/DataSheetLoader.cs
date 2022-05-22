@@ -112,25 +112,26 @@ static class DataSheetLoader
 
             validator.ValidateEndOfAttributes(null);
 
-            if (info.SchemaElement?.UnhandledAttributes is XmlAttribute[] unAttrs)
+            if (info.SchemaElement?.ElementSchemaType?.UnhandledAttributes is { Length: not 0 } unAttrs)
             {
-                var keys = unAttrs
+                var names = unAttrs
                     .Where(a => a.NamespaceURI == "https://vezel.dev/novadrop/dc" && a.LocalName == "keys")
-                    .Select(a => a.Value.Split(' ', StringSplitOptions.RemoveEmptyEntries))
+                    .Select(
+                        a => a.Value.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
                     .Select(arr =>
                     {
                         Array.Resize(ref arr, 4);
 
-                        return arr;
+                        return (arr[0], arr[1], arr[2], arr[3]);
                     })
                     .LastOrDefault();
 
-                if (keys != null && keys.Any(k => k != null))
+                if (names is not (null, null, null, null))
                 {
-                    var names = (keys[0], keys[1], keys[2], keys[3]);
+                    ref var entry = ref CollectionsMarshal.GetValueRefOrAddDefault(keyCache, names, out var exists);
 
-                    if (!keyCache.TryGetValue(names, out var entry))
-                        keyCache.Add(names, entry = new(names.Item1, names.Item2, names.Item3, names.Item4));
+                    if (!exists)
+                        entry = new(names.Item1, names.Item2, names.Item3, names.Item4);
 
                     current.Keys = entry!;
                 }
