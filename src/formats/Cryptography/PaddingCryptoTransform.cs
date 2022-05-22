@@ -21,18 +21,13 @@ public sealed class PaddingCryptoTransform : ICryptoTransform
 
     ~PaddingCryptoTransform()
     {
-        DisposeCore();
+        Dispose();
     }
 
     public void Dispose()
     {
-        DisposeCore();
-        GC.SuppressFinalize(this);
-    }
-
-    void DisposeCore()
-    {
         _transform.Dispose();
+        GC.SuppressFinalize(this);
     }
 
     public int TransformBlock(
