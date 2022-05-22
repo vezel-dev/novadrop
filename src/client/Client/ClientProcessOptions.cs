@@ -6,15 +6,14 @@ public sealed class ClientProcessOptions
 
     public string AccountName { get; private set; }
 
-    public string Ticket { get; private set; }
+    public ReadOnlyMemory<byte> Ticket { get; private set; }
 
     public string? Language { get; private set; }
 
-    public ClientProcessOptions(string fileName, string accountName, string ticket)
+    public ClientProcessOptions(string fileName, string accountName, ReadOnlyMemory<byte> ticket)
     {
         ArgumentNullException.ThrowIfNull(fileName);
         ArgumentNullException.ThrowIfNull(accountName);
-        ArgumentNullException.ThrowIfNull(ticket);
 
         FileName = fileName;
         AccountName = accountName;
@@ -51,10 +50,8 @@ public sealed class ClientProcessOptions
         return options;
     }
 
-    public ClientProcessOptions WithTicket(string ticket)
+    public ClientProcessOptions WithTicket(ReadOnlyMemory<byte> ticket)
     {
-        ArgumentNullException.ThrowIfNull(ticket);
-
         var options = Clone();
 
         options.Ticket = ticket;

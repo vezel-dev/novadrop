@@ -25,9 +25,27 @@ public sealed class ClientProcess : GameProcess
         arguments = Options.Language is string lang ? new[] { $"-LANGUAGEEXT={lang}" } : Array.Empty<string>();
     }
 
-    protected override string? HandleWindowMessage(nuint id, ReadOnlySpan<byte> payload)
+    protected override (nuint Id, ReadOnlyMemory<byte> Payload)? HandleWindowMessage(
+        nuint id, ReadOnlySpan<byte> payload)
     {
-        // TODO: Handle window messages.
-        return null;
+        var opts = Options;
+
+        return id switch
+        {
+            1 => (2, Encoding.Unicode.GetBytes(opts.AccountName)),
+            3 => (4, opts.Ticket),
+            5 => null, // TODO: Server list encoded with Protocol Buffers (id = 6).
+            7 => null,
+            26 => null,
+            1000 => null,
+            1001 => null,
+            1002 => null,
+            1003 => null,
+            1004 => null,
+            1011 => null,
+            1012 => null,
+            1020 => null,
+            _ => null,
+        };
     }
 }

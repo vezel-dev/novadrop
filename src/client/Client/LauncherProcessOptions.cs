@@ -6,17 +6,16 @@ public sealed class LauncherProcessOptions
 
     public string AccountName { get; private set; }
 
-    public string Ticket { get; private set; }
+    public ReadOnlyMemory<byte> Ticket { get; private set; }
 
     public Uri ServerListUri { get; private set; }
 
     public int LastServerId { get; private set; }
 
-    public LauncherProcessOptions(string fileName, string accountName, string ticket, Uri serverListUri)
+    public LauncherProcessOptions(string fileName, string accountName, ReadOnlyMemory<byte> ticket, Uri serverListUri)
     {
         ArgumentNullException.ThrowIfNull(fileName);
         ArgumentNullException.ThrowIfNull(accountName);
-        ArgumentNullException.ThrowIfNull(ticket);
         ArgumentNullException.ThrowIfNull(serverListUri);
 
         FileName = fileName;
@@ -55,10 +54,8 @@ public sealed class LauncherProcessOptions
         return options;
     }
 
-    public LauncherProcessOptions WithTicket(string ticket)
+    public LauncherProcessOptions WithTicket(ReadOnlyMemory<byte> ticket)
     {
-        ArgumentNullException.ThrowIfNull(ticket);
-
         var options = Clone();
 
         options.Ticket = ticket;

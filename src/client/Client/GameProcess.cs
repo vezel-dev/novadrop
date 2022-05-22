@@ -41,24 +41,19 @@ public abstract class GameProcess
 
             var result = process.HandleWindowMessage(id, payload);
 
-            if (result == null)
+            if (result is not var (replyId, replyPayload))
                 return (LRESULT)1;
 
             // We have to fire off the reply in a separate thread or we will cause a deadlock.
             _ = Task.Run(() =>
             {
-                var utf8 = Encoding.UTF8;
-                var bytes = new byte[utf8.GetByteCount(result) + 1]; // Add NUL terminator.
-
-                _ = utf8.GetBytes(result, bytes);
-
-                fixed (byte* ptr = bytes)
+                fixed (byte* ptr = replyPayload.Span)
                 {
                     var response = new COPYDATASTRUCT
                     {
-                        dwData = id,
+                        dwData = replyId,
                         lpData = ptr,
-                        cbData = (uint)bytes.Length,
+                        cbData = (uint)replyPayload.Length,
                     };
 
                     _ = SendMessage((HWND)(nint)(nuint)wParam, msg, (nuint)(nint)hWnd, (nint)(&response));
@@ -77,7 +72,8 @@ public abstract class GameProcess
 
     protected abstract void GetProcessConfiguration(out string fileName, out string[] arguments);
 
-    protected abstract string? HandleWindowMessage(nuint id, ReadOnlySpan<byte> payload);
+    protected abstract (nuint Id, ReadOnlyMemory<byte> Payload)? HandleWindowMessage(
+        nuint id, ReadOnlySpan<byte> payload);
 
     [SuppressMessage("", "CA1031")]
     public unsafe Task<int> RunAsync(CancellationToken cancellationToken = default)
