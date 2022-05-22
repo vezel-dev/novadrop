@@ -46,8 +46,15 @@ sealed class ValidateCommand : Command
 
                             using var reader = XmlReader.Create(file.FullName, settings);
 
-                            while (await reader.ReadAsync())
+                            try
                             {
+                                while (await reader.ReadAsync())
+                                {
+                                }
+                            }
+                            catch (XmlException ex)
+                            {
+                                handler.HandleException(file, ex);
                             }
                         });
 

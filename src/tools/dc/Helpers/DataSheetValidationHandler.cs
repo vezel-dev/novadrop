@@ -2,7 +2,9 @@ namespace Vezel.Novadrop.Helpers;
 
 sealed class DataSheetValidationHandler : IDisposable
 {
-    readonly List<(FileInfo File, ValidationEventArgs Args)> _problems = new();
+    public bool HasProblems => _problems.Count != 0;
+
+    readonly List<(FileInfo File, int, int, XmlSeverityType, string)> _problems = new();
 
     readonly InvocationContext? _context;
 
@@ -27,10 +29,9 @@ sealed class DataSheetValidationHandler : IDisposable
 
             Console.WriteLine($"{fileGroup.Key}:");
 
-            foreach (var problem in shownProblems)
+            foreach (var (_, line, col, severity, msg) in shownProblems)
             {
-                var ex = problem.Args.Exception;
-                var (msg, color) = problem.Args.Severity switch
+                var (type, color) = severity switch
                 {
                     XmlSeverityType.Error => ('E', ConsoleColor.Red),
                     XmlSeverityType.Warning => ('W', ConsoleColor.Yellow),
@@ -38,7 +39,7 @@ sealed class DataSheetValidationHandler : IDisposable
                 };
 
                 Console.ForegroundColor = color;
-                Console.WriteLine($"  [{msg}] ({ex.LineNumber},{ex.LinePosition}): {ex.Message}");
+                Console.WriteLine($"  [{type}] ({line},{col}): {msg}");
                 Console.ResetColor();
             }
 
@@ -51,12 +52,21 @@ sealed class DataSheetValidationHandler : IDisposable
         Console.WriteLine();
     }
 
+    public void HandleException(FileInfo file, XmlException exception)
+    {
+        lock (_problems)
+            _problems.Add(
+                (file, exception.LineNumber, exception.LinePosition, XmlSeverityType.Error, exception.Message));
+    }
+
     public ValidationEventHandler GetEventHandlerFor(FileInfo file)
     {
         return (_, e) =>
         {
+            var ex = e.Exception;
+
             lock (_problems)
-                _problems.Add((file, e));
+                _problems.Add((file, ex.LineNumber, ex.LinePosition, e.Severity, e.Message));
         };
     }
 }

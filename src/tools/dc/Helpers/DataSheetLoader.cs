@@ -17,7 +17,18 @@ static class DataSheetLoader
 
         using var reader = XmlReader.Create(file.FullName, settings);
 
-        var doc = await XDocument.LoadAsync(reader, LoadOptions.None, cancellationToken);
+        XDocument doc;
+
+        try
+        {
+            doc = await XDocument.LoadAsync(reader, LoadOptions.None, cancellationToken);
+        }
+        catch (XmlException ex)
+        {
+            handler.HandleException(file, ex);
+
+            return null;
+        }
 
         // We need to access type and key info from the schema during tree construction, so we do the validation
         // manually as we go rather than relying on validation support in XmlReader or XDocument. (Notably, the latter

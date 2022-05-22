@@ -121,65 +121,69 @@ sealed class WatchCommand : Command
 
                     var sw1 = Stopwatch.StartNew();
 
-                    using (var handler = new DataSheetValidationHandler(null))
-                        await Parallel.ForEachAsync(
-                            finalChanges,
-                            cancellationToken,
-                            async (tup, cancellationToken) =>
+                    using var handler = new DataSheetValidationHandler(null);
+
+                    await Parallel.ForEachAsync(
+                        finalChanges,
+                        cancellationToken,
+                        async (tup, cancellationToken) =>
+                        {
+                            var path = tup.Key;
+
+                            // We assume that if loading a sheet results in errors, it must be modified again to
+                            // become successfully loadable. So we just discard the current change information.
+
+                            switch (tup.Value)
                             {
-                                var path = tup.Key;
-
-                                // We assume that if loading a sheet results in errors, it must be modified again to
-                                // become successfully loadable. So we just discard the current change information.
-
-                                switch (tup.Value)
+                                case DataSheetState.Created:
                                 {
-                                    case DataSheetState.Created:
-                                    {
-                                        var node = await DataSheetLoader.LoadAsync(
-                                            new(path), handler, root, cancellationToken);
+                                    var node = await DataSheetLoader.LoadAsync(
+                                        new(path), handler, root, cancellationToken);
 
-                                        if (node != null)
-                                            lock (root)
-                                                sheets.Add(path, node);
-
-                                        break;
-                                    }
-
-                                    case DataSheetState.Modified:
-                                    {
-                                        var node = await DataSheetLoader.LoadAsync(
-                                            new(path), handler, root, cancellationToken);
-
+                                    if (node != null)
                                         lock (root)
-                                        {
-                                            if (node != null)
-                                            {
-                                                var old = sheets[path];
+                                            sheets.Add(path, node);
 
-                                                _ = root.RemoveChild(old);
-
-                                                sheets[path] = node;
-                                            }
-                                        }
-
-                                        break;
-                                    }
-
-                                    case DataSheetState.Deleted:
-                                    {
-                                        lock (root)
-                                        {
-                                            var node = sheets[path];
-
-                                            _ = root.RemoveChild(node);
-                                            _ = sheets.Remove(path);
-                                        }
-
-                                        break;
-                                    }
+                                    break;
                                 }
-                            });
+
+                                case DataSheetState.Modified:
+                                {
+                                    var node = await DataSheetLoader.LoadAsync(
+                                        new(path), handler, root, cancellationToken);
+
+                                    lock (root)
+                                    {
+                                        if (node != null)
+                                        {
+                                            var old = sheets[path];
+
+                                            _ = root.RemoveChild(old);
+
+                                            sheets[path] = node;
+                                        }
+                                    }
+
+                                    break;
+                                }
+
+                                case DataSheetState.Deleted:
+                                {
+                                    lock (root)
+                                    {
+                                        var node = sheets[path];
+
+                                        _ = root.RemoveChild(node);
+                                        _ = sheets.Remove(path);
+                                    }
+
+                                    break;
+                                }
+                            }
+                        });
+
+                    if (handler.HasProblems)
+                        continue;
 
                     sw1.Stop();
 

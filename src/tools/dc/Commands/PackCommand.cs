@@ -51,12 +51,16 @@ sealed class PackCommand : Command
                 var dc = DataCenter.Create();
                 var files = input.GetFiles("?*-?*.xml", SearchOption.AllDirectories);
 
-                using (var handler = new DataSheetValidationHandler(context))
-                    await Parallel.ForEachAsync(
-                        files,
-                        cancellationToken,
-                        async (file, cancellationToken) =>
-                            await DataSheetLoader.LoadAsync(file, handler, dc.Root, cancellationToken));
+                using var handler = new DataSheetValidationHandler(context);
+
+                await Parallel.ForEachAsync(
+                    files,
+                    cancellationToken,
+                    async (file, cancellationToken) =>
+                        await DataSheetLoader.LoadAsync(file, handler, dc.Root, cancellationToken));
+
+                if (handler.HasProblems)
+                    return;
 
                 await using var stream = File.Open(output.FullName, FileMode.Create, FileAccess.Write);
 
