@@ -15,7 +15,7 @@ sealed class VerifyCommand : Command
             DataCenter.LatestKey,
             "Decryption key");
         var decryptionIVOpt = new HexStringOption(
-            "--decryption-IV",
+            "--decryption-iv",
             DataCenter.LatestIV,
             "Decryption IV");
         var strictOpt = new Option<bool>(
