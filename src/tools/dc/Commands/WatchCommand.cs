@@ -44,6 +44,7 @@ sealed class WatchCommand : Command
                 CancellationToken cancellationToken) =>
             {
                 Console.WriteLine($"Watching for changes in '{input}' and packing to '{output}'.");
+                Console.WriteLine();
 
                 using var watcher = new DataSheetWatcher(input);
 
@@ -85,29 +86,29 @@ sealed class WatchCommand : Command
                             _ => throw new UnreachableException(),
                         };
 
-                    var finalChanges = changes.Where(
-                        kvp => kvp.Value is not (null or DataSheetState.Unchanged)).ToArray();
+                    var finalChanges = changes
+                        .Where(kvp => kvp.Value is not (null or DataSheetState.Unchanged))
+                        .ToArray();
 
                     if (finalChanges.Length == 0)
                         continue;
 
-                    Console.WriteLine();
                     Console.WriteLine($"{finalChanges.Length} data sheet change(s) detected:");
 
                     var shownChanges = finalChanges.Take(10).ToArray();
 
                     foreach (var (path, state) in shownChanges)
                     {
-                        var (msg, color) = state switch
+                        var (type, color) = state switch
                         {
                             DataSheetState.Created => ('+', ConsoleColor.Green),
                             DataSheetState.Modified => ('*', ConsoleColor.Yellow),
-                            DataSheetState.Deleted => ('-', ConsoleColor.Yellow),
+                            DataSheetState.Deleted => ('-', ConsoleColor.Red),
                             var s => throw new InvalidDataException(s.ToString()),
                         };
 
                         Console.ForegroundColor = color;
-                        Console.WriteLine($"  {msg} {path}");
+                        Console.WriteLine($"  {type} {path}");
                         Console.ResetColor();
                     }
 
@@ -194,14 +195,24 @@ sealed class WatchCommand : Command
 
                     await using var stream = File.Open(output.FullName, FileMode.Create, FileAccess.Write);
 
-                    // TODO: What if this fails?
-                    await dc.SaveAsync(
-                        stream,
-                        new DataCenterSaveOptions()
-                            .WithKey(encryptionKey.Span)
-                            .WithIV(encryptionIV.Span)
-                            .WithCompressionLevel(compression),
-                        cancellationToken);
+                    try
+                    {
+                        await dc.SaveAsync(
+                            stream,
+                            new DataCenterSaveOptions()
+                                .WithKey(encryptionKey.Span)
+                                .WithIV(encryptionIV.Span)
+                                .WithCompressionLevel(compression),
+                            cancellationToken);
+                    }
+                    catch (InvalidOperationException ex)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine(ex.Message);
+                        Console.WriteLine();
+
+                        continue;
+                    }
 
                     sw2.Stop();
 
