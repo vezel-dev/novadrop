@@ -12,7 +12,6 @@ running TERA client.</PackageDescription>
 
     <ItemGroup>
         <Using Include="Vezel.Novadrop.Memory" />
-        <Using Include="Vezel.Novadrop.Memory.Code" />
     </ItemGroup>
 
     <ItemGroup>
