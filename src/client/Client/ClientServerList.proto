@@ -7,6 +7,8 @@ import "protobuf-net/protogen.proto";
 option csharp_namespace = "Vezel.Novadrop.Client";
 option (.protobuf_net.fileopt).access = INTERNAL;
 
+// TODO: protobuf-net is not currently AOT-friendly.
+
 message ClientServerList
 {
     repeated ClientServerInfo servers = 1;
