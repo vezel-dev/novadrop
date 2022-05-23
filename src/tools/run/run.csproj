@@ -4,10 +4,14 @@
         <PackAsToolShimRuntimeIdentifiers>win-x64</PackAsToolShimRuntimeIdentifiers>
         <PackageDescription>$(PackageDescription)
 
-This package provides the .NET global tool for launching the TERA client from
-the command line.</PackageDescription>
+This package provides the .NET global tool for running the TERA launcher or
+client from the command line.</PackageDescription>
         <PackageId>novadrop-run</PackageId>
     </PropertyGroup>
+
+    <ItemGroup>
+        <Using Include="Vezel.Novadrop.Client" />
+    </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="../../client/client.csproj" />

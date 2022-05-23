@@ -21,7 +21,8 @@ This project offers the following packages:
 * [novadrop-rsc](https://www.nuget.org/packages/novadrop-rsc): Provides the .NET
   global tool for manipulating TERA's resource container files.
 * [novadrop-run](https://www.nuget.org/packages/novadrop-run): Provides
-  the .NET global tool for launching the TERA client from the command line.
+  the .NET global tool for running the TERA launcher or client from the command
+  line.
 * [novadrop-scan](https://www.nuget.org/packages/novadrop-scan): Provides the
   .NET global tool for extracting useful data from a running TERA client.
 * [Vezel.Novadrop.Client](https://www.nuget.org/packages/Vezel.Novadrop.Client):

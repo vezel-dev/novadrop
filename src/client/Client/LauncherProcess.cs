@@ -34,7 +34,7 @@ public sealed class LauncherProcess : GameProcess
             0 => null,
             2 => opts.ServerListUri.AbsoluteUri,
             3 => JsonSerializer.Serialize(
-                new LauncherGameInfo(opts.AccountName, Convert.ToHexString(opts.Ticket.Span), opts.LastServerId),
+                new LauncherGameInfo(opts.AccountName, opts.Ticket, opts.LastServerId),
                 LauncherJsonContext.Default.LauncherGameInfo),
             4 => null,
             5 => null,

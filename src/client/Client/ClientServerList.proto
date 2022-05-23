@@ -24,8 +24,8 @@ message ClientServerInfo
     bytes name = 4;
     bytes queue = 5;
     bytes population = 6;
-    fixed32 ip = 7;
+    fixed32 address = 7;
     fixed32 port = 8;
-    fixed32 status = 9;
-    bytes popup = 10;
+    fixed32 available = 9;
+    bytes unavailable_message = 10;
 }

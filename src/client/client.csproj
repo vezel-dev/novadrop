@@ -12,6 +12,7 @@ This package provides support for interacting with the TERA launcher and client.
 
     <ItemGroup>
         <Using Include="Iced.Intel" />
+        <Using Include="ProtoBuf" />
     </ItemGroup>
 
     <ItemGroup>

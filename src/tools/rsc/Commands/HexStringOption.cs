@@ -1,6 +1,6 @@
 namespace Vezel.Novadrop.Commands;
 
-class HexStringOption : Option<ReadOnlyMemory<byte>>
+sealed class HexStringOption : Option<ReadOnlyMemory<byte>>
 {
     public HexStringOption(string name, ReadOnlyMemory<byte> defaultValue, string description)
         : base(name, result => ParseArgument(result, defaultValue), true, description)

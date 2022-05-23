@@ -2,29 +2,48 @@ namespace Vezel.Novadrop.Client;
 
 public sealed class ClientProcessOptions
 {
-    public string FileName { get; private set; }
+    public string FileName { get; private set; } = null!;
 
-    public string AccountName { get; private set; }
+    public string AccountName { get; private set; } = null!;
 
-    public ReadOnlyMemory<byte> Ticket { get; private set; }
+    public string Ticket { get; private set; } = null!;
 
     public string? Language { get; private set; }
 
-    public ClientProcessOptions(string fileName, string accountName, ReadOnlyMemory<byte> ticket)
+    public IReadOnlyDictionary<int, ServerInfo> Servers { get; private set; } = null!;
+
+    public int LastServerId { get; private set; }
+
+    ClientProcessOptions()
+    {
+    }
+
+    public ClientProcessOptions(
+        string fileName, string accountName, string ticket, IEnumerable<ServerInfo> servers)
     {
         ArgumentNullException.ThrowIfNull(fileName);
         ArgumentNullException.ThrowIfNull(accountName);
+        ArgumentNullException.ThrowIfNull(ticket);
+        ArgumentNullException.ThrowIfNull(servers);
+        _ = servers.Any() ? true : throw new ArgumentException(null, nameof(servers));
+        _ = servers.All(s => s != null) ? true : throw new ArgumentException(null, nameof(servers));
 
         FileName = fileName;
         AccountName = accountName;
         Ticket = ticket;
+        Servers = servers.ToImmutableDictionary(s => s.Id);
     }
 
     ClientProcessOptions Clone()
     {
-        return new(FileName, AccountName, Ticket)
+        return new()
         {
+            FileName = FileName,
+            AccountName = AccountName,
+            Ticket = Ticket,
             Language = Language,
+            Servers = Servers,
+            LastServerId = LastServerId,
         };
     }
 
@@ -50,8 +69,10 @@ public sealed class ClientProcessOptions
         return options;
     }
 
-    public ClientProcessOptions WithTicket(ReadOnlyMemory<byte> ticket)
+    public ClientProcessOptions WithTicket(string ticket)
     {
+        ArgumentNullException.ThrowIfNull(ticket);
+
         var options = Clone();
 
         options.Ticket = ticket;
@@ -64,6 +85,30 @@ public sealed class ClientProcessOptions
         var options = Clone();
 
         options.Language = language;
+
+        return options;
+    }
+
+    public ClientProcessOptions WithServers(IEnumerable<ServerInfo> servers)
+    {
+        ArgumentNullException.ThrowIfNull(servers);
+        _ = servers.Any() ? true : throw new ArgumentException(null, nameof(servers));
+        _ = servers.All(s => s != null) ? true : throw new ArgumentException(null, nameof(servers));
+
+        var options = Clone();
+
+        options.Servers = servers.ToImmutableDictionary(s => s.Id);
+
+        return options;
+    }
+
+    public ClientProcessOptions WithLastServerId(int lastServerId)
+    {
+        _ = lastServerId > 0 ? true : throw new ArgumentOutOfRangeException(nameof(lastServerId));
+
+        var options = Clone();
+
+        options.LastServerId = lastServerId;
 
         return options;
     }

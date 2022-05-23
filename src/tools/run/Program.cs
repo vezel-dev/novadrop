@@ -1,12 +1,17 @@
+using Vezel.Novadrop.Commands;
+
 namespace Vezel.Novadrop;
 
 static class Program
 {
-    static async Task<int> Main()
+    static Task<int> Main(string[] args)
     {
-        // TODO: Logic.
-        await Task.Yield();
+        var root = new RootCommand("Run the TERA launcher or client from the command line.")
+        {
+            new ClientCommand(),
+            new LauncherCommand(),
+        };
 
-        return 0;
+        return root.InvokeAsync(args);
     }
 }

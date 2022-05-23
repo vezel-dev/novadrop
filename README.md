@@ -40,7 +40,7 @@ This project offers the following packages:
 | [![novadrop-dc][dc-img]][dc-pkg] | Provides the .NET global tool for manipulating TERA's data center files. | ![Downloads][dc-dls] |
 | [![novadrop-gpk][gpk-img]][gpk-pkg] | Provides the .NET global tool for manipulating TERA's GPK archive files. | ![Downloads][gpk-dls] |
 | [![novadrop-rsc][rsc-img]][rsc-pkg] | Provides the .NET global tool for manipulating TERA's resource container files. | ![Downloads][rsc-dls] |
-| [![novadrop-run][run-img]][run-pkg] | Provides the .NET global tool for launching the TERA client from the command line. | ![Downloads][run-dls] |
+| [![novadrop-run][run-img]][run-pkg] | Provides the .NET global tool for running the TERA launcher or client from the command line. | ![Downloads][run-dls] |
 | [![novadrop-scan][scan-img]][scan-pkg] | Provides the .NET global tool for extracting useful data from a running TERA client. | ![Downloads][scan-dls] |
 | [![Vezel.Novadrop.Client][client-img]][client-pkg] | Provides support for interacting with the TERA launcher and client. | ![Downloads][client-dls] |
 | [![Vezel.Novadrop.Common][common-img]][common-pkg] | Provides common functionality used by all Novadrop packages. | ![Downloads][common-dls] |

@@ -2,20 +2,25 @@ namespace Vezel.Novadrop.Client;
 
 public sealed class LauncherProcessOptions
 {
-    public string FileName { get; private set; }
+    public string FileName { get; private set; } = null!;
 
-    public string AccountName { get; private set; }
+    public string AccountName { get; private set; } = null!;
 
-    public ReadOnlyMemory<byte> Ticket { get; private set; }
+    public string Ticket { get; private set; } = null!;
 
-    public Uri ServerListUri { get; private set; }
+    public Uri ServerListUri { get; private set; } = null!;
 
     public int LastServerId { get; private set; }
 
-    public LauncherProcessOptions(string fileName, string accountName, ReadOnlyMemory<byte> ticket, Uri serverListUri)
+    LauncherProcessOptions()
+    {
+    }
+
+    public LauncherProcessOptions(string fileName, string accountName, string ticket, Uri serverListUri)
     {
         ArgumentNullException.ThrowIfNull(fileName);
         ArgumentNullException.ThrowIfNull(accountName);
+        ArgumentNullException.ThrowIfNull(ticket);
         ArgumentNullException.ThrowIfNull(serverListUri);
 
         FileName = fileName;
@@ -26,8 +31,12 @@ public sealed class LauncherProcessOptions
 
     LauncherProcessOptions Clone()
     {
-        return new(FileName, AccountName, Ticket, ServerListUri)
+        return new()
         {
+            FileName = FileName,
+            AccountName = AccountName,
+            Ticket = Ticket,
+            ServerListUri = ServerListUri,
             LastServerId = LastServerId,
         };
     }
@@ -54,8 +63,10 @@ public sealed class LauncherProcessOptions
         return options;
     }
 
-    public LauncherProcessOptions WithTicket(ReadOnlyMemory<byte> ticket)
+    public LauncherProcessOptions WithTicket(string ticket)
     {
+        ArgumentNullException.ThrowIfNull(ticket);
+
         var options = Clone();
 
         options.Ticket = ticket;
