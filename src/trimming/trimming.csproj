@@ -15,14 +15,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <TrimmerRootAssembly Include="Vezel.Novadrop.Client" />
         <TrimmerRootAssembly Include="Vezel.Novadrop.Common" />
         <TrimmerRootAssembly Include="Vezel.Novadrop.Formats" />
         <TrimmerRootAssembly Include="Vezel.Novadrop.Net" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="../client/client.csproj" />
         <ProjectReference Include="../common/common.csproj" />
         <ProjectReference Include="../formats/formats.csproj" />
         <ProjectReference Include="../net/net.csproj" />
