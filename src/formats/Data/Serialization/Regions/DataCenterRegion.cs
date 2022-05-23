@@ -56,7 +56,6 @@ sealed class DataCenterRegion<T>
     {
         var count = Elements.Count;
 
-        // TODO: Align the physical region to e.g. page boundary even if we only use a subset?
         for (var i = 0; i < 2; i++)
             await writer.WriteInt32Async(count, cancellationToken).ConfigureAwait(false);
 
