@@ -18,12 +18,6 @@ sealed class ClientCommand : Command
         var ticketArg = new Argument<string>(
             "ticket",
             "Authentication ticket");
-        var serverIdArg = new Argument<int>(
-            "server-id",
-            "Server ID");
-        var serverNameArg = new Argument<string>(
-            "server-name",
-            "Server name");
         var serverHostArg = new Argument<string>(
             "server-host",
             "Server host");
@@ -35,8 +29,6 @@ sealed class ClientCommand : Command
         Add(languageArg);
         Add(accountArg);
         Add(ticketArg);
-        Add(serverIdArg);
-        Add(serverNameArg);
         Add(serverHostArg);
         Add(serverPortArg);
 
@@ -47,8 +39,6 @@ sealed class ClientCommand : Command
                 string language,
                 string account,
                 string ticket,
-                int serverId,
-                string serverName,
                 string serverHost,
                 ushort serverPort,
                 CancellationToken cancellationToken) =>
@@ -59,10 +49,10 @@ sealed class ClientCommand : Command
                     throw new ApplicationException($"Could not resolve server host '{serverHost}'.");
 
                 var server = new ServerInfo(
-                    serverId,
+                    42,
                     string.Empty,
-                    serverName,
-                    serverName,
+                    string.Empty,
+                    string.Empty,
                     string.Empty,
                     string.Empty,
                     true,
@@ -75,7 +65,7 @@ sealed class ClientCommand : Command
                 var proc = new ClientProcess(
                     new ClientProcessOptions(executable.FullName, account, ticket, new[] { server })
                         .WithLanguage(language)
-                        .WithLastServerId(serverId));
+                        .WithLastServerId(42));
 
                 proc.WindowException += ex =>
                 {
@@ -90,8 +80,6 @@ sealed class ClientCommand : Command
             languageArg,
             accountArg,
             ticketArg,
-            serverIdArg,
-            serverNameArg,
             serverHostArg,
             serverPortArg);
     }
