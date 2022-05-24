@@ -1,4 +1,4 @@
-syntax = "proto3";
+syntax = "proto2";
 
 package vezel.novadrop.client;
 
@@ -12,20 +12,20 @@ option (.protobuf_net.fileopt).access = INTERNAL;
 message ClientServerList
 {
     repeated ClientServerInfo servers = 1;
-    fixed32 last_server_id = 2;
-    fixed32 unknown = 3;
+    required fixed32 last_server_id = 2;
+    required fixed32 unknown = 3;
 }
 
 message ClientServerInfo
 {
-    fixed32 id = 1;
-    bytes raw_name = 2;
-    bytes category = 3;
-    bytes name = 4;
-    bytes queue = 5;
-    bytes population = 6;
-    fixed32 address = 7;
-    fixed32 port = 8;
-    fixed32 available = 9;
-    bytes unavailable_message = 10;
+    required fixed32 id = 1;
+    required bytes raw_name = 2;
+    required bytes category = 3;
+    required bytes name = 4;
+    required bytes queue = 5;
+    required bytes population = 6;
+    required fixed32 address = 7;
+    required fixed32 port = 8;
+    required fixed32 available = 9;
+    required bytes unavailable_message = 10;
 }
