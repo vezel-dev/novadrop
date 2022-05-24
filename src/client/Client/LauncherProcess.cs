@@ -18,6 +18,8 @@ public sealed class LauncherProcess : GameProcess
 
     static readonly Regex _endPopup = new(@"endPopup\((\d+)\)");
 
+    static readonly Regex _getWebLinkUrl = new(@"getWebLinkUrl\((\d+),(.*)\)");
+
     public LauncherProcess(LauncherProcessOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
@@ -42,15 +44,13 @@ public sealed class LauncherProcess : GameProcess
         var opts = Options;
         var utf8 = Encoding.UTF8;
 
-        string? HandleGameEventOrExit(ReadOnlySpan<byte> payload)
+        string? HandleGameEventOrExit(string value)
         {
-            // gameEvent(%d), endPopup(%d), csPopup(), promoPopup(%d)
+            // csPopup(), endPopup(%d), gameEvent(%d), promoPopup(%d)
 
-            var text = utf8.GetString(payload);
-
-            if (_gameEvent.Match(text) is { Success: true } m1)
+            if (_gameEvent.Match(value) is { Success: true } m1)
                 GameEventOccurred?.Invoke((GameEvent)int.Parse(m1.Captures[0].ValueSpan));
-            else if (_endPopup.Match(text) is { Success: true } m2)
+            else if (_endPopup.Match(value) is { Success: true } m2)
                 GameExited?.Invoke((int)uint.Parse(m2.Captures[0].ValueSpan));
 
             return null;
@@ -77,18 +77,13 @@ public sealed class LauncherProcess : GameProcess
             return string.Empty;
         }
 
-        var replyPayload = id switch
+        var replyPayload = (id, utf8.GetString(payload)) switch
         {
-            0x0dbadb0a => "Hello!!", // Hello!!
-            0 => HandleGameEventOrExit(payload),
-            2 => HandleServerListUriRequest(), // slsurl
-            3 => HandleGameInfoRequest(), // gamestr
-            4 => null, // ticket
-            5 => null, // last_svr
-            6 => null, // char_cnt
-            7 => null,
-            8 => null, // ticket
-            10 => HandleWebUriRequest(), // getWebLinkUrl(%d,%s)
+            (0x0dbadb0a, "Hello!!\0") => "Hello!!",
+            (0, var value) => HandleGameEventOrExit(value),
+            (_, "slsurl\0") => HandleServerListUriRequest(),
+            (_, "gamestr\0" or "ticket\0" or "last_svr\0" or "char_cnt\0") => HandleGameInfoRequest(),
+            (_, var value) when _getWebLinkUrl.IsMatch(value) => HandleWebUriRequest(),
             _ => null,
         };
 
