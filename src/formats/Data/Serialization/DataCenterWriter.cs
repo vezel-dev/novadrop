@@ -62,7 +62,7 @@ sealed class DataCenterWriter
         }
 
         static DataCenterAddress AllocateRange<T>(DataCenterSegmentedRegion<T> region, int count, string description)
-            where T : unmanaged, IDataCenterItem<T>
+            where T : unmanaged, IDataCenterItem
         {
             var max = DataCenterAddress.MaxValue;
             var segIdx = 0;

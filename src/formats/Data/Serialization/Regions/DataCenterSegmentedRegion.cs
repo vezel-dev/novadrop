@@ -3,7 +3,7 @@ using Vezel.Novadrop.Data.Serialization.Items;
 namespace Vezel.Novadrop.Data.Serialization.Regions;
 
 sealed class DataCenterSegmentedRegion<T>
-    where T : unmanaged, IDataCenterItem<T>
+    where T : unmanaged, IDataCenterItem
 {
     public List<DataCenterRegion<T>> Segments { get; } = new List<DataCenterRegion<T>>(ushort.MaxValue);
 

@@ -1,7 +1,7 @@
 namespace Vezel.Novadrop.Data.Serialization.Items;
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
-struct DataCenterRawKeys : IDataCenterItem<DataCenterRawKeys>
+struct DataCenterRawKeys : IDataCenterItem
 {
     public ushort NameIndex1;
 
@@ -11,11 +11,11 @@ struct DataCenterRawKeys : IDataCenterItem<DataCenterRawKeys>
 
     public ushort NameIndex4;
 
-    public static void ReverseEndianness(ref DataCenterRawKeys item)
+    public void ReverseEndianness()
     {
-        item.NameIndex1 = BinaryPrimitives.ReverseEndianness(item.NameIndex1);
-        item.NameIndex2 = BinaryPrimitives.ReverseEndianness(item.NameIndex2);
-        item.NameIndex3 = BinaryPrimitives.ReverseEndianness(item.NameIndex3);
-        item.NameIndex4 = BinaryPrimitives.ReverseEndianness(item.NameIndex4);
+        NameIndex1 = BinaryPrimitives.ReverseEndianness(NameIndex1);
+        NameIndex2 = BinaryPrimitives.ReverseEndianness(NameIndex2);
+        NameIndex3 = BinaryPrimitives.ReverseEndianness(NameIndex3);
+        NameIndex4 = BinaryPrimitives.ReverseEndianness(NameIndex4);
     }
 }

@@ -1,7 +1,7 @@
 namespace Vezel.Novadrop.Data.Serialization.Items;
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
-struct DataCenterRawAttribute : IDataCenterItem<DataCenterRawAttribute>
+struct DataCenterRawAttribute : IDataCenterItem
 {
     public ushort NameIndex;
 
@@ -11,11 +11,11 @@ struct DataCenterRawAttribute : IDataCenterItem<DataCenterRawAttribute>
 
     public uint Padding1;
 
-    public static void ReverseEndianness(ref DataCenterRawAttribute item)
+    public void ReverseEndianness()
     {
-        item.NameIndex = BinaryPrimitives.ReverseEndianness(item.NameIndex);
-        item.TypeInfo = BinaryPrimitives.ReverseEndianness(item.TypeInfo);
-        item.Value = BinaryPrimitives.ReverseEndianness(item.Value);
+        NameIndex = BinaryPrimitives.ReverseEndianness(NameIndex);
+        TypeInfo = BinaryPrimitives.ReverseEndianness(TypeInfo);
+        Value = BinaryPrimitives.ReverseEndianness(Value);
 
         // Note: Padding1 can be safely ignored.
     }

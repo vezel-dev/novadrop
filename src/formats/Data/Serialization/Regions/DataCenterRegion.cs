@@ -3,7 +3,7 @@ using Vezel.Novadrop.Data.Serialization.Items;
 namespace Vezel.Novadrop.Data.Serialization.Regions;
 
 sealed class DataCenterRegion<T>
-    where T : unmanaged, IDataCenterItem<T>
+    where T : unmanaged, IDataCenterItem
 {
     public List<T> Elements { get; } = new List<T>(ushort.MaxValue);
 
@@ -37,7 +37,7 @@ sealed class DataCenterRegion<T>
                     ref Unsafe.As<byte, T>(ref MemoryMarshal.GetArrayDataReference(bytes)), count))
                 {
                     if (!BitConverter.IsLittleEndian)
-                        T.ReverseEndianness(ref elem);
+                        elem.ReverseEndianness();
 
                     Elements.Add(elem);
                 }
@@ -74,7 +74,7 @@ sealed class DataCenterRegion<T>
                     elem = Elements[i++];
 
                     if (!BitConverter.IsLittleEndian)
-                        T.ReverseEndianness(ref elem);
+                        elem.ReverseEndianness();
                 }
             }
 

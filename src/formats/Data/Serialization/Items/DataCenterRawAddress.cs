@@ -1,15 +1,15 @@
 namespace Vezel.Novadrop.Data.Serialization.Items;
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
-struct DataCenterRawAddress : IDataCenterItem<DataCenterRawAddress>
+struct DataCenterRawAddress : IDataCenterItem
 {
     public ushort SegmentIndex;
 
     public ushort ElementIndex;
 
-    public static void ReverseEndianness(ref DataCenterRawAddress item)
+    public void ReverseEndianness()
     {
-        item.SegmentIndex = BinaryPrimitives.ReverseEndianness(item.SegmentIndex);
-        item.ElementIndex = BinaryPrimitives.ReverseEndianness(item.ElementIndex);
+        SegmentIndex = BinaryPrimitives.ReverseEndianness(SegmentIndex);
+        ElementIndex = BinaryPrimitives.ReverseEndianness(ElementIndex);
     }
 }

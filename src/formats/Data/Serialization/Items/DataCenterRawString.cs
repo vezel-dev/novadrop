@@ -1,7 +1,7 @@
 namespace Vezel.Novadrop.Data.Serialization.Items;
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
-struct DataCenterRawString : IDataCenterItem<DataCenterRawString>
+struct DataCenterRawString : IDataCenterItem
 {
     public uint Hash;
 
@@ -11,11 +11,11 @@ struct DataCenterRawString : IDataCenterItem<DataCenterRawString>
 
     public DataCenterRawAddress Address;
 
-    public static void ReverseEndianness(ref DataCenterRawString item)
+    public void ReverseEndianness()
     {
-        item.Hash = BinaryPrimitives.ReverseEndianness(item.Hash);
-        item.Length = BinaryPrimitives.ReverseEndianness(item.Length);
-        item.Index = BinaryPrimitives.ReverseEndianness(item.Index);
-        DataCenterRawAddress.ReverseEndianness(ref item.Address);
+        Hash = BinaryPrimitives.ReverseEndianness(Hash);
+        Length = BinaryPrimitives.ReverseEndianness(Length);
+        Index = BinaryPrimitives.ReverseEndianness(Index);
+        Address.ReverseEndianness();
     }
 }
