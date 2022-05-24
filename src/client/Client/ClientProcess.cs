@@ -4,6 +4,22 @@ public sealed class ClientProcess : GameProcess
 {
     // Represents a TERA.exe process from the perspective of a Tl.exe-compatible process.
 
+    public event Action? ServerListRequested;
+
+    public event Action? AccountNameRequested;
+
+    public event Action? TicketRequested;
+
+    public event Action? LobbyEntered;
+
+    public event Action<string>? WorldEntered;
+
+    public event Action<GameEvent>? GameEventOccurred;
+
+    public event Action<int>? GameExited;
+
+    public event Action<string>? GameCrashed;
+
     public ClientProcessOptions Options { get; }
 
     public ClientProcess(ClientProcessOptions options)
@@ -29,17 +45,32 @@ public sealed class ClientProcess : GameProcess
         nuint id, ReadOnlySpan<byte> payload)
     {
         var opts = Options;
+        var utf16 = Encoding.Unicode;
 
-        ReadOnlyMemory<byte> SerializeServerList()
+        (nuint, ReadOnlyMemory<byte>) HandleAccountNameRequest()
         {
+            AccountNameRequested?.Invoke();
+
+            return (2, Encoding.Unicode.GetBytes(opts.AccountName));
+        }
+
+        (nuint, ReadOnlyMemory<byte>) HandleTicketRequest()
+        {
+            TicketRequested?.Invoke();
+
+            return (4, Encoding.UTF8.GetBytes(opts.Ticket));
+        }
+
+        (nuint, ReadOnlyMemory<byte>) HandleServerListRequest()
+        {
+            ServerListRequested?.Invoke();
+
             using var ms = new MemoryStream(ushort.MaxValue);
 
             var csl = new ClientServerList
             {
                 LastServerId = (uint)opts.LastServerId,
             };
-
-            var utf16 = Encoding.Unicode;
 
             foreach (var (_, srv) in opts.Servers)
                 csl.Servers.Add(new()
@@ -58,35 +89,53 @@ public sealed class ClientProcess : GameProcess
 
             Serializer.Serialize(ms, csl);
 
-            return ms.ToArray();
+            return (6, ms.ToArray());
+        }
+
+        (nuint, ReadOnlyMemory<byte>)? HandleEnterLobbyOrWorld(ReadOnlySpan<byte> payload)
+        {
+            if (payload.IsEmpty)
+                LobbyEntered?.Invoke();
+            else
+                WorldEntered?.Invoke(utf16.GetString(payload)[..^1]); // Strip NUL terminator.
+
+            return null;
+        }
+
+        (nuint, ReadOnlyMemory<byte>)? HandleGameEvent()
+        {
+            GameEventOccurred?.Invoke((GameEvent)id);
+
+            return null;
+        }
+
+        (nuint, ReadOnlyMemory<byte>)? HandleGameExit(ReadOnlySpan<byte> payload)
+        {
+            // TODO: What is the other data in the payload?
+            GameExited?.Invoke(BinaryPrimitives.ReadInt32LittleEndian(payload[(sizeof(int) * 2)..sizeof(int)]));
+
+            return null;
+        }
+
+        (nuint, ReadOnlyMemory<byte>)? HandleGameCrash(ReadOnlySpan<byte> payload)
+        {
+            GameCrashed?.Invoke(utf16.GetString(payload).Trim());
+
+            return null;
         }
 
         return id switch
         {
-            1 => (2, Encoding.Unicode.GetBytes(opts.AccountName)),
-            3 => (4, Encoding.UTF8.GetBytes(opts.Ticket)),
-            5 => (6, SerializeServerList()),
-            7 => null,
+            1 => HandleAccountNameRequest(),
+            3 => HandleTicketRequest(),
+            5 => HandleServerListRequest(),
+            7 => HandleEnterLobbyOrWorld(payload),
             25 => null,
             26 => null,
             1000 => null,
-            1001 => null,
-            1002 => null,
-            1003 => null,
-            1004 => null,
-            1005 => null,
-            1006 => null,
-            1007 => null,
-            1008 => null,
-            1009 => null,
-            1010 => null,
-            1011 => null,
-            1012 => null,
-            1013 => null,
-            1015 => null,
-            1016 => null,
-            1020 => null,
-            1021 => null,
+            >= 1001 and <= 1016 => HandleGameEvent(),
+            1020 => HandleGameExit(payload),
+            1021 => HandleGameCrash(payload),
             1025 => null,
             1027 => null,
             _ => null,

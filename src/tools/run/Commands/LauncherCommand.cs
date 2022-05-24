@@ -41,18 +41,10 @@ sealed class LauncherCommand : Command
             {
                 Console.WriteLine("Running launcher and connecting to '{0}'...", url);
 
-                var proc = new LauncherProcess(
+                context.ExitCode = await new LauncherProcess(
                     new LauncherProcessOptions(executable.FullName, account, ticket, url)
-                        .WithLastServerId(serverId));
-
-                proc.WindowException += ex =>
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine(ex);
-                    Console.ResetColor();
-                };
-
-                context.ExitCode = await proc.RunAsync(cancellationToken);
+                        .WithLastServerId(serverId))
+                    .RunAsync(cancellationToken);
             },
             executableArg,
             accountArg,

@@ -8,9 +8,9 @@ namespace Vezel.Novadrop.Client;
 
 public abstract class GameProcess
 {
-    public event ReadOnlySpanAction<byte, nuint>? WindowMessage;
+    public event ReadOnlySpanAction<byte, nuint>? MessageReceived;
 
-    public event Action<Exception>? WindowException;
+    public event ReadOnlySpanAction<byte, nuint>? MessageSent;
 
     public int Id => _process?.Id ?? throw new InvalidOperationException();
 
@@ -22,48 +22,44 @@ public abstract class GameProcess
     {
     }
 
-    [SuppressMessage("", "CA1031")]
     [UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
     static unsafe LRESULT WindowProcedure(HWND hWnd, uint msg, WPARAM wParam, LPARAM lParam)
     {
         if (msg != WM_COPYDATA)
             return DefWindowProc(hWnd, msg, wParam, lParam);
 
+        var cds = *(COPYDATASTRUCT*)(nint)lParam;
+        var id = cds.dwData;
+        var payload = new ReadOnlySpan<byte>(cds.lpData, (int)cds.cbData);
+
         var process = (GameProcess)GCHandle.FromIntPtr(GetWindowLongPtr(hWnd, 0)).Target!;
 
-        try
+        process.MessageReceived?.Invoke(payload, id);
+
+        var result = process.HandleWindowMessage(id, payload);
+
+        if (result is not var (replyId, replyPayload))
+            return (LRESULT)1;
+
+        // We have to fire off the reply in a separate thread or we will cause a deadlock.
+        _ = Task.Run(() =>
         {
-            var cds = *(COPYDATASTRUCT*)(nint)lParam;
-            var id = cds.dwData;
-            var payload = new ReadOnlySpan<byte>(cds.lpData, (int)cds.cbData);
+            var replySpan = replyPayload.Span;
 
-            process.WindowMessage?.Invoke(payload, id);
-
-            var result = process.HandleWindowMessage(id, payload);
-
-            if (result is not var (replyId, replyPayload))
-                return (LRESULT)1;
-
-            // We have to fire off the reply in a separate thread or we will cause a deadlock.
-            _ = Task.Run(() =>
+            fixed (byte* ptr = replySpan)
             {
-                fixed (byte* ptr = replyPayload.Span)
+                var response = new COPYDATASTRUCT
                 {
-                    var response = new COPYDATASTRUCT
-                    {
-                        dwData = replyId,
-                        lpData = ptr,
-                        cbData = (uint)replyPayload.Length,
-                    };
+                    dwData = replyId,
+                    lpData = ptr,
+                    cbData = (uint)replyPayload.Length,
+                };
 
-                    _ = SendMessage((HWND)(nint)(nuint)wParam, msg, (nuint)(nint)hWnd, (nint)(&response));
-                }
-            });
-        }
-        catch (Exception ex)
-        {
-            process.WindowException?.Invoke(ex);
-        }
+                _ = SendMessage((HWND)(nint)(nuint)wParam, msg, (nuint)(nint)hWnd, (nint)(&response));
+
+                process.MessageSent?.Invoke(replySpan, replyId);
+            }
+        });
 
         return (LRESULT)1;
     }

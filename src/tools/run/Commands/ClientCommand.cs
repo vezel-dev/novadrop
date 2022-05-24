@@ -62,19 +62,11 @@ sealed class ClientCommand : Command
 
                 Console.WriteLine("Running client and connecting to '{0}'...", server.Endpoint);
 
-                var proc = new ClientProcess(
+                context.ExitCode = await new ClientProcess(
                     new ClientProcessOptions(executable.FullName, account, ticket, new[] { server })
                         .WithLanguage(language)
-                        .WithLastServerId(42));
-
-                proc.WindowException += ex =>
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine(ex);
-                    Console.ResetColor();
-                };
-
-                context.ExitCode = await proc.RunAsync(cancellationToken);
+                        .WithLastServerId(42))
+                    .RunAsync(cancellationToken);
             },
             executableArg,
             languageArg,
