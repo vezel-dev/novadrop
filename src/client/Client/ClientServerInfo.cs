@@ -1,6 +1,6 @@
 namespace Vezel.Novadrop.Client;
 
-public sealed class ServerInfo
+public sealed class ClientServerInfo
 {
     public int Id { get; }
 
@@ -24,7 +24,7 @@ public sealed class ServerInfo
 
     public IPEndPoint Endpoint => new(Address, Port);
 
-    public ServerInfo(
+    public ClientServerInfo(
         int id,
         string category,
         string rawName,

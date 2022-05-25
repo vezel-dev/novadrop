@@ -68,7 +68,11 @@ public sealed class LauncherProcess : GameProcess
             GameInfoRequested?.Invoke();
 
             return JsonSerializer.Serialize(
-                new LauncherGameInfo(opts.AccountName, opts.Ticket, opts.LastServerId),
+                new LauncherGameInfo(
+                    opts.AccountName,
+                    opts.Ticket,
+                    opts.Servers.Values.Select(s => new LauncherGameInfo.ServerCharacters(s.Id, s.Characters)),
+                    opts.LastServerId),
                 LauncherJsonContext.Default.LauncherGameInfo);
         }
 

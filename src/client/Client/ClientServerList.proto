@@ -9,14 +9,14 @@ option (.protobuf_net.fileopt).access = INTERNAL;
 
 // TODO: protobuf-net is not currently AOT-friendly.
 
-message ClientServerList
+message ProtoBufServerList
 {
-    repeated ClientServerInfo servers = 1;
+    repeated ProtoBufServerInfo servers = 1;
     required fixed32 last_server_id = 2;
     required fixed32 unknown = 3;
 }
 
-message ClientServerInfo
+message ProtoBufServerInfo
 {
     required fixed32 id = 1;
     required bytes raw_name = 2;

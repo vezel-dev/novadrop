@@ -67,7 +67,7 @@ public sealed class ClientProcess : GameProcess
 
             using var ms = new MemoryStream(ushort.MaxValue);
 
-            var csl = new ClientServerList
+            var csl = new ProtoBufServerList
             {
                 LastServerId = (uint)opts.LastServerId,
             };

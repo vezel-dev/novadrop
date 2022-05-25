@@ -48,7 +48,7 @@ sealed class ClientCommand : Command
                 if (ip.Length == 0)
                     throw new ApplicationException($"Could not resolve server host '{serverHost}'.");
 
-                var server = new ServerInfo(
+                var server = new ClientServerInfo(
                     42,
                     string.Empty,
                     string.Empty,

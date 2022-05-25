@@ -10,7 +10,7 @@ public sealed class ClientProcessOptions
 
     public string? Language { get; private set; }
 
-    public IReadOnlyDictionary<int, ServerInfo> Servers { get; private set; } = null!;
+    public IReadOnlyDictionary<int, ClientServerInfo> Servers { get; private set; } = null!;
 
     public int LastServerId { get; private set; }
 
@@ -19,7 +19,7 @@ public sealed class ClientProcessOptions
     }
 
     public ClientProcessOptions(
-        string fileName, string accountName, string ticket, IEnumerable<ServerInfo> servers)
+        string fileName, string accountName, string ticket, IEnumerable<ClientServerInfo> servers)
     {
         ArgumentNullException.ThrowIfNull(fileName);
         ArgumentNullException.ThrowIfNull(accountName);
@@ -89,7 +89,7 @@ public sealed class ClientProcessOptions
         return options;
     }
 
-    public ClientProcessOptions WithServers(IEnumerable<ServerInfo> servers)
+    public ClientProcessOptions WithServers(IEnumerable<ClientServerInfo> servers)
     {
         ArgumentNullException.ThrowIfNull(servers);
         _ = servers.Any() ? true : throw new ArgumentException(null, nameof(servers));

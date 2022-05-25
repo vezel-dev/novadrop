@@ -10,6 +10,9 @@ public sealed class LauncherProcessOptions
 
     public Uri ServerListUri { get; private set; } = null!;
 
+    public IReadOnlyDictionary<int, LauncherServerInfo> Servers { get; private set; } =
+        new Dictionary<int, LauncherServerInfo>();
+
     public int LastServerId { get; private set; }
 
     LauncherProcessOptions()
@@ -37,6 +40,7 @@ public sealed class LauncherProcessOptions
             AccountName = AccountName,
             Ticket = Ticket,
             ServerListUri = ServerListUri,
+            Servers = Servers,
             LastServerId = LastServerId,
         };
     }
@@ -81,6 +85,18 @@ public sealed class LauncherProcessOptions
         var options = Clone();
 
         options.ServerListUri = serverListUri;
+
+        return options;
+    }
+
+    public LauncherProcessOptions WithServers(IEnumerable<LauncherServerInfo> servers)
+    {
+        ArgumentNullException.ThrowIfNull(servers);
+        _ = servers.All(s => s != null) ? true : throw new ArgumentException(null, nameof(servers));
+
+        var options = Clone();
+
+        options.Servers = servers.ToImmutableDictionary(s => s.Id);
 
         return options;
     }
