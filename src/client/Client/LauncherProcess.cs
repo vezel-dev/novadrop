@@ -81,6 +81,8 @@ public sealed class LauncherProcess : GameProcess
             return string.Empty;
         }
 
+        // Note that the message ID increments on every sent message for slsurl, gamestr, ticket, last_svr, and
+        // char_cnt. So, for these messages, matching on the contents is the only correct way to handle them.
         var replyPayload = (id, utf8.GetString(payload)) switch
         {
             (0x0dbadb0a, "Hello!!\0") => "Hello!!",

@@ -111,7 +111,6 @@ public sealed class ClientProcess : GameProcess
 
         (nuint, ReadOnlyMemory<byte>)? HandleGameExit(ReadOnlySpan<byte> payload)
         {
-            // TODO: What is the other data in the payload?
             GameExited?.Invoke(BinaryPrimitives.ReadInt32LittleEndian(payload[(sizeof(int) * 2)..sizeof(int)]));
 
             return null;
@@ -136,6 +135,9 @@ public sealed class ClientProcess : GameProcess
             >= 1001 and <= 1016 => HandleGameEvent(),
             1020 => HandleGameExit(payload),
             1021 => HandleGameCrash(payload),
+            1022 => null,
+            1023 => null,
+            1024 => null,
             1025 => null,
             1027 => null,
             _ => null,
