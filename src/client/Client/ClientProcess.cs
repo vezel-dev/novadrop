@@ -76,9 +76,9 @@ public sealed class ClientProcess : GameProcess
                 csl.Servers.Add(new()
                 {
                     Id = (uint)srv.Id,
-                    RawName = utf16.GetBytes(srv.RawName),
+                    Title = utf16.GetBytes(srv.Name),
                     Category = utf16.GetBytes(srv.Category),
-                    Name = utf16.GetBytes(srv.Name),
+                    Name = utf16.GetBytes(srv.Title),
                     Queue = utf16.GetBytes(srv.Queue),
                     Population = utf16.GetBytes(srv.Population),
                     Address = srv.Address is IPAddress addr

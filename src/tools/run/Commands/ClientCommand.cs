@@ -43,11 +43,12 @@ sealed class ClientCommand : Command
                 ushort serverPort,
                 CancellationToken cancellationToken) =>
             {
+                var srvName = $"{serverHost}:{serverPort}";
                 var srv = new ClientServerInfo(
                     42,
                     string.Empty,
-                    string.Empty,
-                    string.Empty,
+                    srvName,
+                    srvName,
                     string.Empty,
                     string.Empty,
                     true,
@@ -56,10 +57,7 @@ sealed class ClientCommand : Command
                     null,
                     serverPort);
 
-                Console.WriteLine(
-                    "Running client and connecting to '{0}:{1}'...",
-                    (object?)srv.Host ?? srv.Address,
-                    srv.Port);
+                Console.WriteLine("Running client and connecting to '{0}'...", srvName);
 
                 context.ExitCode = await new ClientProcess(
                     new ClientProcessOptions(executable.FullName, account, ticket, new[] { srv })

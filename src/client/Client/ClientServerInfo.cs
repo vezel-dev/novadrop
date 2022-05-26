@@ -6,9 +6,9 @@ public sealed class ClientServerInfo
 
     public string Category { get; }
 
-    public string RawName { get; }
-
     public string Name { get; }
+
+    public string Title { get; }
 
     public string Queue { get; }
 
@@ -27,8 +27,8 @@ public sealed class ClientServerInfo
     public ClientServerInfo(
         int id,
         string category,
-        string rawName,
         string name,
+        string title,
         string queue,
         string population,
         bool available,
@@ -39,8 +39,8 @@ public sealed class ClientServerInfo
     {
         _ = id > 0 ? true : throw new ArgumentOutOfRangeException(nameof(id));
         ArgumentNullException.ThrowIfNull(category);
-        ArgumentNullException.ThrowIfNull(rawName);
         ArgumentNullException.ThrowIfNull(name);
+        ArgumentNullException.ThrowIfNull(title);
         ArgumentNullException.ThrowIfNull(queue);
         ArgumentNullException.ThrowIfNull(population);
         ArgumentNullException.ThrowIfNull(unavailableMessage);
@@ -53,8 +53,8 @@ public sealed class ClientServerInfo
 
         Id = id;
         Category = category;
-        RawName = rawName;
         Name = name;
+        Title = title;
         Queue = queue;
         Population = population;
         IsAvailable = available;
@@ -66,6 +66,6 @@ public sealed class ClientServerInfo
 
     public override string ToString()
     {
-        return $"{{Id: {Id}, Name: {RawName}, Endpoint: {Host ?? Address!.ToString()}:{Port}}}";
+        return $"{{Id: {Id}, Name: {Name}, Endpoint: {Host ?? Address!.ToString()}:{Port}}}";
     }
 }
