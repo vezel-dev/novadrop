@@ -24,14 +24,14 @@ static class DataCenterNameTree
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            // There can be keys that refer to attributes that do not exist even in the official data center, so we need
-            // to explicitly add these attribute names.
             var keys = dataNode.Keys;
 
             if (keys.HasAttributeNames)
                 foreach (var name in keys.AttributeNames)
                     nameNode.Attributes[name] = true;
 
+            // There can be keys that refer to attributes that do not exist even in the official data center, so we need
+            // to explicitly add these attribute names.
             if (dataNode.HasAttributes)
             {
                 foreach (var (name, _) in dataNode.Attributes)
