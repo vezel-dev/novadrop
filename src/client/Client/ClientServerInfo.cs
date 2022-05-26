@@ -18,11 +18,11 @@ public sealed class ClientServerInfo
 
     public string UnavailableMessage { get; }
 
-    public IPAddress Address { get; }
+    public string? Host { get; }
+
+    public IPAddress? Address { get; }
 
     public int Port { get; }
-
-    public IPEndPoint Endpoint => new(Address, Port);
 
     public ClientServerInfo(
         int id,
@@ -33,7 +33,8 @@ public sealed class ClientServerInfo
         string population,
         bool available,
         string unavailableMessage,
-        IPAddress address,
+        string? host,
+        IPAddress? address,
         int port)
     {
         _ = id > 0 ? true : throw new ArgumentOutOfRangeException(nameof(id));
@@ -43,8 +44,9 @@ public sealed class ClientServerInfo
         ArgumentNullException.ThrowIfNull(queue);
         ArgumentNullException.ThrowIfNull(population);
         ArgumentNullException.ThrowIfNull(unavailableMessage);
-        ArgumentNullException.ThrowIfNull(address);
-        _ = address.AddressFamily == AddressFamily.InterNetwork ?
+        _ = (host != null || address != null) && (host == null || address == null) ?
+            true : throw new ArgumentException(null);
+        _ = address?.AddressFamily is null or AddressFamily.InterNetwork ?
             true : throw new ArgumentException(null, nameof(address));
         _ = port is >= IPEndPoint.MinPort and <= IPEndPoint.MaxPort ?
             true : throw new ArgumentOutOfRangeException(nameof(port));
@@ -57,12 +59,13 @@ public sealed class ClientServerInfo
         Population = population;
         IsAvailable = available;
         UnavailableMessage = unavailableMessage;
+        Host = host;
         Address = address;
         Port = port;
     }
 
     public override string ToString()
     {
-        return $"{{Id: {Id}, Name: {RawName}, Endpoint: {Endpoint}}}";
+        return $"{{Id: {Id}, Name: {RawName}, Endpoint: {Host ?? Address!.ToString()}:{Port}}}";
     }
 }

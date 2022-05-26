@@ -43,12 +43,7 @@ sealed class ClientCommand : Command
                 ushort serverPort,
                 CancellationToken cancellationToken) =>
             {
-                var ip = await Dns.GetHostAddressesAsync(serverHost, AddressFamily.InterNetwork, cancellationToken);
-
-                if (ip.Length == 0)
-                    throw new ApplicationException($"Could not resolve server host '{serverHost}'.");
-
-                var server = new ClientServerInfo(
+                var srv = new ClientServerInfo(
                     42,
                     string.Empty,
                     string.Empty,
@@ -57,13 +52,17 @@ sealed class ClientCommand : Command
                     string.Empty,
                     true,
                     string.Empty,
-                    ip[0],
+                    serverHost,
+                    null,
                     serverPort);
 
-                Console.WriteLine("Running client and connecting to '{0}'...", server.Endpoint);
+                Console.WriteLine(
+                    "Running client and connecting to '{0}:{1}'...",
+                    (object?)srv.Host ?? srv.Address,
+                    srv.Port);
 
                 context.ExitCode = await new ClientProcess(
-                    new ClientProcessOptions(executable.FullName, account, ticket, new[] { server })
+                    new ClientProcessOptions(executable.FullName, account, ticket, new[] { srv })
                         .WithLanguage(language)
                         .WithLastServerId(42))
                     .RunAsync(cancellationToken);

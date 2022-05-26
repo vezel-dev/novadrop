@@ -28,4 +28,5 @@ message ProtoBufServerInfo
     required fixed32 port = 8;
     required fixed32 available = 9;
     required bytes unavailable_message = 10;
+    optional bytes host = 11;
 }

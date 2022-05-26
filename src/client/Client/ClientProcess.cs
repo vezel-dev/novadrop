@@ -81,10 +81,13 @@ public sealed class ClientProcess : GameProcess
                     Name = utf16.GetBytes(srv.Name),
                     Queue = utf16.GetBytes(srv.Queue),
                     Population = utf16.GetBytes(srv.Population),
-                    Address = BinaryPrimitives.ReadUInt32BigEndian(srv.Address.GetAddressBytes()),
+                    Address = srv.Address is IPAddress addr
+                        ? BinaryPrimitives.ReadUInt32BigEndian(addr.GetAddressBytes())
+                        : 0,
                     Port = (uint)srv.Port,
                     Available = srv.IsAvailable ? 1u : 0,
                     UnavailableMessage = utf16.GetBytes(srv.UnavailableMessage),
+                    Host = srv.Host is string host ? utf16.GetBytes(host) : null,
                 });
 
             Serializer.Serialize(ms, csl);
