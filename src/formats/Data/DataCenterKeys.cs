@@ -31,6 +31,9 @@ public sealed class DataCenterKeys : IEquatable<DataCenterKeys>
         }
     }
 
+    public bool HasAttributeNames =>
+        (AttributeName1, AttributeName2, AttributeName3, AttributeName4) is not (null, null, null, null);
+
     public DataCenterKeys(
         string? attributeName1 = null,
         string? attributeName2 = null,

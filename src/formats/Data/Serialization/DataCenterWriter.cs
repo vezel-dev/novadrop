@@ -31,36 +31,6 @@ sealed class DataCenterWriter
 
     void ProcessTree(DataCenterNode root, CancellationToken cancellationToken)
     {
-        void AddNames(DataCenterNode node)
-        {
-            cancellationToken.ThrowIfCancellationRequested();
-
-            void AddName(string? name)
-            {
-                if (name is not (null or DataCenterConstants.RootNodeName or DataCenterConstants.ValueAttributeName))
-                    _ = _names.AddString(name);
-            }
-
-            AddName(node.Name);
-
-            var keys = node.Keys;
-
-            // There can be keys that refer to attributes that do not exist even in the official data center, so we need
-            // to explicitly add these attribute names.
-            AddName(keys.AttributeName1);
-            AddName(keys.AttributeName2);
-            AddName(keys.AttributeName3);
-            AddName(keys.AttributeName4);
-
-            if (node.HasAttributes)
-                foreach (var (key, _) in node.Attributes)
-                    AddName(key);
-
-            if (node.HasChildren)
-                foreach (var child in node.Children)
-                    AddNames(child);
-        }
-
         static DataCenterAddress AllocateRange<T>(DataCenterSegmentedRegion<T> region, int count, string description)
             where T : unmanaged, IDataCenterItem
         {
@@ -247,11 +217,7 @@ sealed class DataCenterWriter
 
         // The tree needs to be sorted according to the index of name strings. So we must walk the entire tree and
         // ensure that all names have been added to the table before we actually write the tree.
-        AddNames(root);
-
-        // These must always go last and must always be present.
-        _ = _names.AddString(DataCenterConstants.RootNodeName);
-        _ = _names.AddString(DataCenterConstants.ValueAttributeName);
+        DataCenterNameTree.Collect(root, s => _names.AddString(s), cancellationToken);
 
         WriteTree(root, AllocateRange(_nodes, 1, "Node"));
     }
