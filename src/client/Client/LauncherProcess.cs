@@ -63,17 +63,17 @@ public sealed class LauncherProcess : GameProcess
             return opts.ServerListUri.AbsoluteUri;
         }
 
-        string HandleGameInfoRequest()
+        string HandleAuthenticationInfoRequest()
         {
             GameInfoRequested?.Invoke();
 
             return JsonSerializer.Serialize(
-                new LauncherGameInfo(
+                new LauncherAuthenticationInfo(
                     opts.AccountName,
                     opts.Ticket,
-                    opts.Servers.Values.Select(s => new LauncherGameInfo.ServerCharacters(s.Id, s.Characters)),
+                    opts.Servers.Values.Select(s => new LauncherAuthenticationInfo.ServerCharacters(s.Id, s.Characters)),
                     opts.LastServerId),
-                LauncherJsonContext.Default.LauncherGameInfo);
+                LauncherJsonContext.Default.LauncherAuthenticationInfo);
         }
 
         string HandleWebUriRequest()
@@ -86,9 +86,9 @@ public sealed class LauncherProcess : GameProcess
         var replyPayload = (id, utf8.GetString(payload)) switch
         {
             (0x0dbadb0a, "Hello!!\0") => "Hello!!",
-            (0, var value) => HandleGameEventOrExit(value),
+            (0x0, var value) => HandleGameEventOrExit(value),
             (_, "slsurl\0") => HandleServerListUriRequest(),
-            (_, "gamestr\0" or "ticket\0" or "last_svr\0" or "char_cnt\0") => HandleGameInfoRequest(),
+            (_, "gamestr\0" or "ticket\0" or "last_svr\0" or "char_cnt\0") => HandleAuthenticationInfoRequest(),
             (_, var value) when _getWebLinkUrl.IsMatch(value) => HandleWebUriRequest(),
             _ => null,
         };

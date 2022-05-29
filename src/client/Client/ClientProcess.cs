@@ -51,14 +51,14 @@ public sealed class ClientProcess : GameProcess
         {
             AccountNameRequested?.Invoke();
 
-            return (2, Encoding.Unicode.GetBytes(opts.AccountName));
+            return (0x2, Encoding.Unicode.GetBytes(opts.AccountName));
         }
 
         (nuint, ReadOnlyMemory<byte>) HandleTicketRequest()
         {
             TicketRequested?.Invoke();
 
-            return (4, Encoding.UTF8.GetBytes(opts.Ticket));
+            return (0x4, Encoding.UTF8.GetBytes(opts.Ticket));
         }
 
         (nuint, ReadOnlyMemory<byte>) HandleServerListRequest()
@@ -92,7 +92,7 @@ public sealed class ClientProcess : GameProcess
 
             Serializer.Serialize(ms, csl);
 
-            return (6, ms.ToArray());
+            return (0x6, ms.ToArray());
         }
 
         (nuint, ReadOnlyMemory<byte>)? HandleEnterLobbyOrWorld(ReadOnlySpan<byte> payload)
@@ -128,27 +128,27 @@ public sealed class ClientProcess : GameProcess
 
         return id switch
         {
-            1 => HandleAccountNameRequest(),
-            3 => HandleTicketRequest(),
-            5 => HandleServerListRequest(),
-            7 => HandleEnterLobbyOrWorld(payload),
-            8 => null,
-            10 => null,
-            12 => null,
-            19 => null,
-            20 => null,
-            21 => null,
-            25 => null,
-            26 => null,
-            1000 => null,
-            >= 1001 and <= 1016 => HandleGameEvent(),
-            1020 => HandleGameExit(payload),
-            1021 => HandleGameCrash(payload),
-            1022 => null,
-            1023 => null,
-            1024 => null,
-            1025 => null,
-            1027 => null,
+            0x1 => HandleAccountNameRequest(),
+            0x3 => HandleTicketRequest(),
+            0x5 => HandleServerListRequest(),
+            0x7 => HandleEnterLobbyOrWorld(payload),
+            0x8 => null,
+            0xa => null,
+            0xc => null,
+            0x13 => null,
+            0x14 => null,
+            0x15 => null,
+            0x19 => null,
+            0x1a => null,
+            0x3e8 => null,
+            >= 0x3e9 and <= 0x3f8 => HandleGameEvent(),
+            0x3fc => HandleGameExit(payload),
+            0x3fd => HandleGameCrash(payload),
+            0x3fe => null,
+            0x3ff => null,
+            0x400 => null,
+            0x401 => null,
+            0x403 => null,
             _ => null,
         };
     }

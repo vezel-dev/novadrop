@@ -1,6 +1,6 @@
 namespace Vezel.Novadrop.Client;
 
-sealed class LauncherGameInfo
+sealed class LauncherAuthenticationInfo
 {
     // TODO: access_level, account_bits, user_permission
 
@@ -39,7 +39,7 @@ sealed class LauncherGameInfo
     [JsonPropertyName("last_connected_server_id")]
     public int LastServerId { get; }
 
-    public LauncherGameInfo(
+    public LauncherAuthenticationInfo(
         string accountName, string ticket, IEnumerable<ServerCharacters> charactersPerServer, int lastServerId)
     {
         MasterAccountName = accountName;
