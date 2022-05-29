@@ -15,8 +15,6 @@ supports the following tasks:
   to a fresh data center file usable by the client.
 * Format integrity verification of data center files, optionally with strict
   compliance checks.
-* Incremental packing of data sheets to a data center file by way of a file
-  system watcher, for a faster development loop.
 
 In general, novadrop-dc is quite fast: It exploits as many cores as are
 available for parallel extraction, validation, and packing. On a modern system,
@@ -111,24 +109,3 @@ The `input` argument specifies the input data center file.
 | `--decryption-key <key>` | Specifies a decryption key (defaults to the latest known key). |
 | `--decryption-iv <iv>` | Specifies a decryption IV (defaults to the latest known IV). |
 | `--strict` | Enables strict format compliance checks while reading the input file. |
-
-## novadrop-dc watch
-
-```text
-novadrop-dc watch <input> <output> [options...]
-```
-
-Incrementally packs the data sheets in a directory to a data center file. The
-data tree will be kept in memory and continually updated according to file
-system changes detected in the given directory, thus reducing the time required
-to pack the data center file each time. If validation of changed data sheets
-fails, no packing will be attempted until the problems are addressed.
-
-The `input` argument specifies a directory containing data sheets and schemas.
-The `output` argument specifies the path of the resulting data center file.
-
-| Option | Description |
-| - | - |
-| `--compression <level>` | Specifies a compression level (defaults to `Fastest`). |
-| `--encryption-key <key>` | Specifies an encryption key (defaults to the latest known key). |
-| `--encryption-iv <iv>` | Specifies an encryption IV (defaults to the latest known IV). |

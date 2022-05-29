@@ -13,7 +13,6 @@ static class Program
             new RepackCommand(),
             new ValidateCommand(),
             new VerifyCommand(),
-            new WatchCommand(),
         };
 
         return root.InvokeAsync(args);
