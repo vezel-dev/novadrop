@@ -436,8 +436,8 @@ center format.
 Some nodes will have a special attribute named `__value__`. In XML terms, this
 represents the text of a node. For example, `<Foo>bar</Foo>` would be serialized
 to a node called `Foo` containing an attribute named `__value__` with the string
-value `"bar"`. It is worth noting that a node can have both text and child
-nodes, such as `Foo` in this example:
+value `bar`. It is worth noting that a node can have both text and child nodes,
+such as `Foo` in this example:
 
 ```xml
 <Foo>
