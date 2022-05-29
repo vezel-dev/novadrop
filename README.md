@@ -14,7 +14,7 @@
 
 <div align="center">
 
-[![License](https://img.shields.io/github/license/vezel-dev/novadrop?color=brown)](LICENSE.md)
+[![License](https://img.shields.io/github/license/vezel-dev/novadrop?color=brown)](LICENSE-0BSD)
 [![Commits](https://img.shields.io/github/commit-activity/m/vezel-dev/novadrop/master?label=commits&color=slateblue)](https://github.com/vezel-dev/novadrop/commits/master)
 [![Build](https://img.shields.io/github/workflow/status/vezel-dev/novadrop/Build/master)](https://github.com/vezel-dev/novadrop/actions/workflows/build.yml)
 [![Discussions](https://img.shields.io/github/discussions/vezel-dev/novadrop?color=teal)](https://github.com/vezel-dev/novadrop/discussions)
@@ -86,3 +86,8 @@ To install a tool package in a project, run `dotnet tool install <name>`. To
 install it globally, also pass `-g`.
 
 To install a library package, run `dotnet add package <name>`.
+
+## License
+
+This project is licensed under the terms found in
+[`LICENSE-0BSD`](LICENSE-0BSD).
