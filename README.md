@@ -87,6 +87,9 @@ install it globally, also pass `-g`.
 
 To install a library package, run `dotnet add package <name>`.
 
+For more information, please visit the
+[project home page](https://docs.vezel.dev/novadrop).
+
 ## License
 
 This project is licensed under the terms found in

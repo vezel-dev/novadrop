@@ -35,4 +35,4 @@ This project offers the following packages:
   Provides support for TERA's network protocol.
 
 For more information, please visit the
-[project page](https://github.com/vezel-dev/novadrop).
+[project home page](https://docs.vezel.dev/novadrop).
