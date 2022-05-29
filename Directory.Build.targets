@@ -33,13 +33,15 @@
     <Choose>
         <When Condition="'$(IsPackable)' == 'true'">
             <PropertyGroup>
+                <ApplicationIcon>$(MSBuildThisFileDirectory)novadrop.ico</ApplicationIcon>
                 <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
                 <IsTrimmable Condition="'$(OutputType)' == 'Library'">>true</IsTrimmable>
+                <PackageIcon>novadrop.png</PackageIcon>
                 <PackageReadmeFile>PACKAGE.md</PackageReadmeFile>
             </PropertyGroup>
 
             <ItemGroup>
-                <None Include="$(MSBuildThisFileDirectory)PACKAGE.md"
+                <None Include="$(MSBuildThisFileDirectory)PACKAGE.md; $(MSBuildThisFileDirectory)novadrop.png"
                       Pack="true"
                       PackagePath=""
                       Visible="false" />

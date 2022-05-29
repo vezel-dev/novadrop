@@ -1,5 +1,10 @@
 # Novadrop
 
+<div align="center">
+    <img src="novadrop.svg"
+         width="128" />
+</div>
+
 <p align="center">
     <strong>
         A developer toolkit for interacting with and modifying the TERA game
