@@ -30,7 +30,7 @@ public abstract class DataCenterNode
 
     public virtual bool HasAttributes => Attributes.Count != 0;
 
-    public abstract IReadOnlyCollection<DataCenterNode> Children { get; }
+    public abstract IReadOnlyList<DataCenterNode> Children { get; }
 
     public virtual bool HasChildren => Children.Count != 0;
 
