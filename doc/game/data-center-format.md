@@ -340,7 +340,9 @@ must be sorted by their name index in ascending order.
 
 `child_address` is an address into the `node` region. `child_count` nodes should
 be read at this address. These children must be sorted first by their name
-index, then by name indexes of keys (if any), in ascending order.
+index, then by name indexes of keys (if any), in ascending order. Note that the
+sort should be stable since the order of multiple sibling nodes with the same
+name can be significant for the interpretation of the data.
 
 `padding_1` and `padding_2` should be considered undefined. They were added in
 the 64-bit data center format.
