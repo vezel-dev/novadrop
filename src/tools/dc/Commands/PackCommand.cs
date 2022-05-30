@@ -49,18 +49,34 @@ sealed class PackCommand : Command
                 var sw = Stopwatch.StartNew();
 
                 var dc = DataCenter.Create();
-                var files = input.GetFiles("?*-?*.xml", SearchOption.AllDirectories);
+                var root = dc.Root;
+                var files = input
+                    .EnumerateFiles("?*-?*.xml", SearchOption.AllDirectories)
+                    .OrderBy(f => f.FullName, StringComparer.Ordinal)
+                    .Select((f, i) => (Index: i, File: f))
+                    .ToArray();
 
                 using var handler = new DataSheetValidationHandler(context);
 
-                await Parallel.ForEachAsync(
-                    files,
-                    cancellationToken,
-                    async (file, cancellationToken) =>
-                        await DataSheetLoader.LoadAsync(file, handler, dc.Root, cancellationToken));
+                var nodes = await Task.WhenAll(
+                    files
+                        .AsParallel()
+                        .WithCancellation(cancellationToken)
+                        .Select(item =>
+                            Task.Run(
+                                async () =>
+                                    (Index: item.Index, Node: await DataSheetLoader.LoadAsync(
+                                        item.File, handler, root, cancellationToken)),
+                                cancellationToken)));
 
                 if (handler.HasProblems)
                     return;
+
+                var lookup = nodes.ToDictionary(item => item.Node!, item => item.Index);
+
+                // Since we process data sheets in parallel (i.e. non-deterministically), the data center we now have in
+                // memory will not have the correct order for the immediate children of the root node. Fix that here.
+                root.SortChildren(Comparer<DataCenterNode>.Create((x, y) => lookup[x].CompareTo(lookup[y])));
 
                 await using var stream = File.Open(output.FullName, FileMode.Create, FileAccess.Write);
 
