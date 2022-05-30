@@ -1,75 +1,71 @@
 namespace Vezel.Novadrop.Commands;
 
-sealed class RepackCommand : Command
+[SuppressMessage("", "CA1812")]
+sealed class RepackCommand : CancellableAsyncCommand<RepackCommand.RepackCommandSettings>
 {
-    public RepackCommand()
-        : base("repack", "Repack the contents of a resource container file.")
+    public sealed class RepackCommandSettings : CommandSettings
     {
-        var inputArg = new Argument<FileInfo>(
-            "input",
-            "Input file")
-            .ExistingOnly();
-        var outputArg = new Argument<FileInfo>(
-            "output",
-            "Output file")
-            .LegalFilePathsOnly();
-        var decryptionKeyOpt = new HexStringOption(
-            "--decryption-key",
-            ResourceContainer.LatestKey,
-            "Decryption key");
-        var encryptionKeyOpt = new HexStringOption(
-            "--encryption-key",
-            ResourceContainer.LatestKey,
-            "Encryption key");
-        var strictOpt = new Option<bool>(
-            "--strict",
-            () => false,
-            "Enable strict verification");
+        [CommandArgument(0, "<input>")]
+        [Description("Input file")]
+        public string Input { get; }
 
-        Add(inputArg);
-        Add(outputArg);
-        Add(decryptionKeyOpt);
-        Add(encryptionKeyOpt);
-        Add(strictOpt);
+        [CommandArgument(1, "<output>")]
+        [Description("Output file")]
+        public string Output { get; }
 
-        this.SetHandler(
-            async (
-                FileInfo input,
-                FileInfo output,
-                ReadOnlyMemory<byte> decryptionKey,
-                ReadOnlyMemory<byte> encryptionKey,
-                bool strict,
-                CancellationToken cancellationToken) =>
+        [CommandOption("--decryption-key <key>")]
+        [Description("Set decryption key")]
+        [TypeConverter(typeof(HexStringConverter))]
+        public ReadOnlyMemory<byte> DecryptionKey { get; init; } = ResourceContainer.LatestKey;
+
+        [CommandOption("--strict")]
+        [Description("Enable strict verification")]
+        public bool Strict { get; init; }
+
+        [CommandOption("--encryption-key <key>")]
+        [Description("Set encryption key")]
+        [TypeConverter(typeof(HexStringConverter))]
+        public ReadOnlyMemory<byte> EncryptionKey { get; init; } = ResourceContainer.LatestKey;
+
+        public RepackCommandSettings(string input, string output)
+        {
+            Input = input;
+            Output = output;
+        }
+    }
+
+    protected override async Task<int> ExecuteAsync(
+        dynamic expando, RepackCommandSettings settings, ProgressContext progress, CancellationToken cancellationToken)
+    {
+        Log.WriteLine($"Repacking [cyan]{settings.Input}[/] to [cyan]{settings.Output}[/]...");
+
+        var rc = await progress.RunTaskAsync(
+            "Load resource container",
+            async () =>
             {
-                Console.WriteLine($"Repacking '{input}' to '{output}'...");
+                await using var inStream = File.OpenRead(settings.Input);
 
-                var sw = Stopwatch.StartNew();
-
-                await using var inStream = input.OpenRead();
-
-                var rc = await ResourceContainer.LoadAsync(
+                return await ResourceContainer.LoadAsync(
                     inStream,
                     new ResourceContainerLoadOptions()
-                        .WithKey(decryptionKey.Span)
-                        .WithStrict(strict),
+                        .WithKey(settings.DecryptionKey.Span)
+                        .WithStrict(settings.Strict),
                     cancellationToken);
+            });
 
-                await using var outStream = output.Open(FileMode.Create, FileAccess.Write);
+        await progress.RunTaskAsync(
+            "Save resource container",
+            async () =>
+            {
+                await using var stream = File.Open(settings.Output, FileMode.Create, FileAccess.Write);
 
                 await rc.SaveAsync(
-                    outStream,
+                    stream,
                     new ResourceContainerSaveOptions()
-                        .WithKey(encryptionKey.Span),
+                        .WithKey(settings.EncryptionKey.Span),
                     cancellationToken);
+            });
 
-                sw.Stop();
-
-                Console.WriteLine($"Repacked {rc.Entries.Count} entries in {sw.Elapsed}.");
-            },
-            inputArg,
-            outputArg,
-            decryptionKeyOpt,
-            encryptionKeyOpt,
-            strictOpt);
+        return 0;
     }
 }

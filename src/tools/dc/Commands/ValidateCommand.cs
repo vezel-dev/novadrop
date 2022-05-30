@@ -1,67 +1,90 @@
-using Vezel.Novadrop.Helpers;
-
 namespace Vezel.Novadrop.Commands;
 
-sealed class ValidateCommand : Command
+[SuppressMessage("", "CA1812")]
+sealed class ValidateCommand : CancellableAsyncCommand<ValidateCommand.ValidateCommandSettings>
 {
-    public ValidateCommand()
-        : base("validate", "Validate the contents of a directory against the data center schemas.")
+    public sealed class ValidateCommandSettings : CommandSettings
     {
-        var inputArg = new Argument<DirectoryInfo>(
-            "input",
-            "Input directory")
-            .ExistingOnly();
+        [CommandArgument(0, "<input>")]
+        [Description("Input directory")]
+        public string Input { get; }
 
-        Add(inputArg);
+        public ValidateCommandSettings(string input)
+        {
+            Input = input;
+        }
+    }
 
-        this.SetHandler(
-            async (
-                InvocationContext context,
-                DirectoryInfo input,
-                CancellationToken cancellationToken) =>
-            {
-                Console.WriteLine($"Validating sheets in '{input}'...");
+    protected override Task PreExecuteAsync(
+        dynamic expando, ValidateCommandSettings settings, CancellationToken cancellationToken)
+    {
+        expando.Handler = new DataSheetValidationHandler();
 
-                var sw = Stopwatch.StartNew();
+        return Task.CompletedTask;
+    }
 
-                var files = input.GetFiles("?*-?*.xml", SearchOption.AllDirectories);
+    protected override async Task<int> ExecuteAsync(
+        dynamic expando,
+        ValidateCommandSettings settings,
+        ProgressContext progress,
+        CancellationToken cancellationToken)
+    {
+        Log.WriteLine($"Validating data sheets in [cyan]{settings.Input}[/]...");
 
-                using (var handler = new DataSheetValidationHandler(context))
-                    await Parallel.ForEachAsync(
-                        files,
-                        cancellationToken,
-                        async (file, cancellationToken) =>
+        var files = await progress.RunTaskAsync(
+            "Gather data sheet files",
+            () => Task.FromResult(
+                new DirectoryInfo(settings.Input)
+                    .EnumerateFiles("?*-?*.xml", SearchOption.AllDirectories)
+                    .OrderBy(f => f.FullName, StringComparer.Ordinal)
+                    .ToArray()));
+
+        var handler = (DataSheetValidationHandler)expando.Handler;
+
+        await progress.RunTaskAsync(
+            "Validate data sheets",
+            files.Length,
+            increment => Parallel.ForEachAsync(
+                files,
+                cancellationToken,
+                async (file, cancellationToken) =>
+                {
+                    var xmlSettings = new XmlReaderSettings
+                    {
+                        XmlResolver = new XmlUrlResolver(),
+                        ValidationType = ValidationType.Schema,
+                        ValidationFlags =
+                            XmlSchemaValidationFlags.ProcessSchemaLocation |
+                            XmlSchemaValidationFlags.ReportValidationWarnings,
+                        Async = true,
+                    };
+
+                    xmlSettings.ValidationEventHandler += handler.GetEventHandlerFor(file);
+
+                    using var reader = XmlReader.Create(file.FullName, xmlSettings);
+
+                    try
+                    {
+                        while (await reader.ReadAsync())
                         {
-                            var settings = new XmlReaderSettings
-                            {
-                                XmlResolver = new XmlUrlResolver(),
-                                ValidationType = ValidationType.Schema,
-                                ValidationFlags =
-                                    XmlSchemaValidationFlags.ProcessSchemaLocation |
-                                    XmlSchemaValidationFlags.ReportValidationWarnings,
-                                Async = true,
-                            };
+                        }
+                    }
+                    catch (XmlException ex)
+                    {
+                        handler.HandleException(file, ex);
+                    }
 
-                            settings.ValidationEventHandler += handler.GetEventHandlerFor(file);
+                    increment();
+                }));
 
-                            using var reader = XmlReader.Create(file.FullName, settings);
+        return handler.HasProblems ? 1 : 0;
+    }
 
-                            try
-                            {
-                                while (await reader.ReadAsync())
-                                {
-                                }
-                            }
-                            catch (XmlException ex)
-                            {
-                                handler.HandleException(file, ex);
-                            }
-                        });
+    protected override Task PostExecuteAsync(
+        dynamic expando, ValidateCommandSettings settings, CancellationToken cancellationToken)
+    {
+        expando.Handler.Print();
 
-                sw.Stop();
-
-                Console.WriteLine($"Validated {files.Length} data sheets in {sw.Elapsed}.");
-            },
-            inputArg);
+        return Task.CompletedTask;
     }
 }

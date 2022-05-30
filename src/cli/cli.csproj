@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <AssemblyName>Vezel.Novadrop.Cli</AssemblyName>
+        <RootNamespace>Vezel.Novadrop.Cli</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Using Include="Spectre.Console" />
+        <Using Include="Spectre.Console.Cli" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="novadrop-dc" />
+        <InternalsVisibleTo Include="novadrop-gpk" />
+        <InternalsVisibleTo Include="novadrop-rsc" />
+        <InternalsVisibleTo Include="novadrop-run" />
+        <InternalsVisibleTo Include="novadrop-scan" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Spectre.Console.Cli" />
+    </ItemGroup>
+</Project>

@@ -1,52 +1,45 @@
 namespace Vezel.Novadrop.Commands;
 
-sealed class VerifyCommand : Command
+[SuppressMessage("", "CA1812")]
+sealed class VerifyCommand : CancellableAsyncCommand<VerifyCommand.VerifyCommandSettings>
 {
-    [SuppressMessage("", "CA5350")]
-    public VerifyCommand()
-        : base("verify", "Verify the format integrity of a resource container file.")
+    public sealed class VerifyCommandSettings : CommandSettings
     {
-        var inputArg = new Argument<FileInfo>(
-            "input",
-            "Input file")
-            .ExistingOnly();
-        var decryptionKeyOpt = new HexStringOption(
-            "--decryption-key",
-            ResourceContainer.LatestKey,
-            "Decryption key");
-        var strictOpt = new Option<bool>(
-            "--strict",
-            () => true,
-            "Enable strict verification");
+        [CommandArgument(0, "<input>")]
+        [Description("Input file")]
+        public string Input { get; }
 
-        Add(inputArg);
-        Add(decryptionKeyOpt);
-        Add(strictOpt);
+        [CommandOption("--decryption-key <key>")]
+        [Description("Set decryption key")]
+        [TypeConverter(typeof(HexStringConverter))]
+        public ReadOnlyMemory<byte> DecryptionKey { get; init; } = ResourceContainer.LatestKey;
 
-        this.SetHandler(
-            async (
-                FileInfo input,
-                ReadOnlyMemory<byte> decryptionKey,
-                bool strict,
-                CancellationToken cancellationToken) =>
+        [CommandOption("--strict")]
+        [Description("Enable strict verification")]
+        public bool Strict { get; init; }
+
+        public VerifyCommandSettings(string input)
+        {
+            Input = input;
+        }
+    }
+
+    [SuppressMessage("", "CA5350")]
+    protected override async Task<int> ExecuteAsync(
+        dynamic expando, VerifyCommandSettings settings, ProgressContext progress, CancellationToken cancellationToken)
+    {
+        Log.WriteLine($"Verifying [cyan]{settings.Input}[/]...");
+
+        await progress.RunTaskAsync(
+            "Compute resource container hashes",
+            async () =>
             {
-                Console.WriteLine($"Verifying '{input}'...");
+                await using var stream = File.OpenRead(settings.Input);
 
-                var sw = Stopwatch.StartNew();
-
-                await using var stream = input.OpenRead();
-
-                void PrintHash(string name, HashAlgorithm algorithm)
+                [SuppressMessage("", "CA1308")]
+                string ComputeHash(HashAlgorithm algorithm)
                 {
-                    var hash = algorithm.ComputeHash(stream);
-                    var sb = new StringBuilder(hash.Length * 2);
-
-                    foreach (var b in hash)
-                        _ = sb.Append(CultureInfo.InvariantCulture, $"{b:x2}");
-
-                    Console.WriteLine($"{name}: {sb}");
-
-                    stream.Position = 0;
+                    return Convert.ToHexString(algorithm.ComputeHash(stream));
                 }
 
                 using var sha1 = SHA1.Create();
@@ -54,24 +47,41 @@ sealed class VerifyCommand : Command
                 using var sha384 = SHA384.Create();
                 using var sha512 = SHA512.Create();
 
-                PrintHash("SHA-1", sha1);
-                PrintHash("SHA-256", sha256);
-                PrintHash("SHA-384", sha384);
-                PrintHash("SHA-512", sha512);
+                expando.SHA1 = ComputeHash(sha1);
+                expando.SHA256 = ComputeHash(sha256);
+                expando.SHA384 = ComputeHash(sha384);
+                expando.SHA512 = ComputeHash(sha512);
+            });
+
+        await progress.RunTaskAsync(
+            "Load resource container",
+            async () =>
+            {
+                await using var stream = File.OpenRead(settings.Input);
 
                 var rc = await ResourceContainer.LoadAsync(
                     stream,
                     new ResourceContainerLoadOptions()
-                        .WithKey(decryptionKey.Span)
-                        .WithStrict(strict),
+                        .WithKey(settings.DecryptionKey.Span)
+                        .WithStrict(settings.Strict),
                     cancellationToken);
 
-                sw.Stop();
+                expando.Entries = rc.Entries.Count;
+            });
 
-                Console.WriteLine($"Verified {rc.Entries.Count} entries in {sw.Elapsed}.");
-            },
-            inputArg,
-            decryptionKeyOpt,
-            strictOpt);
+        return 0;
+    }
+
+    protected override Task PostExecuteAsync(
+        dynamic expando, VerifyCommandSettings settings, CancellationToken cancellationToken)
+    {
+        Log.WriteLine($"SHA-1: [blue]{expando.SHA1}[/]");
+        Log.WriteLine($"SHA-256: [blue]{expando.SHA256}[/]");
+        Log.WriteLine($"SHA-384: [blue]{expando.SHA384}[/]");
+        Log.WriteLine($"SHA-512: [blue]{expando.SHA512}[/]");
+        Log.WriteLine();
+        Log.WriteLine($"Entries: [blue]{expando.Entries}[/]");
+
+        return Task.CompletedTask;
     }
 }

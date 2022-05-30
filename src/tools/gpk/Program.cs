@@ -2,11 +2,17 @@ namespace Vezel.Novadrop;
 
 static class Program
 {
-    static async Task<int> Main()
+    static Task<int> Main(string[] args)
     {
-        // TODO: Logic.
-        await Task.Yield();
+        // TODO: Add commands.
 
-        return 0;
+        var app = new CommandApp();
+
+        app.Configure(cfg =>
+            cfg
+                .SetApplicationName("novadrop-gpk")
+                .PropagateExceptions());
+
+        return app.RunAsync(args);
     }
 }

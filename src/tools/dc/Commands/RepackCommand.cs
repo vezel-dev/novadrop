@@ -1,101 +1,90 @@
 namespace Vezel.Novadrop.Commands;
 
-sealed class RepackCommand : Command
+[SuppressMessage("", "CA1812")]
+sealed class RepackCommand : CancellableAsyncCommand<RepackCommand.RepackCommandSettings>
 {
-    public RepackCommand()
-        : base("repack", "Repack the contents of a data center file.")
+    public sealed class RepackCommandSettings : CommandSettings
     {
-        var inputArg = new Argument<FileInfo>(
-            "input",
-            "Input file")
-            .ExistingOnly();
-        var outputArg = new Argument<FileInfo>(
-            "output",
-            "Output file")
-            .LegalFilePathsOnly();
-        var decryptionKeyOpt = new HexStringOption(
-            "--decryption-key",
-            DataCenter.LatestKey,
-            "Decryption key");
-        var decryptionIVOpt = new HexStringOption(
-            "--decryption-iv",
-            DataCenter.LatestIV,
-            "Decryption IV");
-        var strictOpt = new Option<bool>(
-            "--strict",
-            () => false,
-            "Enable strict verification");
-        var compressionOpt = new Option<CompressionLevel>(
-            "--compression",
-            () => CompressionLevel.Optimal,
-            "Set compression level");
-        var encryptionKeyOpt = new HexStringOption(
-            "--encryption-key",
-            DataCenter.LatestKey,
-            "Encryption key");
-        var encryptionIVOpt = new HexStringOption(
-            "--encryption-iv",
-            DataCenter.LatestIV,
-            "Encryption VI");
+        [CommandArgument(0, "<input>")]
+        [Description("Input file")]
+        public string Input { get; }
 
-        Add(inputArg);
-        Add(outputArg);
-        Add(decryptionKeyOpt);
-        Add(decryptionIVOpt);
-        Add(strictOpt);
-        Add(compressionOpt);
-        Add(encryptionKeyOpt);
-        Add(encryptionIVOpt);
+        [CommandArgument(1, "<output>")]
+        [Description("Output file")]
+        public string Output { get; }
 
-        this.SetHandler(
-            async (
-                FileInfo input,
-                FileInfo output,
-                ReadOnlyMemory<byte> decryptionKey,
-                ReadOnlyMemory<byte> decryptionIV,
-                bool strict,
-                CompressionLevel compression,
-                ReadOnlyMemory<byte> encryptionKey,
-                ReadOnlyMemory<byte> encryptionIV,
-                CancellationToken cancellationToken) =>
+        [CommandOption("--decryption-key <key>")]
+        [Description("Set decryption key")]
+        [TypeConverter(typeof(HexStringConverter))]
+        public ReadOnlyMemory<byte> DecryptionKey { get; init; } = DataCenter.LatestKey;
+
+        [CommandOption("--decryption-iv <iv>")]
+        [Description("Set decryption IV")]
+        [TypeConverter(typeof(HexStringConverter))]
+        public ReadOnlyMemory<byte> DecryptionIV { get; init; } = DataCenter.LatestIV;
+
+        [CommandOption("--strict")]
+        [Description("Enable strict verification")]
+        public bool Strict { get; init; }
+
+        [CommandOption("--compression <level>")]
+        [Description("Set compression level")]
+        public CompressionLevel Compression { get; init; } = CompressionLevel.Optimal;
+
+        [CommandOption("--encryption-key <key>")]
+        [Description("Set encryption key")]
+        [TypeConverter(typeof(HexStringConverter))]
+        public ReadOnlyMemory<byte> EncryptionKey { get; init; } = DataCenter.LatestKey;
+
+        [CommandOption("--encryption-iv <iv>")]
+        [Description("Set encryption IV")]
+        [TypeConverter(typeof(HexStringConverter))]
+        public ReadOnlyMemory<byte> EncryptionIV { get; init; } = DataCenter.LatestIV;
+
+        public RepackCommandSettings(string input, string output)
+        {
+            Input = input;
+            Output = output;
+        }
+    }
+
+    protected override async Task<int> ExecuteAsync(
+        dynamic expando, RepackCommandSettings settings, ProgressContext progress, CancellationToken cancellationToken)
+    {
+        Log.WriteLine($"Repacking [cyan]{settings.Input}[/] to [cyan]{settings.Output}[/]...");
+
+        var dc = await progress.RunTaskAsync(
+            "Load data center",
+            async () =>
             {
-                Console.WriteLine($"Repacking '{input}' to '{output}'...");
+                await using var inStream = File.OpenRead(settings.Input);
 
-                var sw = Stopwatch.StartNew();
-
-                await using var inStream = input.OpenRead();
-
-                var dc = await DataCenter.LoadAsync(
+                return await DataCenter.LoadAsync(
                     inStream,
                     new DataCenterLoadOptions()
-                        .WithKey(decryptionKey.Span)
-                        .WithIV(decryptionIV.Span)
-                        .WithStrict(strict)
+                        .WithKey(settings.DecryptionKey.Span)
+                        .WithIV(settings.DecryptionIV.Span)
+                        .WithStrict(settings.Strict)
                         .WithLoaderMode(DataCenterLoaderMode.Eager)
                         .WithMutability(DataCenterMutability.Immutable),
                     cancellationToken);
+            });
 
-                await using var outStream = output.Open(FileMode.Create, FileAccess.Write);
+        await progress.RunTaskAsync(
+            "Save data center",
+            async () =>
+            {
+                await using var stream = File.Open(settings.Output, FileMode.Create, FileAccess.Write);
 
                 await dc.SaveAsync(
-                    outStream,
+                    stream,
                     new DataCenterSaveOptions()
-                        .WithCompressionLevel(compression)
-                        .WithKey(encryptionKey.Span)
-                        .WithIV(encryptionIV.Span),
+                        .WithCompressionLevel(settings.Compression)
+                        .WithKey(settings.EncryptionKey.Span)
+                        .WithIV(settings.EncryptionIV.Span),
                     cancellationToken);
+            });
 
-                sw.Stop();
-
-                Console.WriteLine($"Repacked {dc.Root.Children.Count} data sheets in {sw.Elapsed}.");
-            },
-            inputArg,
-            outputArg,
-            decryptionKeyOpt,
-            decryptionIVOpt,
-            strictOpt,
-            compressionOpt,
-            encryptionKeyOpt,
-            encryptionIVOpt);
+        return 0;
     }
 }

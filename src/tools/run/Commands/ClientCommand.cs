@@ -1,75 +1,91 @@
 namespace Vezel.Novadrop.Commands;
 
-sealed class ClientCommand : Command
+[SuppressMessage("", "CA1812")]
+sealed class ClientCommand : CancellableAsyncCommand<ClientCommand.ClientCommandSettings>
 {
-    public ClientCommand()
-        : base("client", "Run the TERA client.")
+    public sealed class ClientCommandSettings : CommandSettings
     {
-        var executableArg = new Argument<FileInfo>(
-            "executable",
-            "TERA.exe path")
-            .ExistingOnly();
-        var languageArg = new Argument<string>(
-            "language",
-            "Data center language");
-        var accountArg = new Argument<string>(
-            "account",
-            "Account name");
-        var ticketArg = new Argument<string>(
-            "ticket",
-            "Authentication ticket");
-        var serverHostArg = new Argument<string>(
-            "server-host",
-            "Server host");
-        var serverPortArg = new Argument<ushort>(
-            "server-port",
-            "Server port");
+        [CommandArgument(0, "<executable>")]
+        [Description("TERA.exe path")]
+        public string Executable { get; }
 
-        Add(executableArg);
-        Add(languageArg);
-        Add(accountArg);
-        Add(ticketArg);
-        Add(serverHostArg);
-        Add(serverPortArg);
+        [CommandArgument(1, "<language>")]
+        [Description("Data center language")]
+        public string Language { get; }
 
-        this.SetHandler(
-            async (
-                InvocationContext context,
-                FileInfo executable,
-                string language,
-                string account,
-                string ticket,
-                string serverHost,
-                ushort serverPort,
-                CancellationToken cancellationToken) =>
+        [CommandArgument(2, "<account-name>")]
+        [Description("Account name")]
+        public string AccountName { get; }
+
+        [CommandArgument(3, "<session-ticket>")]
+        [Description("Session ticket")]
+        public string SessionTicket { get; }
+
+        [CommandArgument(4, "<server-host>")]
+        [Description("Server host")]
+        public string ServerHost { get; }
+
+        [CommandArgument(5, "<server-port>")]
+        [Description("Server port")]
+        public ushort ServerPort { get; }
+
+        public ClientCommandSettings(
+            string executable,
+            string language,
+            string accountName,
+            string sessionTicket,
+            string serverHost,
+            ushort serverPort)
+        {
+            Executable = executable;
+            Language = language;
+            AccountName = accountName;
+            SessionTicket = sessionTicket;
+            ServerHost = serverHost;
+            ServerPort = serverPort;
+        }
+    }
+
+    protected override Task<int> ExecuteAsync(
+        dynamic expando, ClientCommandSettings settings, ProgressContext progress, CancellationToken cancellationToken)
+    {
+        var srvName = $"{settings.ServerHost}:{settings.ServerPort}";
+        var srv = new ClientServerInfo(
+            42,
+            string.Empty,
+            srvName,
+            srvName,
+            string.Empty,
+            string.Empty,
+            true,
+            string.Empty,
+            settings.ServerHost,
+            null,
+            settings.ServerPort);
+
+        Log.WriteLine($"Running client and connecting to [cyan]{srvName}[/]...");
+
+        return progress.RunTaskAsync(
+            "Connecting to arbiter server",
+            4,
+            increment =>
             {
-                var srvName = $"{serverHost}:{serverPort}";
-                var srv = new ClientServerInfo(
-                    42,
-                    string.Empty,
-                    srvName,
-                    srvName,
-                    string.Empty,
-                    string.Empty,
-                    true,
-                    string.Empty,
-                    serverHost,
-                    null,
-                    serverPort);
+                var process = new ClientProcess(
+                    new ClientProcessOptions(
+                        settings.Executable, settings.AccountName, settings.SessionTicket, new[] { srv })
+                        .WithLanguage(settings.Language)
+                        .WithLastServerId(42));
 
-                Console.WriteLine("Running client and connecting to '{0}'...", srvName);
+                process.ServerListRequested += increment;
+                process.AccountNameRequested += increment;
+                process.SessionTicketRequested += increment;
+                process.GameEventOccurred += e =>
+                {
+                    if (e == GameEvent.LoggedIn)
+                        increment();
+                };
 
-                context.ExitCode = await new ClientProcess(
-                    new ClientProcessOptions(executable.FullName, account, ticket, new[] { srv })
-                        .WithLanguage(language)
-                        .WithLastServerId(42))
-                    .RunAsync(cancellationToken);
-            },
-            executableArg,
-            languageArg,
-            accountArg,
-            ticketArg,
-            serverHostArg,
-            serverPortArg);
+                return process.RunAsync(cancellationToken);
+            });
     }
 }

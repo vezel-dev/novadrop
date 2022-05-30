@@ -1,55 +1,43 @@
-namespace Vezel.Novadrop.Helpers;
+namespace Vezel.Novadrop;
 
-sealed class DataSheetValidationHandler : IDisposable
+sealed class DataSheetValidationHandler
 {
     public bool HasProblems => _problems.Count != 0;
 
     readonly List<(FileInfo File, int, int, XmlSeverityType, string)> _problems = new();
 
-    readonly InvocationContext? _context;
-
-    public DataSheetValidationHandler(InvocationContext? context)
-    {
-        _context = context;
-    }
-
-    public void Dispose()
+    public void Print()
     {
         if (_problems.Count == 0)
             return;
 
-        if (_context != null)
-            _context.ExitCode = 1;
-
-        Console.WriteLine();
+        Log.WriteLine();
 
         foreach (var fileGroup in _problems.GroupBy(tup => tup.File.Name))
         {
             var shownProblems = fileGroup.Take(10).ToArray();
 
-            Console.WriteLine($"{fileGroup.Key}:");
+            Log.WriteLine($"{fileGroup.Key}:");
 
             foreach (var (_, line, col, severity, msg) in shownProblems)
             {
                 var (type, color) = severity switch
                 {
-                    XmlSeverityType.Error => ('E', ConsoleColor.Red),
-                    XmlSeverityType.Warning => ('W', ConsoleColor.Yellow),
+                    XmlSeverityType.Error => ('E', "red"),
+                    XmlSeverityType.Warning => ('W', "yellow"),
                     _ => throw new UnreachableException(),
                 };
 
-                Console.ForegroundColor = color;
-                Console.WriteLine($"  [{type}] ({line},{col}): {msg}");
-                Console.ResetColor();
+                Log.WriteLine($"  [[[{color}]{type}[/]]] ([blue]{line}[/],[blue]{col}[/]): {msg}");
             }
 
             var remainingProblems = fileGroup.Count() - shownProblems.Length;
 
             if (remainingProblems != 0)
-                Console.WriteLine($"    ... {remainingProblems} more problem(s) ...");
+                Log.WriteLine($"    ... [orange]{remainingProblems}[/] more problem(s) ...");
         }
 
-        Console.WriteLine();
+        Log.WriteLine();
     }
 
     public void HandleException(FileInfo file, XmlException exception)

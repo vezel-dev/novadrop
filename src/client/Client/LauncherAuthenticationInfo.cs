@@ -31,7 +31,7 @@ sealed class LauncherAuthenticationInfo
     public string MasterAccountName { get; }
 
     [JsonPropertyName("ticket")]
-    public string Ticket { get; }
+    public string SessionTicket { get; }
 
     [JsonPropertyName("chars_per_server")]
     public IReadOnlyCollection<ServerCharacters> CharactersPerServer { get; }
@@ -40,10 +40,10 @@ sealed class LauncherAuthenticationInfo
     public int LastServerId { get; }
 
     public LauncherAuthenticationInfo(
-        string accountName, string ticket, IEnumerable<ServerCharacters> charactersPerServer, int lastServerId)
+        string accountName, string sessionTicket, IEnumerable<ServerCharacters> charactersPerServer, int lastServerId)
     {
         MasterAccountName = accountName;
-        Ticket = ticket;
+        SessionTicket = sessionTicket;
         CharactersPerServer = charactersPerServer.ToArray();
         LastServerId = lastServerId;
     }

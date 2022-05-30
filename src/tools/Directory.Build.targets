@@ -1,12 +1,12 @@
 <Project>
     <ItemGroup>
-        <Using Include="System.CommandLine" />
-        <Using Include="System.CommandLine.Invocation" />
-        <Using Include="System.CommandLine.Parsing" />
+        <Using Include="Spectre.Console" />
+        <Using Include="Spectre.Console.Cli" />
+        <Using Include="Vezel.Novadrop.Cli" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="System.CommandLine" />
+        <ProjectReference Include="$(MSBuildThisFileDirectory)../cli/cli.csproj" />
     </ItemGroup>
 
     <Import Project="$([MSBuild]::GetPathOfFileAbove('$(MSBuildThisFile)', '$(MSBuildThisFileDirectory)..'))" />

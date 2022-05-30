@@ -6,7 +6,7 @@ public sealed class LauncherProcessOptions
 
     public string AccountName { get; private set; } = null!;
 
-    public string Ticket { get; private set; } = null!;
+    public string SessionTicket { get; private set; } = null!;
 
     public Uri ServerListUri { get; private set; } = null!;
 
@@ -19,16 +19,16 @@ public sealed class LauncherProcessOptions
     {
     }
 
-    public LauncherProcessOptions(string fileName, string accountName, string ticket, Uri serverListUri)
+    public LauncherProcessOptions(string fileName, string accountName, string sessionTicket, Uri serverListUri)
     {
         ArgumentNullException.ThrowIfNull(fileName);
         ArgumentNullException.ThrowIfNull(accountName);
-        ArgumentNullException.ThrowIfNull(ticket);
+        ArgumentNullException.ThrowIfNull(sessionTicket);
         ArgumentNullException.ThrowIfNull(serverListUri);
 
         FileName = fileName;
         AccountName = accountName;
-        Ticket = ticket;
+        SessionTicket = sessionTicket;
         ServerListUri = serverListUri;
     }
 
@@ -38,7 +38,7 @@ public sealed class LauncherProcessOptions
         {
             FileName = FileName,
             AccountName = AccountName,
-            Ticket = Ticket,
+            SessionTicket = SessionTicket,
             ServerListUri = ServerListUri,
             Servers = Servers,
             LastServerId = LastServerId,
@@ -67,13 +67,13 @@ public sealed class LauncherProcessOptions
         return options;
     }
 
-    public LauncherProcessOptions WithTicket(string ticket)
+    public LauncherProcessOptions WithSessionTicket(string sessionTicket)
     {
-        ArgumentNullException.ThrowIfNull(ticket);
+        ArgumentNullException.ThrowIfNull(sessionTicket);
 
         var options = Clone();
 
-        options.Ticket = ticket;
+        options.SessionTicket = sessionTicket;
 
         return options;
     }

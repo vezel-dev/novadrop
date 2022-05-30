@@ -6,7 +6,7 @@ public sealed class LauncherProcess : GameProcess
 
     public event Action? ServerListUriRequested;
 
-    public event Action? GameInfoRequested;
+    public event Action? AuthenticationInfoRequested;
 
     public event Action<GameEvent>? GameEventOccurred;
 
@@ -65,13 +65,14 @@ public sealed class LauncherProcess : GameProcess
 
         string HandleAuthenticationInfoRequest()
         {
-            GameInfoRequested?.Invoke();
+            AuthenticationInfoRequested?.Invoke();
 
             return JsonSerializer.Serialize(
                 new LauncherAuthenticationInfo(
                     opts.AccountName,
-                    opts.Ticket,
-                    opts.Servers.Values.Select(s => new LauncherAuthenticationInfo.ServerCharacters(s.Id, s.Characters)),
+                    opts.SessionTicket,
+                    opts.Servers.Values
+                        .Select(s => new LauncherAuthenticationInfo.ServerCharacters(s.Id, s.Characters)),
                     opts.LastServerId),
                 LauncherJsonContext.Default.LauncherAuthenticationInfo);
         }

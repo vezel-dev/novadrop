@@ -6,7 +6,7 @@ public sealed class ClientProcessOptions
 
     public string AccountName { get; private set; } = null!;
 
-    public string Ticket { get; private set; } = null!;
+    public string SessionTicket { get; private set; } = null!;
 
     public string? Language { get; private set; }
 
@@ -19,18 +19,18 @@ public sealed class ClientProcessOptions
     }
 
     public ClientProcessOptions(
-        string fileName, string accountName, string ticket, IEnumerable<ClientServerInfo> servers)
+        string fileName, string accountName, string sessionTicket, IEnumerable<ClientServerInfo> servers)
     {
         ArgumentNullException.ThrowIfNull(fileName);
         ArgumentNullException.ThrowIfNull(accountName);
-        ArgumentNullException.ThrowIfNull(ticket);
+        ArgumentNullException.ThrowIfNull(sessionTicket);
         ArgumentNullException.ThrowIfNull(servers);
         _ = servers.Any() ? true : throw new ArgumentException(null, nameof(servers));
         _ = servers.All(s => s != null) ? true : throw new ArgumentException(null, nameof(servers));
 
         FileName = fileName;
         AccountName = accountName;
-        Ticket = ticket;
+        SessionTicket = sessionTicket;
         Servers = servers.ToImmutableDictionary(s => s.Id);
     }
 
@@ -40,7 +40,7 @@ public sealed class ClientProcessOptions
         {
             FileName = FileName,
             AccountName = AccountName,
-            Ticket = Ticket,
+            SessionTicket = SessionTicket,
             Language = Language,
             Servers = Servers,
             LastServerId = LastServerId,
@@ -69,13 +69,13 @@ public sealed class ClientProcessOptions
         return options;
     }
 
-    public ClientProcessOptions WithTicket(string ticket)
+    public ClientProcessOptions WithSessionTicket(string sessionTicket)
     {
-        ArgumentNullException.ThrowIfNull(ticket);
+        ArgumentNullException.ThrowIfNull(sessionTicket);
 
         var options = Clone();
 
-        options.Ticket = ticket;
+        options.SessionTicket = sessionTicket;
 
         return options;
     }

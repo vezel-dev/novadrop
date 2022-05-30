@@ -1,57 +1,69 @@
 namespace Vezel.Novadrop.Commands;
 
-sealed class LauncherCommand : Command
+[SuppressMessage("", "CA1812")]
+sealed class LauncherCommand : CancellableAsyncCommand<LauncherCommand.LauncherCommandSettings>
 {
-    public LauncherCommand()
-        : base("launcher", "Run the TERA launcher.")
+    public sealed class LauncherCommandSettings : CommandSettings
     {
-        var executableArg = new Argument<FileInfo>(
-            "executable",
-            "Tl.exe path")
-            .ExistingOnly();
-        var accountArg = new Argument<string>(
-            "account",
-            "Account name");
-        var ticketArg = new Argument<string>(
-            "ticket",
-            "Authentication ticket");
-        var urlArg = new Argument<Uri>(
-            "url",
-            "Server list URL");
-        var serverIdOpt = new Option<int>(
-            "--server-id",
-            () => 0,
-            "Preferred server ID");
+        [CommandArgument(0, "<executable>")]
+        [Description("Tl.exe path")]
+        public string Executable { get; }
 
-        Add(executableArg);
-        Add(accountArg);
-        Add(ticketArg);
-        Add(urlArg);
-        Add(serverIdOpt);
+        [CommandArgument(1, "<account-name>")]
+        [Description("Account name")]
+        public string AccountName { get; }
 
-        this.SetHandler(
-            async (
-                InvocationContext context,
-                FileInfo executable,
-                string account,
-                string ticket,
-                Uri url,
-                int serverId,
-                CancellationToken cancellationToken) =>
+        [CommandArgument(2, "<session-ticket>")]
+        [Description("Session ticket")]
+        public string SessionTicket { get; }
+
+        [CommandArgument(3, "<url>")]
+        [Description("Server list URL")]
+        public Uri ServerListUri { get; }
+
+        [CommandOption("--server-id <id>")]
+        [Description("Set preferred server ID")]
+        public int ServerId { get; init; }
+
+        public LauncherCommandSettings(string executable, string accountName, string sessionTicket, Uri serverListUri)
+        {
+            Executable = executable;
+            AccountName = accountName;
+            SessionTicket = sessionTicket;
+            ServerListUri = serverListUri;
+        }
+    }
+
+    protected override Task<int> ExecuteAsync(
+        dynamic expando,
+        LauncherCommandSettings settings,
+        ProgressContext progress,
+        CancellationToken cancellationToken)
+    {
+        Log.WriteLine($"Running launcher and connecting to [cyan]{settings.ServerListUri}[/]...");
+
+        return progress.RunTaskAsync(
+            "Connecting to arbiter server",
+            3,
+            increment =>
             {
-                Console.WriteLine("Running launcher and connecting to '{0}'...", url);
+                var opts = new LauncherProcessOptions(
+                    settings.Executable, settings.AccountName, settings.SessionTicket, settings.ServerListUri);
 
-                var opts = new LauncherProcessOptions(executable.FullName, account, ticket, url);
+                if (settings.ServerId is not 0 and var id)
+                    opts = opts.WithLastServerId(id);
 
-                if (serverId != 0)
-                    opts = opts.WithLastServerId(serverId);
+                var process = new LauncherProcess(opts);
 
-                context.ExitCode = await new LauncherProcess(opts).RunAsync(cancellationToken);
-            },
-            executableArg,
-            accountArg,
-            ticketArg,
-            urlArg,
-            serverIdOpt);
+                process.ServerListUriRequested += increment;
+                process.AuthenticationInfoRequested += increment;
+                process.GameEventOccurred += e =>
+                {
+                    if (e == GameEvent.LoggedIn)
+                        increment();
+                };
+
+                return process.RunAsync(cancellationToken);
+            });
     }
 }

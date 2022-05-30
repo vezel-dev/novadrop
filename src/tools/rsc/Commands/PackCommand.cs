@@ -1,68 +1,76 @@
 namespace Vezel.Novadrop.Commands;
 
-sealed class PackCommand : Command
+[SuppressMessage("", "CA1812")]
+sealed class PackCommand : CancellableAsyncCommand<PackCommand.PackCommandSettings>
 {
-    public PackCommand()
-        : base("pack", "Pack the contents of a directory to a resource container file.")
+    public sealed class PackCommandSettings : CommandSettings
     {
-        var inputArg = new Argument<DirectoryInfo>(
-            "input",
-            "Input directory")
-            .ExistingOnly();
-        var outputArg = new Argument<FileInfo>(
-            "output",
-            "Output file")
-            .LegalFilePathsOnly();
-        var encryptionKeyOpt = new HexStringOption(
-            "--encryption-key",
-            ResourceContainer.LatestKey,
-            "Encryption key");
+        [CommandArgument(0, "<input>")]
+        [Description("Input directory")]
+        public string Input { get; }
 
-        Add(inputArg);
-        Add(outputArg);
-        Add(encryptionKeyOpt);
+        [CommandArgument(1, "<output>")]
+        [Description("Output file")]
+        public string Output { get; }
 
-        this.SetHandler(
-            async (
-                DirectoryInfo input,
-                FileInfo output,
-                ReadOnlyMemory<byte> encryptionKey,
-                CancellationToken cancellationToken) =>
+        [CommandOption("--encryption-key <key>")]
+        [Description("Set encryption key")]
+        [TypeConverter(typeof(HexStringConverter))]
+        public ReadOnlyMemory<byte> EncryptionKey { get; init; } = ResourceContainer.LatestKey;
+
+        public PackCommandSettings(string input, string output)
+        {
+            Input = input;
+            Output = output;
+        }
+    }
+
+    protected override async Task<int> ExecuteAsync(
+        dynamic expando, PackCommandSettings settings, ProgressContext progress, CancellationToken cancellationToken)
+    {
+        Log.WriteLine($"Packing [cyan]{settings.Input}[/] to [cyan]{settings.Output}[/]...");
+
+        var files = await progress.RunTaskAsync(
+            "Gather resource files",
+            () => Task.FromResult(
+                new DirectoryInfo(settings.Input)
+                    .EnumerateFiles()
+                    .OrderBy(f => f.FullName, StringComparer.Ordinal)
+                    .ToArray()));
+
+        var rc = ResourceContainer.Create();
+
+        await progress.RunTaskAsync(
+            "Load resource files",
+            files.Length,
+            increment => Parallel.ForEachAsync(
+                files,
+                cancellationToken,
+                async (file, cancellationToken) =>
+                {
+                    ResourceContainerEntry entry;
+
+                    lock (rc)
+                        entry = rc.CreateEntry(file.Name);
+
+                    entry.Data = await File.ReadAllBytesAsync(file.FullName, cancellationToken);
+
+                    increment();
+                }));
+
+        await progress.RunTaskAsync(
+            "Save resource container",
+            async () =>
             {
-                Console.WriteLine($"Packing '{input}' to '{output}'...");
-
-                var sw = Stopwatch.StartNew();
-
-                var rc = ResourceContainer.Create();
-                var files = input.GetFiles();
-
-                await Parallel.ForEachAsync(
-                    files,
-                    cancellationToken,
-                    async (file, cancellationToken) =>
-                    {
-                        ResourceContainerEntry entry;
-
-                        lock (rc)
-                            entry = rc.CreateEntry(file.Name);
-
-                        entry.Data = await File.ReadAllBytesAsync(file.FullName, cancellationToken);
-                    });
-
-                await using var stream = File.Open(output.FullName, FileMode.Create, FileAccess.Write);
+                await using var stream = File.Open(settings.Output, FileMode.Create, FileAccess.Write);
 
                 await rc.SaveAsync(
                     stream,
                     new ResourceContainerSaveOptions()
-                        .WithKey(encryptionKey.Span),
+                        .WithKey(settings.EncryptionKey.Span),
                     cancellationToken);
+            });
 
-                sw.Stop();
-
-                Console.WriteLine($"Packed {files.Length} entries in {sw.Elapsed}.");
-            },
-            inputArg,
-            outputArg,
-            encryptionKeyOpt);
+        return 0;
     }
 }

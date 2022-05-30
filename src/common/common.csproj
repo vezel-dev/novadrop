@@ -15,6 +15,7 @@ This package provides common functionality used by all Novadrop packages.</Packa
         <InternalsVisibleTo Include="novadrop-rsc" />
         <InternalsVisibleTo Include="novadrop-run" />
         <InternalsVisibleTo Include="novadrop-scan" />
+        <InternalsVisibleTo Include="Vezel.Novadrop.Cli" />
         <InternalsVisibleTo Include="Vezel.Novadrop.Client" />
         <InternalsVisibleTo Include="Vezel.Novadrop.Formats" />
         <InternalsVisibleTo Include="Vezel.Novadrop.Net" />

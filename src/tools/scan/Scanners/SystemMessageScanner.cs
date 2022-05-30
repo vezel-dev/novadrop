@@ -12,23 +12,21 @@ sealed class SystemMessageScanner : IScanner
         0x48, 0x8d, 0x0d, null, null, null, null, // lea rcx, [rip + <disp>]
     };
 
-    public async Task RunAsync(ScanContext context)
+    public async Task<bool> RunAsync(ScanContext context, CancellationToken cancellationToken)
     {
         var process = context.Process;
         var exe = process.MainModule;
 
-        Console.WriteLine("Searching for system message name function...");
-
-        var offsets = (await exe.SearchAsync(_pattern)).ToArray();
+        var offsets = (await exe.SearchAsync(_pattern, cancellationToken)).ToArray();
 
         if (offsets.Length != 1)
-            throw new ApplicationException("Could not find system message name function.");
+            return false;
 
         var off = offsets[0];
         var count = exe.Read<uint>(off + 6);
 
         if (count < 4000)
-            throw new ApplicationException("Could not read system message count.");
+            return false;
 
         var dispOff = off + 18;
 
@@ -36,24 +34,24 @@ sealed class SystemMessageScanner : IScanner
         var tableAddr = exe.ToAddress(dispOff + sizeof(uint)) + exe.Read<uint>(dispOff);
 
         if (!exe.TryGetOffset(tableAddr, out var tableOff))
-            throw new ApplicationException("Could not find system message table.");
+            return false;
 
         var messages = new Dictionary<string, uint>((int)count);
 
         for (var i = 0u; i < count; i++)
         {
             if (!exe.TryRead<nuint>(tableOff + (uint)Unsafe.SizeOf<nuint>() * i, out var strAddr))
-                throw new ApplicationException("Could not index system message table.");
+                return false;
 
             if (!exe.TryGetOffset((NativeAddress)strAddr, out var strOff))
-                throw new ApplicationException("Could not find system message name.");
+                return false;
 
             var sb = new StringBuilder(128);
 
             for (var j = 0u; ; j++)
             {
                 if (!exe.TryRead<char>(strOff + sizeof(char) * j, out var ch))
-                    throw new ApplicationException("Could not read system message name.");
+                    return false;
 
                 if (ch == '\0')
                     break;
@@ -64,10 +62,11 @@ sealed class SystemMessageScanner : IScanner
             messages.Add(sb.ToString(), i);
         }
 
-        Console.WriteLine($"Found system messages: {count}");
-
         await File.WriteAllLinesAsync(
             Path.Combine(context.Output.FullName, "SystemMessages.txt"),
-            messages.OrderBy(x => x.Key).Select(x => $"{x.Key} = {x.Value}"));
+            messages.OrderBy(x => x.Key).Select(x => $"{x.Key} = {x.Value}"),
+            cancellationToken);
+
+        return true;
     }
 }

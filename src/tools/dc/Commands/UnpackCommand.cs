@@ -1,93 +1,116 @@
 namespace Vezel.Novadrop.Commands;
 
-sealed class UnpackCommand : Command
+[SuppressMessage("", "CA1812")]
+sealed class UnpackCommand : CancellableAsyncCommand<UnpackCommand.UnpackCommandSettings>
 {
-    public UnpackCommand()
-        : base("unpack", "Unpack the contents of a data center file to a directory.")
+    public sealed class UnpackCommandSettings : CommandSettings
     {
-        var inputArg = new Argument<FileInfo>(
-            "input",
-            "Input file")
-            .ExistingOnly();
-        var outputArg = new Argument<DirectoryInfo>(
-            "output",
-            "Output directory")
-            .LegalFilePathsOnly();
-        var decryptionKeyOpt = new HexStringOption(
-            "--decryption-key",
-            DataCenter.LatestKey,
-            "Decryption key");
-        var decryptionIVOpt = new HexStringOption(
-            "--decryption-iv",
-            DataCenter.LatestIV,
-            "Decryption IV");
-        var strictOpt = new Option<bool>(
-            "--strict",
-            () => false,
-            "Enable strict verification");
+        [CommandArgument(0, "<input>")]
+        [Description("Input file")]
+        public string Input { get; }
 
-        Add(inputArg);
-        Add(outputArg);
-        Add(decryptionKeyOpt);
-        Add(decryptionIVOpt);
-        Add(strictOpt);
+        [CommandArgument(1, "<output>")]
+        [Description("Output directory")]
+        public string Output { get; }
 
-        this.SetHandler(
-            async (
-                FileInfo input,
-                DirectoryInfo output,
-                ReadOnlyMemory<byte> decryptionKey,
-                ReadOnlyMemory<byte> decryptionIV,
-                bool strict,
-                CancellationToken cancellationToken) =>
+        [CommandOption("--decryption-key <key>")]
+        [Description("Set decryption key")]
+        [TypeConverter(typeof(HexStringConverter))]
+        public ReadOnlyMemory<byte> DecryptionKey { get; init; } = DataCenter.LatestKey;
+
+        [CommandOption("--decryption-iv <iv>")]
+        [Description("Set decryption IV")]
+        [TypeConverter(typeof(HexStringConverter))]
+        public ReadOnlyMemory<byte> DecryptionIV { get; init; } = DataCenter.LatestIV;
+
+        [CommandOption("--strict")]
+        [Description("Enable strict verification")]
+        public bool Strict { get; init; }
+
+        public UnpackCommandSettings(string input, string output)
+        {
+            Input = input;
+            Output = output;
+        }
+    }
+
+    protected override Task PreExecuteAsync(
+        dynamic expando, UnpackCommandSettings settings, CancellationToken cancellationToken)
+    {
+        expando.Missing = new List<string>();
+
+        return Task.CompletedTask;
+    }
+
+    protected override async Task<int> ExecuteAsync(
+        dynamic expando, UnpackCommandSettings settings, ProgressContext progress, CancellationToken cancellationToken)
+    {
+        Log.WriteLine($"Unpacking [cyan]{settings.Input}[/] to [cyan]{settings.Output}[/]...");
+
+        var dc = await progress.RunTaskAsync(
+            "Load data center",
+            async () =>
             {
-                Console.WriteLine($"Unpacking '{input}' to '{output}'...");
+                await using var inStream = File.OpenRead(settings.Input);
 
-                var sw = Stopwatch.StartNew();
-
-                await using var stream = input.OpenRead();
-
-                var dc = await DataCenter.LoadAsync(
-                    stream,
+                return await DataCenter.LoadAsync(
+                    inStream,
                     new DataCenterLoadOptions()
-                        .WithKey(decryptionKey.Span)
-                        .WithIV(decryptionIV.Span)
-                        .WithStrict(strict),
+                        .WithKey(settings.DecryptionKey.Span)
+                        .WithIV(settings.DecryptionIV.Span)
+                        .WithStrict(settings.Strict),
                     cancellationToken);
+            });
 
+        var output = new DirectoryInfo(settings.Output);
+        var sheets = dc.Root.Children;
+        var sheetNames = sheets.Select(n => n.Name).Distinct().ToArray();
+        var missing = (List<string>)expando.Missing;
+
+        await progress.RunTaskAsync(
+            "Write data sheet schemas",
+            sheetNames.Length + 1,
+            async increment =>
+            {
                 output.Create();
 
                 async ValueTask WriteSchemaAsync(DirectoryInfo directory, string name)
                 {
-                    await using var inXsd = Assembly.GetExecutingAssembly().GetManifestResourceStream(name);
+                    var xsdName = $"{name}.xsd";
+
+                    await using var inXsd = Assembly.GetExecutingAssembly().GetManifestResourceStream(xsdName);
 
                     // Is this not a data sheet we recognize?
                     if (inXsd == null)
                     {
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine($"Data sheet '{directory.Name}' does not have a known schema.");
-                        Console.ResetColor();
+                        missing.Add(name);
 
                         return;
                     }
 
                     await using var outXsd = File.Open(
-                        Path.Combine(directory.FullName, name), FileMode.Create, FileAccess.Write);
+                        Path.Combine(directory.FullName, xsdName), FileMode.Create, FileAccess.Write);
 
                     await inXsd.CopyToAsync(outXsd, cancellationToken);
+
+                    increment();
                 }
 
-                await WriteSchemaAsync(output, "DataCenter.xsd");
-
-                var sheets = dc.Root.Children;
-
                 await Parallel.ForEachAsync(
-                    sheets.Select(n => n.Name).Distinct(),
+                    sheetNames,
                     cancellationToken,
                     async (name, cancellationToken) =>
-                        await WriteSchemaAsync(output.CreateSubdirectory(name), $"{name}.xsd"));
+                        await WriteSchemaAsync(output.CreateSubdirectory(name), name));
 
-                var settings = new XmlWriterSettings
+                await WriteSchemaAsync(output, "DataCenter");
+            });
+
+        await progress.RunTaskAsync(
+            "Write data sheets",
+            sheets.Count,
+            increment =>
+            {
+                var xmlSettings = new XmlWriterSettings
                 {
                     OmitXmlDeclaration = true,
                     Indent = true,
@@ -96,7 +119,7 @@ sealed class UnpackCommand : Command
                     Async = true,
                 };
 
-                await Parallel.ForEachAsync(
+                return Parallel.ForEachAsync(
                     sheets
                         .GroupBy(n => n.Name, (name, elems) => elems.Select((n, i) => (Node: n, Index: i)))
                         .SelectMany(elems => elems),
@@ -108,7 +131,7 @@ sealed class UnpackCommand : Command
                         await using var textWriter = new StreamWriter(Path.Combine(
                             output.CreateSubdirectory(node.Name).FullName, $"{node.Name}-{item.Index:d5}.xml"));
 
-                        await using (var xmlWriter = XmlWriter.Create(textWriter, settings))
+                        await using (var xmlWriter = XmlWriter.Create(textWriter, xmlSettings))
                         {
                             async ValueTask WriteSheetAsync(DataCenterNode current, bool top)
                             {
@@ -146,16 +169,20 @@ sealed class UnpackCommand : Command
                         }
 
                         await textWriter.WriteLineAsync();
+
+                        increment();
                     });
+            });
 
-                sw.Stop();
+        return 0;
+    }
 
-                Console.WriteLine($"Unpacked {sheets.Count} data sheets in {sw.Elapsed}.");
-            },
-            inputArg,
-            outputArg,
-            decryptionKeyOpt,
-            decryptionIVOpt,
-            strictOpt);
+    protected override Task PostExecuteAsync(
+        dynamic expando, UnpackCommandSettings settings, CancellationToken cancellationToken)
+    {
+        foreach (var name in (List<string>)expando.Missing)
+            Log.WriteLine($"[yellow]Data sheet [cyan]{name}[/] does not have a known schema.[/]");
+
+        return Task.CompletedTask;
     }
 }

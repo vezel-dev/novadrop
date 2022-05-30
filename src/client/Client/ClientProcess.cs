@@ -8,7 +8,7 @@ public sealed class ClientProcess : GameProcess
 
     public event Action? AccountNameRequested;
 
-    public event Action? TicketRequested;
+    public event Action? SessionTicketRequested;
 
     public event Action? LobbyEntered;
 
@@ -54,11 +54,11 @@ public sealed class ClientProcess : GameProcess
             return (0x2, Encoding.Unicode.GetBytes(opts.AccountName));
         }
 
-        (nuint, ReadOnlyMemory<byte>) HandleTicketRequest()
+        (nuint, ReadOnlyMemory<byte>) HandleSessionTicketRequest()
         {
-            TicketRequested?.Invoke();
+            SessionTicketRequested?.Invoke();
 
-            return (0x4, Encoding.UTF8.GetBytes(opts.Ticket));
+            return (0x4, Encoding.UTF8.GetBytes(opts.SessionTicket));
         }
 
         (nuint, ReadOnlyMemory<byte>) HandleServerListRequest()
@@ -129,7 +129,7 @@ public sealed class ClientProcess : GameProcess
         return id switch
         {
             0x1 => HandleAccountNameRequest(),
-            0x3 => HandleTicketRequest(),
+            0x3 => HandleSessionTicketRequest(),
             0x5 => HandleServerListRequest(),
             0x7 => HandleEnterLobbyOrWorld(payload),
             0x8 => null,

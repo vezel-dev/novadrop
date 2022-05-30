@@ -11,16 +11,14 @@ sealed class ClientVersionScanner : IScanner
         0x8b, 0x05, null, null, null, null, // mov eax, dword ptr [rip + <disp>]
     };
 
-    public async Task RunAsync(ScanContext context)
+    public async Task<bool> RunAsync(ScanContext context, CancellationToken cancellationToken)
     {
         var exe = context.Process.MainModule;
 
-        Console.WriteLine("Searching for client version reporting function...");
-
-        var offsets = (await exe.SearchAsync(_pattern)).ToArray();
+        var offsets = (await exe.SearchAsync(_pattern, cancellationToken)).ToArray();
 
         if (offsets.Length != 1)
-            throw new ApplicationException("Could not find client version reporting function.");
+            return false;
 
         var off = offsets[0];
         var vers = new uint[] { 2, 22 }.Select(idx =>
@@ -38,14 +36,13 @@ sealed class ClientVersionScanner : IScanner
         });
 
         if (vers.Any(v => v == 0))
-            throw new ApplicationException("Could not read client version values.");
-
-        // The first is game message table version, the second is system message table version.
-        foreach (var ver in vers)
-            Console.WriteLine($"Found client version: {ver}");
+            return false;
 
         await File.WriteAllLinesAsync(
             Path.Combine(context.Output.FullName, "ClientVersions.txt"),
-            vers.Select(v => v.ToString(CultureInfo.InvariantCulture)));
+            vers.Select(v => v.ToString(CultureInfo.InvariantCulture)),
+            cancellationToken);
+
+        return true;
     }
 }

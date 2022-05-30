@@ -6,12 +6,22 @@ static class Program
 {
     static Task<int> Main(string[] args)
     {
-        var root = new RootCommand("Run the TERA launcher or client from the command line.")
-        {
-            new ClientCommand(),
-            new LauncherCommand(),
-        };
+        var app = new CommandApp();
 
-        return root.InvokeAsync(args);
+        app.Configure(cfg =>
+        {
+            _ = cfg
+                .SetApplicationName("novadrop-run")
+                .PropagateExceptions();
+
+            _ = cfg
+                .AddCommand<ClientCommand>("client")
+                .WithDescription("Run the TERA client.");
+            _ = cfg
+                .AddCommand<LauncherCommand>("launcher")
+                .WithDescription("Run the TERA launcher.");
+        });
+
+        return app.RunAsync(args);
     }
 }

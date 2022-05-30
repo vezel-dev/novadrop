@@ -1,54 +1,61 @@
 namespace Vezel.Novadrop.Commands;
 
-sealed class UnpackCommand : Command
+[SuppressMessage("", "CA1812")]
+sealed class UnpackCommand : CancellableAsyncCommand<UnpackCommand.UnpackCommandSettings>
 {
-    public UnpackCommand()
-        : base("unpack", "Unpack the contents of a resource container file to a directory.")
+    public sealed class UnpackCommandSettings : CommandSettings
     {
-        var inputArg = new Argument<FileInfo>(
-            "input",
-            "Input file")
-            .ExistingOnly();
-        var outputArg = new Argument<DirectoryInfo>(
-            "output",
-            "Output directory")
-            .LegalFilePathsOnly();
-        var decryptionKeyOpt = new HexStringOption(
-            "--decryption-key",
-            ResourceContainer.LatestKey,
-            "Decryption key");
-        var strictOpt = new Option<bool>(
-            "--strict",
-            () => false,
-            "Enable strict verification");
+        [CommandArgument(0, "<input>")]
+        [Description("Input file")]
+        public string Input { get; }
 
-        Add(inputArg);
-        Add(outputArg);
-        Add(decryptionKeyOpt);
-        Add(strictOpt);
+        [CommandArgument(1, "<output>")]
+        [Description("Output directory")]
+        public string Output { get; }
 
-        this.SetHandler(
-            async (
-                FileInfo input,
-                DirectoryInfo output,
-                ReadOnlyMemory<byte> decryptionKey,
-                bool strict,
-                CancellationToken cancellationToken) =>
+        [CommandOption("--decryption-key <key>")]
+        [Description("Set decryption key")]
+        [TypeConverter(typeof(HexStringConverter))]
+        public ReadOnlyMemory<byte> DecryptionKey { get; init; } = ResourceContainer.LatestKey;
+
+        [CommandOption("--strict")]
+        [Description("Enable strict verification")]
+        public bool Strict { get; init; }
+
+        public UnpackCommandSettings(string input, string output)
+        {
+            Input = input;
+            Output = output;
+        }
+    }
+
+    protected override async Task<int> ExecuteAsync(
+        dynamic expando, UnpackCommandSettings settings, ProgressContext progress, CancellationToken cancellationToken)
+    {
+        Log.WriteLine($"Unpacking [cyan]{settings.Input}[/] to [cyan]{settings.Output}[/]...");
+
+        var rc = await progress.RunTaskAsync(
+            "Load resource container",
+            async () =>
             {
-                Console.WriteLine($"Unpacking '{input}' to '{output}'...");
+                await using var inStream = File.OpenRead(settings.Input);
 
-                var sw = Stopwatch.StartNew();
-
-                await using var stream = input.OpenRead();
-
-                var rc = await ResourceContainer.LoadAsync(
-                    stream,
+                return await ResourceContainer.LoadAsync(
+                    inStream,
                     new ResourceContainerLoadOptions()
-                        .WithKey(decryptionKey.Span)
-                        .WithStrict(strict),
+                        .WithKey(settings.DecryptionKey.Span)
+                        .WithStrict(settings.Strict),
                     cancellationToken);
+            });
 
-                output.Create();
+        var entries = rc.Entries;
+
+        await progress.RunTaskAsync(
+            "Write resource files",
+            entries.Count,
+            async increment =>
+            {
+                _ = Directory.CreateDirectory(settings.Output);
 
                 await Parallel.ForEachAsync(
                     rc.Entries,
@@ -56,18 +63,14 @@ sealed class UnpackCommand : Command
                     async (kvp, cancellationToken) =>
                     {
                         await using var stream = File.Open(
-                            Path.Combine(output.FullName, kvp.Key), FileMode.Create, FileAccess.Write);
+                            Path.Combine(settings.Output, kvp.Key), FileMode.Create, FileAccess.Write);
 
                         await stream.WriteAsync(kvp.Value.Data, cancellationToken);
+
+                        increment();
                     });
+            });
 
-                sw.Stop();
-
-                Console.WriteLine($"Unpacked {rc.Entries.Count} entries in {sw.Elapsed}.");
-            },
-            inputArg,
-            outputArg,
-            decryptionKeyOpt,
-            strictOpt);
+        return 0;
     }
 }
