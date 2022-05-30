@@ -56,8 +56,7 @@ sealed class PackCommand : CancellableAsyncCommand<PackCommand.PackCommandSettin
                     .Select((f, i) => (Index: i, File: f))
                     .ToArray()));
 
-        var dc = DataCenter.Create();
-        var root = dc.Root;
+        var root = DataCenter.Create();
         var xsi = (XNamespace)"http://www.w3.org/2001/XMLSchema-instance";
         var handler = (DataSheetValidationHandler)expando.Handler;
 
@@ -245,7 +244,8 @@ sealed class PackCommand : CancellableAsyncCommand<PackCommand.PackCommandSettin
             {
                 await using var stream = File.Open(settings.Output, FileMode.Create, FileAccess.Write);
 
-                await dc.SaveAsync(
+                await DataCenter.SaveAsync(
+                    root,
                     stream,
                     new DataCenterSaveOptions()
                         .WithCompressionLevel(settings.Compression)

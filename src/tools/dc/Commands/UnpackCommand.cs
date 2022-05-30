@@ -47,7 +47,7 @@ sealed class UnpackCommand : CancellableAsyncCommand<UnpackCommand.UnpackCommand
     {
         Log.WriteLine($"Unpacking [cyan]{settings.Input}[/] to [cyan]{settings.Output}[/]...");
 
-        var dc = await progress.RunTaskAsync(
+        var root = await progress.RunTaskAsync(
             "Load data center",
             async () =>
             {
@@ -63,7 +63,7 @@ sealed class UnpackCommand : CancellableAsyncCommand<UnpackCommand.UnpackCommand
             });
 
         var output = new DirectoryInfo(settings.Output);
-        var sheets = dc.Root.Children;
+        var sheets = root.Children;
         var sheetNames = sheets.Select(n => n.Name).Distinct().ToArray();
         var missing = (List<string>)expando.Missing;
 

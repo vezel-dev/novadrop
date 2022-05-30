@@ -16,7 +16,7 @@ sealed class TransientDataCenterNode : ImmutableDataCenterNode
     readonly Func<IReadOnlyList<DataCenterNode>> _getChildren;
 
     public TransientDataCenterNode(
-        object parent,
+        DataCenterNode? parent,
         string name,
         string? value,
         DataCenterKeys keys,

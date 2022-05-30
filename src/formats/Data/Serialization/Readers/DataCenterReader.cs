@@ -32,14 +32,14 @@ abstract class DataCenterReader
     protected abstract DataCenterNode AllocateNode(
         DataCenterAddress address,
         DataCenterRawNode raw,
-        object parent,
+        DataCenterNode? parent,
         string name,
         string? value,
         DataCenterKeys keys,
         CancellationToken cancellationToken);
 
     protected abstract DataCenterNode? ResolveNode(
-        DataCenterAddress address, object parent, CancellationToken cancellationToken);
+        DataCenterAddress address, DataCenterNode? parent, CancellationToken cancellationToken);
 
     protected void ReadAttributes<T>(DataCenterRawNode raw, T state, Action<T, string, DataCenterValue> action)
     {
@@ -60,7 +60,7 @@ abstract class DataCenterReader
 
     protected void ReadChildren<T>(
         DataCenterRawNode raw,
-        object parent,
+        DataCenterNode? parent,
         T state,
         Action<T, DataCenterNode> action,
         CancellationToken cancellationToken)
@@ -141,7 +141,8 @@ abstract class DataCenterReader
         return (_names.GetString(rawAttr.NameIndex - 1), result);
     }
 
-    protected DataCenterNode? CreateNode(DataCenterAddress address, object parent, CancellationToken cancellationToken)
+    protected DataCenterNode? CreateNode(
+        DataCenterAddress address, DataCenterNode? parent, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -165,7 +166,7 @@ abstract class DataCenterReader
         {
             if (name == DataCenterConstants.RootNodeName)
             {
-                if (parent is not DataCenter)
+                if (parent != null)
                     throw new InvalidDataException($"Node name '{name}' is only valid for the root node.");
 
                 if (attrCount != 0)
@@ -210,7 +211,7 @@ abstract class DataCenterReader
             address, raw, parent, name, value, _keys.GetKeys((keysInfo & 0b1111111111110000) >> 4), cancellationToken);
     }
 
-    public Task<DataCenterNode> ReadAsync(Stream stream, DataCenter center, CancellationToken cancellationToken)
+    public Task<DataCenterNode> ReadAsync(Stream stream, CancellationToken cancellationToken)
     {
         return Task.Run(
             async () =>
@@ -247,7 +248,7 @@ abstract class DataCenterReader
                     }
                 }
 
-                var root = CreateNode(DataCenterAddress.MinValue, center, cancellationToken);
+                var root = CreateNode(DataCenterAddress.MinValue, null, cancellationToken);
 
                 return root switch
                 {

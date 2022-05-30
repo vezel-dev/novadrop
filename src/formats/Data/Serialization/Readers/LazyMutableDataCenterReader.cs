@@ -13,7 +13,7 @@ sealed class LazyMutableDataCenterReader : DataCenterReader
     protected override LazyMutableDataCenterNode AllocateNode(
         DataCenterAddress address,
         DataCenterRawNode raw,
-        object parent,
+        DataCenterNode? parent,
         string name,
         string? value,
         DataCenterKeys keys,
@@ -50,7 +50,7 @@ sealed class LazyMutableDataCenterReader : DataCenterReader
     }
 
     protected override LazyImmutableDataCenterNode? ResolveNode(
-        DataCenterAddress address, object parent, CancellationToken cancellationToken)
+        DataCenterAddress address, DataCenterNode? parent, CancellationToken cancellationToken)
     {
         return Unsafe.As<LazyImmutableDataCenterNode>(CreateNode(address, parent, default));
     }

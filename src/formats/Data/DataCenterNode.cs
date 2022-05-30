@@ -3,9 +3,7 @@ namespace Vezel.Novadrop.Data;
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
 public abstract class DataCenterNode
 {
-    public DataCenter Owner => _parent is DataCenter dc ? dc : Unsafe.As<DataCenterNode>(_parent).Owner;
-
-    public DataCenterNode? Parent => _parent is not DataCenter ? Unsafe.As<DataCenterNode>(_parent) : null;
+    public DataCenterNode? Parent { get; }
 
     public string Name { get; }
 
@@ -42,15 +40,13 @@ public abstract class DataCenterNode
         set => SetAttribute(name, value);
     }
 
-    readonly object _parent;
-
     string? _value;
 
     DataCenterKeys _keys;
 
-    private protected DataCenterNode(object parent, string name, string? value, DataCenterKeys keys)
+    private protected DataCenterNode(DataCenterNode? parent, string name, string? value, DataCenterKeys keys)
     {
-        _parent = parent;
+        Parent = parent;
         Name = name;
         _value = value;
         _keys = keys;

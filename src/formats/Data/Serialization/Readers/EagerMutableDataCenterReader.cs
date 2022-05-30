@@ -13,7 +13,7 @@ sealed class EagerMutableDataCenterReader : DataCenterReader
     protected override EagerMutableDataCenterNode AllocateNode(
         DataCenterAddress address,
         DataCenterRawNode raw,
-        object parent,
+        DataCenterNode? parent,
         string name,
         string? value,
         DataCenterKeys keys,
@@ -37,7 +37,7 @@ sealed class EagerMutableDataCenterReader : DataCenterReader
     }
 
     protected override EagerMutableDataCenterNode? ResolveNode(
-        DataCenterAddress address, object parent, CancellationToken cancellationToken)
+        DataCenterAddress address, DataCenterNode? parent, CancellationToken cancellationToken)
     {
         return Unsafe.As<EagerMutableDataCenterNode>(CreateNode(address, parent, cancellationToken));
     }

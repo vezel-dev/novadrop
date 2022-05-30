@@ -12,7 +12,7 @@ sealed class LazyImmutableDataCenterNode : ImmutableDataCenterNode
     readonly Lazy<IReadOnlyList<DataCenterNode>>? _children;
 
     public LazyImmutableDataCenterNode(
-        object parent,
+        DataCenterNode? parent,
         string name,
         string? value,
         DataCenterKeys keys,

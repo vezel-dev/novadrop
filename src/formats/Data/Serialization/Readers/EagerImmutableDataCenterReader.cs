@@ -19,7 +19,7 @@ sealed class EagerImmutableDataCenterReader : DataCenterReader
     protected override EagerImmutableDataCenterNode AllocateNode(
         DataCenterAddress address,
         DataCenterRawNode raw,
-        object parent,
+        DataCenterNode? parent,
         string name,
         string? value,
         DataCenterKeys keys,
@@ -58,7 +58,7 @@ sealed class EagerImmutableDataCenterReader : DataCenterReader
     }
 
     protected override EagerImmutableDataCenterNode? ResolveNode(
-        DataCenterAddress address, object parent, CancellationToken cancellationToken)
+        DataCenterAddress address, DataCenterNode? parent, CancellationToken cancellationToken)
     {
         return _cache.GetValueOrDefault(address) ??
             Unsafe.As<EagerImmutableDataCenterNode>(CreateNode(address, parent, cancellationToken));

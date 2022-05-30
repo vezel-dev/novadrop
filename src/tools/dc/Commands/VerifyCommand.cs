@@ -58,7 +58,7 @@ sealed class VerifyCommand : CancellableAsyncCommand<VerifyCommand.VerifyCommand
                 expando.SHA512 = ComputeHash(sha512);
             });
 
-        var dc = await progress.RunTaskAsync(
+        var root = await progress.RunTaskAsync(
             "Load data center",
             async () =>
             {
@@ -92,7 +92,7 @@ sealed class VerifyCommand : CancellableAsyncCommand<VerifyCommand.VerifyCommand
                             ForceLoad(child);
                 }
 
-                ForceLoad(dc.Root);
+                ForceLoad(root);
 
                 expando.Nodes = nodes;
                 expando.Attributes = attrs;

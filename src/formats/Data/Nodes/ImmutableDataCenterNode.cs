@@ -17,7 +17,7 @@ abstract class ImmutableDataCenterNode : DataCenterNode
 
     public override sealed bool IsImmutable => true;
 
-    public ImmutableDataCenterNode(object parent, string name, string? value, DataCenterKeys keys)
+    public ImmutableDataCenterNode(DataCenterNode? parent, string name, string? value, DataCenterKeys keys)
         : base(parent, name, value, keys)
     {
     }

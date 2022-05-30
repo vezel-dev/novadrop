@@ -53,7 +53,7 @@ sealed class RepackCommand : CancellableAsyncCommand<RepackCommand.RepackCommand
     {
         Log.WriteLine($"Repacking [cyan]{settings.Input}[/] to [cyan]{settings.Output}[/]...");
 
-        var dc = await progress.RunTaskAsync(
+        var root = await progress.RunTaskAsync(
             "Load data center",
             async () =>
             {
@@ -76,7 +76,8 @@ sealed class RepackCommand : CancellableAsyncCommand<RepackCommand.RepackCommand
             {
                 await using var stream = File.Open(settings.Output, FileMode.Create, FileAccess.Write);
 
-                await dc.SaveAsync(
+                await DataCenter.SaveAsync(
+                    root,
                     stream,
                     new DataCenterSaveOptions()
                         .WithCompressionLevel(settings.Compression)

@@ -4,7 +4,7 @@ using Vezel.Novadrop.Data.Serialization.Readers;
 
 namespace Vezel.Novadrop.Data;
 
-public sealed class DataCenter
+public static class DataCenter
 {
     public static ReadOnlyMemory<byte> LatestKey { get; } = new byte[]
     {
@@ -20,12 +20,6 @@ public sealed class DataCenter
 
     public static int LatestClientVersion => 387463;
 
-    public DataCenterNode Root { get; private set; } = null!;
-
-    DataCenter()
-    {
-    }
-
     [SuppressMessage("", "CA5358")]
     internal static Aes CreateCipher(ReadOnlyMemory<byte> key, ReadOnlyMemory<byte> iv)
     {
@@ -40,16 +34,12 @@ public sealed class DataCenter
         return aes;
     }
 
-    public static DataCenter Create()
+    public static DataCenterNode Create()
     {
-        var dc = new DataCenter();
-
-        dc.Root = new UserDataCenterNode(dc, DataCenterConstants.RootNodeName);
-
-        return dc;
+        return new UserDataCenterNode(null, DataCenterConstants.RootNodeName);
     }
 
-    public static async Task<DataCenter> LoadAsync(
+    public static Task<DataCenterNode> LoadAsync(
         Stream stream, DataCenterLoadOptions options, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(stream);
@@ -67,19 +57,20 @@ public sealed class DataCenter
             _ => throw new ArgumentException(null, nameof(options)),
         };
 
-        var dc = new DataCenter();
-
-        dc.Root = await reader.ReadAsync(stream, dc, cancellationToken).ConfigureAwait(false);
-
-        return dc;
+        return reader.ReadAsync(stream, cancellationToken);
     }
 
-    public Task SaveAsync(Stream stream, DataCenterSaveOptions options, CancellationToken cancellationToken = default)
+    public static Task SaveAsync(
+        DataCenterNode root,
+        Stream stream,
+        DataCenterSaveOptions options,
+        CancellationToken cancellationToken = default)
     {
+        ArgumentNullException.ThrowIfNull(root);
         ArgumentNullException.ThrowIfNull(stream);
         _ = stream.CanWrite ? true : throw new ArgumentException(null, nameof(stream));
         ArgumentNullException.ThrowIfNull(options);
 
-        return new DataCenterWriter(options).WriteAsync(stream, this, cancellationToken);
+        return new DataCenterWriter(options).WriteAsync(stream, root, cancellationToken);
     }
 }

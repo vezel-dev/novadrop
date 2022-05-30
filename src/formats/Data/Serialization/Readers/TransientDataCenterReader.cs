@@ -17,7 +17,7 @@ sealed class TransientDataCenterReader : DataCenterReader
     protected override DataCenterNode AllocateNode(
         DataCenterAddress address,
         DataCenterRawNode raw,
-        object parent,
+        DataCenterNode? parent,
         string name,
         string? value,
         DataCenterKeys keys,
@@ -67,7 +67,7 @@ sealed class TransientDataCenterReader : DataCenterReader
     }
 
     protected override DataCenterNode? ResolveNode(
-        DataCenterAddress address, object parent, CancellationToken cancellationToken)
+        DataCenterAddress address, DataCenterNode? parent, CancellationToken cancellationToken)
     {
         return CreateNode(address, parent, default);
     }

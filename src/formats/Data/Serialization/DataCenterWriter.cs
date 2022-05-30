@@ -223,12 +223,12 @@ sealed class DataCenterWriter
     }
 
     [SuppressMessage("", "CA5401")]
-    public Task WriteAsync(Stream stream, DataCenter center, CancellationToken cancellationToken)
+    public Task WriteAsync(Stream stream, DataCenterNode root, CancellationToken cancellationToken)
     {
         return Task.Run(
             async () =>
             {
-                ProcessTree(center.Root, cancellationToken);
+                ProcessTree(root, cancellationToken);
 
                 // Write the uncompressed data center into memory first so that we can write the uncompressed size
                 // before we write the zlib header. Sadness.

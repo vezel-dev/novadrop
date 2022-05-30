@@ -12,7 +12,7 @@ sealed class LazyMutableDataCenterNode : MutableDataCenterNode
     readonly Lazy<List<DataCenterNode>>? _children;
 
     public LazyMutableDataCenterNode(
-        object parent,
+        DataCenterNode? parent,
         string name,
         string? value,
         DataCenterKeys keys,
