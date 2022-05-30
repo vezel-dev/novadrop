@@ -30,6 +30,20 @@ abstract class MutableDataCenterNode : DataCenterNode
         return child;
     }
 
+    public override sealed DataCenterNode CreateChildAt(int index, string name)
+    {
+        ArgumentNullException.ThrowIfNull(name);
+        _ = name != DataCenterConstants.RootNodeName ? true : throw new ArgumentException(null, nameof(name));
+        _ = Children.Count != DataCenterAddress.MaxValue.ElementIndex + 1
+            ? true : throw new InvalidOperationException();
+
+        var child = new UserDataCenterNode(this, name);
+
+        Children.Insert(index, child);
+
+        return child;
+    }
+
     public override sealed bool RemoveChild(DataCenterNode node)
     {
         ArgumentNullException.ThrowIfNull(node);
@@ -38,9 +52,24 @@ abstract class MutableDataCenterNode : DataCenterNode
         return Children.Remove(node);
     }
 
+    public override sealed void RemoveChildAt(int index)
+    {
+        Children.RemoveAt(index);
+    }
+
+    public override sealed void RemoveChildRange(int index, int count)
+    {
+        Children.RemoveRange(index, count);
+    }
+
     public override sealed void ClearChildren()
     {
         Children.Clear();
+    }
+
+    public override void ReverseChildren(int index, int count)
+    {
+        Children.Reverse(index, count);
     }
 
     public override sealed void SortChildren(IComparer<DataCenterNode> comparer)

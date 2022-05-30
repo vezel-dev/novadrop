@@ -27,12 +27,32 @@ abstract class ImmutableDataCenterNode : DataCenterNode
         throw new NotSupportedException();
     }
 
+    public override sealed DataCenterNode CreateChildAt(int index, string name)
+    {
+        throw new NotSupportedException();
+    }
+
     public override sealed bool RemoveChild(DataCenterNode node)
     {
         throw new NotSupportedException();
     }
 
+    public override sealed void RemoveChildAt(int index)
+    {
+        throw new NotSupportedException();
+    }
+
+    public override sealed void RemoveChildRange(int index, int count)
+    {
+        throw new NotSupportedException();
+    }
+
     public override sealed void ClearChildren()
+    {
+        throw new NotSupportedException();
+    }
+
+    public override sealed void ReverseChildren(int index, int count)
     {
         throw new NotSupportedException();
     }

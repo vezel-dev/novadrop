@@ -58,9 +58,22 @@ public abstract class DataCenterNode
 
     public abstract DataCenterNode CreateChild(string name);
 
+    public abstract DataCenterNode CreateChildAt(int index, string name);
+
     public abstract bool RemoveChild(DataCenterNode node);
 
+    public abstract void RemoveChildAt(int index);
+
+    public abstract void RemoveChildRange(int index, int count);
+
     public abstract void ClearChildren();
+
+    public void ReverseChildren()
+    {
+        ReverseChildren(0, Children.Count);
+    }
+
+    public abstract void ReverseChildren(int index, int count);
 
     public abstract void SortChildren(IComparer<DataCenterNode> comparer);
 
