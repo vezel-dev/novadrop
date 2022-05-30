@@ -37,6 +37,11 @@ abstract class ImmutableDataCenterNode : DataCenterNode
         throw new NotSupportedException();
     }
 
+    public override sealed void SortChildren(IComparer<DataCenterNode> comparer)
+    {
+        throw new NotSupportedException();
+    }
+
     public override sealed void AddAttribute(string name, DataCenterValue value)
     {
         throw new NotSupportedException();

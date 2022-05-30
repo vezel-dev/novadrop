@@ -43,6 +43,13 @@ abstract class MutableDataCenterNode : DataCenterNode
         Children.Clear();
     }
 
+    public override sealed void SortChildren(IComparer<DataCenterNode> comparer)
+    {
+        ArgumentNullException.ThrowIfNull(comparer);
+
+        Children.Sort(comparer);
+    }
+
     public override sealed void AddAttribute(string name, DataCenterValue value)
     {
         _ = name != DataCenterConstants.ValueAttributeName ? true : throw new ArgumentException(null, nameof(name));

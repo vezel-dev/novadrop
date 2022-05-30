@@ -62,6 +62,8 @@ public abstract class DataCenterNode
 
     public abstract void ClearChildren();
 
+    public abstract void SortChildren(IComparer<DataCenterNode> comparer);
+
     public abstract void AddAttribute(string name, DataCenterValue value);
 
     public abstract void SetAttribute(string name, DataCenterValue value);
