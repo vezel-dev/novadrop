@@ -49,9 +49,9 @@ public sealed class LauncherProcess : GameProcess
             // csPopup(), endPopup(%d), gameEvent(%d), promoPopup(%d)
 
             if (_gameEvent.Match(value) is { Success: true } m1)
-                GameEventOccurred?.Invoke((GameEvent)int.Parse(m1.Captures[0].ValueSpan));
+                GameEventOccurred?.Invoke((GameEvent)int.Parse(m1.Groups[1].ValueSpan));
             else if (_endPopup.Match(value) is { Success: true } m2)
-                GameExited?.Invoke((int)uint.Parse(m2.Captures[0].ValueSpan));
+                GameExited?.Invoke((int)uint.Parse(m2.Groups[1].ValueSpan));
 
             return null;
         }
