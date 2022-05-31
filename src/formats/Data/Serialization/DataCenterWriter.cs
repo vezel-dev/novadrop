@@ -113,7 +113,7 @@ sealed class DataCenterWriter
 
             if (node.HasAttributes || node.Value != null)
             {
-                var attributes = new List<KeyValuePair<int, DataCenterValue>>();
+                var attributes = new List<(int Index, DataCenterValue Value)>();
 
                 void AddAttribute(string name, DataCenterValue value)
                 {
@@ -127,7 +127,7 @@ sealed class DataCenterWriter
                 if (node.Value != null)
                     AddAttribute(DataCenterConstants.ValueAttributeName, node.Value);
 
-                attributes.Sort((x, y) => x.Key.CompareTo(y.Key));
+                attributes.Sort((x, y) => x.Index.CompareTo(y.Index));
 
                 attrCount = attributes.Count;
                 attrAddr = AllocateRange(_attributes, attrCount, "Attribute");
