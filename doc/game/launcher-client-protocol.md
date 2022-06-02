@@ -41,14 +41,21 @@ authentication while the latter uses [Steam](https://store.steampowered.com).
 ### Game Event Notification
 
 `Tl.exe` will occasionally notify `launcher.exe` of various game events sent by
-`TERA.exe`. These message have the message ID `0x0`. The format of these
+`TERA.exe`. These messages have the message ID `0x0`. The format of these
 messages can be described with the following
 [regular expressions](https://en.wikipedia.org/wiki/Regular_expression):
 
-* `gameEvent\((\d+)\)`: Indicates some kind of notable action taken by the user
-  in the game. The value in parentheses is a code specifying the type of event.
-* `endPopup\((\d+)\)`: Indicates that the client has exited. The value in
-  parentheses is an exit reason code (not the same as the process exit code).
+* `^csPopup\(\)$`: Signals that `launcher.exe` should open the customer support
+  website (e.g. in the default Web browser).
+* `^gameEvent\((\d+)\)$`: Indicates some kind of notable action taken by the
+  user in the game. The value in parentheses is a code specifying the type of
+  event; the possible values are documented in the section on `TERA.exe`
+  messages.
+* `^endPopup\((\d+)\)$`: Indicates that the client has exited. The value in
+  parentheses is an exit reason code (not the same as the process exit code);
+  the possible values are documented in the section on `TERA.exe` messages.
+* `^promoPopup\(\d+\)$`: The exact purpose of this notification is currently
+  unknown.
 
 `launcher.exe` should *not* respond to these messages.
 
@@ -142,13 +149,13 @@ The response received from the server list URL should be in
 
     <xsd:simpleType name="serverlist_server_permission_mask">
         <xsd:restriction base="xsd:string">
-            <xsd:pattern value="0x[0-9A-Fa-f]{8}"/>
+            <xsd:pattern value="0x[0-9A-Fa-f]{8}" />
         </xsd:restriction>
     </xsd:simpleType>
 
     <xsd:simpleType name="serverlist_server_server_stat">
         <xsd:restriction base="xsd:string">
-            <xsd:pattern value="0x[0-9A-Fa-f]{8}"/>
+            <xsd:pattern value="0x[0-9A-Fa-f]{8}" />
         </xsd:restriction>
     </xsd:simpleType>
 
@@ -158,7 +165,23 @@ The response received from the server list URL should be in
 
 ### Authentication Info Request
 
-TODO: `gamestr`, `ticket`, `last_svr`, `char_cnt`
+`Tl.exe` will request [JSON](https://www.json.org)-encoded authentication data
+from `launcher.exe`. This message does not have a static message ID. The message
+contains one of several NUL-terminated strings.
+
+`gamestr` is only sent when the game is initially launched. This request asks
+for the full authentication data.
+
+`ticket`, `last_svr`, and `char_cnt` are only sent when returning to the server
+list from an arbiter server.
+
+* `ticket`: Requests the authentication ticket. This can be the same ticket as
+  before, but `launcher.exe` may also choose to authenticate anew and retrieve a
+  fresh ticket.
+* `last_svr`: Requests the ID of the last server the the account connected to.
+* `char_cnt`: Requests character counts for each server in the server list.
+
+`launcher.exe` should respond with the NUL-terminated JSON payload.
 
 #### Authentication Info Schema
 
@@ -166,12 +189,112 @@ The authentication JSON response can be described with the following
 [JSON Schema](https://json-schema.org) definition:
 
 ```json
-TODO
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vezel.dev/novadrop/tl/authentication.schema.json",
+  "title": "AuthenticationInfo",
+  "type": "object",
+  "properties": {
+    "result-message": {
+      "type": "string"
+    },
+    "result-code": {
+      "type": "integer",
+      "minimum": 100,
+      "maximum": 599
+    },
+    "account_bits": {
+      "type": "string",
+      "pattern": "^0x[0-9A-Fa-f]{10}$"
+    },
+    "ticket": {
+      "type": "string"
+    },
+    "last_connected_server_id": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "access_level": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "master_account_name": {
+      "type": "string"
+    },
+    "chars_per_server": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false
+        },
+        {
+          "$ref": "#/$defs/chars_on_server"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/chars_on_server"
+          }
+        }
+      ]
+    },
+    "user_permission": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "game_account_name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "result-code",
+    "master_account_name",
+    "game_account_name"
+  ],
+  "$defs": {
+    "chars_on_server": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[1-9]\\d*$"
+        },
+        "char_count": {
+          "type": "string",
+          "pattern": "^\\d+$"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "char_count"
+      ]
+    }
+  }
+}
 ```
+
+Some properties are only required depending on the message:
+
+* `gamestr`: All properties are required.
+* `ticket`: The `ticket` property is required.
+* `last_svr`: The `last_connected_server_id` property is required.
+* `char_cnt`: The `chars_per_server` property is required.
+
+`result-message`, `account_bits`, `access_level`, and `user_permission` are
+completely optional.
 
 ### Web Link URL Request
 
-TODO: `getWebLinkUrl\((\d+),(.*)\)`
+`Tl.exe` will send a message that can be described with the regular expression
+`^getWebLinkUrl\((\d+),(.*)\)$`. The first group is the link type and the second
+is a set of arguments specific to that type. This message does not have a static
+message ID and is *not* NUL-terminated.
+
+The exact meaning of the link type values and arguments is currently unknown.
+
+`launcher.exe` should respond with an empty payload.
 
 ## `TERA.exe` -> `Tl.exe` Messages
 
