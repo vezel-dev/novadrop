@@ -95,7 +95,7 @@ The response received from the server list URL should be in
 
     <xsd:complexType name="serverlist_server">
         <xsd:sequence>
-            <xsd:element name="id" type="xsd:unsignedInt" />
+            <xsd:element name="id" type="serverlist_server_id" />
             <xsd:element name="ip" type="serverlist_server_ip" />
             <xsd:element name="port" type="unsignedShort" />
             <xsd:element name="category" type="serverlist_server_category" />
@@ -108,6 +108,12 @@ The response received from the server list URL should be in
             <xsd:element name="language" type="xsd:string" />
         </xsd:sequence>
     </xsd:complexType>
+
+    <xsd:simpleType name="serverlist_server_id">
+        <xsd:restriction base="xsd:unsignedInt">
+            <xsd:minInclusive value="1" />
+        </xsd:restriction>
+    </xsd:simpleType>
 
     <xsd:simpleType name="serverlist_server_ip">
         <xsd:restriction base="xsd:string">
