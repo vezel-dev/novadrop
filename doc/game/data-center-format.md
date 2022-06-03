@@ -74,10 +74,10 @@ struct DataCenterHeader
     uint32_t file_version;
     double timestamp;
     uint32_t client_version;
-    int32_t unknown1;
-    int32_t unknown2;
-    int32_t unknown3;
-    int32_t unknown4;
+    int32_t unknown_1;
+    int32_t unknown_2;
+    int32_t unknown_3;
+    int32_t unknown_4;
 };
 ```
 
@@ -85,8 +85,8 @@ struct DataCenterHeader
 
 `timestamp` is a Unix timestamp indicating when the file was produced.
 
-`unknown1`, `unknown2`, `unknown3`, and `unknown4` are all always `0`. They are
-actually part of a tree structure describing the
+`unknown_1`, `unknown_2`, `unknown_3`, and `unknown_4` are all always `0`. They
+are actually part of a tree structure describing the
 [XSD](https://www.w3.org/TR/xmlschema-1) schema of the data tree, but official
 data centers never include this information.
 

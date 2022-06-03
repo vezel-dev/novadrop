@@ -323,29 +323,80 @@ messages have static message IDs; responses have different IDs from requests.
 
 ### Account Name Request (`0x1`)
 
-TODO: (empty)
+`TERA.exe` will request the (game) account name from `Tl.exe`.
+
+```cpp
+struct LauncherAccountNameRequest
+{
+};
+```
 
 #### Account Name Response (`0x2`)
 
-TODO: u16string name (no NUL terminator)
+`Tl.exe` should respond with the account name.
+
+```cpp
+struct LauncherAccountNameResponse
+{
+    u16string account_name;
+};
+```
+
+`account_name` is the name of the game account. It is *not* NUL-terminated.
 
 ### Session Ticket Request (`0x3`)
 
-TODO: (empty)
+`TERA.exe` will request the session ticket from `Tl.exe`.
+
+```cpp
+struct LauncherSessionTicketRequest
+{
+};
+```
 
 #### Session Ticket Response (`0x4`)
 
-TODO: u8string ticket (no NUL terminator)
+`Tl.exe` should respond with the session ticket.
+
+```cpp
+struct LauncherAccountNameResponse
+{
+    u8string session_ticket;
+};
+```
+
+`session_ticket` is the authentication session ticket. It is *not*
+NUL-terminated.
 
 ### Server List Request (`0x5`)
 
-TODO: uint32 unk
+`TERA.exe` will request the server list from `Tl.exe`.
+
+```cpp
+struct LauncherServerListRequest
+{
+    uint32_t unknown_1;
+};
+```
+
+The meaning of `unknown_1` is currently unknown.
 
 #### Server List Response (`0x6`)
 
-TODO: protobuf list
+`Tl.exe` should respond with the server list encoded with
+[Protocol Buffers](https://developers.google.com/protocol-buffers).
+
+```cpp
+struct LauncherServerListResponse
+{
+    uint8_t data[];
+};
+```
 
 ##### Server List Structures
+
+The server list response can be described with the following message
+definitions:
 
 ```protobuf
 syntax = "proto2";
@@ -369,15 +420,27 @@ message ServerList
 
     repeated ServerInfo servers = 1;
     required fixed32 last_server_id = 2;
-    required fixed32 unknown = 3;
+    required fixed32 unknown_1 = 3;
 }
 ```
+
+A few notes on these definitions:
+
+* They will not work correctly as `proto3` due to `required` semantics.
+* `bytes` fields are really `u16string` *without* NUL terminators.
+* `id` must be a positive (non-zero) value.
+* `port` should be in the `uint16_t` range.
+* `available` is really a `bool`, so only the values `0` and `1` are allowed.
+* Either `address` or `host` must be set; not neither and not both.
+    * For `address`, a value of `0` has 'not set' semantics since the field is
+      not marked `optional`.
+* The meaning of `unknown_1` is currently unknown. It appears to always be `0`.
 
 ### Enter Lobby/World Notification (`0x7`)
 
 `TERA.exe` will notify `Tl.exe` when entering the lobby (i.e. successfully
 connecting to an arbiter server) or when entering the world on a particular
-character. The possible message payloads are as follows:
+character.
 
 ```cpp
 struct LauncherEnterLobbyNotification
@@ -390,14 +453,14 @@ struct LauncherEnterWorldNotification
 };
 ```
 
-The two cases can be distinguished by looking at the payload size.
+The two cases can be distinguished by looking at the payload length.
 
 `character_name` is the NUL-terminated name of the character that the user is
 entering the world on.
 
-### Voice Chat Requests
+### Voice Chat Commands
 
-There is a set of requests for interacting with
+There is a set of commands for interacting with
 [TeamSpeak](https://www.teamspeak.com):
 
 * Create Room (`0x8`)
@@ -410,26 +473,78 @@ There is a set of requests for interacting with
 These messages were only present in some regions and were likely never actually
 used. It is currently unknown what their payloads contain.
 
-### Open Website (`0x19`)
+### Open Website Command (`0x19`)
 
-TODO: uint32 type
+`TERA.exe` asks `Tl.exe` to open a website in the default Web browser.
+
+```cpp
+struct LauncherOpenWebsiteCommand
+{
+    uint32_t type;
+};
+```
+
+`type` specifies the kind of website that should be opened. The possible values
+are currently unknown, but each value is an ID of a well-known URL to open.
 
 ### Web Link URL Request (`0x1a`)
 
-TODO: uint32 type, u16string args (NUL-terminated)
+This request is the `TERA.exe` equivalent of the request sent by `Tl.exe` to
+`launcher.exe`.
+
+```cpp
+struct LauncherWebLinkURLRequest
+{
+    uint32_t type;
+    u16string arguments;
+};
+```
+
+`type` specifies the link type. The possible values are currently unknown, but
+each value is an ID of a well-known URL to open.
+
+`arguments` specifies the NUL-terminated arguments in relation to the `type`
+value.
 
 #### Web Link URL Response (`0x1b`)
 
-TODO: uint32 type, int32 unk
+```cpp
+struct LauncherWebLinkURLResponse
+{
+    uint32_t type;
+    uint32_t unknown_1;
+};
+```
+
+`type` is the same value that was sent in the request.
+
+The meaning of `unknown_1` is currently unknown.
 
 ### Game Start Notification (`0x3e8`)
 
-TODO: uint32 srcregver, uint32 unk, u16string user (NUL-terminated)
+`TERA.exe` will notify `Tl.exe` that it has launched.
+
+```cpp
+struct LauncherGameStartNotification
+{
+    uint32_t source_revision;
+    uint32_t unknown_1;
+    u16string windows_account_name;
+};
+```
+
+`source_revision` is the `SrcRegVer` value from the client's
+`ReleaseRevision.txt` file.
+
+The meaning of `unknown_1` is currently unknown.
+
+`windows_account_name` is the NUL-terminated name of the current Windows user
+account.
 
 ### Game Event Notification (`0x3e9` - `0x3f8`)
 
 `TERA.exe` will occasionally notify `Tl.exe` of various notable actions taken by
-the user. The message payload is as follows:
+the user.
 
 ```cpp
 struct LauncherGameEventNotification
@@ -464,15 +579,86 @@ enum LauncherGameEvent : uint32_t
 
 ### Game Exit Notification (`0x3fc`)
 
-TODO: uint32 length, uint32 code, uint32 reason
+`TERA.exe` will notify `Tl.exe` that it is exiting.
+
+```cpp
+struct LauncherGameExitNotification
+{
+    uint32_t length;
+    uint32_t code;
+    uint32_t reason;
+};
+```
+
+`length` is the length of the payload. It must be `12`.
+
+`code` is the exit code of the `TERA.exe` process. This can be `0` or `1`.
+
+`reason` provides a more specific exit reason. Some valid values are as follows:
+
+```cpp
+enum LauncherGameExitReason : uint32_t
+{
+    // TODO: Fill this in.
+};
+```
 
 ### Game Crash Notification (`0x3fd`)
 
-TODO: u16string details (no NUL terminator)
+`TERA.exe` will notify `Tl.exe` that it has crashed (e.g. because of a memory
+access violation). Note that, since a crash could mean things are arbitrarily
+broken, this message may not be produced if the crash is sufficiently severe.
+
+```cpp
+struct LauncherGameCrashNotification
+{
+    u16string details;
+};
+```
+
+`details` contains various details about the crash such as the instruction
+pointer and exception type. It is *not* NUL-terminated.
 
 ### Anti-Cheat Event Notifications (`0x3fe` - `0x400`)
 
-TODO: starting, started, failed (uint32 size (old), uint64 error)
+`TERA.exe` will notify `Tl.exe` of various events relating to the anti-cheat
+module (e.g. [XIGNCODE3](https://www.wellbia.com) or
+[GameGuard](https://gameguard.nprotect.com)). Note that only some regions have a
+client build with an anti-cheat module.
+
+#### Anti-Cheat Starting Notification
+
+`TERA.exe` will notify `Tl.exe` that the anti-cheat module is starting.
+
+```cpp
+struct LauncherAntiCheatStartingNotification
+{
+};
+```
+
+#### Anti-Cheat Started Notification
+
+`TERA.exe` will notify `Tl.exe` that the anti-cheat module has successfully
+started.
+
+```cpp
+struct LauncherAntiCheatStartedNotification
+{
+};
+```
+
+#### Anti-Cheat Error Notification
+
+`TERA.exe` will notify `Tl.exe` that the anti-cheat module failed to start.
+
+```cpp
+struct LauncherAntiCheatStartedNotification
+{
+    uint64_t error;
+};
+```
+
+`error` contains the error code from the anti-cheat module.
 
 ### Unknown Request 1025 (`0x401`)
 

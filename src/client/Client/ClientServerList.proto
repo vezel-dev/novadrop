@@ -29,5 +29,5 @@ message ProtoBufServerList
 
     repeated ProtoBufServerInfo servers = 1;
     required fixed32 last_server_id = 2;
-    required fixed32 unknown = 3;
+    required fixed32 unknown_1 = 3;
 }
