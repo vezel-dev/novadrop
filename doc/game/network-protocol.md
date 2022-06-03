@@ -12,11 +12,13 @@ for any fields.
 * `offset_t` values are `uint16_t` indexes into a packet, including the header.
 * `float` and `double` are IEEE 754 `binary32` and `binary64`, respectively.
 * Characters (i.e. `char16_t`) are UTF-16 and little endian.
+* Strings (i.e. `u16string`) are a series of valid `char16_t` characters
+  followed by a NUL character.
 * Fields are laid out in the declared order with no implied padding anywhere.
 
 ## Encryption
 
-TODO: Describe the key exchange and the (very insecure) encryption algorithm.
+TODO: Describe the (insecure) key exchange and the PIKE algorithm.
 
 ## Packet Header
 
@@ -46,7 +48,7 @@ The packet body consists of a series of fields. Some examples:
 struct CJoinPrivateChannelPacket
 {
     PacketHeader header;
-    string channel_name;
+    u16string channel_name;
     uint16_t password;
 };
 
@@ -56,7 +58,7 @@ struct CEditPrivateChannelPacket
     {
         uint32_t player_id;
     } members[];
-    string channel_name;
+    u16string channel_name;
     uint16_t password;
 };
 ```
@@ -93,7 +95,7 @@ struct PacketStringPointer
 ```
 
 When writing the string contents, the characters are written contiguously,
-followed by a `NUL` character.
+followed by a NUL character.
 
 ### Object Arrays
 

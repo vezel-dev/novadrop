@@ -5,8 +5,8 @@ This page describes the encrypted resource container format used by TERA.
 * C/C++-like primitive types and `struct`s will be used.
 * Integers (`uint8_t`, `int8_t`, `uint16_t`, `int16_t`, etc) are little endian.
 * Characters (i.e. `char16_t`) are UTF-16 and little endian.
-* Strings (i.e. `string`) are a series of valid characters followed by a `NUL`
-  character.
+* Strings (i.e. `u16string`) are a series of valid `char16_t` characters
+  followed by a NUL character.
 * Fields are laid out in the declared order with no implied padding anywhere.
 
 ## Encryption
@@ -79,7 +79,7 @@ struct ResourceContainerEntry
 {
     uint32_t size;
     uint32_t offset;
-    string name;
+    u16string name;
 };
 ```
 

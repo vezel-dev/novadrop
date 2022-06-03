@@ -11,7 +11,7 @@ TERA.
 * Characters (i.e. `char16_t`) are UTF-16 and little endian.
 * Fields are laid out in the declared order with no implied padding anywhere.
 
-Please note that the format uses both zero-based and one-based array indexes in
+Note that the format uses both zero-based and one-based array indexes in
 various, seemingly random places.
 
 ## Encryption
@@ -192,7 +192,7 @@ struct DataCenterString
 `data_center_string_hash(value)` where `value` is the string value. In a typical
 data center file, there is only a very tiny amount of hash collisions.
 
-`length` is the length of the string in terms of characters, including the `NUL`
+`length` is the length of the string in terms of characters, including the NUL
 character.
 
 `index` is a **one-based** index into the string table's `addresses` region. The
@@ -201,8 +201,8 @@ address at this index must match the `address` field exactly.
 `address` is an address into the string table's `data` region. This address
 points to the actual string data. The string read from this address must have
 the same length as the `length` field. Notably, if the string data straddles the
-end of its segment, the `NUL` character may be omitted. Readers should therefore
-not rely exclusively on the presence of a `NUL` character, but also check the
+end of its segment, the NUL character may be omitted. Readers should therefore
+not rely exclusively on the presence of a NUL character, but also check the
 segment bounds.
 
 A string entry must be placed in the correct `table` segment based on its `hash`

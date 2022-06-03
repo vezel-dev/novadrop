@@ -3,12 +3,27 @@
 This page describes the communication protocol employed by `launcher.exe`,
 `Tl.exe`, and `TERA.exe`.
 
+* C/C++-like primitive types and `struct`s will be used.
+* Integers (`uint8_t`, `int8_t`, `uint16_t`, `int16_t`, etc) are little endian.
+* Characters (i.e. `char8_t` and `char16_t`) are UTF-8 and UTF-16 respectively,
+  and little endian.
+* Strings (i.e. `u8string` and `u16string`) are a series of valid `char8_t` and
+  `char16_t` characters respectively, followed by a NUL character.
+* Fields are laid out in the declared order with no implied padding anywhere.
+
+Note that strings are not always NUL-terminated. For this reason, the document
+will explicitly call out whether a NUL terminator is present.
+
+## Communication
+
+The role of each program is as follows:
+
 * `launcher.exe`: The publisher-specific game launcher which performs
   authentication and server list URL resolution. Serves requests from `Tl.exe`
   and receives game events.
-* `Tl.exe`: The publisher-agnostic game launcher which requests authentication
-  data and the server list URL from `launcher.exe`. Serves requests and forwards
-  game events from `TERA.exe`.
+* `Tl.exe`: The (mostly) publisher-agnostic game launcher which requests
+  authentication data and the server list URL from `launcher.exe`. Serves
+  requests and forwards game events from `TERA.exe`.
 * `TERA.exe`: The actual game client. Sends requests and game events to
   `Tl.exe`.
 
@@ -17,7 +32,7 @@ These programs all communicate via
 specifically
 [`WM_COPYDATA`](https://docs.microsoft.com/en-us/windows/win32/dataxchg/wm-copydata).
 The `dwData` field specifies the message ID, while `lpData` and `cbData` contain
-the payload pointer and length (if any).
+the payload pointer and length.
 
 ## `Tl.exe` -> `launcher.exe` Messages
 
@@ -28,21 +43,20 @@ corresponding request message. Notably, only the Hello Handshake and Game Event
 Notification messages have a static ID; the request messages use a message
 counter as the message ID, so the contents must be parsed to understand them.
 
-### Hello Handshake
+### Hello Handshake (`0x0dbadb0a`)
 
-The protocol starts off with a handshake sent from `Tl.exe`. This message has
-the ID `0x0dbadb0a` and contains the NUL-terminated string `Hello!!`.
+The protocol starts off with a handshake sent from `Tl.exe`. This message
+contains the NUL-terminated string `Hello!!`.
 
 `launcher.exe` should respond with a NUL-terminated `Hello!!` or `Steam!!` to
 indicate the method of authentication in use. The former uses classic
 authentication while the latter uses [Steam](https://store.steampowered.com).
 (Steam authentication will not be documented here.)
 
-### Game Event Notification
+### Game Event Notification (`0x0`)
 
 `Tl.exe` will occasionally notify `launcher.exe` of various game events sent by
-`TERA.exe`. These messages have the message ID `0x0`. The format of these
-messages can be described with the following
+`TERA.exe`. The format of these messages can be described with the following
 [regular expressions](https://en.wikipedia.org/wiki/Regular_expression):
 
 * `^csPopup\(\)$`: Signals that `launcher.exe` should open the customer support
@@ -304,4 +318,166 @@ The exact meaning of the link type values and arguments is currently unknown.
 
 ## `TERA.exe` -> `Tl.exe` Messages
 
-TODO
+Messages sent between `TERA.exe` and `Tl.exe` use a simple binary protocol. All
+messages have static message IDs; responses have different IDs from requests.
+
+### Account Name Request (`0x1`)
+
+TODO: (empty)
+
+#### Account Name Response (`0x2`)
+
+TODO: u16string name (no NUL terminator)
+
+### Session Ticket Request (`0x3`)
+
+TODO: (empty)
+
+#### Session Ticket Response (`0x4`)
+
+TODO: u8string ticket (no NUL terminator)
+
+### Server List Request (`0x5`)
+
+TODO: uint32 unk
+
+#### Server List Response (`0x6`)
+
+TODO: protobuf list
+
+##### Server List Structures
+
+```protobuf
+syntax = "proto2";
+
+message ServerList
+{
+    message ServerInfo
+    {
+        required fixed32 id = 1;
+        required bytes name = 2;
+        required bytes category = 3;
+        required bytes title = 4;
+        required bytes queue = 5;
+        required bytes population = 6;
+        required fixed32 address = 7;
+        required fixed32 port = 8;
+        required fixed32 available = 9;
+        required bytes unavailable_message = 10;
+        optional bytes host = 11;
+    }
+
+    repeated ServerInfo servers = 1;
+    required fixed32 last_server_id = 2;
+    required fixed32 unknown = 3;
+}
+```
+
+### Enter Lobby/World Notification (`0x7`)
+
+`TERA.exe` will notify `Tl.exe` when entering the lobby (i.e. successfully
+connecting to an arbiter server) or when entering the world on a particular
+character. The possible message payloads are as follows:
+
+```cpp
+struct LauncherEnterLobbyNotification
+{
+};
+
+struct LauncherEnterWorldNotification
+{
+    u16string character_name;
+};
+```
+
+The two cases can be distinguished by looking at the payload size.
+
+`character_name` is the NUL-terminated name of the character that the user is
+entering the world on.
+
+### Voice Chat Requests
+
+There is a set of requests for interacting with
+[TeamSpeak](https://www.teamspeak.com):
+
+* Create Room (`0x8`)
+* Join Room (`0xa`)
+* Leave Room (`0xc`)
+* Set Volume (`0x13`)
+* Set Microphone (`0x14`)
+* Silence User (`0x15`)
+
+These messages were only present in some regions and were likely never actually
+used. It is currently unknown what their payloads contain.
+
+### Open Website (`0x19`)
+
+TODO: uint32 type
+
+### Web Link URL Request (`0x1a`)
+
+TODO: uint32 type, u16string args (NUL-terminated)
+
+#### Web Link URL Response (`0x1b`)
+
+TODO: uint32 type, int32 unk
+
+### Game Start Notification (`0x3e8`)
+
+TODO: uint32 srcregver, uint32 unk, u16string user (NUL-terminated)
+
+### Game Event Notification (`0x3e9` - `0x3f8`)
+
+`TERA.exe` will occasionally notify `Tl.exe` of various notable actions taken by
+the user. The message payload is as follows:
+
+```cpp
+struct LauncherGameEventNotification
+{
+    LauncherGameEvent event;
+};
+```
+
+`event` specifies the kind of event that occurred. Valid values are as follows:
+
+```cpp
+enum LauncherGameEvent : uint32_t
+{
+    LAUNCHER_GAME_EVENT_REQUESTED_SERVER_LIST = 1001,
+    LAUNCHER_GAME_EVENT_RECEIVED_SERVER_LIST = 1002,
+    LAUNCHER_GAME_EVENT_LOGGED_IN = 1003,
+    LAUNCHER_GAME_EVENT_ENTERED_LOBBY = 1004,
+    LAUNCHER_GAME_EVENT_ENTERING_CHARACTER_CREATION = 1005,
+    LAUNCHER_GAME_EVENT_LOGGED_OUT = 1006,
+    LAUNCHER_GAME_EVENT_DELETED_CHARACTER = 1007,
+    LAUNCHER_GAME_EVENT_CANCELED_CHARACTER_CREATION = 1008,
+    LAUNCHER_GAME_EVENT_ENTERED_CHARACTER_CREATION = 1009,
+    LAUNCHER_GAME_EVENT_CREATED_CHARACTER = 1010,
+    LAUNCHER_GAME_EVENT_ENTERED_WORLD = 1011,
+    LAUNCHER_GAME_EVENT_FINISHED_LOADING_SCREEN = 1012,
+    LAUNCHER_GAME_EVENT_LEFT_WORLD = 1013,
+    LAUNCHER_GAME_EVENT_MOUNTED_PEGASUS = 1014,
+    LAUNCHER_GAME_EVENT_DISMOUNTED_PEGASUS = 1015,
+    LAUNCHER_GAME_EVENT_CHANGED_CHANNEL = 1016,
+};
+```
+
+### Game Exit Notification (`0x3fc`)
+
+TODO: uint32 length, uint32 code, uint32 reason
+
+### Game Crash Notification (`0x3fd`)
+
+TODO: u16string details (no NUL terminator)
+
+### Anti-Cheat Event Notifications (`0x3fe` - `0x400`)
+
+TODO: starting, started, failed (uint32 size (old), uint64 error)
+
+### Unknown Request 1025 (`0x401`)
+
+The exact purpose of this message is currently unknown.
+
+### Unknown Request 1027 (`0x403`)
+
+The exact purpose of this message is currently unknown.
