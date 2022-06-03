@@ -660,10 +660,10 @@ struct LauncherAntiCheatStartedNotification
 
 `error` contains the error code from the anti-cheat module.
 
-### Unknown Request 1025 (`0x401`)
+### Unknown Command 1025 (`0x401`)
 
 The exact purpose of this message is currently unknown.
 
-### Unknown Request 1027 (`0x403`)
+### Unknown Command 1027 (`0x403`)
 
 The exact purpose of this message is currently unknown.
