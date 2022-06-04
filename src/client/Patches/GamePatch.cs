@@ -19,29 +19,30 @@ public abstract class GamePatch
         Process = process;
     }
 
-    public async Task<bool> ToggleAsync(CancellationToken cancellationToken = default)
+    public async Task ToggleAsync(CancellationToken cancellationToken = default)
     {
-        if (!_initialized)
+        try
         {
-            if (!await InitializeAsync(cancellationToken).ConfigureAwait(false))
-                return false;
+            if (!_initialized)
+            {
+                await InitializeAsync(cancellationToken).ConfigureAwait(false);
 
-            _initialized = true;
+                _initialized = true;
+            }
+
+            await (!_enabled ? ApplyAsync(cancellationToken) : RevertAsync(cancellationToken)).ConfigureAwait(false);
+
+            _enabled = !_enabled;
         }
-
-        var task = !_enabled ? ApplyAsync(cancellationToken) : RevertAsync(cancellationToken);
-
-        if (!await task.ConfigureAwait(false))
-            return false;
-
-        _enabled = !_enabled;
-
-        return true;
+        catch (Win32Exception ex)
+        {
+            throw new GamePatchException("A Win32 API error ocurred.", ex);
+        }
     }
 
-    protected abstract Task<bool> InitializeAsync(CancellationToken cancellationToken);
+    protected abstract Task InitializeAsync(CancellationToken cancellationToken);
 
-    protected abstract Task<bool> ApplyAsync(CancellationToken cancellationToken);
+    protected abstract Task ApplyAsync(CancellationToken cancellationToken);
 
-    protected abstract Task<bool> RevertAsync(CancellationToken cancellationToken);
+    protected abstract Task RevertAsync(CancellationToken cancellationToken);
 }

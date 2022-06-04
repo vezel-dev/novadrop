@@ -18,29 +18,23 @@ public sealed class SecurityNeutralizationPatch : GamePatch
     {
     }
 
-    protected override async Task<bool> InitializeAsync(CancellationToken cancellationToken)
+    protected override async Task InitializeAsync(CancellationToken cancellationToken)
     {
         var offsets = (await Executable.SearchAsync(_className, cancellationToken).ConfigureAwait(false)).ToArray();
 
         if (offsets.Length != 32)
-            return false;
+            throw new GamePatchException("Could not locate security virtual method tables.");
 
         foreach (var off in offsets)
         {
             // The 4th slot contains the crashing method that we are interested in.
             var slot = off - (uint)Unsafe.SizeOf<nuint>() * 2;
 
-            if (!Executable.TryRead<nuint>(slot, out var func) ||
-                !Executable.ContainsAddress((NativeAddress)func))
-                return false;
-
-            _slots.Add((slot, func));
+            _slots.Add((slot, Executable.Read<nuint>(slot)));
         }
-
-        return true;
     }
 
-    protected override Task<bool> ApplyAsync(CancellationToken cancellationToken)
+    protected override Task ApplyAsync(CancellationToken cancellationToken)
     {
         // The code in the crashing method is virtualized. Instead of trying to devirtualize it, we will just replace
         // the function pointer in the virtual method table with a pointer to a no-op function that we create. A neat
@@ -56,17 +50,16 @@ public sealed class SecurityNeutralizationPatch : GamePatch
         foreach (var (slot, _) in _slots)
             Executable.Write(slot, (nuint)_function.Window.Address);
 
-        return Task.FromResult(true);
+        return Task.CompletedTask;
     }
 
-    protected override Task<bool> RevertAsync(CancellationToken cancellationToken)
+    protected override Task RevertAsync(CancellationToken cancellationToken)
     {
         foreach (var (slot, original) in _slots)
             Executable.Write(slot, original);
 
-        // This is not safe at all if the process is not suspended, but there is not much we can do about that.
         _function!.Dispose();
 
-        return Task.FromResult(true);
+        return Task.CompletedTask;
     }
 }

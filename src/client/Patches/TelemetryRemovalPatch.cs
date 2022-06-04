@@ -17,41 +17,85 @@ public sealed class TelemetryRemovalPatch : GamePatch
         0x48, 0x8d, 0xac, 0x24, 0xf0, 0xfb, 0xff, 0xff, // lea rbp, [rsp - 0x410]
     };
 
-    nuint _offset;
+    static readonly ReadOnlyMemory<byte?> _pattern2 = new byte?[]
+    {
+        0x48, 0x89, 0x5c, 0x24, 0x10,                   // mov qword ptr [rsp + 0x10], rbx
+        0x48, 0x89, 0x74, 0x24, 0x18,                   // mov qword ptr [rsp + 0x18], rsi
+        0x48, 0x89, 0x7c, 0x24, 0x20,                   // mov qword ptr [rsp + 0x20], rdi
+        0x55,                                           // push rbp
+        0x41, 0x54,                                     // push r12
+        0x41, 0x55,                                     // push r13
+        0x41, 0x56,                                     // push r14
+        0x41, 0x57,                                     // push r15
+        0x48, 0x8d, 0xac, 0x24, 0xa0, 0xf9, 0xff, 0xff, // lea rbp, [rsp - 0x660]
+    };
 
-    byte _original;
+    static readonly ReadOnlyMemory<byte?> _pattern3 = new byte?[]
+    {
+        0x48, 0x89, 0x5c, 0x24, 0x08,                   // mov qword ptr [rsp + 0x8], rbx
+        0x48, 0x89, 0x74, 0x24, 0x10,                   // mov qword ptr [rsp + 0x10], rbx
+        0x48, 0x89, 0x7c, 0x24, 0x18,                   // mov qword ptr [rsp + 0x18], rbx
+        0x55,                                           // push rbp
+        0x41, 0x54,                                     // push r12
+        0x41, 0x55,                                     // push r13
+        0x41, 0x56,                                     // push r14
+        0x41, 0x57,                                     // push r15
+        0x48, 0x8d, 0xac, 0x24, 0x10, 0xff, 0xff, 0xff, // lea rbp, [rsp - 0xf0]
+        0x48, 0x81, 0xec, 0xf0, 0x01, 0x00, 0x00,       // sub rsp, 0x1f0
+        0x48, 0x8b, 0x05, null, null, null, null,       // mov rax, qword ptr [rip + <disp>]
+    };
+
+    static readonly ReadOnlyMemory<byte> _patch = new byte[]
+    {
+        0x33, 0xc0, // xor eax, eax
+        0xc3,       // ret
+    };
+
+    readonly List<(nuint, ReadOnlyMemory<byte>)> _functions = new();
 
     public TelemetryRemovalPatch(NativeProcess process)
         : base(process)
     {
     }
 
-    protected override async Task<bool> InitializeAsync(CancellationToken cancellationToken)
+    protected override async Task InitializeAsync(CancellationToken cancellationToken)
     {
-        var offsets = (await Executable.SearchAsync(_pattern1, cancellationToken).ConfigureAwait(false)).ToArray();
+        var results = await Task.WhenAll(
+            new[] { _pattern1, _pattern2, _pattern3 }
+                .AsParallel()
+                .WithCancellation(cancellationToken)
+                .Select(p => Executable.SearchAsync(p, cancellationToken)))
+            .ConfigureAwait(false);
 
-        if (offsets.Length != 1)
-            return false;
+        foreach (var offsets in results)
+        {
+            var arr = offsets.ToArray();
 
-        _offset = offsets[0];
-        _original = Executable.Read<byte>(_offset);
+            if (arr.Length != 1)
+                throw new GamePatchException("Could not locate telemetry functions.");
 
-        // TODO: Also remove crash telemetry.
+            var off = arr[0];
+            var code = new byte[_patch.Length];
 
-        return true;
+            Executable.Read(off, code);
+
+            _functions.Add((off, code));
+        }
     }
 
-    protected override Task<bool> ApplyAsync(CancellationToken cancellationToken)
+    protected override Task ApplyAsync(CancellationToken cancellationToken)
     {
-        Executable.Write(_offset, (byte)0xc3); // ret
+        foreach (var (off, _) in _functions)
+            Executable.Write(off, _patch.Span);
 
-        return Task.FromResult(true);
+        return Task.CompletedTask;
     }
 
-    protected override Task<bool> RevertAsync(CancellationToken cancellationToken)
+    protected override Task RevertAsync(CancellationToken cancellationToken)
     {
-        Executable.Write(_offset, _original);
+        foreach (var (off, original) in _functions)
+            Executable.Write(off, original.Span);
 
-        return Task.FromResult(true);
+        return Task.CompletedTask;
     }
 }
