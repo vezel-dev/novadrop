@@ -12,6 +12,8 @@ public sealed class NativeProcess : IDisposable
 
     public SafeHandle Handle { get; }
 
+    public ProcessMemoryAccessor Accessor { get; }
+
     public NativeModule MainModule => Modules.First();
 
     public IEnumerable<NativeModule> Modules
@@ -29,11 +31,14 @@ public sealed class NativeProcess : IDisposable
 
     public NativeProcess(int id)
     {
-        Id = id;
-        Handle = OpenProcess_SafeHandle(PROCESS_ACCESS_RIGHTS.PROCESS_ALL_ACCESS, false, (uint)id);
+        var handle = OpenProcess_SafeHandle(PROCESS_ACCESS_RIGHTS.PROCESS_ALL_ACCESS, false, (uint)id);
 
-        if (Handle.IsInvalid)
+        if (handle.IsInvalid)
             throw new Win32Exception();
+
+        Id = id;
+        Handle = handle;
+        Accessor = new(this);
     }
 
     ~NativeProcess()
@@ -121,10 +126,7 @@ public sealed class NativeProcess : IDisposable
                         ? throw new Win32Exception()
                         : new(
                             arr.AsSpan(0, (int)len).ToString(),
-                            new(
-                                new ProcessMemoryAccessor(this),
-                                (NativeAddress)(nuint)entry.modBaseAddr,
-                                entry.modBaseSize));
+                            new(Accessor, (NativeAddress)(nuint)entry.modBaseAddr, entry.modBaseSize));
                 }
 
                 yield return CreateModule(ref me);

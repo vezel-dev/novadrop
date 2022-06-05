@@ -48,7 +48,7 @@ public sealed class SecurityNeutralizationPatch : GamePatch
         });
 
         foreach (var (slot, _) in _slots)
-            Window.Write(slot, (nuint)_function.Window.Address);
+            Window.Write(slot, (nuint)_function.FullWindow.Address);
     }
 
     protected override void Revert()

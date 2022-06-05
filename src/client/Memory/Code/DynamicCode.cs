@@ -6,17 +6,17 @@ public sealed class DynamicCode : IDisposable
 {
     public NativeProcess Process { get; }
 
-    public MemoryWindow Window { get; }
+    public MemoryWindow FullWindow { get; }
 
-    public nuint Length { get; }
+    public MemoryWindow CodeWindow { get; }
 
     int _disposed;
 
-    DynamicCode(NativeProcess process, MemoryWindow window, nuint length)
+    DynamicCode(NativeProcess process, MemoryWindow fullWindow, MemoryWindow codeWindow)
     {
         Process = process;
-        Window = window;
-        Length = length;
+        FullWindow = fullWindow;
+        CodeWindow = codeWindow;
     }
 
     ~DynamicCode()
@@ -34,7 +34,7 @@ public sealed class DynamicCode : IDisposable
     void Free()
     {
         if (Interlocked.Exchange(ref _disposed, 1) == 0)
-            Process.Free(Window.Address);
+            Process.Free(FullWindow.Address);
     }
 
     public static unsafe DynamicCode Create(NativeProcess process, Action<Assembler> assembler)
@@ -56,7 +56,7 @@ public sealed class DynamicCode : IDisposable
         var len = (nuint)stream.Length * 2;
         var ptr = process.Alloc(len, MemoryProtection.Read | MemoryProtection.Write);
 
-        var window = new MemoryWindow(new ProcessMemoryAccessor(process), ptr, len);
+        var window = new MemoryWindow(process.Accessor, ptr, len);
         var windowWriter = new MemoryWindowCodeWriter(window);
 
         try
@@ -78,7 +78,7 @@ public sealed class DynamicCode : IDisposable
             throw;
         }
 
-        return new(process, window, len - windowWriter.CurrentWindow.Length);
+        return new(process, window, window.Slice(0, len - windowWriter.CurrentWindow.Length));
     }
 
     public unsafe uint Call(nuint parameter)
@@ -89,7 +89,7 @@ public sealed class DynamicCode : IDisposable
             Process.Handle,
             null,
             0,
-            (delegate* unmanaged[Stdcall]<void*, uint>)(nuint)Window.Address,
+            (delegate* unmanaged[Stdcall]<void*, uint>)(nuint)FullWindow.Address,
             (void*)parameter,
             0,
             null);
@@ -105,6 +105,6 @@ public sealed class DynamicCode : IDisposable
 
     public override string ToString()
     {
-        return $"{{Window: {Window}, Length: {Length}}}";
+        return $"{{FullWindow: {FullWindow}, CodeWindow: {CodeWindow}}}";
     }
 }

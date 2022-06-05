@@ -4,10 +4,8 @@ public sealed class ProcessMemoryAccessor : MemoryAccessor
 {
     public NativeProcess Process { get; }
 
-    public ProcessMemoryAccessor(NativeProcess process)
+    internal ProcessMemoryAccessor(NativeProcess process)
     {
-        ArgumentNullException.ThrowIfNull(process);
-
         Process = process;
     }
 
