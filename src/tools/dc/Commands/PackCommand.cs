@@ -13,6 +13,10 @@ sealed class PackCommand : CancellableAsyncCommand<PackCommand.PackCommandSettin
         [Description("Output file")]
         public string Output { get; }
 
+        [CommandOption("--revision <value>")]
+        [Description("Set data revision")]
+        public int Revision { get; init; } = DataCenter.LatestRevision;
+
         [CommandOption("--compression <level>")]
         [Description("Set compression level")]
         public CompressionLevel Compression { get; init; } = CompressionLevel.Optimal;
@@ -248,6 +252,7 @@ sealed class PackCommand : CancellableAsyncCommand<PackCommand.PackCommandSettin
                     root,
                     stream,
                     new DataCenterSaveOptions()
+                        .WithRevision(settings.Revision)
                         .WithCompressionLevel(settings.Compression)
                         .WithKey(settings.EncryptionKey.Span)
                         .WithIV(settings.EncryptionIV.Span),

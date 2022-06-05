@@ -36,6 +36,7 @@ The `output` argument specifies the path of the resulting data center file.
 
 | Option | Description |
 | - | - |
+| `--revision <value>` | Specifies the data tree revision number (defaults to latest known revision). |
 | `--compression <level>` | Specifies a compression level (defaults to `Optimal`). |
 | `--encryption-key <key>` | Specifies an encryption key (defaults to the latest known key). |
 | `--encryption-iv <iv>` | Specifies an encryption IV (defaults to the latest known IV). |
@@ -57,6 +58,7 @@ specifies the path of the resulting data center file.
 | `--decryption-key <key>` | Specifies a decryption key (defaults to the latest known key). |
 | `--decryption-iv <iv>` | Specifies a decryption IV (defaults to the latest known IV). |
 | `--strict` | Enables strict format compliance checks while reading the input file. |
+| `--revision <value>` | Specifies the data tree revision number (defaults to latest known revision). |
 | `--compression <level>` | Specifies a compression level (defaults to `Optimal`). |
 | `--encryption-key <key>` | Specifies an encryption key (defaults to the latest known key). |
 | `--encryption-iv <iv>` | Specifies an encryption IV (defaults to the latest known IV). |
