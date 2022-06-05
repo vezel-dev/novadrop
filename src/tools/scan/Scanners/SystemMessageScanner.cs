@@ -15,7 +15,7 @@ sealed class SystemMessageScanner : GameScanner
     public override async Task<bool> RunAsync(ScanContext context, CancellationToken cancellationToken)
     {
         var exe = context.Window;
-        var offsets = (await exe.SearchAsync(_pattern, cancellationToken)).ToArray();
+        var offsets = (await exe.SearchAsync(_pattern, 1, cancellationToken)).ToArray();
 
         if (offsets.Length != 1)
             return false;

@@ -52,13 +52,30 @@ sealed class ScanCommand : CancellableAsyncCommand<ScanCommand.ScanCommandSettin
 
         Log.WriteLine($"Scanning TERA process [cyan]{proc.Id}[/] and writing results to [cyan]{settings.Output}[/]...");
 
-        using var native = new NativeProcess(proc.Id);
+        NativeAddress teraExeBase;
+        byte[] teraExeImage;
+
+        // Copy the executable into our local address space to speed up pattern searches considerably.
+        using (var tera = new NativeProcess(proc.Id))
+        {
+            var teraExe = tera.MainModule.Window;
+
+            teraExeBase = teraExe.Address;
+            teraExeImage = new byte[teraExe.Length];
+
+            teraExe.Read(0, teraExeImage);
+        }
 
         var output = new DirectoryInfo(settings.Output);
 
         output.Create();
 
-        var context = new ScanContext(native.MainModule.Window, output);
+        var context = new ScanContext(
+            new(
+                new RebasingMemoryAccessor(new ManagedMemoryAccessor(teraExeImage), teraExeBase),
+                teraExeBase,
+                (nuint)teraExeImage.Length),
+            output);
         var failed = new List<string>();
         var good = true;
 

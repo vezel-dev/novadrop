@@ -94,9 +94,19 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>
         return new(Accessor, Address + offset, length);
     }
 
-    public async Task<IEnumerable<nuint>> SearchAsync(
+    public Task<IEnumerable<nuint>> SearchAsync(
         ReadOnlyMemory<byte?> pattern, CancellationToken cancellationToken = default)
     {
+        return SearchAsync(pattern, -1, cancellationToken);
+    }
+
+    public async Task<IEnumerable<nuint>> SearchAsync(
+        ReadOnlyMemory<byte?> pattern, int maxDegreeOfParallelism, CancellationToken cancellationToken = default)
+    {
+        _ = !pattern.IsEmpty ? true : throw new ArgumentException(null, nameof(pattern));
+        _ = maxDegreeOfParallelism is > 0 or -1 ?
+            true : throw new ArgumentOutOfRangeException(nameof(maxDegreeOfParallelism));
+
         var window = this;
         var length = pattern.Length;
 
@@ -108,37 +118,46 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>
 
         var offsets = new List<nuint>();
 
-        await Parallel.ForEachAsync(EnumerateOffsets(), cancellationToken, (i, ct) =>
-        {
-            ct.ThrowIfCancellationRequested();
-
-            var offset = (nuint)i;
-            var candidateSpan = length <= 256 ? stackalloc byte[length] : new byte[length];
-
-            if (!window.TryRead(offset, candidateSpan))
-                return default;
-
-            var patternSpan = pattern.Span;
-            var match = true;
-
-            for (var j = 0; j < length; j++)
-            {
-                var b = Unsafe.Add(ref MemoryMarshal.GetReference(patternSpan), j);
-
-                if (b != null && Unsafe.Add(ref MemoryMarshal.GetReference(candidateSpan), j) != b)
+        await Parallel
+            .ForEachAsync(
+                EnumerateOffsets(),
+                new ParallelOptions
                 {
-                    match = false;
+                    MaxDegreeOfParallelism = maxDegreeOfParallelism,
+                    CancellationToken = cancellationToken,
+                },
+                (i, ct) =>
+                {
+                    ct.ThrowIfCancellationRequested();
 
-                    break;
-                }
-            }
+                    var offset = (nuint)i;
+                    var candidateSpan = length <= 256 ? stackalloc byte[length] : new byte[length];
 
-            if (match)
-                lock (offsets)
-                    offsets.Add(offset);
+                    if (!window.TryRead(offset, candidateSpan))
+                        return default;
 
-            return default;
-        }).ConfigureAwait(false);
+                    var patternSpan = pattern.Span;
+                    var match = true;
+
+                    for (var j = 0; j < length; j++)
+                    {
+                        var b = Unsafe.Add(ref MemoryMarshal.GetReference(patternSpan), j);
+
+                        if (b != null && Unsafe.Add(ref MemoryMarshal.GetReference(candidateSpan), j) != b)
+                        {
+                            match = false;
+
+                            break;
+                        }
+                    }
+
+                    if (match)
+                        lock (offsets)
+                            offsets.Add(offset);
+
+                    return default;
+                })
+            .ConfigureAwait(false);
 
         return offsets;
     }
