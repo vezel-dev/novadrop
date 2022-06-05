@@ -2,7 +2,7 @@ namespace Vezel.Novadrop.Memory;
 
 public readonly struct MemoryWindow : IEquatable<MemoryWindow>
 {
-    public NativeProcess Process { get; }
+    public MemoryAccessor Accessor { get; }
 
     public NativeAddress Address { get; }
 
@@ -10,11 +10,11 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>
 
     public bool IsEmpty => Length == 0;
 
-    public MemoryWindow(NativeProcess process, NativeAddress address, nuint length)
+    public MemoryWindow(MemoryAccessor accessor, NativeAddress address, nuint length)
     {
-        ArgumentNullException.ThrowIfNull(process);
+        ArgumentNullException.ThrowIfNull(accessor);
 
-        Process = process;
+        Accessor = accessor;
         Address = address;
         Length = length;
     }
@@ -91,7 +91,7 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>
     {
         _ = ContainsRange(offset, length) ? true : throw new ArgumentOutOfRangeException(nameof(offset));
 
-        return new(Process, Address + offset, length);
+        return new(Accessor, Address + offset, length);
     }
 
     public async Task<IEnumerable<nuint>> SearchAsync(
@@ -148,7 +148,7 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>
         if (!ContainsRange(offset, (nuint)buffer.Length))
             return false;
 
-        Process.Read(ToAddress(offset), buffer);
+        Accessor.Read(ToAddress(offset), buffer);
 
         return true;
     }
@@ -178,7 +178,7 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>
         if (!ContainsRange(offset, (nuint)buffer.Length))
             return false;
 
-        Process.Write(ToAddress(offset), buffer);
+        Accessor.Write(ToAddress(offset), buffer);
 
         return true;
     }
@@ -204,7 +204,7 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>
 
     public bool Equals(MemoryWindow other)
     {
-        return Process == other.Process && Address == other.Address && Length == other.Length;
+        return Accessor == other.Accessor && Address == other.Address && Length == other.Length;
     }
 
     public override bool Equals([NotNullWhen(true)] object? obj)
@@ -214,11 +214,11 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(Process, Address, Length);
+        return HashCode.Combine(Accessor, Address, Length);
     }
 
     public override string ToString()
     {
-        return $"{{Process: {Process}, Address: 0x{Address:x}, Length: {Length}}}";
+        return $"{{Address: 0x{Address:x}, Length: {Length}}}";
     }
 }

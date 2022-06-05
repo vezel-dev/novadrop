@@ -19,60 +19,9 @@ public sealed class NativeProcess : IDisposable
         [SuppressMessage("", "CA1065")]
         get
         {
-            var pid = (uint)Id;
+            _ = _disposed == 0 ? true : throw new ObjectDisposedException(GetType().Name);
 
-            SafeFileHandle snap;
-
-            while (true)
-            {
-                snap = CreateToolhelp32Snapshot_SafeHandle(CREATE_TOOLHELP_SNAPSHOT_FLAGS.TH32CS_SNAPMODULE, pid);
-
-                if (!snap.IsInvalid)
-                    break;
-
-                // We may get ERROR_BAD_LENGTH for processes that have not finished initializing or if the process loads
-                // or unloads a module while we are capturing the snapshot.
-                if (Marshal.GetLastPInvokeError() != (int)WIN32_ERROR.ERROR_BAD_LENGTH)
-                    throw new Win32Exception();
-            }
-
-            using (snap)
-            {
-                var me = new MODULEENTRY32
-                {
-                    dwSize = (uint)Unsafe.SizeOf<MODULEENTRY32>(),
-                };
-
-                if (!Module32First(snap, ref me))
-                    yield break;
-
-                do
-                {
-                    if (me.dwSize != Unsafe.SizeOf<MODULEENTRY32>())
-                        continue;
-
-                    unsafe NativeModule CreateModule(ref MODULEENTRY32 entry)
-                    {
-                        var arr = new char[MAX_PATH];
-
-                        uint len;
-
-                        fixed (char* p = arr)
-                            while ((len = K32GetModuleBaseName(
-                                (HANDLE)Handle.DangerousGetHandle(), entry.hModule, p, (uint)arr.Length)) >= arr.Length)
-                                Array.Resize(ref arr, (int)len);
-
-                        return len == 0
-                            ? throw new Win32Exception()
-                            : new(
-                                arr.AsSpan(0, (int)len).ToString(),
-                                new(this, (NativeAddress)(nuint)entry.modBaseAddr, entry.modBaseSize));
-                    }
-
-                    yield return CreateModule(ref me);
-                }
-                while (Module32Next(snap, ref me));
-            }
+            return EnumerateModules();
         }
     }
 
@@ -121,6 +70,67 @@ public sealed class NativeProcess : IDisposable
                 PAGE_PROTECTION_FLAGS.PAGE_EXECUTE,
             _ => throw new ArgumentOutOfRangeException(nameof(protection)),
         };
+    }
+
+    IEnumerable<NativeModule> EnumerateModules()
+    {
+        var pid = (uint)Id;
+
+        SafeFileHandle snap;
+
+        while (true)
+        {
+            snap = CreateToolhelp32Snapshot_SafeHandle(CREATE_TOOLHELP_SNAPSHOT_FLAGS.TH32CS_SNAPMODULE, pid);
+
+            if (!snap.IsInvalid)
+                break;
+
+            // We may get ERROR_BAD_LENGTH for processes that have not finished initializing or if the process loads
+            // or unloads a module while we are capturing the snapshot.
+            if (Marshal.GetLastPInvokeError() != (int)WIN32_ERROR.ERROR_BAD_LENGTH)
+                throw new Win32Exception();
+        }
+
+        using (snap)
+        {
+            var me = new MODULEENTRY32
+            {
+                dwSize = (uint)Unsafe.SizeOf<MODULEENTRY32>(),
+            };
+
+            if (!Module32First(snap, ref me))
+                yield break;
+
+            do
+            {
+                if (me.dwSize != Unsafe.SizeOf<MODULEENTRY32>())
+                    continue;
+
+                unsafe NativeModule CreateModule(ref MODULEENTRY32 entry)
+                {
+                    var arr = new char[MAX_PATH];
+
+                    uint len;
+
+                    fixed (char* p = arr)
+                        while ((len = K32GetModuleBaseName(
+                            (HANDLE)Handle.DangerousGetHandle(), entry.hModule, p, (uint)arr.Length)) >= arr.Length)
+                            Array.Resize(ref arr, (int)len);
+
+                    return len == 0
+                        ? throw new Win32Exception()
+                        : new(
+                            arr.AsSpan(0, (int)len).ToString(),
+                            new(
+                                new ProcessMemoryAccessor(this),
+                                (NativeAddress)(nuint)entry.modBaseAddr,
+                                entry.modBaseSize));
+                }
+
+                yield return CreateModule(ref me);
+            }
+            while (Module32Next(snap, ref me));
+        }
     }
 
     void Free()
@@ -187,6 +197,9 @@ public sealed class NativeProcess : IDisposable
 
     unsafe void ForEachThread(Func<int, bool> predicate, Action<uint, SafeFileHandle> action)
     {
+        ArgumentNullException.ThrowIfNull(predicate);
+        _ = _disposed == 0 ? true : throw new ObjectDisposedException(GetType().Name);
+
         var pid = (uint)Id;
         using var snap = CreateToolhelp32Snapshot_SafeHandle(CREATE_TOOLHELP_SNAPSHOT_FLAGS.TH32CS_SNAPTHREAD, pid);
 
@@ -216,8 +229,6 @@ public sealed class NativeProcess : IDisposable
 
     public (int Id, int Count)[] Suspend(Func<int, bool> predicate)
     {
-        ArgumentNullException.ThrowIfNull(predicate);
-
         var suspended = new List<(int, int)>();
 
         ForEachThread(predicate, (tid, handle) =>
@@ -231,8 +242,6 @@ public sealed class NativeProcess : IDisposable
 
     public (int Id, int Count)[] Resume(Func<int, bool> predicate)
     {
-        ArgumentNullException.ThrowIfNull(predicate);
-
         var resumed = new List<(int, int)>();
 
         ForEachThread(predicate, (tid, handle) =>

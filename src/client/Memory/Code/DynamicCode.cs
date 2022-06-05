@@ -4,14 +4,17 @@ namespace Vezel.Novadrop.Memory.Code;
 
 public sealed class DynamicCode : IDisposable
 {
+    public NativeProcess Process { get; }
+
     public MemoryWindow Window { get; }
 
     public nuint Length { get; }
 
     int _disposed;
 
-    DynamicCode(MemoryWindow window, nuint length)
+    DynamicCode(NativeProcess process, MemoryWindow window, nuint length)
     {
+        Process = process;
         Window = window;
         Length = length;
     }
@@ -31,7 +34,7 @@ public sealed class DynamicCode : IDisposable
     void Free()
     {
         if (Interlocked.Exchange(ref _disposed, 1) == 0)
-            Window.Process.Free(Window.Address);
+            Process.Free(Window.Address);
     }
 
     public static unsafe DynamicCode Create(NativeProcess process, Action<Assembler> assembler)
@@ -53,7 +56,7 @@ public sealed class DynamicCode : IDisposable
         var len = (nuint)stream.Length * 2;
         var ptr = process.Alloc(len, MemoryProtection.Read | MemoryProtection.Write);
 
-        var window = new MemoryWindow(process, ptr, len);
+        var window = new MemoryWindow(new ProcessMemoryAccessor(process), ptr, len);
         var windowWriter = new MemoryWindowCodeWriter(window);
 
         try
@@ -75,7 +78,7 @@ public sealed class DynamicCode : IDisposable
             throw;
         }
 
-        return new(window, len - windowWriter.CurrentWindow.Length);
+        return new(process, window, len - windowWriter.CurrentWindow.Length);
     }
 
     public unsafe uint Call(nuint parameter)
@@ -83,7 +86,7 @@ public sealed class DynamicCode : IDisposable
         _ = _disposed == 0 ? true : throw new ObjectDisposedException(GetType().Name);
 
         using var handle = CreateRemoteThread(
-            Window.Process.Handle,
+            Process.Handle,
             null,
             0,
             (delegate* unmanaged[Stdcall]<void*, uint>)(nuint)Window.Address,
