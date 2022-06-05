@@ -29,6 +29,14 @@ sealed class ScanCommand : CancellableAsyncCommand<ScanCommand.ScanCommandSettin
         new SystemMessageScanner(),
     };
 
+    protected override Task PreExecuteAsync(
+        dynamic expando, ScanCommandSettings settings, CancellationToken cancellationToken)
+    {
+        expando.Failures = new List<string>();
+
+        return Task.CompletedTask;
+    }
+
     protected override async Task<int> ExecuteAsync(
         dynamic expando, ScanCommandSettings settings, ProgressContext progress, CancellationToken cancellationToken)
     {
@@ -76,7 +84,7 @@ sealed class ScanCommand : CancellableAsyncCommand<ScanCommand.ScanCommandSettin
                 teraExeBase,
                 (nuint)teraExeImage.Length),
             output);
-        var failed = new List<string>();
+        var failures = (List<string>)expando.Failures;
         var good = true;
 
         foreach (var scanner in _scanners.ToArray())
@@ -87,14 +95,20 @@ sealed class ScanCommand : CancellableAsyncCommand<ScanCommand.ScanCommandSettin
             var result = await progress.RunTaskAsync($"Run {name}", () => scanner.RunAsync(context, cancellationToken));
 
             if (!result)
-                failed.Add(name);
+                failures.Add(name);
 
             good &= result;
         }
 
-        foreach (var name in failed)
-            Log.WriteLine($"[blue]{name}[/] failed to retrieve information from TERA process [cyan]{proc.Id}[/].");
-
         return good ? 0 : 1;
+    }
+
+    protected override Task PostExecuteAsync(
+        dynamic expando, ScanCommandSettings settings, CancellationToken cancellationToken)
+    {
+        foreach (var name in (List<string>)expando.Missing)
+            Log.WriteLine($"[blue]{name}[/] failed to retrieve information from the TERA process.");
+
+        return Task.CompletedTask;
     }
 }
