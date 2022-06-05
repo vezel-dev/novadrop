@@ -6,7 +6,7 @@ public abstract class GamePatch
 {
     public NativeProcess Process { get; }
 
-    public bool Active { get; private set; }
+    public bool IsActive { get; private set; }
 
     protected MemoryWindow Window => Process.MainModule.Window;
 
@@ -30,9 +30,9 @@ public abstract class GamePatch
                 _initialized = true;
             }
 
-            await (!Active ? ApplyAsync(cancellationToken) : RevertAsync(cancellationToken)).ConfigureAwait(false);
+            await (!IsActive ? ApplyAsync(cancellationToken) : RevertAsync(cancellationToken)).ConfigureAwait(false);
 
-            Active = !Active;
+            IsActive = !IsActive;
         }
         catch (Win32Exception ex)
         {
@@ -48,6 +48,6 @@ public abstract class GamePatch
 
     public override string ToString()
     {
-        return $"{{Name: {GetType().Name}, Process: {Process}, Active: {Active}}}";
+        return $"{{Name: {GetType().Name}, Process: {Process}, Active: {IsActive}}}";
     }
 }
