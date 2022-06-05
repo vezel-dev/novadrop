@@ -5,6 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <Using Include="Microsoft.Win32.SafeHandles" />
         <Using Include="System.Buffers" />
         <Using Include="System.Buffers.Binary" />
         <Using Include="System.Collections" />

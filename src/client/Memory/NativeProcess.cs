@@ -1,3 +1,4 @@
+using Windows.Win32.System.Diagnostics.ToolHelp;
 using Windows.Win32.System.Memory;
 using Windows.Win32.System.Threading;
 using static Windows.Win32.WindowsPInvoke;
@@ -122,6 +123,66 @@ public sealed class NativeProcess : IDisposable
 
         if (!FlushInstructionCache(Handle, (void*)(nuint)address, length))
             throw new Win32Exception();
+    }
+
+    unsafe void ForEachThread(Func<int, bool> predicate, Action<uint, SafeFileHandle> action)
+    {
+        var pid = (uint)Process.Id;
+        using var snap = CreateToolhelp32Snapshot_SafeHandle(CREATE_TOOLHELP_SNAPSHOT_FLAGS.TH32CS_SNAPTHREAD, pid);
+
+        if (snap.IsInvalid)
+            throw new Win32Exception();
+
+        var te = new THREADENTRY32
+        {
+            dwSize = (uint)sizeof(THREADENTRY32),
+        };
+
+        if (!Thread32First(snap, ref te))
+            return;
+
+        do
+        {
+            if (te.dwSize == sizeof(THREADENTRY32) && te.th32OwnerProcessID == pid && predicate((int)te.th32ThreadID))
+            {
+                using var handle = OpenThread_SafeHandle(
+                    THREAD_ACCESS_RIGHTS.THREAD_SUSPEND_RESUME, false, te.th32ThreadID);
+
+                if (!handle.IsInvalid)
+                    action(te.th32ThreadID, handle);
+            }
+        }
+        while (Thread32Next(snap, ref te));
+    }
+
+    public (int Id, int Count)[] Suspend(Func<int, bool> predicate)
+    {
+        ArgumentNullException.ThrowIfNull(predicate);
+
+        var suspended = new List<(int, int)>();
+
+        ForEachThread(predicate, (tid, handle) =>
+        {
+            if (SuspendThread(handle) is not uint.MaxValue and var count)
+                suspended.Add(((int)tid, (int)count));
+        });
+
+        return suspended.ToArray();
+    }
+
+    public (int Id, int Count)[] Resume(Func<int, bool> predicate)
+    {
+        ArgumentNullException.ThrowIfNull(predicate);
+
+        var resumed = new List<(int, int)>();
+
+        ForEachThread(predicate, (tid, handle) =>
+        {
+            if (ResumeThread(handle) is not uint.MaxValue and var count)
+                resumed.Add(((int)tid, (int)count));
+        });
+
+        return resumed.ToArray();
     }
 
     public override string ToString()
