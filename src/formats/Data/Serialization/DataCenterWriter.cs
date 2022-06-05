@@ -7,7 +7,7 @@ namespace Vezel.Novadrop.Data.Serialization;
 
 sealed class DataCenterWriter
 {
-    readonly DataCenterHeader _header = new();
+    readonly DataCenterHeader _header;
 
     readonly DataCenterKeysTableWriter _keys;
 
@@ -25,6 +25,10 @@ sealed class DataCenterWriter
 
     public DataCenterWriter(DataCenterSaveOptions options)
     {
+        _header = new()
+        {
+            Revision = options.Revision,
+        };
         _keys = new(_names);
         _options = options;
     }
