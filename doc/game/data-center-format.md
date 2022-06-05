@@ -71,9 +71,9 @@ After decompression, a data center file starts with this header:
 ```cpp
 struct DataCenterHeader
 {
-    uint32_t file_version;
+    uint32_t version;
     double timestamp;
-    uint32_t client_version;
+    uint32_t revision;
     int32_t unknown_1;
     int32_t unknown_2;
     int32_t unknown_3;
@@ -81,7 +81,7 @@ struct DataCenterHeader
 };
 ```
 
-`file_version` is currently `6`.
+`version` is currently `6`.
 
 `timestamp` is a Unix timestamp indicating when the file was produced.
 
@@ -90,7 +90,8 @@ are actually part of a tree structure describing the
 [XSD](https://www.w3.org/TR/xmlschema-1) schema of the data tree, but official
 data centers never include this information.
 
-`client_version` is usually (but not always) the value sent by the client in the
+`revision` indicates the version of the data tree contained within the file. It
+is sometimes (but not always) equal to the value sent by the client in the
 `C_CHECK_VERSION` packet.
 
 ### File Footer

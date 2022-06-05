@@ -2,15 +2,15 @@ namespace Vezel.Novadrop.Data.Serialization;
 
 sealed class DataCenterHeader
 {
-    const int KnownFormatVersion = 6;
+    const int KnownVersion = 6;
 
     const double KnownTimestamp = -1.0;
 
-    public int FormatVersion { get; private set; }
+    public int Version { get; private set; }
 
     public double Timestamp { get; private set; }
 
-    public int ClientVersion { get; private set; }
+    public int Revision { get; set; }
 
     public int Unknown4 { get; private set; }
 
@@ -22,17 +22,17 @@ sealed class DataCenterHeader
 
     public async ValueTask ReadAsync(bool strict, StreamBinaryReader reader, CancellationToken cancellationToken)
     {
-        FormatVersion = await reader.ReadInt32Async(cancellationToken).ConfigureAwait(false);
+        Version = await reader.ReadInt32Async(cancellationToken).ConfigureAwait(false);
         Timestamp = await reader.ReadDoubleAsync(cancellationToken).ConfigureAwait(false);
-        ClientVersion = await reader.ReadInt32Async(cancellationToken).ConfigureAwait(false);
+        Revision = await reader.ReadInt32Async(cancellationToken).ConfigureAwait(false);
         Unknown4 = await reader.ReadInt32Async(cancellationToken).ConfigureAwait(false);
         Unknown5 = await reader.ReadInt32Async(cancellationToken).ConfigureAwait(false);
         Unknown6 = await reader.ReadInt32Async(cancellationToken).ConfigureAwait(false);
         Unknown7 = await reader.ReadInt32Async(cancellationToken).ConfigureAwait(false);
 
-        if (FormatVersion != KnownFormatVersion)
+        if (Version != KnownVersion)
             throw new InvalidDataException(
-                $"Unsupported data center format version {FormatVersion} (expected {KnownFormatVersion}).");
+                $"Unsupported data center version {Version} (expected {KnownVersion}).");
 
         if (Timestamp != KnownTimestamp)
             throw new InvalidDataException(
@@ -46,9 +46,9 @@ sealed class DataCenterHeader
 
     public async ValueTask WriteAsync(StreamBinaryWriter writer, CancellationToken cancellationToken)
     {
-        await writer.WriteInt32Async(KnownFormatVersion, cancellationToken).ConfigureAwait(false);
+        await writer.WriteInt32Async(KnownVersion, cancellationToken).ConfigureAwait(false);
         await writer.WriteDoubleAsync(KnownTimestamp, cancellationToken).ConfigureAwait(false);
-        await writer.WriteInt32Async(ClientVersion, cancellationToken).ConfigureAwait(false);
+        await writer.WriteInt32Async(Revision, cancellationToken).ConfigureAwait(false);
         await writer.WriteInt32Async(0, cancellationToken).ConfigureAwait(false);
         await writer.WriteInt32Async(0, cancellationToken).ConfigureAwait(false);
         await writer.WriteInt32Async(0, cancellationToken).ConfigureAwait(false);

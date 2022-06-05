@@ -18,7 +18,7 @@ public static class DataCenter
         0x76, 0xc9, 0x8d, 0x3c, 0xb9, 0xec, 0x46, 0x01,
     };
 
-    public static int LatestClientVersion => 387463;
+    public static int LatestRevision => 387463;
 
     [SuppressMessage("", "CA5358")]
     internal static Aes CreateCipher(ReadOnlyMemory<byte> key, ReadOnlyMemory<byte> iv)

@@ -2,7 +2,7 @@ namespace Vezel.Novadrop.Data;
 
 public sealed class DataCenterSaveOptions
 {
-    public int ClientVersion { get; private set; } = DataCenter.LatestClientVersion;
+    public int Revision { get; private set; } = DataCenter.LatestRevision;
 
     public CompressionLevel CompressionLevel { get; private set; }
 
@@ -14,21 +14,20 @@ public sealed class DataCenterSaveOptions
     {
         return new()
         {
-            ClientVersion = ClientVersion,
+            Revision = Revision,
             CompressionLevel = CompressionLevel,
             Key = Key,
             IV = IV,
         };
     }
 
-    public DataCenterSaveOptions WithClientVersion(int clientVersion)
+    public DataCenterSaveOptions WithRevision(int revision)
     {
-        _ = clientVersion >= DataCenter.LatestClientVersion
-            ? true : throw new ArgumentOutOfRangeException(nameof(clientVersion));
+        _ = revision >= DataCenter.LatestRevision ? true : throw new ArgumentOutOfRangeException(nameof(revision));
 
         var options = Clone();
 
-        options.ClientVersion = clientVersion;
+        options.Revision = revision;
 
         return options;
     }
