@@ -13,4 +13,9 @@ public sealed class ResourceContainerEntry
         Container = container;
         Name = name;
     }
+
+    public override string ToString()
+    {
+        return $"{{Name: {Name}, Data: [{Data.Length}]}}";
+    }
 }

@@ -64,7 +64,7 @@ public sealed class TelemetryRemovalPatch : GamePatch
             new[] { _pattern1, _pattern2, _pattern3 }
                 .AsParallel()
                 .WithCancellation(cancellationToken)
-                .Select(p => Executable.SearchAsync(p, cancellationToken)))
+                .Select(p => Window.SearchAsync(p, cancellationToken)))
             .ConfigureAwait(false);
 
         foreach (var offsets in results)
@@ -77,7 +77,7 @@ public sealed class TelemetryRemovalPatch : GamePatch
             var off = arr[0];
             var code = new byte[_patch.Length];
 
-            Executable.Read(off, code);
+            Window.Read(off, code);
 
             _functions.Add((off, code));
         }
@@ -86,7 +86,7 @@ public sealed class TelemetryRemovalPatch : GamePatch
     protected override Task ApplyAsync(CancellationToken cancellationToken)
     {
         foreach (var (off, _) in _functions)
-            Executable.Write(off, _patch.Span);
+            Window.Write(off, _patch.Span);
 
         return Task.CompletedTask;
     }
@@ -94,7 +94,7 @@ public sealed class TelemetryRemovalPatch : GamePatch
     protected override Task RevertAsync(CancellationToken cancellationToken)
     {
         foreach (var (off, original) in _functions)
-            Executable.Write(off, original.Span);
+            Window.Write(off, original.Span);
 
         return Task.CompletedTask;
     }

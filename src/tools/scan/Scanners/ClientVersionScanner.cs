@@ -1,6 +1,6 @@
 namespace Vezel.Novadrop.Scanners;
 
-sealed class ClientVersionScanner : IScanner
+sealed class ClientVersionScanner : GameScanner
 {
     static readonly ReadOnlyMemory<byte?> _pattern = new byte?[]
     {
@@ -11,10 +11,9 @@ sealed class ClientVersionScanner : IScanner
         0x8b, 0x05, null, null, null, null, // mov eax, dword ptr [rip + <disp>]
     };
 
-    public async Task<bool> RunAsync(ScanContext context, CancellationToken cancellationToken)
+    public override async Task<bool> RunAsync(ScanContext context, CancellationToken cancellationToken)
     {
-        var exe = context.Process.MainModule;
-
+        var exe = context.Window;
         var offsets = (await exe.SearchAsync(_pattern, cancellationToken)).ToArray();
 
         if (offsets.Length != 1)

@@ -21,7 +21,7 @@ sealed class ScanCommand : CancellableAsyncCommand<ScanCommand.ScanCommandSettin
         }
     }
 
-    static readonly ReadOnlyMemory<IScanner> _scanners = new IScanner[]
+    static readonly ReadOnlyMemory<GameScanner> _scanners = new GameScanner[]
     {
         new ClientVersionScanner(),
         new DataCenterScanner(),
@@ -32,7 +32,7 @@ sealed class ScanCommand : CancellableAsyncCommand<ScanCommand.ScanCommandSettin
     protected override async Task<int> ExecuteAsync(
         dynamic expando, ScanCommandSettings settings, ProgressContext progress, CancellationToken cancellationToken)
     {
-        var proc = settings.ProcessId is not -1 and var pid
+        using var proc = settings.ProcessId is not -1 and var pid
             ? Process.GetProcessById(pid)
             : Process.GetProcessesByName("TERA").FirstOrDefault();
 
@@ -52,13 +52,13 @@ sealed class ScanCommand : CancellableAsyncCommand<ScanCommand.ScanCommandSettin
 
         Log.WriteLine($"Scanning TERA process [cyan]{proc.Id}[/] and writing results to [cyan]{settings.Output}[/]...");
 
-        using var native = new NativeProcess(proc);
+        using var native = new NativeProcess(proc.Id);
 
         var output = new DirectoryInfo(settings.Output);
 
         output.Create();
 
-        var context = new ScanContext(native, output);
+        var context = new ScanContext(native.MainModule.Window, output);
         var failed = new List<string>();
         var good = true;
 

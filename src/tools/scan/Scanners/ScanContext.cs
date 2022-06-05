@@ -2,13 +2,13 @@ namespace Vezel.Novadrop.Scanners;
 
 sealed class ScanContext
 {
-    public NativeProcess Process { get; }
+    public MemoryWindow Window { get; }
 
     public DirectoryInfo Output { get; }
 
-    public ScanContext(NativeProcess process, DirectoryInfo output)
+    public ScanContext(MemoryWindow window, DirectoryInfo output)
     {
-        Process = process;
+        Window = window;
         Output = output;
     }
 }

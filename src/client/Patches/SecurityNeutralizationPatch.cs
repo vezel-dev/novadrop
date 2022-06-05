@@ -20,7 +20,7 @@ public sealed class SecurityNeutralizationPatch : GamePatch
 
     protected override async Task InitializeAsync(CancellationToken cancellationToken)
     {
-        var offsets = (await Executable.SearchAsync(_className, cancellationToken).ConfigureAwait(false)).ToArray();
+        var offsets = (await Window.SearchAsync(_className, cancellationToken).ConfigureAwait(false)).ToArray();
 
         if (offsets.Length != 32)
             throw new GamePatchException("Could not locate security virtual method tables.");
@@ -30,7 +30,7 @@ public sealed class SecurityNeutralizationPatch : GamePatch
             // The 4th slot contains the crashing method that we are interested in.
             var slot = off - (uint)Unsafe.SizeOf<nuint>() * 2;
 
-            _slots.Add((slot, Executable.Read<nuint>(slot)));
+            _slots.Add((slot, Window.Read<nuint>(slot)));
         }
     }
 
@@ -48,7 +48,7 @@ public sealed class SecurityNeutralizationPatch : GamePatch
         });
 
         foreach (var (slot, _) in _slots)
-            Executable.Write(slot, (nuint)_function.Window.Address);
+            Window.Write(slot, (nuint)_function.Window.Address);
 
         return Task.CompletedTask;
     }
@@ -56,7 +56,7 @@ public sealed class SecurityNeutralizationPatch : GamePatch
     protected override Task RevertAsync(CancellationToken cancellationToken)
     {
         foreach (var (slot, original) in _slots)
-            Executable.Write(slot, original);
+            Window.Write(slot, original);
 
         _function!.Dispose();
 
