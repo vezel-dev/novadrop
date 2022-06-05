@@ -58,7 +58,7 @@ public sealed class TelemetryRemovalPatch : GamePatch
     {
     }
 
-    protected override async Task InitializeAsync(CancellationToken cancellationToken)
+    protected override async Task InitializeCoreAsync(CancellationToken cancellationToken)
     {
         var results = await Task.WhenAll(
             new[] { _pattern1, _pattern2, _pattern3 }
@@ -83,19 +83,15 @@ public sealed class TelemetryRemovalPatch : GamePatch
         }
     }
 
-    protected override Task ApplyAsync(CancellationToken cancellationToken)
+    protected override void Apply()
     {
         foreach (var (off, _) in _functions)
             Window.Write(off, _patch.Span);
-
-        return Task.CompletedTask;
     }
 
-    protected override Task RevertAsync(CancellationToken cancellationToken)
+    protected override void Revert()
     {
         foreach (var (off, original) in _functions)
             Window.Write(off, original.Span);
-
-        return Task.CompletedTask;
     }
 }

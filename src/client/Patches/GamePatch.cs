@@ -8,7 +8,7 @@ public abstract class GamePatch
 
     public bool IsActive { get; private set; }
 
-    protected MemoryWindow Window => Process.MainModule.Window;
+    protected MemoryWindow Window { get; }
 
     bool _initialized;
 
@@ -17,37 +17,53 @@ public abstract class GamePatch
         ArgumentNullException.ThrowIfNull(process);
 
         Process = process;
+        Window = process.MainModule.Window;
     }
 
-    public async Task ToggleAsync(CancellationToken cancellationToken = default)
+    public async Task InitializeAsync(CancellationToken cancellationToken = default)
     {
+        if (_initialized)
+            return;
+
         try
         {
-            if (!_initialized)
-            {
-                await InitializeAsync(cancellationToken).ConfigureAwait(false);
-
-                _initialized = true;
-            }
-
-            await (!IsActive ? ApplyAsync(cancellationToken) : RevertAsync(cancellationToken)).ConfigureAwait(false);
-
-            IsActive = !IsActive;
+            await InitializeCoreAsync(cancellationToken).ConfigureAwait(false);
         }
         catch (Win32Exception ex)
         {
             throw new GamePatchException("A Win32 API error ocurred.", ex);
         }
+
+        _initialized = true;
     }
 
-    protected abstract Task InitializeAsync(CancellationToken cancellationToken);
+    protected abstract Task InitializeCoreAsync(CancellationToken cancellationToken);
 
-    protected abstract Task ApplyAsync(CancellationToken cancellationToken);
+    public void Toggle()
+    {
+        _ = _initialized ? true : throw new InvalidOperationException();
 
-    protected abstract Task RevertAsync(CancellationToken cancellationToken);
+        try
+        {
+            if (!IsActive)
+                Apply();
+            else
+                Revert();
+        }
+        catch (Win32Exception ex)
+        {
+            throw new GamePatchException("A Win32 API error ocurred.", ex);
+        }
+
+        IsActive = !IsActive;
+    }
+
+    protected abstract void Apply();
+
+    protected abstract void Revert();
 
     public override string ToString()
     {
-        return $"{{Name: {GetType().Name}, Process: {Process}, Active: {IsActive}}}";
+        return $"{{Name: {GetType().Name}, Process: {Process}, IsActive: {IsActive}}}";
     }
 }

@@ -18,7 +18,7 @@ public sealed class SecurityNeutralizationPatch : GamePatch
     {
     }
 
-    protected override async Task InitializeAsync(CancellationToken cancellationToken)
+    protected override async Task InitializeCoreAsync(CancellationToken cancellationToken)
     {
         var offsets = (await Window.SearchAsync(_className, cancellationToken).ConfigureAwait(false)).ToArray();
 
@@ -34,7 +34,7 @@ public sealed class SecurityNeutralizationPatch : GamePatch
         }
     }
 
-    protected override Task ApplyAsync(CancellationToken cancellationToken)
+    protected override void Apply()
     {
         // The code in the crashing method is virtualized. Instead of trying to devirtualize it, we will just replace
         // the function pointer in the virtual method table with a pointer to a no-op function that we create. A neat
@@ -49,17 +49,13 @@ public sealed class SecurityNeutralizationPatch : GamePatch
 
         foreach (var (slot, _) in _slots)
             Window.Write(slot, (nuint)_function.Window.Address);
-
-        return Task.CompletedTask;
     }
 
-    protected override Task RevertAsync(CancellationToken cancellationToken)
+    protected override void Revert()
     {
         foreach (var (slot, original) in _slots)
             Window.Write(slot, original);
 
         _function!.Dispose();
-
-        return Task.CompletedTask;
     }
 }
