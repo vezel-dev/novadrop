@@ -1,6 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <ApplicationManifest>scan.manifest</ApplicationManifest>
         <AssemblyName>novadrop-scan</AssemblyName>
         <PackAsToolShimRuntimeIdentifiers>win-x64</PackAsToolShimRuntimeIdentifiers>
         <PackageDescription>$(PackageDescription)

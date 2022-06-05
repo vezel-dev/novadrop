@@ -19,7 +19,5 @@ process for the scan; if omitted, novadrop-scan will look for a process named
 
 Notes:
 
-* Since novadrop-scan performs intrusive memory operations on the target
-  process, it must be run with elevation.
 * There is no support for running novadrop-scan on platforms other than Windows.
 * Only 64-bit versions of the game client are supported.
