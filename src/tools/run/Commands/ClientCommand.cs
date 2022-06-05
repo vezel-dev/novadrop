@@ -67,7 +67,7 @@ sealed class ClientCommand : CancellableAsyncCommand<ClientCommand.ClientCommand
 
         return progress.RunTaskAsync(
             "Connecting to arbiter server",
-            4,
+            5,
             increment =>
             {
                 var process = new ClientProcess(
@@ -76,6 +76,7 @@ sealed class ClientCommand : CancellableAsyncCommand<ClientCommand.ClientCommand
                         .WithLanguage(settings.Language)
                         .WithLastServerId(42));
 
+                process.GameStarted += _ => increment();
                 process.ServerListRequested += increment;
                 process.AccountNameRequested += increment;
                 process.SessionTicketRequested += increment;

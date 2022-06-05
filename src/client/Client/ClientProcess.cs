@@ -4,6 +4,8 @@ public sealed class ClientProcess : GameProcess
 {
     // Represents a TERA.exe process from the perspective of a Tl.exe-compatible process.
 
+    public event Action<int>? GameStarted;
+
     public event Action? ServerListRequested;
 
     public event Action? AccountNameRequested;
@@ -105,6 +107,13 @@ public sealed class ClientProcess : GameProcess
             return null;
         }
 
+        (nuint, ReadOnlyMemory<byte>)? HandleGameStart(ReadOnlySpan<byte> payload)
+        {
+            GameStarted?.Invoke(BinaryPrimitives.ReadInt32LittleEndian(payload));
+
+            return null;
+        }
+
         (nuint, ReadOnlyMemory<byte>)? HandleGameEvent()
         {
             GameEventOccurred?.Invoke((GameEvent)id);
@@ -140,7 +149,7 @@ public sealed class ClientProcess : GameProcess
             0x15 => null,
             0x19 => null,
             0x1a => null,
-            0x3e8 => null,
+            0x3e8 => HandleGameStart(payload),
             >= 0x3e9 and <= 0x3f8 => HandleGameEvent(),
             0x3fc => HandleGameExit(payload),
             0x3fd => HandleGameCrash(payload),
