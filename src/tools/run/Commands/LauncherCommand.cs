@@ -59,7 +59,7 @@ sealed class LauncherCommand : CancellableAsyncCommand<LauncherCommand.LauncherC
                 process.AuthenticationInfoRequested += increment;
                 process.GameEventOccurred += e =>
                 {
-                    if (e == GameEvent.LoggedIn)
+                    if (e == GameEvent.EnteredLobby)
                         increment();
                 };
 

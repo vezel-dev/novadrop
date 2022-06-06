@@ -3,12 +3,12 @@ namespace Vezel.Novadrop.Client;
 [SuppressMessage("", "CA1008")]
 public enum GameEvent
 {
-    RequestedServerList = 1001,
-    ReceivedServerList = 1002,
-    LoggedIn = 1003,
+    EnteredIntroCinematic = 1001,
+    EnteredServerList = 1002,
+    EnteringLobby = 1003,
     EnteredLobby = 1004,
     EnteringCharacterCreation = 1005,
-    LoggedOut = 1006,
+    LeftLobby = 1006,
     DeletedCharacter = 1007,
     CanceledCharacterCreation = 1008,
     EnteredCharacterCreation = 1009,

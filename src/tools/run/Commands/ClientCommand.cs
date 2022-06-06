@@ -82,7 +82,7 @@ sealed class ClientCommand : CancellableAsyncCommand<ClientCommand.ClientCommand
                 process.SessionTicketRequested += increment;
                 process.GameEventOccurred += e =>
                 {
-                    if (e == GameEvent.LoggedIn)
+                    if (e == GameEvent.EnteredLobby)
                         increment();
                 };
 
