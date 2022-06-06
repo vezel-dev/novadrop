@@ -40,9 +40,13 @@ public sealed class TelemetryRemovalPatch : GamePatch
         0x41, 0x55,                                     // push r13
         0x41, 0x56,                                     // push r14
         0x41, 0x57,                                     // push r15
-        0x48, 0x8d, 0xac, 0x24, 0x10, 0xff, 0xff, 0xff, // lea rbp, [rsp - 0xf0]
-        0x48, 0x81, 0xec, 0xf0, 0x01, 0x00, 0x00,       // sub rsp, 0x1f0
+        0x48, 0x8d, 0xac, 0x24, null, null, null, null, // lea rbp, [rsp + <disp>]
+        0x48, 0x81, 0xec, null, null, null, null,       // sub rsp, <imm>
         0x48, 0x8b, 0x05, null, null, null, null,       // mov rax, qword ptr [rip + <disp>]
+        0x48, 0x33, 0xc4,                               // xor rax, rsp
+        0x48, 0x89, 0x85, null, null, null, null,       // mov qword ptr [rbp + <disp>], rax
+        0xe8, null, null, null, null,                   // call <imm>
+        0xf7, 0xd8,                                     // neg eax
     };
 
     static readonly ReadOnlyMemory<byte> _patch = new byte[]
