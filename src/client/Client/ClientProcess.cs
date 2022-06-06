@@ -149,6 +149,7 @@ public sealed class ClientProcess : GameProcess
             0x15 => null,
             0x19 => null,
             0x1a => null,
+            0x1c => null,
             0x3e8 => HandleGameStart(payload),
             >= 0x3e9 and <= 0x3f8 => HandleGameEvent(),
             0x3fc => HandleGameExit(payload),

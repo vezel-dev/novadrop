@@ -385,9 +385,10 @@ struct LauncherServerListRequest
 as follows:
 
 ```cpp
-enum LauncherServerListSorting
+enum LauncherServerListSorting : int32_t
 {
-    LAUNCHER_SERVER_LIST_SORTING_NONE = 0,
+    LAUNCHER_SERVER_LIST_SORTING_NONE = -1,
+    LAUNCHER_SERVER_LIST_SORTING_CHARACTERS = 0,
     LAUNCHER_SERVER_LIST_SORTING_CATEGORY = 1,
     LAUNCHER_SERVER_LIST_SORTING_NAME = 2,
     LAUNCHER_SERVER_LIST_SORTING_POPULATION = 4,
@@ -397,10 +398,12 @@ enum LauncherServerListSorting
 A few notes on sorting:
 
 * The sort should be stable.
-* The resultant list should be maintained between requests and operated on,
-  unless `LAUNCHER_SERVER_LIST_SORTING_NONE` is sent to reset the sorting to an
-  arbitrary initial state.
-* If the same sorting is requested multiple times and is any other sorting than
+* `LAUNCHER_SERVER_LIST_SORTING_NONE` indicates that `Tl.exe` is free to sort
+  the list arbitrarily.
+* The resultant list should be maintained between requests and further sorted
+  on each request, unless `LAUNCHER_SERVER_LIST_SORTING_NONE` is sent to reset
+  the sorting.
+* If the same sorting is requested multiple times and is any sorting other than
   `LAUNCHER_SERVER_LIST_SORTING_NONE`, the list should simply be reversed
   without applying sorting.
 
@@ -481,9 +484,9 @@ The two cases can be distinguished by looking at the payload length.
 `character_name` is the NUL-terminated name of the character that the user is
 entering the world on.
 
-### Voice Chat Commands
+### Voice Chat Requests
 
-There is a set of commands for interacting with
+There is a set of requests for interacting with
 [TeamSpeak](https://www.teamspeak.com):
 
 * Create Room (`0x8`)
@@ -495,6 +498,14 @@ There is a set of commands for interacting with
 
 These messages were only present in some regions and were likely never actually
 used. It is currently unknown what their payloads contain.
+
+#### Voice Chat Responses
+
+The following responses exist for the above TeamSpeak requests:
+
+* Create Room Result (`0x9`)
+* Join Room Result (`0xb`)
+* Leave Room Result (`0xd`)
 
 ### Open Website Command (`0x19`)
 
