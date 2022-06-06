@@ -30,6 +30,10 @@ The `account-name` and `session-ticket` arguments specify the credentials as
 obtained from the relevant authentication service. The `server-host` and
 `server-port` arguments specify the arbiter server to connect to.
 
+| Option | Description |
+| - | - |
+| `--patch` | Enable memory patching to remove Themida integrity checks and telemetry. |
+
 ## novadrop-run launcher
 
 ```text

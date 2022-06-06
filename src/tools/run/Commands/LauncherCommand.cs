@@ -44,7 +44,7 @@ sealed class LauncherCommand : CancellableAsyncCommand<LauncherCommand.LauncherC
 
         return progress.RunTaskAsync(
             "Connecting to arbiter server",
-            3,
+            6,
             increment =>
             {
                 var opts = new LauncherProcessOptions(
@@ -56,10 +56,15 @@ sealed class LauncherCommand : CancellableAsyncCommand<LauncherCommand.LauncherC
                 var process = new LauncherProcess(opts);
 
                 process.ServerListUriRequested += increment;
+
                 process.AuthenticationInfoRequested += increment;
+
                 process.GameEventOccurred += e =>
                 {
-                    if (e == GameEvent.EnteredLobby)
+                    if (e is GameEvent.EnteredIntroCinematic or
+                        GameEvent.EnteredServerList or
+                        GameEvent.EnteringLobby or
+                        GameEvent.EnteredLobby)
                         increment();
                 };
 

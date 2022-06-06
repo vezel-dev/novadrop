@@ -11,6 +11,8 @@ client from the command line.</PackageDescription>
 
     <ItemGroup>
         <Using Include="Vezel.Novadrop.Client" />
+        <Using Include="Vezel.Novadrop.Memory" />
+        <Using Include="Vezel.Novadrop.Patches" />
     </ItemGroup>
 
     <ItemGroup>

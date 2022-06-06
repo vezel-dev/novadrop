@@ -29,6 +29,10 @@ sealed class ClientCommand : CancellableAsyncCommand<ClientCommand.ClientCommand
         [Description("Server port")]
         public ushort ServerPort { get; }
 
+        [CommandOption("--patch")]
+        [Description("Enable Themida and telemetry removal")]
+        public bool Patch { get; init; }
+
         public ClientCommandSettings(
             string executable,
             string language,
@@ -67,7 +71,7 @@ sealed class ClientCommand : CancellableAsyncCommand<ClientCommand.ClientCommand
 
         return progress.RunTaskAsync(
             "Connecting to arbiter server",
-            5,
+            8 + (settings.Patch ? 2 : 0),
             increment =>
             {
                 var process = new ClientProcess(
@@ -76,13 +80,58 @@ sealed class ClientCommand : CancellableAsyncCommand<ClientCommand.ClientCommand
                         .WithLanguage(settings.Language)
                         .WithLastServerId(42));
 
-                process.GameStarted += _ => increment();
-                process.ServerListRequested += increment;
+                var patches = new List<(GamePatch, Task)>();
+
+                process.GameStarted += _ =>
+                {
+                    increment();
+
+                    if (!settings.Patch)
+                        return;
+
+                    var nativeProc = new NativeProcess(process.Id);
+                    var tempPatches = new GamePatch[]
+                    {
+                        new SecurityNeutralizationPatch(nativeProc),
+                        new TelemetryRemovalPatch(nativeProc),
+                    };
+
+                    // Start scanning for needed patterns as early as possible.
+                    foreach (var patch in tempPatches)
+                        patches.Add((patch, patch.InitializeAsync(cancellationToken)));
+                };
+
+                var sls = false;
+
+                process.ServerListRequested += () =>
+                {
+                    // If we take too long to apply patches, the client gets impatient and sends the request again.
+                    if (sls)
+                        return;
+
+                    sls = true;
+
+                    increment();
+
+                    foreach (var (patch, task) in patches)
+                    {
+                        task.GetAwaiter().GetResult();
+                        patch.Toggle();
+
+                        increment();
+                    }
+                };
+
                 process.AccountNameRequested += increment;
+
                 process.SessionTicketRequested += increment;
+
                 process.GameEventOccurred += e =>
                 {
-                    if (e == GameEvent.EnteredLobby)
+                    if (e is GameEvent.EnteredIntroCinematic or
+                        GameEvent.EnteredServerList or
+                        GameEvent.EnteringLobby or
+                        GameEvent.EnteredLobby)
                         increment();
                 };
 
