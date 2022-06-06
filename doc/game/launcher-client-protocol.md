@@ -307,14 +307,16 @@ completely optional.
 
 ### Web Link URL Request
 
-`Tl.exe` will send a message that can be described with the regular expression
-`^getWebLinkUrl\((\d+),(.*)\)$`. The first group is the link type and the second
-is a set of arguments specific to that type. This message does not have a static
-message ID and is *not* NUL-terminated.
+`Tl.exe` will request a URL to be opened in the client's embedded Web browser.
+This message does not have a static message ID and is *not* NUL-terminated.
 
-The exact meaning of the link type values and arguments is currently unknown.
+The message can be described by the regular expression
+`^getWebLinkUrl\((\d+),(.*)\)$`. The first group is the ID of a `UIWindow` node
+under the `CoherentGTWeb` data center sheet, and the second group is a set of
+arguments specific to that link.
 
-`launcher.exe` should respond with an empty payload.
+`launcher.exe` should respond with a URL to be opened (*without* a NUL
+terminator), or an empty payload to reject the request.
 
 ## `TERA.exe` -> `Tl.exe` Messages
 
@@ -375,11 +377,32 @@ NUL-terminated.
 ```cpp
 struct LauncherServerListRequest
 {
-    uint32_t unknown_1;
+    LauncherServerListSorting sorting;
 };
 ```
 
-The meaning of `unknown_1` is currently unknown.
+`sorting` specifies how `Tl.exe` should sort the server list. Valid values are
+as follows:
+
+```cpp
+enum LauncherServerListSorting
+{
+    LAUNCHER_SERVER_LIST_SORTING_NONE = 0,
+    LAUNCHER_SERVER_LIST_SORTING_CATEGORY = 1,
+    LAUNCHER_SERVER_LIST_SORTING_NAME = 2,
+    LAUNCHER_SERVER_LIST_SORTING_POPULATION = 4,
+};
+```
+
+A few notes on sorting:
+
+* The sort should be stable.
+* The resultant list should be maintained between requests and operated on,
+  unless `LAUNCHER_SERVER_LIST_SORTING_NONE` is sent to reset the sorting to an
+  arbitrary initial state.
+* If the same sorting is requested multiple times and is any other sorting than
+  `LAUNCHER_SERVER_LIST_SORTING_NONE`, the list should simply be reversed
+  without applying sorting.
 
 #### Server List Response (`0x6`)
 
@@ -480,12 +503,12 @@ used. It is currently unknown what their payloads contain.
 ```cpp
 struct LauncherOpenWebsiteCommand
 {
-    uint32_t type;
+    uint32_t id;
 };
 ```
 
-`type` specifies the kind of website that should be opened. The possible values
-are currently unknown, but each value is an ID of a well-known URL to open.
+`id` specifies the kind of website that should be opened. The possible values
+are currently unknown.
 
 ### Web Link URL Request (`0x1a`)
 
@@ -495,30 +518,29 @@ This request is the `TERA.exe` equivalent of the request sent by `Tl.exe` to
 ```cpp
 struct LauncherWebLinkURLRequest
 {
-    uint32_t type;
+    uint32_t id;
     u16string arguments;
 };
 ```
 
-`type` specifies the link type. The possible values are currently unknown, but
-each value is an ID of a well-known URL to open.
+`id` refers to a `UIWindow` node under the `CoherentGTWeb` data center sheet.
 
-`arguments` specifies the NUL-terminated arguments in relation to the `type`
-value.
+`arguments` specifies the NUL-terminated arguments specific to the link.
 
 #### Web Link URL Response (`0x1b`)
 
 ```cpp
 struct LauncherWebLinkURLResponse
 {
-    uint32_t type;
-    uint32_t unknown_1;
+    uint32_t id;
+    u16string url;
 };
 ```
 
-`type` is the same value that was sent in the request.
+`id` is the same value that was sent in the request.
 
-The meaning of `unknown_1` is currently unknown.
+`url` is the NUL-terminated URL to open. It can be the special string `|` to
+indicate that no URL should be opened.
 
 ### Game Start Notification (`0x3e8`)
 
@@ -586,7 +608,7 @@ struct LauncherGameExitNotification
 {
     uint32_t length;
     uint32_t code;
-    uint32_t reason;
+    LauncherGameExitReason reason;
 };
 ```
 
@@ -594,7 +616,7 @@ struct LauncherGameExitNotification
 
 `code` is the exit code of the `TERA.exe` process. This can be `0` or `1`.
 
-`reason` provides a more specific exit reason. Some valid values are as follows:
+`reason` provides a more specific exit reason. Some known values are as follows:
 
 ```cpp
 enum LauncherGameExitReason : uint32_t
