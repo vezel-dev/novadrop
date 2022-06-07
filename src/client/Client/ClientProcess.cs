@@ -63,7 +63,7 @@ public sealed class ClientProcess : GameProcess
             return (0x4, Encoding.UTF8.GetBytes(opts.SessionTicket));
         }
 
-        (nuint, ReadOnlyMemory<byte>) HandleServerListRequest()
+        (nuint, ReadOnlyMemory<byte>) HandleServerListRequest(ReadOnlySpan<byte> payload)
         {
             ServerListRequested?.Invoke();
 
@@ -72,6 +72,7 @@ public sealed class ClientProcess : GameProcess
             var csl = new ProtoBufServerList
             {
                 LastServerId = (uint)opts.LastServerId,
+                SortCriterion = BinaryPrimitives.ReadUInt32LittleEndian(payload),
             };
 
             foreach (var srv in opts.Servers.Values.OrderBy(s => s.Id))
@@ -139,7 +140,7 @@ public sealed class ClientProcess : GameProcess
         {
             0x1 => HandleAccountNameRequest(),
             0x3 => HandleSessionTicketRequest(),
-            0x5 => HandleServerListRequest(),
+            0x5 => HandleServerListRequest(payload),
             0x7 => HandleEnterLobbyOrWorld(payload),
             0x8 => null,
             0xa => null,
