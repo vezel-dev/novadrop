@@ -74,7 +74,7 @@ public sealed class ClientProcess : GameProcess
                 LastServerId = (uint)opts.LastServerId,
             };
 
-            foreach (var (_, srv) in opts.Servers)
+            foreach (var srv in opts.Servers.Values.OrderBy(s => s.Id))
                 csl.Servers.Add(new()
                 {
                     Id = (uint)srv.Id,
