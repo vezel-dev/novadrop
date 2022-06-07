@@ -377,7 +377,7 @@ NUL-terminated.
 ```cpp
 struct LauncherServerListRequest
 {
-    LauncherServerListSorting sorting;
+    LauncherServerListSortCriteria sort_criterion;
 };
 ```
 
@@ -385,26 +385,26 @@ struct LauncherServerListRequest
 as follows:
 
 ```cpp
-enum LauncherServerListSorting : int32_t
+enum LauncherServerListSortCriteria : int32_t
 {
-    LAUNCHER_SERVER_LIST_SORTING_NONE = -1,
-    LAUNCHER_SERVER_LIST_SORTING_CHARACTERS = 0,
-    LAUNCHER_SERVER_LIST_SORTING_CATEGORY = 1,
-    LAUNCHER_SERVER_LIST_SORTING_NAME = 2,
-    LAUNCHER_SERVER_LIST_SORTING_POPULATION = 4,
+    LAUNCHER_SERVER_LIST_SORT_CRITERIA_NONE = -1,
+    LAUNCHER_SERVER_LIST_SORT_CRITERIA_CHARACTERS = 0,
+    LAUNCHER_SERVER_LIST_SORT_CRITERIA_CATEGORY = 1,
+    LAUNCHER_SERVER_LIST_SORT_CRITERIA_NAME = 2,
+    LAUNCHER_SERVER_LIST_SORT_CRITERIA_POPULATION = 4,
 };
 ```
 
 A few notes on sorting:
 
 * The sort should be stable.
-* `LAUNCHER_SERVER_LIST_SORTING_NONE` indicates that `Tl.exe` is free to sort
-  the list arbitrarily.
+* `LAUNCHER_SERVER_LIST_SORT_CRITERIA_NONE` indicates that `Tl.exe` is free to
+  sort the list arbitrarily.
 * The resultant list should be maintained between requests and further sorted
   on each request, unless `LAUNCHER_SERVER_LIST_SORTING_NONE` is sent to reset
   the sorting.
 * If the same sorting is requested multiple times and is any sorting other than
-  `LAUNCHER_SERVER_LIST_SORTING_NONE`, the list should simply be reversed
+  `LAUNCHER_SERVER_LIST_SORT_CRITERIA_NONE`, the list should simply be reversed
   without applying sorting.
 
 #### Server List Response (`0x6`)
@@ -446,7 +446,7 @@ message ServerList
 
     repeated ServerInfo servers = 1;
     required fixed32 last_server_id = 2;
-    required fixed32 unknown_1 = 3;
+    required fixed32 sort_criterion = 3;
 }
 ```
 
@@ -460,7 +460,8 @@ A few notes on these definitions:
 * Either `address` or `host` must be set; not neither and not both.
     * For `address`, a value of `0` has 'not set' semantics since the field is
       not marked `optional`.
-* The meaning of `unknown_1` is currently unknown. It appears to always be `0`.
+* `sort_criterion` should be the `LauncherServerListSortCriteria` value that was
+  sent in the request.
 
 ### Enter Lobby/World Notification (`0x7`)
 
