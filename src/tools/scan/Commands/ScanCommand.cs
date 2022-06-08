@@ -106,7 +106,7 @@ sealed class ScanCommand : CancellableAsyncCommand<ScanCommand.ScanCommandSettin
     protected override Task PostExecuteAsync(
         dynamic expando, ScanCommandSettings settings, CancellationToken cancellationToken)
     {
-        foreach (var name in (List<string>)expando.Missing)
+        foreach (var name in (List<string>)expando.Failures)
             Log.WriteLine($"[blue]{name}[/] failed to retrieve information from the TERA process.");
 
         return Task.CompletedTask;
