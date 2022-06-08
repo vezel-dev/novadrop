@@ -97,7 +97,7 @@ public sealed class LauncherProcess : GameProcess
         // char_cnt. So, for these messages, matching on the contents is the only correct way to handle them.
         var replyPayload = (id, utf8.GetString(payload)) switch
         {
-            (0x0dbadb0a, "Hello!!\0") => "Hello!!",
+            (0x0dbadb0a, "Hello!!\0") => "Hello!!\0",
             (0x0, var value) => HandleGameEventOrExit(value),
             (_, "slsurl\0") => HandleServerListUriRequest(),
             (_, "gamestr\0" or "ticket\0" or "last_svr\0" or "char_cnt\0") => HandleAuthenticationInfoRequest(),
