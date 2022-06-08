@@ -305,7 +305,7 @@ Some properties are only required depending on the message:
 `result-message`, `account_bits`, `access_level`, and `user_permission` are
 completely optional.
 
-### Web Link URL Request
+### Web URL Request
 
 `Tl.exe` will request a URL to be opened in the client's embedded Web browser.
 This message does not have a static message ID and is *not* NUL-terminated.
@@ -313,7 +313,7 @@ This message does not have a static message ID and is *not* NUL-terminated.
 The message can be described by the regular expression
 `^getWebLinkUrl\((\d+),(.*)\)$`. The first group is the ID of a `UIWindow` node
 under the `CoherentGTWeb` data center sheet, and the second group is a set of
-arguments specific to that link.
+arguments specific to that URL.
 
 `launcher.exe` should respond with a URL to be opened (*without* a NUL
 terminator), or an empty payload to reject the request.
@@ -522,13 +522,13 @@ struct LauncherOpenWebsiteCommand
 `id` specifies the kind of website that should be opened. The possible values
 are currently unknown.
 
-### Web Link URL Request (`0x1a`)
+### Web URL Request (`0x1a`)
 
 This request is the `TERA.exe` equivalent of the request sent by `Tl.exe` to
 `launcher.exe`.
 
 ```cpp
-struct LauncherWebLinkURLRequest
+struct LauncherWebURLRequest
 {
     uint32_t id;
     u16string arguments;
@@ -537,12 +537,12 @@ struct LauncherWebLinkURLRequest
 
 `id` refers to a `UIWindow` node under the `CoherentGTWeb` data center sheet.
 
-`arguments` specifies the NUL-terminated arguments specific to the link.
+`arguments` specifies the NUL-terminated arguments specific to the URL.
 
-#### Web Link URL Response (`0x1b`)
+#### Web URL Response (`0x1b`)
 
 ```cpp
-struct LauncherWebLinkURLResponse
+struct LauncherWebURLResponse
 {
     uint32_t id;
     u16string url;
@@ -551,8 +551,8 @@ struct LauncherWebLinkURLResponse
 
 `id` is the same value that was sent in the request.
 
-`url` is the NUL-terminated URL to open. It can be the special string `|` to
-indicate that no URL should be opened.
+`url` is the NUL-terminated URL to open. It can be the empty string or the
+special string `|` to indicate that no URL should be opened.
 
 ### Game Start Notification (`0x3e8`)
 

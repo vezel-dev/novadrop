@@ -16,6 +16,8 @@ public sealed class ClientProcess : GameProcess
 
     public event Action<string>? WorldEntered;
 
+    public event ReadOnlySpanAction<string, int>? WebUriRequested;
+
     public event Action<GameEvent>? GameEventOccurred;
 
     public event Action<int>? GameExited;
@@ -108,6 +110,28 @@ public sealed class ClientProcess : GameProcess
             return null;
         }
 
+        (nuint, ReadOnlyMemory<byte>)? HandleWebUriRequest(ReadOnlySpan<byte> payload)
+        {
+            var id = BinaryPrimitives.ReadInt32LittleEndian(payload);
+            var args = utf16.GetString(payload[sizeof(int)..]).TrimEnd('\0').Split(',');
+
+            WebUriRequested?.Invoke(args, id);
+
+            if (Options.WebUriProvider?.Invoke(id, args) is not Uri uri)
+                return null;
+
+            if (!uri.IsAbsoluteUri)
+                throw new InvalidOperationException();
+
+            var abs = uri.AbsoluteUri;
+            var reply = new byte[sizeof(int) + utf16.GetByteCount(abs) + sizeof(char)]; // Add NUL terminator.
+
+            BinaryPrimitives.WriteInt32LittleEndian(reply, id);
+            _ = utf16.GetBytes(abs, reply.AsSpan(sizeof(int)));
+
+            return (0x1b, reply);
+        }
+
         (nuint, ReadOnlyMemory<byte>)? HandleGameStart(ReadOnlySpan<byte> payload)
         {
             GameStarted?.Invoke(BinaryPrimitives.ReadInt32LittleEndian(payload));
@@ -149,7 +173,7 @@ public sealed class ClientProcess : GameProcess
             0x14 => null,
             0x15 => null,
             0x19 => null,
-            0x1a => null,
+            0x1a => HandleWebUriRequest(payload),
             0x1c => null,
             0x3e8 => HandleGameStart(payload),
             >= 0x3e9 and <= 0x3f8 => HandleGameEvent(),

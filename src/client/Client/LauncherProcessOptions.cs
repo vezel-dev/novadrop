@@ -15,6 +15,8 @@ public sealed class LauncherProcessOptions
 
     public int LastServerId { get; private set; }
 
+    public Func<int, string[], Uri>? WebUriProvider { get; private set; }
+
     LauncherProcessOptions()
     {
     }
@@ -25,6 +27,7 @@ public sealed class LauncherProcessOptions
         ArgumentNullException.ThrowIfNull(accountName);
         ArgumentNullException.ThrowIfNull(sessionTicket);
         ArgumentNullException.ThrowIfNull(serverListUri);
+        _ = serverListUri.IsAbsoluteUri ? true : throw new ArgumentException(null, nameof(serverListUri));
 
         FileName = fileName;
         AccountName = accountName;
@@ -42,6 +45,7 @@ public sealed class LauncherProcessOptions
             ServerListUri = ServerListUri,
             Servers = Servers,
             LastServerId = LastServerId,
+            WebUriProvider = WebUriProvider,
         };
     }
 
@@ -81,6 +85,7 @@ public sealed class LauncherProcessOptions
     public LauncherProcessOptions WithServerListUri(Uri serverListUri)
     {
         ArgumentNullException.ThrowIfNull(serverListUri);
+        _ = serverListUri.IsAbsoluteUri ? true : throw new ArgumentException(null, nameof(serverListUri));
 
         var options = Clone();
 
@@ -108,6 +113,17 @@ public sealed class LauncherProcessOptions
         var options = Clone();
 
         options.LastServerId = lastServerId;
+
+        return options;
+    }
+
+    public LauncherProcessOptions WithWebUriProvider(Func<int, string[], Uri>? webUriProvider)
+    {
+        ArgumentNullException.ThrowIfNull(webUriProvider);
+
+        var options = Clone();
+
+        options.WebUriProvider = webUriProvider;
 
         return options;
     }

@@ -8,6 +8,8 @@ public sealed class LauncherProcess : GameProcess
 
     public event Action? AuthenticationInfoRequested;
 
+    public event ReadOnlySpanAction<string, int>? WebUriRequested;
+
     public event Action<GameEvent>? GameEventOccurred;
 
     public event Action<int>? GameExited;
@@ -60,7 +62,7 @@ public sealed class LauncherProcess : GameProcess
         {
             ServerListUriRequested?.Invoke();
 
-            return opts.ServerListUri.AbsoluteUri;
+            return opts.ServerListUri.AbsoluteUri + '\0';
         }
 
         string HandleAuthenticationInfoRequest()
@@ -74,12 +76,21 @@ public sealed class LauncherProcess : GameProcess
                     opts.Servers.Values
                         .Select(s => new LauncherAuthenticationInfo.ServerCharacters(s.Id, s.Characters)),
                     opts.LastServerId),
-                LauncherJsonContext.Default.LauncherAuthenticationInfo);
+                LauncherJsonContext.Default.LauncherAuthenticationInfo) + '\0';
         }
 
-        string HandleWebUriRequest()
+        string HandleWebUriRequest(Match match)
         {
-            return string.Empty;
+            var id = int.Parse(match.Groups[1].ValueSpan);
+            var args = match.Groups[2].Value.Split(',');
+
+            WebUriRequested?.Invoke(args, id);
+
+            return Options.WebUriProvider?.Invoke(id, args) is Uri uri
+                ? uri.IsAbsoluteUri
+                    ? uri.AbsoluteUri
+                    : throw new InvalidOperationException()
+                : string.Empty;
         }
 
         // Note that the message ID increments on every sent message for slsurl, gamestr, ticket, last_svr, and
@@ -90,10 +101,10 @@ public sealed class LauncherProcess : GameProcess
             (0x0, var value) => HandleGameEventOrExit(value),
             (_, "slsurl\0") => HandleServerListUriRequest(),
             (_, "gamestr\0" or "ticket\0" or "last_svr\0" or "char_cnt\0") => HandleAuthenticationInfoRequest(),
-            (_, var value) when _getWebLinkUrl.IsMatch(value) => HandleWebUriRequest(),
+            (_, var value) when _getWebLinkUrl.Match(value) is { Success: true } m => HandleWebUriRequest(m),
             _ => null,
         };
 
-        return replyPayload != null ? (id, utf8.GetBytes(replyPayload + '\0')) : null; // Add NUL terminator.
+        return replyPayload != null ? (id, utf8.GetBytes(replyPayload)) : null;
     }
 }

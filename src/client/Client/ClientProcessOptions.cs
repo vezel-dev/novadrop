@@ -14,6 +14,8 @@ public sealed class ClientProcessOptions
 
     public int LastServerId { get; private set; }
 
+    public Func<int, string[], Uri>? WebUriProvider { get; private set; }
+
     ClientProcessOptions()
     {
     }
@@ -44,6 +46,7 @@ public sealed class ClientProcessOptions
             Language = Language,
             Servers = Servers,
             LastServerId = LastServerId,
+            WebUriProvider = WebUriProvider,
         };
     }
 
@@ -109,6 +112,17 @@ public sealed class ClientProcessOptions
         var options = Clone();
 
         options.LastServerId = lastServerId;
+
+        return options;
+    }
+
+    public ClientProcessOptions WithWebUriProvider(Func<int, string[], Uri>? webUriProvider)
+    {
+        ArgumentNullException.ThrowIfNull(webUriProvider);
+
+        var options = Clone();
+
+        options.WebUriProvider = webUriProvider;
 
         return options;
     }
