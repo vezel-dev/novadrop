@@ -23,7 +23,7 @@ public sealed class DataCenterSaveOptions
 
     public DataCenterSaveOptions WithRevision(int revision)
     {
-        _ = revision >= DataCenter.LatestRevision ? true : throw new ArgumentOutOfRangeException(nameof(revision));
+        _ = revision >= 0 ? true : throw new ArgumentOutOfRangeException(nameof(revision));
 
         var options = Clone();
 
