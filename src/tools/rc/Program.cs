@@ -11,7 +11,7 @@ static class Program
         app.Configure(cfg =>
         {
             _ = cfg
-                .SetApplicationName("novadrop-rsc")
+                .SetApplicationName("novadrop-rc")
                 .PropagateExceptions();
 
             _ = cfg

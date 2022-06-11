@@ -1,10 +1,10 @@
-# novadrop-rsc
+# novadrop-rc
 
 ```text
-novadrop-rsc <command> <arguments...> [options...]
+novadrop-rc <command> <arguments...> [options...]
 ```
 
-The novadrop-rsc tool allows manipulation of TERA's resource container files. It
+The novadrop-rc tool allows manipulation of TERA's resource container files. It
 supports the following tasks:
 
 * Extraction of files contained within resource container files.
@@ -12,10 +12,10 @@ supports the following tasks:
 * Format integrity verification of resource container files, optionally with
   strict compliance checks.
 
-## novadrop-rsc pack
+## novadrop-rc pack
 
 ```text
-novadrop-rsc pack <input> <output> [options...]
+novadrop-rc pack <input> <output> [options...]
 ```
 
 Packs the files in a directory to a resource container file.
@@ -27,14 +27,14 @@ argument specifies the path of the resulting resource container file.
 | - | - |
 | `--encryption-key <key>` | Specifies an encryption key (defaults to the latest known key). |
 
-## novadrop-rsc repack
+## novadrop-rc repack
 
 ```text
-novadrop-rsc repack <input> <output> [options...]
+novadrop-rc repack <input> <output> [options...]
 ```
 
 Repacks a resource container file without unpacking to disk. This command is
-primarily useful for development of novadrop-rsc.
+primarily useful for development of novadrop-rc.
 
 The `input` argument specifies the input resource container file. The `output`
 argument specifies the path of the resulting resource container file.
@@ -45,10 +45,10 @@ argument specifies the path of the resulting resource container file.
 | `--encryption-key <key>` | Specifies an encryption key (defaults to the latest known key). |
 | `--strict` | Enables strict format compliance checks while reading the input file. |
 
-## novadrop-rsc unpack
+## novadrop-rc unpack
 
 ```text
-novadrop-rsc unpack <input> <output> [options...]
+novadrop-rc unpack <input> <output> [options...]
 ```
 
 Unpacks the files in a resource container file to a directory.
@@ -61,10 +61,10 @@ argument specifies the path of the directory to extract files to.
 | `--decryption-key <key>` | Specifies a decryption key (defaults to the latest known key). |
 | `--strict` | Enables strict format compliance checks while reading the input file. |
 
-## novadrop-rsc verify
+## novadrop-rc verify
 
 ```text
-novadrop-rsc validate <input> [options...]
+novadrop-rc validate <input> [options...]
 ```
 
 Verifies the format integrity of a resource container file. This means loading

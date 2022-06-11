@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <AssemblyName>novadrop-rsc</AssemblyName>
+        <AssemblyName>novadrop-rc</AssemblyName>
         <PackageDescription>$(PackageDescription)
 
 This package provides the .NET global tool for manipulating TERA's resource
 container files.</PackageDescription>
-        <PackageId>novadrop-rsc</PackageId>
+        <PackageId>novadrop-rc</PackageId>
     </PropertyGroup>
 
     <ItemGroup>

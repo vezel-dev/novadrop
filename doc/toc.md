@@ -20,6 +20,6 @@
 ## Tools
 
 * [novadrop-dc](tools/dc.md)
-* [novadrop-rsc](tools/rsc.md)
+* [novadrop-rc](tools/rc.md)
 * [novadrop-run](tools/run.md)
 * [novadrop-scan](tools/scan.md)

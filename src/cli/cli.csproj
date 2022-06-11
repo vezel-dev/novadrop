@@ -12,7 +12,7 @@
     <ItemGroup>
         <InternalsVisibleTo Include="novadrop-dc" />
         <InternalsVisibleTo Include="novadrop-gpk" />
-        <InternalsVisibleTo Include="novadrop-rsc" />
+        <InternalsVisibleTo Include="novadrop-rc" />
         <InternalsVisibleTo Include="novadrop-run" />
         <InternalsVisibleTo Include="novadrop-scan" />
     </ItemGroup>

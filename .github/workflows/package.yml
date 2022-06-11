@@ -35,7 +35,7 @@ jobs:
               with:
                   names: |
                       novadrop-dc
-                      novadrop-rsc
+                      novadrop-rc
                       novadrop-run
                       novadrop-scan
                       Vezel.Novadrop.Client
