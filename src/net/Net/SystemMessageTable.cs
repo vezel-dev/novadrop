@@ -1,14 +1,9 @@
 namespace Vezel.Novadrop.Net;
 
-public static class SystemMessageTable
+public sealed class SystemMessageTable
 {
-    public static ImmutableDictionary<ushort, string> CodeToName { get; }
-
-    public static ImmutableDictionary<string, ushort> NameToCode { get; }
-
-    static SystemMessageTable()
-    {
-        NameToCode = new Dictionary<string, ushort>
+    public static SystemMessageTable LatestTable { get; } =
+        new(387410, new Dictionary<string, ushort>
         {
             ["SMF_BF_INFO_ENEMY_KILL_TO_ME"] = 2438,
             ["SMT_ABANDON_DIVIDE_DICE"] = 2008,
@@ -4915,8 +4910,21 @@ public static class SystemMessageTable
             ["SMT_YOU_CANT_RETRY_SOLO_DUNGEON"] = 3630,
             ["SMT_YOU_MUST_DETACH_CRYSTAL"] = 3284,
             ["SMT_YOU_MUST_DETACH_CRYSTAL_AND_ARTIFACT"] = 4069,
-        }.ToImmutableDictionary();
+        });
 
-        CodeToName = NameToCode.ToImmutableDictionary(x => x.Value, x => x.Key);
+    public int Revision { get; }
+
+    public IReadOnlyDictionary<string, ushort> NameToCode { get; }
+
+    public IReadOnlyDictionary<ushort, string> CodeToName { get; }
+
+    public SystemMessageTable(int revision, IReadOnlyDictionary<string, ushort> mapping)
+    {
+        _ = revision >= 0 ? true : throw new ArgumentOutOfRangeException(nameof(revision));
+        ArgumentNullException.ThrowIfNull(mapping);
+        _ = mapping.Keys.All(k => k != null) ? true : throw new ArgumentException(null, nameof(mapping));
+
+        NameToCode = mapping.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+        CodeToName = mapping.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
     }
 }
