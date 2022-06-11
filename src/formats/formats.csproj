@@ -2,6 +2,8 @@
     <PropertyGroup>
         <AssemblyName>Vezel.Novadrop.Formats</AssemblyName>
         <IsPackable>true</IsPackable>
+        <!-- TODO: Find a replacement for Microsoft.Collections.Extensions. -->
+        <NoWarn>NU5104</NoWarn>
         <PackageDescription>$(PackageDescription)
 
 This package provides support for TERA's various file formats.</PackageDescription>
