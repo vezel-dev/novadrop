@@ -1,3 +1,0 @@
-# novadrop-gpk
-
-TODO

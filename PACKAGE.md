@@ -16,8 +16,6 @@ This project offers the following packages:
 
 * [novadrop-dc](https://www.nuget.org/packages/novadrop-dc): Provides the .NET
   global tool for manipulating TERA's data center files.
-* [novadrop-gpk](https://www.nuget.org/packages/novadrop-gpk): Provides the .NET
-  global tool for manipulating TERA's GPK archive files.
 * [novadrop-rsc](https://www.nuget.org/packages/novadrop-rsc): Provides the .NET
   global tool for manipulating TERA's resource container files.
 * [novadrop-run](https://www.nuget.org/packages/novadrop-run): Provides

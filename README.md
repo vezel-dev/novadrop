@@ -43,7 +43,6 @@ This project offers the following packages:
 | Package | Description | Downloads |
 | -: | - | :- |
 | [![novadrop-dc][dc-img]][dc-pkg] | Provides the .NET global tool for manipulating TERA's data center files. | ![Downloads][dc-dls] |
-| [![novadrop-gpk][gpk-img]][gpk-pkg] | Provides the .NET global tool for manipulating TERA's GPK archive files. | ![Downloads][gpk-dls] |
 | [![novadrop-rsc][rsc-img]][rsc-pkg] | Provides the .NET global tool for manipulating TERA's resource container files. | ![Downloads][rsc-dls] |
 | [![novadrop-run][run-img]][run-pkg] | Provides the .NET global tool for running the TERA launcher or client from the command line. | ![Downloads][run-dls] |
 | [![novadrop-scan][scan-img]][scan-pkg] | Provides the .NET global tool for extracting useful data from a running TERA client. | ![Downloads][scan-dls] |
@@ -53,7 +52,6 @@ This project offers the following packages:
 | [![Vezel.Novadrop.Net][net-img]][net-pkg] | Provides support for TERA's network protocol. | ![Downloads][net-dls] |
 
 [dc-pkg]: https://www.nuget.org/packages/novadrop-dc
-[gpk-pkg]: https://www.nuget.org/packages/novadrop-gpk
 [rsc-pkg]: https://www.nuget.org/packages/novadrop-rsc
 [run-pkg]: https://www.nuget.org/packages/novadrop-run
 [scan-pkg]: https://www.nuget.org/packages/novadrop-scan
@@ -63,7 +61,6 @@ This project offers the following packages:
 [net-pkg]: https://www.nuget.org/packages/Vezel.Novadrop.Net
 
 [dc-img]: https://img.shields.io/nuget/v/novadrop-dc?label=novadrop-dc
-[gpk-img]: https://img.shields.io/nuget/v/novadrop-gpk?label=novadrop-gpk
 [rsc-img]: https://img.shields.io/nuget/v/novadrop-rsc?label=novadrop-rsc
 [run-img]: https://img.shields.io/nuget/v/novadrop-run?label=novadrop-run
 [scan-img]: https://img.shields.io/nuget/v/novadrop-scan?label=novadrop-scan
@@ -73,7 +70,6 @@ This project offers the following packages:
 [net-img]: https://img.shields.io/nuget/v/Vezel.Novadrop.Net?label=Vezel.Novadrop.Net
 
 [dc-dls]: https://img.shields.io/nuget/dt/novadrop-dc?label=
-[gpk-dls]: https://img.shields.io/nuget/dt/novadrop-gpk?label=
 [rsc-dls]: https://img.shields.io/nuget/dt/novadrop-rsc?label=
 [run-dls]: https://img.shields.io/nuget/dt/novadrop-run?label=
 [scan-dls]: https://img.shields.io/nuget/dt/novadrop-scan?label=

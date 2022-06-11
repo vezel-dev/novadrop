@@ -35,7 +35,6 @@ jobs:
               with:
                   names: |
                       novadrop-dc
-                      novadrop-gpk
                       novadrop-rsc
                       novadrop-run
                       novadrop-scan
