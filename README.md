@@ -49,7 +49,6 @@ This project offers the following packages:
 | [![Vezel.Novadrop.Client][client-img]][client-pkg] | Provides support for interacting with the TERA launcher and client. | ![Downloads][client-dls] |
 | [![Vezel.Novadrop.Common][common-img]][common-pkg] | Provides common functionality used by all Novadrop packages. | ![Downloads][common-dls] |
 | [![Vezel.Novadrop.Formats][formats-img]][formats-pkg] | Provides support for TERA's various file formats. | ![Downloads][formats-dls] |
-| [![Vezel.Novadrop.Net][net-img]][net-pkg] | Provides support for TERA's network protocol. | ![Downloads][net-dls] |
 
 [dc-pkg]: https://www.nuget.org/packages/novadrop-dc
 [rc-pkg]: https://www.nuget.org/packages/novadrop-rc
@@ -58,7 +57,6 @@ This project offers the following packages:
 [client-pkg]: https://www.nuget.org/packages/Vezel.Novadrop.Client
 [common-pkg]: https://www.nuget.org/packages/Vezel.Novadrop.Common
 [formats-pkg]: https://www.nuget.org/packages/Vezel.Novadrop.Formats
-[net-pkg]: https://www.nuget.org/packages/Vezel.Novadrop.Net
 
 [dc-img]: https://img.shields.io/nuget/v/novadrop-dc?label=novadrop-dc
 [rc-img]: https://img.shields.io/nuget/v/novadrop-rc?label=novadrop-rc
@@ -67,7 +65,6 @@ This project offers the following packages:
 [client-img]: https://img.shields.io/nuget/v/Vezel.Novadrop.Client?label=Vezel.Novadrop.Client
 [common-img]: https://img.shields.io/nuget/v/Vezel.Novadrop.Common?label=Vezel.Novadrop.Common
 [formats-img]: https://img.shields.io/nuget/v/Vezel.Novadrop.Formats?label=Vezel.Novadrop.Formats
-[net-img]: https://img.shields.io/nuget/v/Vezel.Novadrop.Net?label=Vezel.Novadrop.Net
 
 [dc-dls]: https://img.shields.io/nuget/dt/novadrop-dc?label=
 [rc-dls]: https://img.shields.io/nuget/dt/novadrop-rc?label=
@@ -76,7 +73,6 @@ This project offers the following packages:
 [client-dls]: https://img.shields.io/nuget/dt/Vezel.Novadrop.Client?label=
 [common-dls]: https://img.shields.io/nuget/dt/Vezel.Novadrop.Common?label=
 [formats-dls]: https://img.shields.io/nuget/dt/Vezel.Novadrop.Formats?label=
-[net-dls]: https://img.shields.io/nuget/dt/Vezel.Novadrop.Net?label=
 
 To install a tool package in a project, run `dotnet tool install <name>`. To
 install it globally, also pass `-g`.

@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <AssemblyName>Vezel.Novadrop.Net</AssemblyName>
-        <IsPackable>true</IsPackable>
+        <!-- TODO: Ship this package. -->
+        <IsPackable>false</IsPackable>
         <PackageDescription>$(PackageDescription)
 
 This package provides support for TERA's network protocol.</PackageDescription>

@@ -15,7 +15,6 @@
 * [Vezel.Novadrop.Client](libraries/client.md)
 * [Vezel.Novadrop.Common](libraries/common.md)
 * [Vezel.Novadrop.Formats](libraries/formats.md)
-* [Vezel.Novadrop.Net](libraries/net.md)
 
 ## Tools
 

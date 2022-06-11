@@ -41,5 +41,4 @@ jobs:
                       Vezel.Novadrop.Client
                       Vezel.Novadrop.Common
                       Vezel.Novadrop.Formats
-                      Vezel.Novadrop.Net
                   keep: 25
