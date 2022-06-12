@@ -3,6 +3,7 @@
 
     <PropertyGroup>
         <IsPackable>true</IsPackable>
+        <IsPublishable>true</IsPublishable>
         <OutputType>Exe</OutputType>
         <PackAsTool>true</PackAsTool>
         <RollForward>LatestMajor</RollForward>
