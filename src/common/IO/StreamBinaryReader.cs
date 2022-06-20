@@ -6,7 +6,7 @@ sealed class StreamBinaryReader
 
     readonly Stream _stream;
 
-    readonly Memory<byte> _buffer = GC.AllocateUninitializedArray<byte>(sizeof(double));
+    readonly Memory<byte> _buffer = GC.AllocateUninitializedArray<byte>(sizeof(ulong));
 
     public StreamBinaryReader(Stream stream)
     {
@@ -30,11 +30,28 @@ sealed class StreamBinaryReader
         Progress += progress;
     }
 
+    public async ValueTask<byte> ReadByteAsync(CancellationToken cancellationToken)
+    {
+        await ReadAsync(_buffer[..sizeof(byte)], cancellationToken).ConfigureAwait(false);
+
+        return _buffer.Span[0];
+    }
+
+    public async ValueTask<sbyte> ReadSByteAsync(CancellationToken cancellationToken)
+    {
+        return (sbyte)await ReadByteAsync(cancellationToken).ConfigureAwait(false);
+    }
+
     public async ValueTask<ushort> ReadUInt16Async(CancellationToken cancellationToken)
     {
         await ReadAsync(_buffer[..sizeof(ushort)], cancellationToken).ConfigureAwait(false);
 
         return BinaryPrimitives.ReadUInt16LittleEndian(_buffer.Span);
+    }
+
+    public async ValueTask<short> ReadInt16Async(CancellationToken cancellationToken)
+    {
+        return (short)await ReadUInt16Async(cancellationToken).ConfigureAwait(false);
     }
 
     public async ValueTask<uint> ReadUInt32Async(CancellationToken cancellationToken)
@@ -49,11 +66,30 @@ sealed class StreamBinaryReader
         return (int)await ReadUInt32Async(cancellationToken).ConfigureAwait(false);
     }
 
+    public async ValueTask<ulong> ReadUInt64Async(CancellationToken cancellationToken)
+    {
+        await ReadAsync(_buffer[..sizeof(ulong)], cancellationToken).ConfigureAwait(false);
+
+        return BinaryPrimitives.ReadUInt64LittleEndian(_buffer.Span);
+    }
+
+    public async ValueTask<long> ReadInt64Async(CancellationToken cancellationToken)
+    {
+        return (long)await ReadUInt64Async(cancellationToken).ConfigureAwait(false);
+    }
+
+    public async ValueTask<float> ReadSingleAsync(CancellationToken cancellationToken)
+    {
+        var value = await ReadUInt32Async(cancellationToken).ConfigureAwait(false);
+
+        return Unsafe.As<uint, float>(ref value);
+    }
+
     public async ValueTask<double> ReadDoubleAsync(CancellationToken cancellationToken)
     {
-        await ReadAsync(_buffer[..sizeof(double)], cancellationToken).ConfigureAwait(false);
+        var value = await ReadUInt64Async(cancellationToken).ConfigureAwait(false);
 
-        return BinaryPrimitives.ReadDoubleLittleEndian(_buffer.Span);
+        return Unsafe.As<ulong, double>(ref value);
     }
 
     public async ValueTask<string> ReadStringAsync(CancellationToken cancellationToken)
