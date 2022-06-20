@@ -4,42 +4,74 @@ sealed class StreamBinaryWriter
 {
     readonly Stream _stream;
 
-    readonly Memory<byte> _buffer = GC.AllocateUninitializedArray<byte>(sizeof(double));
+    readonly Memory<byte> _buffer = GC.AllocateUninitializedArray<byte>(sizeof(ulong));
 
     public StreamBinaryWriter(Stream stream)
     {
         _stream = stream;
     }
 
-    public async ValueTask WriteAsync(ReadOnlyMemory<byte> buffer, CancellationToken cancellationToken)
+    public ValueTask WriteAsync(ReadOnlyMemory<byte> buffer, CancellationToken cancellationToken)
     {
-        await _stream.WriteAsync(buffer, cancellationToken).ConfigureAwait(false);
+        return _stream.WriteAsync(buffer, cancellationToken);
     }
 
-    public async ValueTask WriteUInt16Async(ushort value, CancellationToken cancellationToken)
+    public ValueTask WriteByteAsync(byte value, CancellationToken cancellationToken)
+    {
+        _buffer.Span[0] = value;
+
+        return WriteAsync(_buffer[..sizeof(byte)], cancellationToken);
+    }
+
+    public ValueTask WriteSByteAsync(sbyte value, CancellationToken cancellationToken)
+    {
+        return WriteByteAsync((byte)value, cancellationToken);
+    }
+
+    public ValueTask WriteUInt16Async(ushort value, CancellationToken cancellationToken)
     {
         BinaryPrimitives.WriteUInt16LittleEndian(_buffer.Span, value);
 
-        await WriteAsync(_buffer[..sizeof(ushort)], cancellationToken).ConfigureAwait(false);
+        return WriteAsync(_buffer[..sizeof(ushort)], cancellationToken);
     }
 
-    public async ValueTask WriteUInt32Async(uint value, CancellationToken cancellationToken)
+    public ValueTask WriteInt16Async(short value, CancellationToken cancellationToken)
+    {
+        return WriteUInt16Async((ushort)value, cancellationToken);
+    }
+
+    public ValueTask WriteUInt32Async(uint value, CancellationToken cancellationToken)
     {
         BinaryPrimitives.WriteUInt32LittleEndian(_buffer.Span, value);
 
-        await WriteAsync(_buffer[..sizeof(uint)], cancellationToken).ConfigureAwait(false);
+        return WriteAsync(_buffer[..sizeof(uint)], cancellationToken);
     }
 
-    public async ValueTask WriteInt32Async(int value, CancellationToken cancellationToken)
+    public ValueTask WriteInt32Async(int value, CancellationToken cancellationToken)
     {
-        await WriteUInt32Async((uint)value, cancellationToken).ConfigureAwait(false);
+        return WriteUInt32Async((uint)value, cancellationToken);
     }
 
-    public async ValueTask WriteDoubleAsync(double value, CancellationToken cancellationToken)
+    public ValueTask WriteUInt64Async(ulong value, CancellationToken cancellationToken)
     {
-        BinaryPrimitives.WriteDoubleLittleEndian(_buffer.Span, value);
+        BinaryPrimitives.WriteUInt64LittleEndian(_buffer.Span, value);
 
-        await WriteAsync(_buffer[..sizeof(double)], cancellationToken).ConfigureAwait(false);
+        return WriteAsync(_buffer[..sizeof(ulong)], cancellationToken);
+    }
+
+    public ValueTask WriteInt64Async(long value, CancellationToken cancellationToken)
+    {
+        return WriteUInt64Async((ulong)value, cancellationToken);
+    }
+
+    public ValueTask WriteSingleAsync(float value, CancellationToken cancellationToken)
+    {
+        return WriteUInt32Async(Unsafe.As<float, uint>(ref value), cancellationToken);
+    }
+
+    public ValueTask WriteDoubleAsync(double value, CancellationToken cancellationToken)
+    {
+        return WriteUInt64Async(Unsafe.As<double, ulong>(ref value), cancellationToken);
     }
 
     public async ValueTask WriteStringAsync(string value, CancellationToken cancellationToken)
