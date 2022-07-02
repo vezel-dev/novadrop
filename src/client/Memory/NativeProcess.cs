@@ -6,7 +6,7 @@ using static Windows.Win32.WindowsPInvoke;
 
 namespace Vezel.Novadrop.Memory;
 
-public sealed class NativeProcess : IDisposable
+public sealed unsafe class NativeProcess : IDisposable
 {
     public int Id { get; }
 
@@ -21,13 +21,13 @@ public sealed class NativeProcess : IDisposable
         [SuppressMessage("", "CA1065")]
         get
         {
-            _ = _disposed == 0 ? true : throw new ObjectDisposedException(GetType().Name);
+            _ = !_disposed ? true : throw new ObjectDisposedException(GetType().Name);
 
-            return EnumerateModules();
+            return GetModules();
         }
     }
 
-    int _disposed;
+    volatile bool _disposed;
 
     public NativeProcess(int id)
     {
@@ -43,12 +43,12 @@ public sealed class NativeProcess : IDisposable
 
     ~NativeProcess()
     {
-        Free();
+        DisposeCore();
     }
 
     public void Dispose()
     {
-        Free();
+        DisposeCore();
 
         GC.SuppressFinalize(this);
     }
@@ -77,7 +77,7 @@ public sealed class NativeProcess : IDisposable
         };
     }
 
-    IEnumerable<NativeModule> EnumerateModules()
+    IEnumerable<NativeModule> GetModules()
     {
         var pid = (uint)Id;
 
@@ -98,52 +98,53 @@ public sealed class NativeProcess : IDisposable
 
         using (snap)
         {
-            var me = new MODULEENTRY32
-            {
-                dwSize = (uint)Unsafe.SizeOf<MODULEENTRY32>(),
-            };
+            var mods = new List<NativeModule>();
 
-            if (!Module32First(snap, ref me))
-                yield break;
+            // TODO: https://github.com/microsoft/CsWin32/issues/597
+            var modSize = 568;
+            var modSpace = stackalloc byte[modSize];
+            var mod = (MODULEENTRY32*)modSpace;
+
+            if (!Module32First(snap, ref *mod))
+                throw new Win32Exception();
 
             do
             {
-                if (me.dwSize != Unsafe.SizeOf<MODULEENTRY32>())
+                if (mod->dwSize != Unsafe.SizeOf<MODULEENTRY32>())
                     continue;
 
-                unsafe NativeModule CreateModule(ref MODULEENTRY32 entry)
-                {
-                    var arr = new char[MAX_PATH];
+                var handle = (HANDLE)Handle.DangerousGetHandle();
+                var arr = new char[MAX_PATH];
 
-                    uint len;
+                uint len;
 
-                    fixed (char* p = arr)
-                        while ((len = K32GetModuleBaseName(
-                            (HANDLE)Handle.DangerousGetHandle(), entry.hModule, p, (uint)arr.Length)) >= arr.Length)
-                            Array.Resize(ref arr, (int)len);
+                fixed (char* p = arr)
+                    while ((len = K32GetModuleBaseName(handle, mod->hModule, p, (uint)arr.Length)) >= arr.Length)
+                        Array.Resize(ref arr, (int)len);
 
-                    return len == 0
-                        ? throw new Win32Exception()
-                        : new(
-                            arr.AsSpan(0, (int)len).ToString(),
-                            new(Accessor, (NativeAddress)(nuint)entry.modBaseAddr, entry.modBaseSize));
-                }
+                if (len == 0)
+                    throw new Win32Exception();
 
-                yield return CreateModule(ref me);
+                mods.Add(new(
+                    arr.AsSpan(0, (int)len).ToString(),
+                    new(Accessor, (NativeAddress)(nuint)mod->modBaseAddr, mod->modBaseSize)));
             }
-            while (Module32Next(snap, ref me));
+            while (Module32Next(snap, ref *mod));
+
+            return mods;
         }
     }
 
-    void Free()
+    void DisposeCore()
     {
-        if (Interlocked.Exchange(ref _disposed, 1) == 0)
-            Handle.Dispose();
+        _disposed = true;
+
+        Handle.Dispose();
     }
 
-    public unsafe NativeAddress Alloc(nuint length, MemoryProtection protection)
+    public NativeAddress Alloc(nuint length, MemoryProtection protection)
     {
-        _ = _disposed == 0 ? true : throw new ObjectDisposedException(GetType().Name);
+        _ = !_disposed ? true : throw new ObjectDisposedException(GetType().Name);
 
         return VirtualAllocEx(
             Handle,
@@ -155,52 +156,52 @@ public sealed class NativeProcess : IDisposable
             : throw new Win32Exception();
     }
 
-    public unsafe void Free(NativeAddress address)
+    public void Free(NativeAddress address)
     {
-        _ = _disposed == 0 ? true : throw new ObjectDisposedException(GetType().Name);
+        _ = !_disposed ? true : throw new ObjectDisposedException(GetType().Name);
 
         if (!VirtualFreeEx(Handle, (void*)(nuint)address, 0, VIRTUAL_FREE_TYPE.MEM_RELEASE))
             throw new Win32Exception();
     }
 
-    public unsafe void Protect(NativeAddress address, nuint length, MemoryProtection protection)
+    public void Protect(NativeAddress address, nuint length, MemoryProtection protection)
     {
-        _ = _disposed == 0 ? true : throw new ObjectDisposedException(GetType().Name);
+        _ = !_disposed ? true : throw new ObjectDisposedException(GetType().Name);
 
         if (!VirtualProtectEx(Handle, (void*)(nuint)address, length, TranslateProtection(protection), out _))
             throw new Win32Exception();
     }
 
-    public unsafe void Read(NativeAddress address, Span<byte> buffer)
+    public void Read(NativeAddress address, Span<byte> buffer)
     {
-        _ = _disposed == 0 ? true : throw new ObjectDisposedException(GetType().Name);
+        _ = !_disposed ? true : throw new ObjectDisposedException(GetType().Name);
 
         fixed (byte* p = buffer)
             if (!ReadProcessMemory(Handle, (void*)(nuint)address, p, (nuint)buffer.Length, null))
                 throw new Win32Exception();
     }
 
-    public unsafe void Write(NativeAddress address, ReadOnlySpan<byte> buffer)
+    public void Write(NativeAddress address, ReadOnlySpan<byte> buffer)
     {
-        _ = _disposed == 0 ? true : throw new ObjectDisposedException(GetType().Name);
+        _ = !_disposed ? true : throw new ObjectDisposedException(GetType().Name);
 
         fixed (byte* p = buffer)
             if (!WriteProcessMemory(Handle, (void*)(nuint)address, p, (nuint)buffer.Length, null))
                 throw new Win32Exception();
     }
 
-    public unsafe void Flush(NativeAddress address, nuint length)
+    public void Flush(NativeAddress address, nuint length)
     {
-        _ = _disposed == 0 ? true : throw new ObjectDisposedException(GetType().Name);
+        _ = !_disposed ? true : throw new ObjectDisposedException(GetType().Name);
 
         if (!FlushInstructionCache(Handle, (void*)(nuint)address, length))
             throw new Win32Exception();
     }
 
-    unsafe void ForEachThread(Func<int, bool> predicate, Action<uint, SafeFileHandle> action)
+    void ForEachThread(Func<int, bool> predicate, Action<uint, SafeFileHandle> action)
     {
         ArgumentNullException.ThrowIfNull(predicate);
-        _ = _disposed == 0 ? true : throw new ObjectDisposedException(GetType().Name);
+        _ = !_disposed ? true : throw new ObjectDisposedException(GetType().Name);
 
         var pid = (uint)Id;
         using var snap = CreateToolhelp32Snapshot_SafeHandle(CREATE_TOOLHELP_SNAPSHOT_FLAGS.TH32CS_SNAPTHREAD, pid);
