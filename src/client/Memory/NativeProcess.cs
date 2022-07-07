@@ -101,16 +101,16 @@ public sealed unsafe class NativeProcess : IDisposable
             var mods = new List<NativeModule>();
 
             // TODO: https://github.com/microsoft/CsWin32/issues/597
-            var modSize = 568;
+            var modSize = 1080;
             var modSpace = stackalloc byte[modSize];
-            var mod = (MODULEENTRY32*)modSpace;
+            var mod = (MODULEENTRY32W*)modSpace;
 
-            if (!Module32First(snap, ref *mod))
+            if (!Module32FirstW(snap, ref *mod))
                 throw new Win32Exception();
 
             do
             {
-                if (mod->dwSize != Unsafe.SizeOf<MODULEENTRY32>())
+                if (mod->dwSize != modSize)
                     continue;
 
                 using var modHandle = new SafeFileHandle(mod->hModule, false);
@@ -120,7 +120,7 @@ public sealed unsafe class NativeProcess : IDisposable
                 uint len;
 
                 fixed (char* p = arr)
-                    while ((len = K32GetModuleBaseName(Handle, modHandle, p, (uint)arr.Length)) >= arr.Length)
+                    while ((len = K32GetModuleBaseNameW(Handle, modHandle, p, (uint)arr.Length)) >= arr.Length)
                         Array.Resize(ref arr, (int)len);
 
                 if (len == 0)
@@ -130,7 +130,7 @@ public sealed unsafe class NativeProcess : IDisposable
                     arr.AsSpan(0, (int)len).ToString(),
                     new(Accessor, (NativeAddress)(nuint)mod->modBaseAddr, mod->modBaseSize)));
             }
-            while (Module32Next(snap, ref *mod));
+            while (Module32NextW(snap, ref *mod));
 
             return mods;
         }

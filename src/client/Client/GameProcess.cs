@@ -26,13 +26,13 @@ public abstract class GameProcess
     static unsafe LRESULT WindowProcedure(HWND hWnd, uint msg, WPARAM wParam, LPARAM lParam)
     {
         if (msg != WM_COPYDATA)
-            return DefWindowProc(hWnd, msg, wParam, lParam);
+            return DefWindowProcW(hWnd, msg, wParam, lParam);
 
         var cds = *(COPYDATASTRUCT*)(nint)lParam;
         var id = cds.dwData;
         var payload = new ReadOnlySpan<byte>(cds.lpData, (int)cds.cbData);
 
-        var process = (GameProcess)GCHandle.FromIntPtr(GetWindowLongPtr(hWnd, 0)).Target!;
+        var process = (GameProcess)GCHandle.FromIntPtr(GetWindowLongPtrW(hWnd, 0)).Target!;
 
         process.MessageReceived?.Invoke(payload, id);
 
@@ -55,7 +55,7 @@ public abstract class GameProcess
                     cbData = (uint)replyPayload.Length,
                 };
 
-                _ = SendMessage((HWND)(nint)(nuint)wParam, msg, (nuint)(nint)hWnd, (nint)(&response));
+                _ = SendMessageW((HWND)(nint)(nuint)wParam, msg, (nuint)(nint)hWnd, (nint)(&response));
 
                 process.MessageSent?.Invoke(replySpan, replyId);
             }
@@ -94,7 +94,7 @@ public abstract class GameProcess
                         handle = GCHandle.Alloc(this);
 
                         fixed (char* ptr = className)
-                            atom = RegisterClassEx(new WNDCLASSEXW
+                            atom = RegisterClassExW(new WNDCLASSEXW
                             {
                                 cbSize = (uint)sizeof(WNDCLASSEXW),
                                 cbWndExtra = sizeof(nint),
@@ -105,12 +105,12 @@ public abstract class GameProcess
                         if (atom == 0)
                             throw new Win32Exception();
 
-                        hwnd = CreateWindowEx(0, className, windowName, 0, 0, 0, 0, 0, default, null, null, null);
+                        hwnd = CreateWindowExW(0, className, windowName, 0, 0, 0, 0, 0, default, null, null, null);
 
                         if ((nint)hwnd == 0)
                             throw new Win32Exception();
 
-                        _ = SetWindowLongPtr(hwnd, 0, (IntPtr)handle);
+                        _ = SetWindowLongPtrW(hwnd, 0, (IntPtr)handle);
 
                         _process = new(fileName, arguments, cancellationToken);
 
@@ -123,10 +123,10 @@ public abstract class GameProcess
                     finally
                     {
                         if ((nint)hwnd != 0)
-                            _ = DefWindowProc(hwnd, WM_CLOSE, 0, 0);
+                            _ = DefWindowProcW(hwnd, WM_CLOSE, 0, 0);
 
                         if (atom != 0)
-                            _ = UnregisterClass(className, null);
+                            _ = UnregisterClassW(className, null);
 
                         if (handle.IsAllocated)
                             handle.Free();
