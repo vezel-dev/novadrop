@@ -97,7 +97,7 @@ The `input` argument specifies a directory containing data sheets and schemas.
 ## novadrop-dc verify
 
 ```text
-novadrop-dc validate <input> [options...]
+novadrop-dc verify <input> [options...]
 ```
 
 Verifies the format integrity of a data center file. This means traversing the
