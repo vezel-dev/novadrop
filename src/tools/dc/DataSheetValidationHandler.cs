@@ -34,7 +34,7 @@ sealed class DataSheetValidationHandler
             var remainingProblems = fileGroup.Count() - shownProblems.Length;
 
             if (remainingProblems != 0)
-                Log.WriteLine($"    ... [orange]{remainingProblems}[/] more problem(s) ...");
+                Log.WriteLine($"    ... [darkorange]{remainingProblems}[/] more problem(s) ...");
         }
 
         Log.WriteLine();
