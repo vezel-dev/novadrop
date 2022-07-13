@@ -209,32 +209,43 @@ public sealed unsafe class NativeProcess : IDisposable
         _ = !_disposed ? true : throw new ObjectDisposedException(GetType().Name);
 
         var pid = (uint)Id;
+
         using var snap = Win32.CreateToolhelp32Snapshot_SafeHandle(
             CREATE_TOOLHELP_SNAPSHOT_FLAGS.TH32CS_SNAPTHREAD, pid);
 
         if (snap.IsInvalid)
             throw new Win32Exception();
 
-        var te = new THREADENTRY32
+        var entry = new THREADENTRY32
         {
             dwSize = (uint)sizeof(THREADENTRY32),
         };
 
-        if (!Win32.Thread32First(snap, ref te))
-            return;
+        var result = Win32.Thread32First(snap, ref entry);
 
-        do
+        while (true)
         {
-            if (te.dwSize != sizeof(THREADENTRY32) || te.th32OwnerProcessID != pid || !predicate((int)te.th32ThreadID))
+            if (!result)
+            {
+                if (Marshal.GetLastPInvokeError() != (int)WIN32_ERROR.ERROR_NO_MORE_FILES)
+                    throw new Win32Exception();
+
+                break;
+            }
+
+            if (entry.dwSize != sizeof(THREADENTRY32) ||
+                entry.th32OwnerProcessID != pid ||
+                !predicate((int)entry.th32ThreadID))
                 continue;
 
             using var handle = Win32.OpenThread_SafeHandle(
-                THREAD_ACCESS_RIGHTS.THREAD_ALL_ACCESS, false, te.th32ThreadID);
+                THREAD_ACCESS_RIGHTS.THREAD_ALL_ACCESS, false, entry.th32ThreadID);
 
             if (!handle.IsInvalid)
-                action(te.th32ThreadID, handle);
+                action(entry.th32ThreadID, handle);
+
+            result = Win32.Thread32Next(snap, ref entry);
         }
-        while (Win32.Thread32Next(snap, ref te));
     }
 
     public (int Id, int Count)[] Suspend(Func<int, bool> predicate)
