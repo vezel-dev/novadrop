@@ -1,3 +1,4 @@
+using Windows.Win32.Foundation;
 using static Windows.Win32.WindowsPInvoke;
 
 namespace Vezel.Novadrop.Memory.Code;
@@ -95,7 +96,7 @@ public sealed class DynamicCode : IDisposable
             null);
 
         return !handle.IsInvalid
-            ? WaitForSingleObject(handle, INFINITE) == WAIT_OBJECT_0
+            ? WaitForSingleObject(handle, INFINITE) == (uint)WIN32_ERROR.WAIT_OBJECT_0
                 ? GetExitCodeThread(handle, out var result)
                     ? result
                     : throw new Win32Exception()
