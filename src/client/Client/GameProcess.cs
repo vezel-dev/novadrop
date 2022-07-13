@@ -2,7 +2,7 @@ using Vezel.Novadrop.Diagnostics;
 using Windows.Win32.Foundation;
 using Windows.Win32.System.DataExchange;
 using Windows.Win32.UI.WindowsAndMessaging;
-using static Windows.Win32.WindowsPInvoke;
+using Win32 = Windows.Win32.WindowsPInvoke;
 
 namespace Vezel.Novadrop.Client;
 
@@ -25,14 +25,14 @@ public abstract class GameProcess
     [UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
     static unsafe LRESULT WindowProcedure(HWND hWnd, uint msg, WPARAM wParam, LPARAM lParam)
     {
-        if (msg != WM_COPYDATA)
-            return DefWindowProcW(hWnd, msg, wParam, lParam);
+        if (msg != Win32.WM_COPYDATA)
+            return Win32.DefWindowProcW(hWnd, msg, wParam, lParam);
 
         var cds = *(COPYDATASTRUCT*)(nint)lParam;
         var id = cds.dwData;
         var payload = new ReadOnlySpan<byte>(cds.lpData, (int)cds.cbData);
 
-        var process = (GameProcess)GCHandle.FromIntPtr(GetWindowLongPtrW(hWnd, 0)).Target!;
+        var process = (GameProcess)GCHandle.FromIntPtr(Win32.GetWindowLongPtrW(hWnd, 0)).Target!;
 
         process.MessageReceived?.Invoke(payload, id);
 
@@ -55,7 +55,7 @@ public abstract class GameProcess
                     cbData = (uint)replyPayload.Length,
                 };
 
-                _ = SendMessageW((HWND)(nint)(nuint)wParam, msg, (nuint)(nint)hWnd, (nint)(&response));
+                _ = Win32.SendMessageW((HWND)(nint)(nuint)wParam, msg, (nuint)(nint)hWnd, (nint)(&response));
 
                 process.MessageSent?.Invoke(replySpan, replyId);
             }
@@ -94,7 +94,7 @@ public abstract class GameProcess
                         handle = GCHandle.Alloc(this);
 
                         fixed (char* ptr = className)
-                            atom = RegisterClassExW(new WNDCLASSEXW
+                            atom = Win32.RegisterClassExW(new WNDCLASSEXW
                             {
                                 cbSize = (uint)sizeof(WNDCLASSEXW),
                                 cbWndExtra = sizeof(nint),
@@ -105,12 +105,13 @@ public abstract class GameProcess
                         if (atom == 0)
                             throw new Win32Exception();
 
-                        hwnd = CreateWindowExW(0, className, windowName, 0, 0, 0, 0, 0, default, null, null, null);
+                        hwnd = Win32.CreateWindowExW(
+                            0, className, windowName, 0, 0, 0, 0, 0, default, null, null, null);
 
                         if ((nint)hwnd == 0)
                             throw new Win32Exception();
 
-                        _ = SetWindowLongPtrW(hwnd, 0, (IntPtr)handle);
+                        _ = Win32.SetWindowLongPtrW(hwnd, 0, (IntPtr)handle);
 
                         _process = new(fileName, arguments, cancellationToken);
 
@@ -123,10 +124,10 @@ public abstract class GameProcess
                     finally
                     {
                         if ((nint)hwnd != 0)
-                            _ = DefWindowProcW(hwnd, WM_CLOSE, 0, 0);
+                            _ = Win32.DefWindowProcW(hwnd, Win32.WM_CLOSE, 0, 0);
 
                         if (atom != 0)
-                            _ = UnregisterClassW(className, null);
+                            _ = Win32.UnregisterClassW(className, null);
 
                         if (handle.IsAllocated)
                             handle.Free();

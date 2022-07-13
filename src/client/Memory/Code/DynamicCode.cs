@@ -1,5 +1,5 @@
 using Windows.Win32.Foundation;
-using static Windows.Win32.WindowsPInvoke;
+using Win32 = Windows.Win32.WindowsPInvoke;
 
 namespace Vezel.Novadrop.Memory.Code;
 
@@ -86,7 +86,7 @@ public sealed class DynamicCode : IDisposable
     {
         _ = _disposed == 0 ? true : throw new ObjectDisposedException(GetType().Name);
 
-        using var handle = CreateRemoteThread(
+        using var handle = Win32.CreateRemoteThread(
             Process.Handle,
             null,
             0,
@@ -96,8 +96,8 @@ public sealed class DynamicCode : IDisposable
             null);
 
         return !handle.IsInvalid
-            ? WaitForSingleObject(handle, INFINITE) == (uint)WIN32_ERROR.WAIT_OBJECT_0
-                ? GetExitCodeThread(handle, out var result)
+            ? Win32.WaitForSingleObject(handle, Win32.INFINITE) == (uint)WIN32_ERROR.WAIT_OBJECT_0
+                ? Win32.GetExitCodeThread(handle, out var result)
                     ? result
                     : throw new Win32Exception()
                 : throw new Win32Exception()
