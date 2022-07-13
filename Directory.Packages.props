@@ -17,9 +17,9 @@
         <PackageVersion Include="Nerdbank.GitVersioning"
                         Version="3.5.108" />
         <PackageVersion Include="protobuf-net"
-                        Version="3.1.4" />
+                        Version="3.1.17" />
         <PackageVersion Include="protobuf-net.BuildTools"
-                        Version="3.0.115" />
+                        Version="3.1.17" />
         <PackageVersion Include="ReadLine"
                         Version="2.0.1" />
         <PackageVersion Include="Spectre.Console.Cli"
