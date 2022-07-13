@@ -21,7 +21,7 @@
         <PackageVersion Include="protobuf-net.BuildTools"
                         Version="3.1.17" />
         <PackageVersion Include="Spectre.Console.Cli"
-                        Version="0.44.1-preview.0.17" />
+                        Version="0.44.1-preview.0.29" />
         <PackageVersion Include="StyleCop.Analyzers"
                         Version="1.2.0-beta.406" />
     </ItemGroup>
