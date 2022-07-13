@@ -79,14 +79,11 @@ public sealed unsafe class NativeProcess : IDisposable
 
     IEnumerable<NativeModule> GetModules()
     {
-        var pid = (uint)Id;
-
         SafeFileHandle snap;
 
-        while (true)
+        while ((snap = CreateToolhelp32Snapshot_SafeHandle(
+            CREATE_TOOLHELP_SNAPSHOT_FLAGS.TH32CS_SNAPMODULE, (uint)Id)).IsInvalid)
         {
-            snap = CreateToolhelp32Snapshot_SafeHandle(CREATE_TOOLHELP_SNAPSHOT_FLAGS.TH32CS_SNAPMODULE, pid);
-
             if (!snap.IsInvalid)
                 break;
 
@@ -98,41 +95,47 @@ public sealed unsafe class NativeProcess : IDisposable
 
         using (snap)
         {
-            var mods = new List<NativeModule>();
-
-            // TODO: https://github.com/microsoft/CsWin32/issues/597
-            var modSize = 1080;
-            var modSpace = stackalloc byte[modSize];
-            var mod = (MODULEENTRY32W*)modSpace;
-
-            if (!Module32FirstW(snap, ref *mod))
-                throw new Win32Exception();
-
-            do
+            var entry = new MODULEENTRY32W
             {
-                if (mod->dwSize != modSize)
-                    continue;
+                dwSize = (uint)Unsafe.SizeOf<MODULEENTRY32W>(),
+            };
 
-                using var modHandle = new SafeFileHandle(mod->hModule, false);
+            var result = Module32FirstW(snap, ref entry);
 
-                var arr = new char[MAX_PATH];
+            while (true)
+            {
+                if (!result)
+                {
+                    if (Marshal.GetLastPInvokeError() != (int)WIN32_ERROR.ERROR_NO_MORE_FILES)
+                        throw new Win32Exception();
 
-                uint len;
+                    break;
+                }
 
-                fixed (char* p = arr)
-                    while ((len = K32GetModuleBaseNameW(Handle, modHandle, p, (uint)arr.Length)) >= arr.Length)
-                        Array.Resize(ref arr, (int)len);
+                NativeModule CreateModule(in MODULEENTRY32W entry)
+                {
+                    // Cannot use unsafe code in iterators...
+                    using var modHandle = new SafeFileHandle(entry.hModule, false);
 
-                if (len == 0)
-                    throw new Win32Exception();
+                    var arr = new char[MAX_PATH];
 
-                mods.Add(new(
-                    arr.AsSpan(0, (int)len).ToString(),
-                    new(Accessor, (NativeAddress)(nuint)mod->modBaseAddr, mod->modBaseSize)));
+                    uint len;
+
+                    fixed (char* p = arr)
+                        while ((len = K32GetModuleBaseNameW(Handle, modHandle, p, (uint)arr.Length)) >= arr.Length)
+                            Array.Resize(ref arr, (int)len);
+
+                    return len != 0
+                        ? new(
+                            arr.AsSpan(0, (int)len).ToString(),
+                            new(Accessor, (NativeAddress)(nuint)entry.modBaseAddr, entry.modBaseSize))
+                        : throw new Win32Exception();
+                }
+
+                yield return CreateModule(entry);
+
+                result = Module32NextW(snap, ref entry);
             }
-            while (Module32NextW(snap, ref *mod));
-
-            return mods;
         }
     }
 
