@@ -11,6 +11,12 @@ This package provides support for TERA's network protocol.</PackageDescription>
     </PropertyGroup>
 
     <ItemGroup>
+        <None Include="buildTransitive/**"
+              Pack="true"
+              PackagePath="%(Identity)" />
+    </ItemGroup>
+
+    <ItemGroup>
         <ProjectReference Include="../common/common.csproj" />
     </ItemGroup>
 </Project>

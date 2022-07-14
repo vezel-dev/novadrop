@@ -10,10 +10,6 @@ files.</PackageDescription>
     </PropertyGroup>
 
     <ItemGroup>
-        <Using Include="Vezel.Novadrop.Data" />
-    </ItemGroup>
-
-    <ItemGroup>
         <EmbeddedResource Include="../../../xsd/**"
                           LogicalName="%(Filename)%(Extension)" />
     </ItemGroup>
@@ -21,4 +17,10 @@ files.</PackageDescription>
     <ItemGroup>
         <ProjectReference Include="../../formats/formats.csproj" />
     </ItemGroup>
+
+    <!--
+    This import is required here since we are not consuming the library as a
+    PackageReference item.
+    -->
+    <Import Project="../../formats/buildTransitive/Vezel.Novadrop.Formats.targets" />
 </Project>

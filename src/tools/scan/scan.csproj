@@ -10,10 +10,12 @@ running TERA client.</PackageDescription>
     </PropertyGroup>
 
     <ItemGroup>
-        <Using Include="Vezel.Novadrop.Memory" />
-    </ItemGroup>
-
-    <ItemGroup>
         <ProjectReference Include="../../client/client.csproj" />
     </ItemGroup>
+
+    <!--
+    This import is required here since we are not consuming the library as a
+    PackageReference item.
+    -->
+    <Import Project="../../client/buildTransitive/Vezel.Novadrop.Client.targets" />
 </Project>

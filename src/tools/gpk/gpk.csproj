@@ -13,4 +13,10 @@ files.</PackageDescription>
     <ItemGroup>
         <ProjectReference Include="../../formats/formats.csproj" />
     </ItemGroup>
+
+    <!--
+    This import is required here since we are not consuming the library as a
+    PackageReference item.
+    -->
+    <Import Project="../../formats/buildTransitive/Vezel.Novadrop.Formats.targets" />
 </Project>

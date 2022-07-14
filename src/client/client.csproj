@@ -16,6 +16,12 @@ This package provides support for interacting with the TERA launcher and client.
     </ItemGroup>
 
     <ItemGroup>
+        <None Include="buildTransitive/**"
+              Pack="true"
+              PackagePath="%(Identity)" />
+    </ItemGroup>
+
+    <ItemGroup>
         <AdditionalFiles Include="**/*.proto" />
     </ItemGroup>
 

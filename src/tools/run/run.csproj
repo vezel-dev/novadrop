@@ -10,12 +10,12 @@ client from the command line.</PackageDescription>
     </PropertyGroup>
 
     <ItemGroup>
-        <Using Include="Vezel.Novadrop.Client" />
-        <Using Include="Vezel.Novadrop.Memory" />
-        <Using Include="Vezel.Novadrop.Patches" />
-    </ItemGroup>
-
-    <ItemGroup>
         <ProjectReference Include="../../client/client.csproj" />
     </ItemGroup>
+
+    <!--
+    This import is required here since we are not consuming the library as a
+    PackageReference item.
+    -->
+    <Import Project="../../client/buildTransitive/Vezel.Novadrop.Client.targets" />
 </Project>
