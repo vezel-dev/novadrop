@@ -2,7 +2,7 @@ using Windows.Win32.Foundation;
 using Windows.Win32.System.Diagnostics.ToolHelp;
 using Windows.Win32.System.Memory;
 using Windows.Win32.System.Threading;
-using Win32 = Windows.Win32.WindowsPInvoke;
+using static Windows.Win32.WindowsPInvoke;
 
 namespace Vezel.Novadrop.Memory;
 
@@ -31,7 +31,7 @@ public sealed unsafe class NativeProcess : IDisposable
 
     public NativeProcess(int id)
     {
-        var handle = Win32.OpenProcess_SafeHandle(PROCESS_ACCESS_RIGHTS.PROCESS_ALL_ACCESS, false, (uint)id);
+        var handle = OpenProcess_SafeHandle(PROCESS_ACCESS_RIGHTS.PROCESS_ALL_ACCESS, false, (uint)id);
 
         if (handle.IsInvalid)
             throw new Win32Exception();
@@ -81,7 +81,7 @@ public sealed unsafe class NativeProcess : IDisposable
     {
         SafeFileHandle snap;
 
-        while ((snap = Win32.CreateToolhelp32Snapshot_SafeHandle(
+        while ((snap = CreateToolhelp32Snapshot_SafeHandle(
             CREATE_TOOLHELP_SNAPSHOT_FLAGS.TH32CS_SNAPMODULE, (uint)Id)).IsInvalid)
         {
             if (!snap.IsInvalid)
@@ -100,7 +100,7 @@ public sealed unsafe class NativeProcess : IDisposable
                 dwSize = (uint)Unsafe.SizeOf<MODULEENTRY32W>(),
             };
 
-            var result = Win32.Module32FirstW(snap, ref entry);
+            var result = Module32FirstW(snap, ref entry);
 
             while (true)
             {
@@ -117,13 +117,12 @@ public sealed unsafe class NativeProcess : IDisposable
                     // Cannot use unsafe code in iterators...
                     using var modHandle = new SafeFileHandle(entry.hModule, false);
 
-                    var arr = new char[Win32.MAX_PATH];
+                    var arr = new char[MAX_PATH];
 
                     uint len;
 
                     fixed (char* p = arr)
-                        while ((len = Win32.K32GetModuleBaseNameW(
-                            Handle, modHandle, p, (uint)arr.Length)) >= arr.Length)
+                        while ((len = K32GetModuleBaseNameW(Handle, modHandle, p, (uint)arr.Length)) >= arr.Length)
                             Array.Resize(ref arr, (int)len);
 
                     return len != 0
@@ -135,7 +134,7 @@ public sealed unsafe class NativeProcess : IDisposable
 
                 yield return CreateModule(entry);
 
-                result = Win32.Module32NextW(snap, ref entry);
+                result = Module32NextW(snap, ref entry);
             }
         }
     }
@@ -151,7 +150,7 @@ public sealed unsafe class NativeProcess : IDisposable
     {
         _ = !_disposed ? true : throw new ObjectDisposedException(GetType().Name);
 
-        return Win32.VirtualAllocEx(
+        return VirtualAllocEx(
             Handle,
             null,
             length,
@@ -165,7 +164,7 @@ public sealed unsafe class NativeProcess : IDisposable
     {
         _ = !_disposed ? true : throw new ObjectDisposedException(GetType().Name);
 
-        if (!Win32.VirtualFreeEx(Handle, (void*)(nuint)address, 0, VIRTUAL_FREE_TYPE.MEM_RELEASE))
+        if (!VirtualFreeEx(Handle, (void*)(nuint)address, 0, VIRTUAL_FREE_TYPE.MEM_RELEASE))
             throw new Win32Exception();
     }
 
@@ -173,7 +172,7 @@ public sealed unsafe class NativeProcess : IDisposable
     {
         _ = !_disposed ? true : throw new ObjectDisposedException(GetType().Name);
 
-        if (!Win32.VirtualProtectEx(Handle, (void*)(nuint)address, length, TranslateProtection(protection), out _))
+        if (!VirtualProtectEx(Handle, (void*)(nuint)address, length, TranslateProtection(protection), out _))
             throw new Win32Exception();
     }
 
@@ -182,7 +181,7 @@ public sealed unsafe class NativeProcess : IDisposable
         _ = !_disposed ? true : throw new ObjectDisposedException(GetType().Name);
 
         fixed (byte* p = buffer)
-            if (!Win32.ReadProcessMemory(Handle, (void*)(nuint)address, p, (nuint)buffer.Length, null))
+            if (!ReadProcessMemory(Handle, (void*)(nuint)address, p, (nuint)buffer.Length, null))
                 throw new Win32Exception();
     }
 
@@ -191,7 +190,7 @@ public sealed unsafe class NativeProcess : IDisposable
         _ = !_disposed ? true : throw new ObjectDisposedException(GetType().Name);
 
         fixed (byte* p = buffer)
-            if (!Win32.WriteProcessMemory(Handle, (void*)(nuint)address, p, (nuint)buffer.Length, null))
+            if (!WriteProcessMemory(Handle, (void*)(nuint)address, p, (nuint)buffer.Length, null))
                 throw new Win32Exception();
     }
 
@@ -199,7 +198,7 @@ public sealed unsafe class NativeProcess : IDisposable
     {
         _ = !_disposed ? true : throw new ObjectDisposedException(GetType().Name);
 
-        if (!Win32.FlushInstructionCache(Handle, (void*)(nuint)address, length))
+        if (!FlushInstructionCache(Handle, (void*)(nuint)address, length))
             throw new Win32Exception();
     }
 
@@ -210,8 +209,7 @@ public sealed unsafe class NativeProcess : IDisposable
 
         var pid = (uint)Id;
 
-        using var snap = Win32.CreateToolhelp32Snapshot_SafeHandle(
-            CREATE_TOOLHELP_SNAPSHOT_FLAGS.TH32CS_SNAPTHREAD, pid);
+        using var snap = CreateToolhelp32Snapshot_SafeHandle(CREATE_TOOLHELP_SNAPSHOT_FLAGS.TH32CS_SNAPTHREAD, pid);
 
         if (snap.IsInvalid)
             throw new Win32Exception();
@@ -221,7 +219,7 @@ public sealed unsafe class NativeProcess : IDisposable
             dwSize = (uint)sizeof(THREADENTRY32),
         };
 
-        var result = Win32.Thread32First(snap, ref entry);
+        var result = Thread32First(snap, ref entry);
 
         while (true)
         {
@@ -238,13 +236,12 @@ public sealed unsafe class NativeProcess : IDisposable
                 !predicate((int)entry.th32ThreadID))
                 continue;
 
-            using var handle = Win32.OpenThread_SafeHandle(
-                THREAD_ACCESS_RIGHTS.THREAD_ALL_ACCESS, false, entry.th32ThreadID);
+            using var handle = OpenThread_SafeHandle(THREAD_ACCESS_RIGHTS.THREAD_ALL_ACCESS, false, entry.th32ThreadID);
 
             if (!handle.IsInvalid)
                 action(entry.th32ThreadID, handle);
 
-            result = Win32.Thread32Next(snap, ref entry);
+            result = Thread32Next(snap, ref entry);
         }
     }
 
@@ -254,7 +251,7 @@ public sealed unsafe class NativeProcess : IDisposable
 
         ForEachThread(predicate, (tid, handle) =>
         {
-            if (Win32.SuspendThread(handle) is not uint.MaxValue and var count)
+            if (SuspendThread(handle) is not uint.MaxValue and var count)
                 suspended.Add(((int)tid, (int)count));
         });
 
@@ -267,7 +264,7 @@ public sealed unsafe class NativeProcess : IDisposable
 
         ForEachThread(predicate, (tid, handle) =>
         {
-            if (Win32.ResumeThread(handle) is not uint.MaxValue and var count)
+            if (ResumeThread(handle) is not uint.MaxValue and var count)
                 resumed.Add(((int)tid, (int)count));
         });
 
