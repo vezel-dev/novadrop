@@ -1,7 +1,7 @@
 namespace Vezel.Novadrop.Commands;
 
 [SuppressMessage("", "CA1812")]
-sealed class VerifyCommand : CancellableAsyncCommand<VerifyCommand.VerifyCommandSettings>
+internal sealed class VerifyCommand : CancellableAsyncCommand<VerifyCommand.VerifyCommandSettings>
 {
     public sealed class VerifyCommandSettings : CommandSettings
     {

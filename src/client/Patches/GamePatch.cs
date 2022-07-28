@@ -10,7 +10,7 @@ public abstract class GamePatch
 
     protected MemoryWindow Window { get; }
 
-    bool _initialized;
+    private bool _initialized;
 
     private protected GamePatch(NativeProcess process)
     {

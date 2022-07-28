@@ -2,7 +2,7 @@ using Vezel.Novadrop.Data.Serialization.Items;
 
 namespace Vezel.Novadrop.Data.Serialization.Regions;
 
-sealed class DataCenterSegmentedSimpleRegion<T>
+internal sealed class DataCenterSegmentedSimpleRegion<T>
     where T : unmanaged, IDataCenterItem
 {
     public ImmutableArray<DataCenterSimpleRegion<T>> Segments { get; }

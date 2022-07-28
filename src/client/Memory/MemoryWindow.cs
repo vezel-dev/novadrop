@@ -19,15 +19,9 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>
         Length = length;
     }
 
-    public static bool operator ==(MemoryWindow left, MemoryWindow right)
-    {
-        return left.Equals(right);
-    }
+    public static bool operator ==(MemoryWindow left, MemoryWindow right) => left.Equals(right);
 
-    public static bool operator !=(MemoryWindow left, MemoryWindow right)
-    {
-        return !left.Equals(right);
-    }
+    public static bool operator !=(MemoryWindow left, MemoryWindow right) => !left.Equals(right);
 
     public bool ContainsAddress(NativeAddress address)
     {

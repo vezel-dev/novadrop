@@ -1,7 +1,7 @@
 namespace Vezel.Novadrop.Data.Serialization.Items;
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
-struct DataCenterRawChar : IDataCenterItem
+internal struct DataCenterRawChar : IDataCenterItem
 {
     public char Value;
 

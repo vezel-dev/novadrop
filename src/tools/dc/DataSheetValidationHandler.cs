@@ -1,10 +1,10 @@
 namespace Vezel.Novadrop;
 
-sealed class DataSheetValidationHandler
+internal sealed class DataSheetValidationHandler
 {
     public bool HasProblems => _problems.Count != 0;
 
-    readonly List<(FileInfo File, int, int, XmlSeverityType, string)> _problems = new();
+    private readonly List<(FileInfo File, int, int, XmlSeverityType, string)> _problems = new();
 
     public void Print()
     {

@@ -5,23 +5,23 @@ using Vezel.Novadrop.Data.Serialization.Tables;
 
 namespace Vezel.Novadrop.Data.Serialization;
 
-sealed class DataCenterWriter
+internal sealed class DataCenterWriter
 {
-    readonly DataCenterHeader _header;
+    private readonly DataCenterHeader _header;
 
-    readonly DataCenterKeysTableWriter _keys;
+    private readonly DataCenterKeysTableWriter _keys;
 
-    readonly DataCenterSegmentedRegion<DataCenterRawAttribute> _attributes = new();
+    private readonly DataCenterSegmentedRegion<DataCenterRawAttribute> _attributes = new();
 
-    readonly DataCenterSegmentedRegion<DataCenterRawNode> _nodes = new();
+    private readonly DataCenterSegmentedRegion<DataCenterRawNode> _nodes = new();
 
-    readonly DataCenterStringTableWriter _values = new(DataCenterConstants.ValueTableSize, false);
+    private readonly DataCenterStringTableWriter _values = new(DataCenterConstants.ValueTableSize, false);
 
-    readonly DataCenterStringTableWriter _names = new(DataCenterConstants.NameTableSize, true);
+    private readonly DataCenterStringTableWriter _names = new(DataCenterConstants.NameTableSize, true);
 
-    readonly DataCenterFooter _footer = new();
+    private readonly DataCenterFooter _footer = new();
 
-    readonly DataCenterSaveOptions _options;
+    private readonly DataCenterSaveOptions _options;
 
     public DataCenterWriter(DataCenterSaveOptions options)
     {
@@ -33,7 +33,7 @@ sealed class DataCenterWriter
         _options = options;
     }
 
-    void ProcessTree(DataCenterNode root, CancellationToken cancellationToken)
+    private void ProcessTree(DataCenterNode root, CancellationToken cancellationToken)
     {
         static DataCenterAddress AllocateRange<T>(DataCenterSegmentedRegion<T> region, int count, string description)
             where T : unmanaged, IDataCenterItem

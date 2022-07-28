@@ -3,7 +3,7 @@ using Vezel.Novadrop.Data.Serialization.Items;
 namespace Vezel.Novadrop.Data.Serialization;
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
-readonly struct DataCenterAddress : IEquatable<DataCenterAddress>
+internal readonly struct DataCenterAddress : IEquatable<DataCenterAddress>
 {
     public static readonly DataCenterAddress MinValue = new(ushort.MinValue, ushort.MinValue);
 
@@ -24,29 +24,17 @@ readonly struct DataCenterAddress : IEquatable<DataCenterAddress>
     {
     }
 
-    public static implicit operator DataCenterAddress(DataCenterRawAddress raw)
-    {
-        return new(raw);
-    }
+    public static implicit operator DataCenterAddress(DataCenterRawAddress raw) => new(raw);
 
-    public static implicit operator DataCenterRawAddress(DataCenterAddress address)
+    public static implicit operator DataCenterRawAddress(DataCenterAddress address) => new()
     {
-        return new()
-        {
-            SegmentIndex = address.SegmentIndex,
-            ElementIndex = address.ElementIndex,
-        };
-    }
+        SegmentIndex = address.SegmentIndex,
+        ElementIndex = address.ElementIndex,
+    };
 
-    public static bool operator ==(DataCenterAddress left, DataCenterAddress right)
-    {
-        return left.Equals(right);
-    }
+    public static bool operator ==(DataCenterAddress left, DataCenterAddress right) => left.Equals(right);
 
-    public static bool operator !=(DataCenterAddress left, DataCenterAddress right)
-    {
-        return !left.Equals(right);
-    }
+    public static bool operator !=(DataCenterAddress left, DataCenterAddress right) => !left.Equals(right);
 
     public bool Equals(DataCenterAddress other)
     {

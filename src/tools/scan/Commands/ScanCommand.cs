@@ -3,7 +3,7 @@ using Vezel.Novadrop.Scanners;
 namespace Vezel.Novadrop.Commands;
 
 [SuppressMessage("", "CA1812")]
-sealed class ScanCommand : CancellableAsyncCommand<ScanCommand.ScanCommandSettings>
+internal sealed class ScanCommand : CancellableAsyncCommand<ScanCommand.ScanCommandSettings>
 {
     public sealed class ScanCommandSettings : CommandSettings
     {
@@ -21,7 +21,7 @@ sealed class ScanCommand : CancellableAsyncCommand<ScanCommand.ScanCommandSettin
         }
     }
 
-    static readonly ReadOnlyMemory<GameScanner> _scanners = new GameScanner[]
+    private static readonly ReadOnlyMemory<GameScanner> _scanners = new GameScanner[]
     {
         new ClientVersionScanner(),
         new DataCenterScanner(),

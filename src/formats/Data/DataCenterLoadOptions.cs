@@ -12,7 +12,7 @@ public sealed class DataCenterLoadOptions
 
     public DataCenterMutability Mutability { get; private set; }
 
-    DataCenterLoadOptions Clone()
+    private DataCenterLoadOptions Clone()
     {
         return new()
         {

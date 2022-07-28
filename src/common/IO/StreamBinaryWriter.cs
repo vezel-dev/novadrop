@@ -1,10 +1,10 @@
 namespace Vezel.Novadrop.IO;
 
-sealed class StreamBinaryWriter
+internal sealed class StreamBinaryWriter
 {
-    readonly Stream _stream;
+    private readonly Stream _stream;
 
-    readonly Memory<byte> _buffer = GC.AllocateUninitializedArray<byte>(sizeof(ulong));
+    private readonly Memory<byte> _buffer = GC.AllocateUninitializedArray<byte>(sizeof(ulong));
 
     public StreamBinaryWriter(Stream stream)
     {

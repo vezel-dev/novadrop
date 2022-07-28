@@ -1,6 +1,6 @@
 namespace Vezel.Novadrop.Data.Serialization.Items;
 
-interface IDataCenterItem
+internal interface IDataCenterItem
 {
-    void ReverseEndianness();
+    public abstract void ReverseEndianness();
 }

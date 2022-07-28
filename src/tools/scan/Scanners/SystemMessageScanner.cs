@@ -1,8 +1,8 @@
 namespace Vezel.Novadrop.Scanners;
 
-sealed class SystemMessageScanner : GameScanner
+internal sealed class SystemMessageScanner : GameScanner
 {
-    static readonly ReadOnlyMemory<byte?> _pattern = new byte?[]
+    private static readonly ReadOnlyMemory<byte?> _pattern = new byte?[]
     {
         0x85, 0xc9,                               // test ecx, eax
         0x78, 0x17,                               // js short 0x17

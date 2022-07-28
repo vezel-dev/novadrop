@@ -1,7 +1,7 @@
 namespace Vezel.Novadrop.Diagnostics;
 
 [SuppressMessage("", "CA1001")]
-sealed class ChildProcess
+internal sealed class ChildProcess
 {
     // This is a simplified version of the ChildProcess class from Cathode.
 
@@ -9,11 +9,11 @@ sealed class ChildProcess
 
     public Task<int> Completion { get; }
 
-    readonly Process _process;
+    private readonly Process _process;
 
-    readonly TaskCompletionSource<int> _completion = new(TaskCreationOptions.RunContinuationsAsynchronously);
+    private readonly TaskCompletionSource<int> _completion = new(TaskCreationOptions.RunContinuationsAsynchronously);
 
-    readonly TaskCompletionSource _exited = new(TaskCreationOptions.RunContinuationsAsynchronously);
+    private readonly TaskCompletionSource _exited = new(TaskCreationOptions.RunContinuationsAsynchronously);
 
     [SuppressMessage("", "CA1031")]
     public ChildProcess(string fileName, string[] arguments, CancellationToken cancellationToken)

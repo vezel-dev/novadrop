@@ -1,10 +1,10 @@
 namespace Vezel.Novadrop.Cli;
 
-static class CliExtensions
+internal static class CliExtensions
 {
-    sealed class ProgressTaskWrapper : IDisposable
+    private sealed class ProgressTaskWrapper : IDisposable
     {
-        readonly ProgressTask _task;
+        private readonly ProgressTask _task;
 
         public ProgressTaskWrapper(ProgressContext context, string description, int goal, bool indeterminate)
         {

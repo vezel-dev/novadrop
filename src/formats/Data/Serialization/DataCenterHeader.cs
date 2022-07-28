@@ -1,10 +1,10 @@
 namespace Vezel.Novadrop.Data.Serialization;
 
-sealed class DataCenterHeader
+internal sealed class DataCenterHeader
 {
-    const int KnownVersion = 6;
+    private const int KnownVersion = 6;
 
-    const double KnownTimestamp = -1.0;
+    private const double KnownTimestamp = -1.0;
 
     public int Version { get; private set; }
 

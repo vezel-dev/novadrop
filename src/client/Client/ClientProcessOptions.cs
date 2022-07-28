@@ -16,10 +16,11 @@ public sealed class ClientProcessOptions
 
     public Func<int, string[], Uri>? WebUriProvider { get; private set; }
 
-    ClientProcessOptions()
+    private ClientProcessOptions()
     {
     }
 
+    [SuppressMessage("", "CA1851")]
     public ClientProcessOptions(
         string fileName, string accountName, string sessionTicket, IEnumerable<ClientServerInfo> servers)
     {
@@ -36,7 +37,7 @@ public sealed class ClientProcessOptions
         Servers = servers.ToImmutableDictionary(s => s.Id);
     }
 
-    ClientProcessOptions Clone()
+    private ClientProcessOptions Clone()
     {
         return new()
         {
@@ -92,6 +93,7 @@ public sealed class ClientProcessOptions
         return options;
     }
 
+    [SuppressMessage("", "CA1851")]
     public ClientProcessOptions WithServers(IEnumerable<ClientServerInfo> servers)
     {
         ArgumentNullException.ThrowIfNull(servers);

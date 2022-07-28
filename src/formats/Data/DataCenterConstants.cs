@@ -1,6 +1,6 @@
 namespace Vezel.Novadrop.Data;
 
-static class DataCenterConstants
+internal static class DataCenterConstants
 {
     public const int KeysTableSize = 4096;
 

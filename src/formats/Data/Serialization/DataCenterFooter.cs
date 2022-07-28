@@ -1,6 +1,6 @@
 namespace Vezel.Novadrop.Data.Serialization;
 
-sealed class DataCenterFooter
+internal sealed class DataCenterFooter
 {
     public int Marker { get; private set; }
 

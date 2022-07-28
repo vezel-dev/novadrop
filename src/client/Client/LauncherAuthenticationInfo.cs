@@ -1,6 +1,6 @@
 namespace Vezel.Novadrop.Client;
 
-sealed class LauncherAuthenticationInfo
+internal sealed class LauncherAuthenticationInfo
 {
     // TODO: access_level, account_bits, user_permission
 

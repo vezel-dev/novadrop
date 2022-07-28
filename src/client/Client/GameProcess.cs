@@ -14,16 +14,16 @@ public abstract class GameProcess
 
     public int Id => _process?.Id ?? throw new InvalidOperationException();
 
-    int _started;
+    private int _started;
 
-    ChildProcess? _process;
+    private ChildProcess? _process;
 
     private protected GameProcess()
     {
     }
 
     [UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
-    static unsafe LRESULT WindowProcedure(HWND hWnd, uint msg, WPARAM wParam, LPARAM lParam)
+    private static unsafe LRESULT WindowProcedure(HWND hWnd, uint msg, WPARAM wParam, LPARAM lParam)
     {
         if (msg != Win32.WM_COPYDATA)
             return Win32.DefWindowProcW(hWnd, msg, wParam, lParam);

@@ -1,8 +1,8 @@
 namespace Vezel.Novadrop.Data.Serialization;
 
-static class DataCenterNameTree
+internal static class DataCenterNameTree
 {
-    sealed class DataCenterNameNode
+    private sealed class DataCenterNameNode
     {
         public string Name { get; }
 

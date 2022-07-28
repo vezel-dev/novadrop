@@ -1,6 +1,6 @@
 namespace Vezel.Novadrop.Cli;
 
-static class Log
+internal static class Log
 {
     public static void WriteLine()
     {

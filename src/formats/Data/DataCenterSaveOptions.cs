@@ -10,7 +10,7 @@ public sealed class DataCenterSaveOptions
 
     public ReadOnlyMemory<byte> IV { get; private set; } = DataCenter.LatestIV;
 
-    DataCenterSaveOptions Clone()
+    private DataCenterSaveOptions Clone()
     {
         return new()
         {

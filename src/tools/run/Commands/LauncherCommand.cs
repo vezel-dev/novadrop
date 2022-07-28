@@ -1,7 +1,7 @@
 namespace Vezel.Novadrop.Commands;
 
 [SuppressMessage("", "CA1812")]
-sealed class LauncherCommand : CancellableAsyncCommand<LauncherCommand.LauncherCommandSettings>
+internal sealed class LauncherCommand : CancellableAsyncCommand<LauncherCommand.LauncherCommandSettings>
 {
     public sealed class LauncherCommandSettings : CommandSettings
     {

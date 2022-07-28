@@ -3,17 +3,17 @@ using Vezel.Novadrop.Data.Serialization.Regions;
 
 namespace Vezel.Novadrop.Data.Serialization.Tables;
 
-sealed class DataCenterStringTableReader
+internal sealed class DataCenterStringTableReader
 {
-    readonly DataCenterSegmentedRegion<DataCenterRawChar> _data = new();
+    private readonly DataCenterSegmentedRegion<DataCenterRawChar> _data = new();
 
-    readonly DataCenterSegmentedSimpleRegion<DataCenterRawString> _strings;
+    private readonly DataCenterSegmentedSimpleRegion<DataCenterRawString> _strings;
 
-    readonly DataCenterSimpleRegion<DataCenterRawAddress> _addresses = new(true);
+    private readonly DataCenterSimpleRegion<DataCenterRawAddress> _addresses = new(true);
 
-    readonly Dictionary<DataCenterAddress, string> _addressCache = new(ushort.MaxValue);
+    private readonly Dictionary<DataCenterAddress, string> _addressCache = new(ushort.MaxValue);
 
-    readonly List<string> _indexCache = new(ushort.MaxValue);
+    private readonly List<string> _indexCache = new(ushort.MaxValue);
 
     public DataCenterStringTableReader(int count)
     {

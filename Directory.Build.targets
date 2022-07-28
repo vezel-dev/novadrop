@@ -32,6 +32,10 @@
         <Using Include="System.Xml.Schema" />
     </ItemGroup>
 
+    <ItemGroup>
+        <AdditionalFiles Include="$(MSBuildThisFileDirectory).stylecop.json" />
+    </ItemGroup>
+
     <Choose>
         <When Condition="'$(IsPackable)' == 'true'">
             <PropertyGroup>

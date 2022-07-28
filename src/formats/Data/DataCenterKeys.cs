@@ -56,15 +56,10 @@ public sealed class DataCenterKeys : IEquatable<DataCenterKeys>
         AttributeName4 = attributeName4;
     }
 
-    public static bool operator ==(DataCenterKeys? left, DataCenterKeys? right)
-    {
-        return EqualityComparer<DataCenterKeys>.Default.Equals(left, right);
-    }
+    public static bool operator ==(DataCenterKeys? left, DataCenterKeys? right) =>
+        EqualityComparer<DataCenterKeys>.Default.Equals(left, right);
 
-    public static bool operator !=(DataCenterKeys? left, DataCenterKeys? right)
-    {
-        return !(left == right);
-    }
+    public static bool operator !=(DataCenterKeys? left, DataCenterKeys? right) => !(left == right);
 
     public DataCenterKeys WithAttributeName1(string attributeName1)
     {

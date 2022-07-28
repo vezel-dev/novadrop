@@ -1,6 +1,6 @@
 namespace Vezel.Novadrop.Client;
 
 [JsonSerializable(typeof(LauncherAuthenticationInfo))]
-partial class LauncherJsonContext : JsonSerializerContext
+internal partial class LauncherJsonContext : JsonSerializerContext
 {
 }

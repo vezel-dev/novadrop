@@ -2,7 +2,7 @@ using Vezel.Novadrop.Data.Serialization.Items;
 
 namespace Vezel.Novadrop.Data.Serialization.Regions;
 
-sealed class DataCenterRegion<T>
+internal sealed class DataCenterRegion<T>
     where T : unmanaged, IDataCenterItem
 {
     public List<T> Elements { get; } = new List<T>(ushort.MaxValue);

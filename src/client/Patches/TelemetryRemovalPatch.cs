@@ -4,7 +4,7 @@ namespace Vezel.Novadrop.Patches;
 
 public sealed class TelemetryRemovalPatch : GamePatch
 {
-    static readonly ReadOnlyMemory<byte?> _pattern1 = new byte?[]
+    private static readonly ReadOnlyMemory<byte?> _pattern1 = new byte?[]
     {
         0x48, 0x89, 0x5c, 0x24, 0x08,                   // mov qword ptr [rsp + 0x8], rbx
         0x48, 0x89, 0x74, 0x24, 0x18,                   // mov qword ptr [rsp + 0x18], rsi
@@ -17,7 +17,7 @@ public sealed class TelemetryRemovalPatch : GamePatch
         0x48, 0x8d, 0xac, 0x24, 0xf0, 0xfb, 0xff, 0xff, // lea rbp, [rsp - 0x410]
     };
 
-    static readonly ReadOnlyMemory<byte?> _pattern2 = new byte?[]
+    private static readonly ReadOnlyMemory<byte?> _pattern2 = new byte?[]
     {
         0x48, 0x89, 0x5c, 0x24, 0x10,                   // mov qword ptr [rsp + 0x10], rbx
         0x48, 0x89, 0x74, 0x24, 0x18,                   // mov qword ptr [rsp + 0x18], rsi
@@ -30,7 +30,7 @@ public sealed class TelemetryRemovalPatch : GamePatch
         0x48, 0x8d, 0xac, 0x24, 0xa0, 0xf9, 0xff, 0xff, // lea rbp, [rsp - 0x660]
     };
 
-    static readonly ReadOnlyMemory<byte?> _pattern3 = new byte?[]
+    private static readonly ReadOnlyMemory<byte?> _pattern3 = new byte?[]
     {
         0x48, 0x89, 0x5c, 0x24, 0x08,                   // mov qword ptr [rsp + 0x8], rbx
         0x48, 0x89, 0x74, 0x24, 0x10,                   // mov qword ptr [rsp + 0x10], rbx
@@ -49,13 +49,13 @@ public sealed class TelemetryRemovalPatch : GamePatch
         0xf7, 0xd8,                                     // neg eax
     };
 
-    static readonly ReadOnlyMemory<byte> _patch = new byte[]
+    private static readonly ReadOnlyMemory<byte> _patch = new byte[]
     {
         0x33, 0xc0, // xor eax, eax
         0xc3,       // ret
     };
 
-    readonly List<(nuint, ReadOnlyMemory<byte>)> _functions = new();
+    private readonly List<(nuint, ReadOnlyMemory<byte>)> _functions = new();
 
     public TelemetryRemovalPatch(NativeProcess process)
         : base(process)

@@ -6,12 +6,12 @@ namespace Vezel.Novadrop.Patches;
 
 public sealed class SecurityNeutralizationPatch : GamePatch
 {
-    static readonly ReadOnlyMemory<byte?> _className =
+    private static readonly ReadOnlyMemory<byte?> _className =
         Encoding.Unicode.GetBytes("S1SecurityCrashJob").Cast<byte?>().ToArray();
 
-    readonly List<(nuint, nuint)> _slots = new();
+    private readonly List<(nuint, nuint)> _slots = new();
 
-    DynamicCode? _function;
+    private DynamicCode? _function;
 
     public SecurityNeutralizationPatch(NativeProcess process)
         : base(process)

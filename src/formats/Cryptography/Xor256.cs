@@ -3,7 +3,7 @@ namespace Vezel.Novadrop.Cryptography;
 [SuppressMessage("", "CA5358")]
 public sealed class Xor256 : SymmetricAlgorithm
 {
-    sealed class Xor256CryptoTransform : ICryptoTransform
+    private sealed class Xor256CryptoTransform : ICryptoTransform
     {
         public bool CanReuseTransform => true;
 
@@ -13,7 +13,7 @@ public sealed class Xor256 : SymmetricAlgorithm
 
         public int OutputBlockSize => _key.Length;
 
-        readonly ReadOnlyMemory<byte> _key;
+        private readonly ReadOnlyMemory<byte> _key;
 
         public Xor256CryptoTransform(byte[] key)
         {
@@ -81,7 +81,7 @@ public sealed class Xor256 : SymmetricAlgorithm
         }
     }
 
-    const int KeyLength = 32;
+    private const int KeyLength = 32;
 
     public override int FeedbackSize
     {
@@ -117,7 +117,7 @@ public sealed class Xor256 : SymmetricAlgorithm
         }
     }
 
-    Xor256()
+    private Xor256()
     {
         ModeValue = CipherMode.ECB;
         PaddingValue = PaddingMode.None;

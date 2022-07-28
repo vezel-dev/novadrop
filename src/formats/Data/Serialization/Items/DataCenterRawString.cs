@@ -1,7 +1,7 @@
 namespace Vezel.Novadrop.Data.Serialization.Items;
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
-struct DataCenterRawString : IDataCenterItem
+internal struct DataCenterRawString : IDataCenterItem
 {
     public uint Hash;
 

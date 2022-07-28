@@ -1,12 +1,12 @@
 namespace Vezel.Novadrop.IO;
 
-sealed class StreamBinaryReader
+internal sealed class StreamBinaryReader
 {
     public long Progress { get; private set; }
 
-    readonly Stream _stream;
+    private readonly Stream _stream;
 
-    readonly Memory<byte> _buffer = GC.AllocateUninitializedArray<byte>(sizeof(ulong));
+    private readonly Memory<byte> _buffer = GC.AllocateUninitializedArray<byte>(sizeof(ulong));
 
     public StreamBinaryReader(Stream stream)
     {

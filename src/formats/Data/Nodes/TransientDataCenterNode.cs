@@ -1,7 +1,7 @@
 namespace Vezel.Novadrop.Data.Nodes;
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
-sealed class TransientDataCenterNode : ImmutableDataCenterNode
+internal sealed class TransientDataCenterNode : ImmutableDataCenterNode
 {
     public override IReadOnlyDictionary<string, DataCenterValue> Attributes => _getAttributes();
 
@@ -11,9 +11,9 @@ sealed class TransientDataCenterNode : ImmutableDataCenterNode
 
     public override bool HasChildren { get; }
 
-    readonly Func<IReadOnlyDictionary<string, DataCenterValue>> _getAttributes;
+    private readonly Func<IReadOnlyDictionary<string, DataCenterValue>> _getAttributes;
 
-    readonly Func<IReadOnlyList<DataCenterNode>> _getChildren;
+    private readonly Func<IReadOnlyList<DataCenterNode>> _getChildren;
 
     public TransientDataCenterNode(
         DataCenterNode? parent,

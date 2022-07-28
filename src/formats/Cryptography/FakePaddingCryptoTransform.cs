@@ -10,7 +10,7 @@ public sealed class FakePaddingCryptoTransform : ICryptoTransform
 
     public bool CanReuseTransform => _transform.CanReuseTransform;
 
-    readonly ICryptoTransform _transform;
+    private readonly ICryptoTransform _transform;
 
     public FakePaddingCryptoTransform(ICryptoTransform transform)
     {

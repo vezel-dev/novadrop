@@ -5,23 +5,23 @@ using Vezel.Novadrop.Data.Serialization.Tables;
 
 namespace Vezel.Novadrop.Data.Serialization.Readers;
 
-abstract class DataCenterReader
+internal abstract class DataCenterReader
 {
-    readonly DataCenterHeader _header = new();
+    private readonly DataCenterHeader _header = new();
 
-    readonly DataCenterKeysTableReader _keys;
+    private readonly DataCenterKeysTableReader _keys;
 
-    readonly DataCenterSegmentedRegion<DataCenterRawAttribute> _attributes = new();
+    private readonly DataCenterSegmentedRegion<DataCenterRawAttribute> _attributes = new();
 
-    readonly DataCenterSegmentedRegion<DataCenterRawNode> _nodes = new();
+    private readonly DataCenterSegmentedRegion<DataCenterRawNode> _nodes = new();
 
-    readonly DataCenterStringTableReader _values = new(DataCenterConstants.ValueTableSize);
+    private readonly DataCenterStringTableReader _values = new(DataCenterConstants.ValueTableSize);
 
-    readonly DataCenterStringTableReader _names = new(DataCenterConstants.NameTableSize);
+    private readonly DataCenterStringTableReader _names = new(DataCenterConstants.NameTableSize);
 
-    readonly DataCenterFooter _footer = new();
+    private readonly DataCenterFooter _footer = new();
 
-    readonly DataCenterLoadOptions _options;
+    private readonly DataCenterLoadOptions _options;
 
     protected DataCenterReader(DataCenterLoadOptions options)
     {
@@ -78,7 +78,7 @@ abstract class DataCenterReader
         }
     }
 
-    (string Name, DataCenterValue Value) CreateAttribute(DataCenterAddress address)
+    private (string Name, DataCenterValue Value) CreateAttribute(DataCenterAddress address)
     {
         var rawAttr = _attributes.GetElement(address);
 

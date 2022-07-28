@@ -1,15 +1,15 @@
 namespace Vezel.Novadrop.Data.Nodes;
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
-sealed class EagerImmutableDataCenterNode : ImmutableDataCenterNode
+internal sealed class EagerImmutableDataCenterNode : ImmutableDataCenterNode
 {
     public override IReadOnlyDictionary<string, DataCenterValue> Attributes => _attributes!;
 
     public override IReadOnlyList<DataCenterNode> Children => _children!;
 
-    IReadOnlyDictionary<string, DataCenterValue>? _attributes;
+    private IReadOnlyDictionary<string, DataCenterValue>? _attributes;
 
-    IReadOnlyList<DataCenterNode>? _children;
+    private IReadOnlyList<DataCenterNode>? _children;
 
     public EagerImmutableDataCenterNode(DataCenterNode? parent, string name, string? value, DataCenterKeys keys)
         : base(parent, name, value, keys)

@@ -40,9 +40,9 @@ public abstract class DataCenterNode
         set => SetAttribute(name, value);
     }
 
-    string? _value;
+    private string? _value;
 
-    DataCenterKeys _keys;
+    private DataCenterKeys _keys;
 
     private protected DataCenterNode(DataCenterNode? parent, string name, string? value, DataCenterKeys keys)
     {

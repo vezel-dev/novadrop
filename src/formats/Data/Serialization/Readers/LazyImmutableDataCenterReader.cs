@@ -3,13 +3,13 @@ using Vezel.Novadrop.Data.Serialization.Items;
 
 namespace Vezel.Novadrop.Data.Serialization.Readers;
 
-sealed class LazyImmutableDataCenterReader : DataCenterReader
+internal sealed class LazyImmutableDataCenterReader : DataCenterReader
 {
-    static readonly OrderedDictionary<string, DataCenterValue> _emptyAttributes = new();
+    private static readonly OrderedDictionary<string, DataCenterValue> _emptyAttributes = new();
 
-    static readonly List<DataCenterNode> _emptyChildren = new();
+    private static readonly List<DataCenterNode> _emptyChildren = new();
 
-    readonly ConcurrentDictionary<DataCenterAddress, LazyImmutableDataCenterNode> _cache = new();
+    private readonly ConcurrentDictionary<DataCenterAddress, LazyImmutableDataCenterNode> _cache = new();
 
     public LazyImmutableDataCenterReader(DataCenterLoadOptions options)
         : base(options)

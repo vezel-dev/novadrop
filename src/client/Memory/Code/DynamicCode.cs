@@ -11,9 +11,9 @@ public sealed class DynamicCode : IDisposable
 
     public MemoryWindow CodeWindow { get; }
 
-    int _disposed;
+    private int _disposed;
 
-    DynamicCode(NativeProcess process, MemoryWindow fullWindow, MemoryWindow codeWindow)
+    private DynamicCode(NativeProcess process, MemoryWindow fullWindow, MemoryWindow codeWindow)
     {
         Process = process;
         FullWindow = fullWindow;
@@ -32,7 +32,7 @@ public sealed class DynamicCode : IDisposable
         GC.SuppressFinalize(this);
     }
 
-    void Free()
+    private void Free()
     {
         if (Interlocked.Exchange(ref _disposed, 1) == 0)
             Process.Free(FullWindow.Address);

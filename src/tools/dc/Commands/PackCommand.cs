@@ -1,7 +1,7 @@
 namespace Vezel.Novadrop.Commands;
 
 [SuppressMessage("", "CA1812")]
-sealed class PackCommand : CancellableAsyncCommand<PackCommand.PackCommandSettings>
+internal sealed class PackCommand : CancellableAsyncCommand<PackCommand.PackCommandSettings>
 {
     public sealed class PackCommandSettings : CommandSettings
     {

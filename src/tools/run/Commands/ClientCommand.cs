@@ -1,7 +1,7 @@
 namespace Vezel.Novadrop.Commands;
 
 [SuppressMessage("", "CA1812")]
-sealed class ClientCommand : CancellableAsyncCommand<ClientCommand.ClientCommandSettings>
+internal sealed class ClientCommand : CancellableAsyncCommand<ClientCommand.ClientCommandSettings>
 {
     public sealed class ClientCommandSettings : CommandSettings
     {

@@ -1,8 +1,8 @@
 namespace Vezel.Novadrop.Scanners;
 
-sealed class ResourceContainerScanner : GameScanner
+internal sealed class ResourceContainerScanner : GameScanner
 {
-    static readonly ReadOnlyMemory<byte?> _pattern = new byte?[]
+    private static readonly ReadOnlyMemory<byte?> _pattern = new byte?[]
     {
         0x44, 0x8b, 0xda,                         // mov r11d, edx
         0x48, 0x8d, 0x1d, null, null, null, null, // lea rbx, [rip + <disp>]

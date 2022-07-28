@@ -27,7 +27,7 @@ public sealed unsafe class NativeProcess : IDisposable
         }
     }
 
-    volatile bool _disposed;
+    private volatile bool _disposed;
 
     public NativeProcess(int id)
     {
@@ -53,7 +53,7 @@ public sealed unsafe class NativeProcess : IDisposable
         GC.SuppressFinalize(this);
     }
 
-    static PAGE_PROTECTION_FLAGS TranslateProtection(MemoryProtection protection)
+    private static PAGE_PROTECTION_FLAGS TranslateProtection(MemoryProtection protection)
     {
         return protection switch
         {
@@ -77,7 +77,7 @@ public sealed unsafe class NativeProcess : IDisposable
         };
     }
 
-    IEnumerable<NativeModule> GetModules()
+    private IEnumerable<NativeModule> GetModules()
     {
         SafeFileHandle snap;
 
@@ -140,7 +140,7 @@ public sealed unsafe class NativeProcess : IDisposable
         }
     }
 
-    void DisposeCore()
+    private void DisposeCore()
     {
         _disposed = true;
 
@@ -203,7 +203,7 @@ public sealed unsafe class NativeProcess : IDisposable
             throw new Win32Exception();
     }
 
-    void ForEachThread(Func<int, bool> predicate, Action<uint, SafeFileHandle> action)
+    private void ForEachThread(Func<int, bool> predicate, Action<uint, SafeFileHandle> action)
     {
         ArgumentNullException.ThrowIfNull(predicate);
         _ = !_disposed ? true : throw new ObjectDisposedException(GetType().Name);

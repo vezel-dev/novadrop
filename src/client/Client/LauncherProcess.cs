@@ -16,11 +16,11 @@ public sealed class LauncherProcess : GameProcess
 
     public LauncherProcessOptions Options { get; }
 
-    static readonly Regex _gameEvent = new(@"^gameEvent\((\d+)\)$");
+    private static readonly Regex _gameEvent = new(@"^gameEvent\((\d+)\)$");
 
-    static readonly Regex _endPopup = new(@"^endPopup\((\d+)\)$");
+    private static readonly Regex _endPopup = new(@"^endPopup\((\d+)\)$");
 
-    static readonly Regex _getWebLinkUrl = new(@"^getWebLinkUrl\((\d+),(.*)\)$");
+    private static readonly Regex _getWebLinkUrl = new(@"^getWebLinkUrl\((\d+),(.*)\)$");
 
     public LauncherProcess(LauncherProcessOptions options)
     {

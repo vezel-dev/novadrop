@@ -1,6 +1,6 @@
 namespace Vezel.Novadrop.Cli;
 
-abstract class CancellableAsyncCommand<TSettings> : AsyncCommand<TSettings>
+internal abstract class CancellableAsyncCommand<TSettings> : AsyncCommand<TSettings>
     where TSettings : CommandSettings
 {
     public override sealed async Task<int> ExecuteAsync(CommandContext context, TSettings settings)

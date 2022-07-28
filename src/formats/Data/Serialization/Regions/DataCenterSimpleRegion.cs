@@ -2,10 +2,10 @@ using Vezel.Novadrop.Data.Serialization.Items;
 
 namespace Vezel.Novadrop.Data.Serialization.Regions;
 
-sealed class DataCenterSimpleRegion<T>
+internal sealed class DataCenterSimpleRegion<T>
     where T : unmanaged, IDataCenterItem
 {
-    readonly bool _offByOne;
+    private readonly bool _offByOne;
 
     public List<T> Elements { get; } = new List<T>(ushort.MaxValue);
 

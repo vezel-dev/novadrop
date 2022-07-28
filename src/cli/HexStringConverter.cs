@@ -1,6 +1,6 @@
 namespace Vezel.Novadrop.Cli;
 
-sealed class HexStringConverter : TypeConverter
+internal sealed class HexStringConverter : TypeConverter
 {
     public override bool CanConvertFrom(ITypeDescriptorContext? context, Type sourceType)
     {

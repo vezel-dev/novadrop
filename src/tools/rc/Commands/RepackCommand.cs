@@ -1,7 +1,7 @@
 namespace Vezel.Novadrop.Commands;
 
 [SuppressMessage("", "CA1812")]
-sealed class RepackCommand : CancellableAsyncCommand<RepackCommand.RepackCommandSettings>
+internal sealed class RepackCommand : CancellableAsyncCommand<RepackCommand.RepackCommandSettings>
 {
     public sealed class RepackCommandSettings : CommandSettings
     {

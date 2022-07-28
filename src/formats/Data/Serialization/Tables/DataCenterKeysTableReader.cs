@@ -3,13 +3,13 @@ using Vezel.Novadrop.Data.Serialization.Regions;
 
 namespace Vezel.Novadrop.Data.Serialization.Tables;
 
-sealed class DataCenterKeysTableReader
+internal sealed class DataCenterKeysTableReader
 {
-    readonly DataCenterSimpleRegion<DataCenterRawKeys> _keys = new(false);
+    private readonly DataCenterSimpleRegion<DataCenterRawKeys> _keys = new(false);
 
-    readonly ConcurrentDictionary<int, DataCenterKeys> _cache = new();
+    private readonly ConcurrentDictionary<int, DataCenterKeys> _cache = new();
 
-    readonly DataCenterStringTableReader _names;
+    private readonly DataCenterStringTableReader _names;
 
     public DataCenterKeysTableReader(DataCenterStringTableReader names)
     {

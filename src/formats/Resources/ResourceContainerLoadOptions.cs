@@ -6,7 +6,7 @@ public sealed class ResourceContainerLoadOptions
 
     public bool Strict { get; private set; }
 
-    ResourceContainerLoadOptions Clone()
+    private ResourceContainerLoadOptions Clone()
     {
         return new()
         {

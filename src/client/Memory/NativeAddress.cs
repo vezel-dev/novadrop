@@ -6,132 +6,60 @@ public readonly struct NativeAddress : IComparable<NativeAddress>, IEquatable<Na
 
     public static NativeAddress MaxValue { get; } = new(nuint.MaxValue);
 
-    readonly nuint _value;
+    private readonly nuint _value;
 
     public NativeAddress(nuint value)
     {
         _value = value;
     }
 
-    public static explicit operator NativeAddress(nuint value)
-    {
-        return new(value);
-    }
+    public static explicit operator NativeAddress(nuint value) => new(value);
 
-    public static explicit operator nuint(NativeAddress value)
-    {
-        return value._value;
-    }
+    public static explicit operator nuint(NativeAddress value) => value._value;
 
-    public static bool operator ==(NativeAddress left, NativeAddress right)
-    {
-        return left.Equals(right);
-    }
+    public static bool operator ==(NativeAddress left, NativeAddress right) => left.Equals(right);
 
-    public static bool operator !=(NativeAddress left, NativeAddress right)
-    {
-        return !left.Equals(right);
-    }
+    public static bool operator !=(NativeAddress left, NativeAddress right) => !left.Equals(right);
 
-    public static bool operator <(NativeAddress left, NativeAddress right)
-    {
-        return left.CompareTo(right) < 0;
-    }
+    public static bool operator <(NativeAddress left, NativeAddress right) => left.CompareTo(right) < 0;
 
-    public static bool operator <=(NativeAddress left, NativeAddress right)
-    {
-        return left.CompareTo(right) <= 0;
-    }
+    public static bool operator <=(NativeAddress left, NativeAddress right) => left.CompareTo(right) <= 0;
 
-    public static bool operator >(NativeAddress left, NativeAddress right)
-    {
-        return left.CompareTo(right) > 0;
-    }
+    public static bool operator >(NativeAddress left, NativeAddress right) => left.CompareTo(right) > 0;
 
-    public static bool operator >=(NativeAddress left, NativeAddress right)
-    {
-        return left.CompareTo(right) >= 0;
-    }
+    public static bool operator >=(NativeAddress left, NativeAddress right) => left.CompareTo(right) >= 0;
 
-    public static NativeAddress operator +(NativeAddress value)
-    {
-        return new(+value._value);
-    }
+    public static NativeAddress operator +(NativeAddress value) => new(+value._value);
 
-    public static NativeAddress operator ~(NativeAddress value)
-    {
-        return new(~value._value);
-    }
+    public static NativeAddress operator ~(NativeAddress value) => new(~value._value);
 
-    public static NativeAddress operator ++(NativeAddress value)
-    {
-        return new(value._value + 1);
-    }
+    public static NativeAddress operator ++(NativeAddress value) => new(value._value + 1);
 
-    public static NativeAddress operator --(NativeAddress value)
-    {
-        return new(value._value - 1);
-    }
+    public static NativeAddress operator --(NativeAddress value) => new(value._value - 1);
 
-    public static NativeAddress operator +(NativeAddress left, NativeAddress right)
-    {
-        return new(left._value + right._value);
-    }
+    public static NativeAddress operator +(NativeAddress left, NativeAddress right) => new(left._value + right._value);
 
-    public static NativeAddress operator +(NativeAddress left, nuint right)
-    {
-        return new(left._value + right);
-    }
+    public static NativeAddress operator +(NativeAddress left, nuint right) => new(left._value + right);
 
-    public static NativeAddress operator -(NativeAddress left, NativeAddress right)
-    {
-        return new(left._value - right._value);
-    }
+    public static NativeAddress operator -(NativeAddress left, NativeAddress right) => new(left._value - right._value);
 
-    public static NativeAddress operator -(NativeAddress left, nuint right)
-    {
-        return new(left._value - right);
-    }
+    public static NativeAddress operator -(NativeAddress left, nuint right) => new(left._value - right);
 
-    public static NativeAddress operator *(NativeAddress left, NativeAddress right)
-    {
-        return new(left._value * right._value);
-    }
+    public static NativeAddress operator *(NativeAddress left, NativeAddress right) => new(left._value * right._value);
 
-    public static NativeAddress operator /(NativeAddress left, NativeAddress right)
-    {
-        return new(left._value / right._value);
-    }
+    public static NativeAddress operator /(NativeAddress left, NativeAddress right) => new(left._value / right._value);
 
-    public static NativeAddress operator %(NativeAddress left, NativeAddress right)
-    {
-        return new(left._value % right._value);
-    }
+    public static NativeAddress operator %(NativeAddress left, NativeAddress right) => new(left._value % right._value);
 
-    public static NativeAddress operator &(NativeAddress left, NativeAddress right)
-    {
-        return new(left._value & right._value);
-    }
+    public static NativeAddress operator &(NativeAddress left, NativeAddress right) => new(left._value & right._value);
 
-    public static NativeAddress operator |(NativeAddress left, NativeAddress right)
-    {
-        return new(left._value | right._value);
-    }
+    public static NativeAddress operator |(NativeAddress left, NativeAddress right) => new(left._value | right._value);
 
-    public static NativeAddress operator ^(NativeAddress left, NativeAddress right)
-    {
-        return new(left._value ^ right._value);
-    }
+    public static NativeAddress operator ^(NativeAddress left, NativeAddress right) => new(left._value ^ right._value);
 
-    public static NativeAddress operator <<(NativeAddress left, int right)
-    {
-        return new(left._value << right);
-    }
+    public static NativeAddress operator <<(NativeAddress left, int right) => new(left._value << right);
 
-    public static NativeAddress operator >>(NativeAddress left, int right)
-    {
-        return new(left._value >> right);
-    }
+    public static NativeAddress operator >>(NativeAddress left, int right) => new(left._value >> right);
 
     public static NativeAddress Clamp(NativeAddress value, NativeAddress min, NativeAddress max)
     {

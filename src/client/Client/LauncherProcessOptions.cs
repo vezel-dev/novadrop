@@ -17,7 +17,7 @@ public sealed class LauncherProcessOptions
 
     public Func<int, string[], Uri>? WebUriProvider { get; private set; }
 
-    LauncherProcessOptions()
+    private LauncherProcessOptions()
     {
     }
 
@@ -35,7 +35,7 @@ public sealed class LauncherProcessOptions
         ServerListUri = serverListUri;
     }
 
-    LauncherProcessOptions Clone()
+    private LauncherProcessOptions Clone()
     {
         return new()
         {
@@ -94,6 +94,7 @@ public sealed class LauncherProcessOptions
         return options;
     }
 
+    [SuppressMessage("", "CA1851")]
     public LauncherProcessOptions WithServers(IEnumerable<LauncherServerInfo> servers)
     {
         ArgumentNullException.ThrowIfNull(servers);

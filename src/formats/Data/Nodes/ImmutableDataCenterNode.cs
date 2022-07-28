@@ -1,7 +1,7 @@
 namespace Vezel.Novadrop.Data.Nodes;
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
-abstract class ImmutableDataCenterNode : DataCenterNode
+internal abstract class ImmutableDataCenterNode : DataCenterNode
 {
     public override sealed string? Value
     {

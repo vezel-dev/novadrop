@@ -1,7 +1,7 @@
 namespace Vezel.Novadrop.Data.Serialization.Items;
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
-struct DataCenterRawNode : IDataCenterItem
+internal struct DataCenterRawNode : IDataCenterItem
 {
     public ushort NameIndex;
 

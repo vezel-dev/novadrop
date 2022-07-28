@@ -4,9 +4,9 @@ namespace Vezel.Novadrop.Resources;
 
 public sealed class ResourceContainer
 {
-    const int FooterLength = sizeof(int) * 2;
+    private const int FooterLength = sizeof(int) * 2;
 
-    const uint Magic = 0x01001fff;
+    private const uint Magic = 0x01001fff;
 
     public static ReadOnlyMemory<byte> LatestKey { get; } = new byte[]
     {
@@ -18,9 +18,9 @@ public sealed class ResourceContainer
 
     public IReadOnlyDictionary<string, ResourceContainerEntry> Entries => _entries;
 
-    readonly Dictionary<string, ResourceContainerEntry> _entries = new();
+    private readonly Dictionary<string, ResourceContainerEntry> _entries = new();
 
-    ResourceContainer()
+    private ResourceContainer()
     {
     }
 

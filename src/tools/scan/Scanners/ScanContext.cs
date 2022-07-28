@@ -1,6 +1,6 @@
 namespace Vezel.Novadrop.Scanners;
 
-sealed class ScanContext
+internal sealed class ScanContext
 {
     public MemoryWindow Window { get; }
 

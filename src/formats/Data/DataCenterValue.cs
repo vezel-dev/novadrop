@@ -15,20 +15,14 @@ public readonly struct DataCenterValue : IComparable<DataCenterValue>, IEquatabl
 
     public bool IsBoolean => TypeCode == DataCenterTypeCode.Boolean;
 
-    public object? Value
+    public object? Value => TypeCode switch
     {
-        get
-        {
-            return TypeCode switch
-            {
-                DataCenterTypeCode.Int32 => UnsafeAsInt32,
-                DataCenterTypeCode.Single => UnsafeAsSingle,
-                DataCenterTypeCode.String => UnsafeAsString,
-                DataCenterTypeCode.Boolean => UnsafeAsBoolean,
-                _ => null,
-            };
-        }
-    }
+        DataCenterTypeCode.Int32 => UnsafeAsInt32,
+        DataCenterTypeCode.Single => UnsafeAsSingle,
+        DataCenterTypeCode.String => UnsafeAsString,
+        DataCenterTypeCode.Boolean => UnsafeAsBoolean,
+        _ => null,
+    };
 
     public int AsInt32 =>
         IsInt32
@@ -50,6 +44,7 @@ public readonly struct DataCenterValue : IComparable<DataCenterValue>, IEquatabl
             ? UnsafeAsBoolean
             : throw new InvalidOperationException($"Value is not of type {DataCenterTypeCode.Boolean}.");
 
+    [SuppressMessage("", "IDE0032")]
     internal int UnsafeAsInt32 => _primitiveValue;
 
     internal float UnsafeAsSingle => Unsafe.As<int, float>(ref Unsafe.AsRef(_primitiveValue));
@@ -59,11 +54,11 @@ public readonly struct DataCenterValue : IComparable<DataCenterValue>, IEquatabl
     internal bool UnsafeAsBoolean => Unsafe.As<int, bool>(ref Unsafe.AsRef(_primitiveValue));
 
     [SuppressMessage("", "IDE0032")]
-    readonly int _primitiveValue;
+    private readonly int _primitiveValue;
 
-    readonly string? _stringValue;
+    private readonly string? _stringValue;
 
-    DataCenterValue(DataCenterTypeCode typeCode, int primitiveValue, string? stringValue)
+    private DataCenterValue(DataCenterTypeCode typeCode, int primitiveValue, string? stringValue)
     {
         TypeCode = typeCode;
         _primitiveValue = primitiveValue;
@@ -91,75 +86,33 @@ public readonly struct DataCenterValue : IComparable<DataCenterValue>, IEquatabl
     {
     }
 
-    public static implicit operator DataCenterValue(int value)
-    {
-        return new(value);
-    }
+    public static implicit operator DataCenterValue(int value) => new(value);
 
-    public static implicit operator DataCenterValue(float value)
-    {
-        return new(value);
-    }
+    public static implicit operator DataCenterValue(float value) => new(value);
 
-    public static implicit operator DataCenterValue(string value)
-    {
-        return new(value);
-    }
+    public static implicit operator DataCenterValue(string value) => new(value);
 
-    public static implicit operator DataCenterValue(bool value)
-    {
-        return new(value);
-    }
+    public static implicit operator DataCenterValue(bool value) => new(value);
 
-    public static explicit operator int(DataCenterValue value)
-    {
-        return value.AsInt32;
-    }
+    public static explicit operator int(DataCenterValue value) => value.AsInt32;
 
-    public static explicit operator float(DataCenterValue value)
-    {
-        return value.AsSingle;
-    }
+    public static explicit operator float(DataCenterValue value) => value.AsSingle;
 
-    public static explicit operator string(DataCenterValue value)
-    {
-        return value.AsString;
-    }
+    public static explicit operator string(DataCenterValue value) => value.AsString;
 
-    public static explicit operator bool(DataCenterValue value)
-    {
-        return value.AsBoolean;
-    }
+    public static explicit operator bool(DataCenterValue value) => value.AsBoolean;
 
-    public static bool operator ==(DataCenterValue left, DataCenterValue right)
-    {
-        return left.Equals(right);
-    }
+    public static bool operator ==(DataCenterValue left, DataCenterValue right) => left.Equals(right);
 
-    public static bool operator !=(DataCenterValue left, DataCenterValue right)
-    {
-        return !left.Equals(right);
-    }
+    public static bool operator !=(DataCenterValue left, DataCenterValue right) => !left.Equals(right);
 
-    public static bool operator <(DataCenterValue left, DataCenterValue right)
-    {
-        return left.CompareTo(right) < 0;
-    }
+    public static bool operator <(DataCenterValue left, DataCenterValue right) => left.CompareTo(right) < 0;
 
-    public static bool operator <=(DataCenterValue left, DataCenterValue right)
-    {
-        return left.CompareTo(right) <= 0;
-    }
+    public static bool operator <=(DataCenterValue left, DataCenterValue right) => left.CompareTo(right) <= 0;
 
-    public static bool operator >(DataCenterValue left, DataCenterValue right)
-    {
-        return left.CompareTo(right) > 0;
-    }
+    public static bool operator >(DataCenterValue left, DataCenterValue right) => left.CompareTo(right) > 0;
 
-    public static bool operator >=(DataCenterValue left, DataCenterValue right)
-    {
-        return left.CompareTo(right) >= 0;
-    }
+    public static bool operator >=(DataCenterValue left, DataCenterValue right) => left.CompareTo(right) >= 0;
 
     public int CompareTo(DataCenterValue other)
     {

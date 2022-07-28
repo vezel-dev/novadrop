@@ -3,7 +3,7 @@ using Vezel.Novadrop.Data.Serialization.Items;
 
 namespace Vezel.Novadrop.Data.Serialization.Readers;
 
-sealed class LazyMutableDataCenterReader : DataCenterReader
+internal sealed class LazyMutableDataCenterReader : DataCenterReader
 {
     public LazyMutableDataCenterReader(DataCenterLoadOptions options)
         : base(options)

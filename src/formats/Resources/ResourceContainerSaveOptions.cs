@@ -4,7 +4,7 @@ public sealed class ResourceContainerSaveOptions
 {
     public ReadOnlyMemory<byte> Key { get; private set; } = ResourceContainer.LatestKey;
 
-    ResourceContainerSaveOptions Clone()
+    private ResourceContainerSaveOptions Clone()
     {
         return new()
         {
