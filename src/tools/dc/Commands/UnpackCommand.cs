@@ -74,11 +74,15 @@ internal sealed class UnpackCommand : CancellableAsyncCommand<UnpackCommand.Unpa
             {
                 output.Create();
 
+                [SuppressMessage("", "CS0436")]
                 async ValueTask WriteSchemaAsync(DirectoryInfo directory, string name)
                 {
                     var xsdName = $"{name}.xsd";
 
+                    // TODO: https://github.com/dotnet/Nerdbank.GitVersioning/issues/555
+#pragma warning disable CS0436
                     await using var inXsd = typeof(ThisAssembly).Assembly.GetManifestResourceStream(xsdName);
+#pragma warning restore CS0436
 
                     // Is this not a data sheet we recognize?
                     if (inXsd == null)
