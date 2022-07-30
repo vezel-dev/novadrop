@@ -78,7 +78,7 @@ internal sealed class UnpackCommand : CancellableAsyncCommand<UnpackCommand.Unpa
                 {
                     var xsdName = $"{name}.xsd";
 
-                    await using var inXsd = Assembly.GetExecutingAssembly().GetManifestResourceStream(xsdName);
+                    await using var inXsd = typeof(ThisAssembly).Assembly.GetManifestResourceStream(xsdName);
 
                     // Is this not a data sheet we recognize?
                     if (inXsd == null)
