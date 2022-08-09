@@ -1,6 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <AssemblyName>novadrop-scan</AssemblyName>
+        <NoWarn>
+            $(NoWarn);
+            MSB3270
+        </NoWarn>
         <PackAsToolShimRuntimeIdentifiers>win-x64</PackAsToolShimRuntimeIdentifiers>
         <PackageDescription>$(PackageDescription)
 
