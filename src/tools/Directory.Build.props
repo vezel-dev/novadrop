@@ -8,5 +8,6 @@
         <PackAsTool>true</PackAsTool>
         <RollForward>LatestMajor</RollForward>
         <RootNamespace>Vezel.Novadrop</RootNamespace>
+        <SelfContained>false</SelfContained>
     </PropertyGroup>
 </Project>
