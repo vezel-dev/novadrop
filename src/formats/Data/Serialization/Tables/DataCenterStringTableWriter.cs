@@ -98,7 +98,7 @@ internal sealed class DataCenterStringTableWriter
                 Address = addr,
             };
 
-            _strings.Segments[(int)((hash ^ hash >> 16) % (uint)_strings.Segments.Length)].Elements.Add(raw);
+            _strings.Segments[(int)((hash ^ hash >> 16) % (uint)_strings.Segments.Count)].Elements.Add(raw);
 
             _cache.Add(value, raw);
         }
