@@ -87,7 +87,7 @@ sealed class DataCenterStringTableReader
 
                     last = hash;
 
-                    var bucket = (hash ^ hash >> 16) % (uint)_strings.Segments.Length;
+                    var bucket = (hash ^ hash >> 16) % (uint)_strings.Segments.Count;
 
                     if (i != bucket)
                         throw new InvalidDataException($"String bucket {i} does not match expected bucket {bucket}.");
