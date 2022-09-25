@@ -23,12 +23,12 @@ This project offers the following packages:
   line.
 * [novadrop-scan](https://www.nuget.org/packages/novadrop-scan): Provides the
   .NET global tool for extracting useful data from a running TERA client.
-* [Vezel.Novadrop.Client](https://www.nuget.org/packages/Vezel.Novadrop.Client):
-  Provides support for interacting with the TERA launcher and client.
 * [Vezel.Novadrop.Common](https://www.nuget.org/packages/Vezel.Novadrop.Common):
   Provides common functionality used by all Novadrop packages.
 * [Vezel.Novadrop.Formats](https://www.nuget.org/packages/Vezel.Novadrop.Data):
   Provides support for TERA's various file formats.
+* [Vezel.Novadrop.Client](https://www.nuget.org/packages/Vezel.Novadrop.Client):
+  Provides support for interacting with the TERA launcher and client.
 
 For more information, please visit the
 [project home page](https://docs.vezel.dev/novadrop).
