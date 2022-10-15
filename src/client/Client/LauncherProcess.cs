@@ -16,6 +16,8 @@ public sealed class LauncherProcess : GameProcess
 
     public LauncherProcessOptions Options { get; }
 
+    private static readonly CultureInfo _culture = CultureInfo.InvariantCulture;
+
     private static readonly Regex _gameEvent = new(@"^gameEvent\((\d+)\)$");
 
     private static readonly Regex _endPopup = new(@"^endPopup\((\d+)\)$");
@@ -51,9 +53,9 @@ public sealed class LauncherProcess : GameProcess
             // csPopup(), endPopup(%d), gameEvent(%d), promoPopup(%d)
 
             if (_gameEvent.Match(value) is { Success: true } m1)
-                GameEventOccurred?.Invoke((GameEvent)int.Parse(m1.Groups[1].ValueSpan));
+                GameEventOccurred?.Invoke((GameEvent)int.Parse(m1.Groups[1].Value, _culture));
             else if (_endPopup.Match(value) is { Success: true } m2)
-                GameExited?.Invoke((int)uint.Parse(m2.Groups[1].ValueSpan));
+                GameExited?.Invoke((int)uint.Parse(m2.Groups[1].Value, _culture));
 
             return null;
         }
@@ -81,7 +83,7 @@ public sealed class LauncherProcess : GameProcess
 
         string HandleWebUriRequest(Match match)
         {
-            var id = int.Parse(match.Groups[1].ValueSpan);
+            var id = int.Parse(match.Groups[1].Value, _culture);
             var args = match.Groups[2].Value.Split(',');
 
             WebUriRequested?.Invoke(args, id);

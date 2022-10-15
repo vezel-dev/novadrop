@@ -55,7 +55,7 @@ internal static class CliExtensions
     {
         using var task = new ProgressTaskWrapper(context, description, goal, false);
 
-        return await function(() => task.Increment()).ConfigureAwait(false);
+        return await function(task.Increment).ConfigureAwait(false);
     }
 
     public static async Task RunTaskAsync(
