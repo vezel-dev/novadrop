@@ -1,3 +1,0 @@
-# Vezel.Novadrop.Common
-
-TODO

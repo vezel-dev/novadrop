@@ -10,12 +10,6 @@
 * [Launcher/Client Protocol](game/launcher-client-protocol.md)
 * [Network Protocol](game/network-protocol.md)
 
-## Libraries
-
-* [Vezel.Novadrop.Client](libraries/client.md)
-* [Vezel.Novadrop.Common](libraries/common.md)
-* [Vezel.Novadrop.Formats](libraries/formats.md)
-
 ## Tools
 
 * [novadrop-dc](tools/dc.md)

@@ -1,3 +1,0 @@
-# Vezel.Novadrop.Formats
-
-TODO
