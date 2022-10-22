@@ -8,7 +8,7 @@ public sealed class RebasingMemoryAccessor : MemoryAccessor
 
     public RebasingMemoryAccessor(MemoryAccessor accessor, NativeAddress address)
     {
-        ArgumentNullException.ThrowIfNull(accessor);
+        Check.Null(accessor);
 
         Accessor = accessor;
         Address = address;

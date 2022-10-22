@@ -12,7 +12,7 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>
 
     public MemoryWindow(MemoryAccessor accessor, NativeAddress address, nuint length)
     {
-        ArgumentNullException.ThrowIfNull(accessor);
+        Check.Null(accessor);
 
         Accessor = accessor;
         Address = address;
@@ -68,12 +68,16 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>
 
     public NativeAddress ToAddress(nuint offset)
     {
-        return TryGetAddress(offset, out var addr) ? addr : throw new ArgumentOutOfRangeException(nameof(offset));
+        Check.Range(TryGetAddress(offset, out var addr), offset);
+
+        return addr;
     }
 
     public unsafe nuint ToOffset(NativeAddress address)
     {
-        return TryGetOffset(address, out var off) ? off : throw new ArgumentOutOfRangeException(nameof(address));
+        Check.Range(TryGetOffset(address, out var off), address);
+
+        return off;
     }
 
     public MemoryWindow Slice(nuint offset)
@@ -83,7 +87,7 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>
 
     public MemoryWindow Slice(nuint offset, nuint length)
     {
-        _ = ContainsRange(offset, length) ? true : throw new ArgumentOutOfRangeException(nameof(offset));
+        Check.Range(ContainsRange(offset, length), offset);
 
         return new(Accessor, Address + offset, length);
     }
@@ -97,9 +101,8 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>
     public async Task<IEnumerable<nuint>> SearchAsync(
         ReadOnlyMemory<byte?> pattern, int maxDegreeOfParallelism, CancellationToken cancellationToken = default)
     {
-        _ = !pattern.IsEmpty ? true : throw new ArgumentException(null, nameof(pattern));
-        _ = maxDegreeOfParallelism is > 0 or -1 ?
-            true : throw new ArgumentOutOfRangeException(nameof(maxDegreeOfParallelism));
+        Check.Argument(!pattern.IsEmpty, pattern);
+        Check.Range(maxDegreeOfParallelism is -1 or > 0, maxDegreeOfParallelism);
 
         var window = this;
         var length = pattern.Length;
@@ -176,14 +179,15 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>
 
     public void Read(nuint offset, Span<byte> buffer)
     {
-        if (!TryRead(offset, buffer))
-            throw new ArgumentOutOfRangeException(nameof(offset));
+        Check.Range(TryRead(offset, buffer), offset);
     }
 
     public unsafe T Read<T>(nuint offset)
         where T : unmanaged
     {
-        return TryRead<T>(offset, out var value) ? value : throw new ArgumentOutOfRangeException(nameof(offset));
+        Check.Range(TryRead<T>(offset, out var value), offset);
+
+        return value;
     }
 
     public bool TryWrite(nuint offset, ReadOnlySpan<byte> buffer)
@@ -204,15 +208,13 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>
 
     public void Write(nuint offset, ReadOnlySpan<byte> buffer)
     {
-        if (!TryWrite(offset, buffer))
-            throw new ArgumentOutOfRangeException(nameof(offset));
+        Check.Range(TryWrite(offset, buffer), offset);
     }
 
     public unsafe void Write<T>(nuint offset, T value)
         where T : unmanaged
     {
-        if (!TryWrite(offset, value))
-            throw new ArgumentOutOfRangeException(nameof(offset));
+        Check.Range(TryWrite(offset, value), offset);
     }
 
     public bool Equals(MemoryWindow other)

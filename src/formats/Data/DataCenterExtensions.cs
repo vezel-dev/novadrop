@@ -4,7 +4,7 @@ public static class DataCenterExtensions
 {
     public static IEnumerable<DataCenterNode> Ancestors(this DataCenterNode node)
     {
-        ArgumentNullException.ThrowIfNull(node);
+        Check.Null(node);
 
         var current = node;
 
@@ -14,7 +14,7 @@ public static class DataCenterExtensions
 
     public static IEnumerable<DataCenterNode> Siblings(this DataCenterNode node)
     {
-        ArgumentNullException.ThrowIfNull(node);
+        Check.Null(node);
 
         var parent = node.Parent;
 
@@ -27,7 +27,7 @@ public static class DataCenterExtensions
 
     public static IEnumerable<DataCenterNode> Descendants(this DataCenterNode node)
     {
-        ArgumentNullException.ThrowIfNull(node);
+        Check.Null(node);
 
         var work = new Queue<DataCenterNode>();
 

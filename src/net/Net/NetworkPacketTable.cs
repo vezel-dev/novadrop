@@ -2180,9 +2180,8 @@ public sealed class NetworkPacketTable
 
     public NetworkPacketTable(int revision, IReadOnlyDictionary<string, ushort> mapping)
     {
-        _ = revision >= 0 ? true : throw new ArgumentOutOfRangeException(nameof(revision));
-        ArgumentNullException.ThrowIfNull(mapping);
-        _ = mapping.Keys.All(k => k != null) ? true : throw new ArgumentException(null, nameof(mapping));
+        Check.Range(revision >= 0, revision);
+        Check.Null(mapping);
 
         Revision = revision;
         NameToCode = mapping.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);

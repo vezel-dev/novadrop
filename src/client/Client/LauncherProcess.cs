@@ -20,7 +20,7 @@ public sealed partial class LauncherProcess : GameProcess
 
     public LauncherProcess(LauncherProcessOptions options)
     {
-        ArgumentNullException.ThrowIfNull(options);
+        Check.Null(options);
 
         Options = options;
     }
@@ -82,11 +82,12 @@ public sealed partial class LauncherProcess : GameProcess
 
             WebUriRequested?.Invoke(args, id);
 
-            return Options.WebUriProvider?.Invoke(id, args) is Uri uri
-                ? uri.IsAbsoluteUri
-                    ? uri.AbsoluteUri
-                    : throw new InvalidOperationException()
-                : string.Empty;
+            if (Options.WebUriProvider?.Invoke(id, args) is not Uri uri)
+                return string.Empty;
+
+            Check.Operation(uri.IsAbsoluteUri);
+
+            return uri.AbsoluteUri;
         }
 
         // Note that the message ID increments on every sent message for slsurl, gamestr, ticket, last_svr, and

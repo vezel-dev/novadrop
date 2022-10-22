@@ -37,19 +37,17 @@ public sealed class ClientServerInfo
         IPAddress? address,
         int port)
     {
-        _ = id > 0 ? true : throw new ArgumentOutOfRangeException(nameof(id));
-        ArgumentNullException.ThrowIfNull(category);
-        ArgumentNullException.ThrowIfNull(name);
-        ArgumentNullException.ThrowIfNull(title);
-        ArgumentNullException.ThrowIfNull(queue);
-        ArgumentNullException.ThrowIfNull(population);
-        ArgumentNullException.ThrowIfNull(unavailableMessage);
-        _ = (host != null || address != null) && (host == null || address == null) ?
-            true : throw new ArgumentException(null);
-        _ = address?.AddressFamily is null or AddressFamily.InterNetwork ?
-            true : throw new ArgumentException(null, nameof(address));
-        _ = port is >= IPEndPoint.MinPort and <= IPEndPoint.MaxPort ?
-            true : throw new ArgumentOutOfRangeException(nameof(port));
+        Check.Range(id > 0, id);
+        Check.Null(category);
+        Check.Null(name);
+        Check.Null(name);
+        Check.Null(title);
+        Check.Null(queue);
+        Check.Null(population);
+        Check.Null(unavailableMessage);
+        Check.Argument((host, address) is (not null, null) or (null, not null));
+        Check.Argument(address?.AddressFamily is null or AddressFamily.InterNetwork, address);
+        Check.Argument(port is >= IPEndPoint.MinPort and <= IPEndPoint.MaxPort, port);
 
         Id = id;
         Category = category;

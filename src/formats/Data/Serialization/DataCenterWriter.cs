@@ -61,8 +61,7 @@ internal sealed class DataCenterWriter
             {
                 segIdx = region.Segments.Count;
 
-                if (segIdx > max.SegmentIndex)
-                    throw new InvalidOperationException($"{description} region is full ({segIdx} segments).");
+                Check.Operation(segIdx <= max.SegmentIndex, $"{description} region is full ({segIdx} segments).");
 
                 segment = new DataCenterRegion<T>();
 

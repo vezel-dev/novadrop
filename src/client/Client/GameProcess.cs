@@ -1,4 +1,3 @@
-using Vezel.Novadrop.Diagnostics;
 using Windows.Win32.Foundation;
 using Windows.Win32.System.DataExchange;
 using Windows.Win32.UI.WindowsAndMessaging;
@@ -32,7 +31,7 @@ public abstract class GameProcess
         var id = cds.dwData;
         var payload = new ReadOnlySpan<byte>(cds.lpData, (int)cds.cbData);
 
-        var process = (GameProcess)GCHandle.FromIntPtr(GetWindowLongPtrW(hWnd, 0)).Target!;
+        var process = Unsafe.As<GameProcess>(((GCHandle)GetWindowLongPtrW(hWnd, 0)).Target!);
 
         process.MessageReceived?.Invoke(payload, id);
 
@@ -74,71 +73,71 @@ public abstract class GameProcess
     [SuppressMessage("", "CA1031")]
     public unsafe Task<int> RunAsync(CancellationToken cancellationToken = default)
     {
-        return Interlocked.Exchange(ref _started, 1) != 1
-            ? Task.Run(() =>
+        Check.Operation(Interlocked.Exchange(ref _started, 1) == 0);
+
+        return Task.Run(() =>
+        {
+            var code = 1;
+            var exception = default(Exception);
+
+            var thread = new Thread(() =>
             {
-                var code = 1;
-                var exception = default(Exception);
+                GetWindowConfiguration(out var className, out var windowName);
+                GetProcessConfiguration(out var fileName, out var arguments);
 
-                var thread = new Thread(() =>
+                var handle = default(GCHandle);
+                var atom = 0;
+                var hwnd = default(HWND);
+
+                try
                 {
-                    GetWindowConfiguration(out var className, out var windowName);
-                    GetProcessConfiguration(out var fileName, out var arguments);
+                    handle = GCHandle.Alloc(this);
 
-                    var handle = default(GCHandle);
-                    var atom = 0;
-                    var hwnd = default(HWND);
+                    fixed (char* ptr = className)
+                        atom = RegisterClassExW(new WNDCLASSEXW
+                        {
+                            cbSize = (uint)sizeof(WNDCLASSEXW),
+                            cbWndExtra = sizeof(nint),
+                            lpszClassName = ptr,
+                            lpfnWndProc = &WindowProcedure,
+                        });
 
-                    try
-                    {
-                        handle = GCHandle.Alloc(this);
+                    if (atom == 0)
+                        throw new Win32Exception();
 
-                        fixed (char* ptr = className)
-                            atom = RegisterClassExW(new WNDCLASSEXW
-                            {
-                                cbSize = (uint)sizeof(WNDCLASSEXW),
-                                cbWndExtra = sizeof(nint),
-                                lpszClassName = ptr,
-                                lpfnWndProc = &WindowProcedure,
-                            });
+                    hwnd = CreateWindowExW(0, className, windowName, 0, 0, 0, 0, 0, default, null, null, null);
 
-                        if (atom == 0)
-                            throw new Win32Exception();
+                    if ((nint)hwnd == 0)
+                        throw new Win32Exception();
 
-                        hwnd = CreateWindowExW(0, className, windowName, 0, 0, 0, 0, 0, default, null, null, null);
+                    _ = SetWindowLongPtrW(hwnd, 0, (nint)handle);
 
-                        if ((nint)hwnd == 0)
-                            throw new Win32Exception();
+                    _process = new(fileName, arguments, cancellationToken);
 
-                        _ = SetWindowLongPtrW(hwnd, 0, (IntPtr)handle);
+                    code = _process.Completion.GetAwaiter().GetResult();
+                }
+                catch (Exception ex)
+                {
+                    exception = ex;
+                }
+                finally
+                {
+                    if ((nint)hwnd != 0)
+                        _ = DefWindowProcW(hwnd, WM_CLOSE, 0, 0);
 
-                        _process = new(fileName, arguments, cancellationToken);
+                    if (atom != 0)
+                        _ = UnregisterClassW(className, null);
 
-                        code = _process.Completion.GetAwaiter().GetResult();
-                    }
-                    catch (Exception ex)
-                    {
-                        exception = ex;
-                    }
-                    finally
-                    {
-                        if ((nint)hwnd != 0)
-                            _ = DefWindowProcW(hwnd, WM_CLOSE, 0, 0);
+                    if (handle.IsAllocated)
+                        handle.Free();
+                }
+            });
 
-                        if (atom != 0)
-                            _ = UnregisterClassW(className, null);
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+            thread.Join();
 
-                        if (handle.IsAllocated)
-                            handle.Free();
-                    }
-                });
-
-                thread.SetApartmentState(ApartmentState.STA);
-                thread.Start();
-                thread.Join();
-
-                return exception == null ? code : throw exception;
-            })
-            : throw new InvalidOperationException();
+            return exception == null ? code : throw exception;
+        });
     }
 }

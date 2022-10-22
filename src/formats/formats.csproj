@@ -16,6 +16,7 @@ This package provides support for TERA's various file formats.</PackageDescripti
 
     <ItemGroup>
         <Using Include="Microsoft.Collections.Extensions" />
+        <Using Include="Vezel.Novadrop.Diagnostics" />
         <Using Include="Vezel.Novadrop.IO" />
     </ItemGroup>
 

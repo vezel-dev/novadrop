@@ -21,7 +21,7 @@ public sealed unsafe class NativeProcess : IDisposable
         [SuppressMessage("", "CA1065")]
         get
         {
-            _ = !_disposed ? true : throw new ObjectDisposedException(GetType().Name);
+            Check.Usable(!_disposed, this);
 
             return GetModules();
         }
@@ -148,7 +148,7 @@ public sealed unsafe class NativeProcess : IDisposable
 
     public NativeAddress Alloc(nuint length, MemoryProtection protection)
     {
-        _ = !_disposed ? true : throw new ObjectDisposedException(GetType().Name);
+        Check.Usable(!_disposed, this);
 
         return VirtualAllocEx(
             Handle,
@@ -162,7 +162,7 @@ public sealed unsafe class NativeProcess : IDisposable
 
     public void Free(NativeAddress address)
     {
-        _ = !_disposed ? true : throw new ObjectDisposedException(GetType().Name);
+        Check.Usable(!_disposed, this);
 
         if (!VirtualFreeEx(Handle, (void*)(nuint)address, 0, VIRTUAL_FREE_TYPE.MEM_RELEASE))
             throw new Win32Exception();
@@ -170,7 +170,7 @@ public sealed unsafe class NativeProcess : IDisposable
 
     public void Protect(NativeAddress address, nuint length, MemoryProtection protection)
     {
-        _ = !_disposed ? true : throw new ObjectDisposedException(GetType().Name);
+        Check.Usable(!_disposed, this);
 
         if (!VirtualProtectEx(Handle, (void*)(nuint)address, length, TranslateProtection(protection), out _))
             throw new Win32Exception();
@@ -178,7 +178,7 @@ public sealed unsafe class NativeProcess : IDisposable
 
     public void Read(NativeAddress address, Span<byte> buffer)
     {
-        _ = !_disposed ? true : throw new ObjectDisposedException(GetType().Name);
+        Check.Usable(!_disposed, this);
 
         fixed (byte* p = buffer)
             if (!ReadProcessMemory(Handle, (void*)(nuint)address, p, (nuint)buffer.Length, null))
@@ -187,7 +187,7 @@ public sealed unsafe class NativeProcess : IDisposable
 
     public void Write(NativeAddress address, ReadOnlySpan<byte> buffer)
     {
-        _ = !_disposed ? true : throw new ObjectDisposedException(GetType().Name);
+        Check.Usable(!_disposed, this);
 
         fixed (byte* p = buffer)
             if (!WriteProcessMemory(Handle, (void*)(nuint)address, p, (nuint)buffer.Length, null))
@@ -196,7 +196,7 @@ public sealed unsafe class NativeProcess : IDisposable
 
     public void Flush(NativeAddress address, nuint length)
     {
-        _ = !_disposed ? true : throw new ObjectDisposedException(GetType().Name);
+        Check.Usable(!_disposed, this);
 
         if (!FlushInstructionCache(Handle, (void*)(nuint)address, length))
             throw new Win32Exception();
@@ -204,8 +204,8 @@ public sealed unsafe class NativeProcess : IDisposable
 
     private void ForEachThread(Func<int, bool> predicate, Action<uint, SafeFileHandle> action)
     {
-        ArgumentNullException.ThrowIfNull(predicate);
-        _ = !_disposed ? true : throw new ObjectDisposedException(GetType().Name);
+        Check.Null(predicate);
+        Check.Usable(!_disposed, this);
 
         var pid = (uint)Id;
 

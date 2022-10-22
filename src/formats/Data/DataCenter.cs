@@ -42,9 +42,9 @@ public static class DataCenter
     public static Task<DataCenterNode> LoadAsync(
         Stream stream, DataCenterLoadOptions options, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(stream);
-        _ = stream.CanRead ? true : throw new ArgumentException(null, nameof(stream));
-        ArgumentNullException.ThrowIfNull(options);
+        Check.Null(stream);
+        Check.Argument(stream.CanRead, stream);
+        Check.Null(options);
 
         DataCenterReader reader = (options.Mode, options.Mutability) switch
         {
@@ -66,10 +66,10 @@ public static class DataCenter
         DataCenterSaveOptions options,
         CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(root);
-        ArgumentNullException.ThrowIfNull(stream);
-        _ = stream.CanWrite ? true : throw new ArgumentException(null, nameof(stream));
-        ArgumentNullException.ThrowIfNull(options);
+        Check.Null(root);
+        Check.Null(stream);
+        Check.Argument(stream.CanWrite, stream);
+        Check.Null(options);
 
         return new DataCenterWriter(options).WriteAsync(stream, root, cancellationToken);
     }

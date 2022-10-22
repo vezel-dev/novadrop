@@ -24,25 +24,45 @@ public readonly struct DataCenterValue : IComparable<DataCenterValue>, IEquatabl
         _ => null,
     };
 
-    public int AsInt32 =>
-        IsInt32
-            ? UnsafeAsInt32
-            : throw new InvalidOperationException($"Value is not of type {DataCenterTypeCode.Int32}.");
+    public int AsInt32
+    {
+        get
+        {
+            Check.Operation(IsInt32, $"Value is not of type {DataCenterTypeCode.Int32}.");
 
-    public float AsSingle =>
-        IsSingle
-            ? UnsafeAsSingle
-            : throw new InvalidOperationException($"Value is not of type {DataCenterTypeCode.Single}.");
+            return UnsafeAsInt32;
+        }
+    }
 
-    public string AsString =>
-        IsString
-            ? UnsafeAsString
-            : throw new InvalidOperationException($"Value is not of type {DataCenterTypeCode.String}.");
+    public float AsSingle
+    {
+        get
+        {
+            Check.Operation(IsSingle, $"Value is not of type {DataCenterTypeCode.Single}.");
 
-    public bool AsBoolean =>
-        IsBoolean
-            ? UnsafeAsBoolean
-            : throw new InvalidOperationException($"Value is not of type {DataCenterTypeCode.Boolean}.");
+            return UnsafeAsSingle;
+        }
+    }
+
+    public string AsString
+    {
+        get
+        {
+            Check.Operation(IsString, $"Value is not of type {DataCenterTypeCode.String}.");
+
+            return UnsafeAsString;
+        }
+    }
+
+    public bool AsBoolean
+    {
+        get
+        {
+            Check.Operation(IsBoolean, $"Value is not of type {DataCenterTypeCode.Boolean}.");
+
+            return UnsafeAsBoolean;
+        }
+    }
 
     [SuppressMessage("", "IDE0032")]
     internal int UnsafeAsInt32 => _primitiveValue;
@@ -78,7 +98,7 @@ public readonly struct DataCenterValue : IComparable<DataCenterValue>, IEquatabl
     public DataCenterValue(string value)
         : this(DataCenterTypeCode.String, 0, value)
     {
-        ArgumentNullException.ThrowIfNull(value);
+        Check.Null(value);
     }
 
     public DataCenterValue(bool value)

@@ -40,8 +40,8 @@ public sealed class DynamicCode : IDisposable
 
     public static unsafe DynamicCode Create(NativeProcess process, Action<Assembler> assembler)
     {
-        ArgumentNullException.ThrowIfNull(process);
-        ArgumentNullException.ThrowIfNull(assembler);
+        Check.Null(process);
+        Check.Null(assembler);
 
         var asm = new Assembler(sizeof(nuint) * 8);
 
@@ -84,7 +84,7 @@ public sealed class DynamicCode : IDisposable
 
     public unsafe uint Call(nuint parameter)
     {
-        _ = _disposed == 0 ? true : throw new ObjectDisposedException(GetType().Name);
+        Check.Usable(_disposed == 0, this);
 
         using var handle = CreateRemoteThread(
             Process.Handle,

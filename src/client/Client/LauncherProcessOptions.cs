@@ -23,11 +23,11 @@ public sealed class LauncherProcessOptions
 
     public LauncherProcessOptions(string fileName, string accountName, string sessionTicket, Uri serverListUri)
     {
-        ArgumentNullException.ThrowIfNull(fileName);
-        ArgumentNullException.ThrowIfNull(accountName);
-        ArgumentNullException.ThrowIfNull(sessionTicket);
-        ArgumentNullException.ThrowIfNull(serverListUri);
-        _ = serverListUri.IsAbsoluteUri ? true : throw new ArgumentException(null, nameof(serverListUri));
+        Check.Null(fileName);
+        Check.Null(accountName);
+        Check.Null(sessionTicket);
+        Check.Null(serverListUri);
+        Check.Argument(serverListUri.IsAbsoluteUri, serverListUri);
 
         FileName = fileName;
         AccountName = accountName;
@@ -51,7 +51,7 @@ public sealed class LauncherProcessOptions
 
     public LauncherProcessOptions WithFileName(string fileName)
     {
-        ArgumentNullException.ThrowIfNull(fileName);
+        Check.Null(fileName);
 
         var options = Clone();
 
@@ -62,7 +62,7 @@ public sealed class LauncherProcessOptions
 
     public LauncherProcessOptions WithAccountName(string accountName)
     {
-        ArgumentNullException.ThrowIfNull(accountName);
+        Check.Null(accountName);
 
         var options = Clone();
 
@@ -73,7 +73,7 @@ public sealed class LauncherProcessOptions
 
     public LauncherProcessOptions WithSessionTicket(string sessionTicket)
     {
-        ArgumentNullException.ThrowIfNull(sessionTicket);
+        Check.Null(sessionTicket);
 
         var options = Clone();
 
@@ -84,8 +84,8 @@ public sealed class LauncherProcessOptions
 
     public LauncherProcessOptions WithServerListUri(Uri serverListUri)
     {
-        ArgumentNullException.ThrowIfNull(serverListUri);
-        _ = serverListUri.IsAbsoluteUri ? true : throw new ArgumentException(null, nameof(serverListUri));
+        Check.Null(serverListUri);
+        Check.Argument(serverListUri.IsAbsoluteUri, serverListUri);
 
         var options = Clone();
 
@@ -97,8 +97,8 @@ public sealed class LauncherProcessOptions
     [SuppressMessage("", "CA1851")]
     public LauncherProcessOptions WithServers(IEnumerable<LauncherServerInfo> servers)
     {
-        ArgumentNullException.ThrowIfNull(servers);
-        _ = servers.All(s => s != null) ? true : throw new ArgumentException(null, nameof(servers));
+        Check.Null(servers);
+        Check.ForEach(servers, srv => Check.Argument(srv != null, servers));
 
         var options = Clone();
 
@@ -109,7 +109,7 @@ public sealed class LauncherProcessOptions
 
     public LauncherProcessOptions WithLastServerId(int lastServerId)
     {
-        _ = lastServerId > 0 ? true : throw new ArgumentOutOfRangeException(nameof(lastServerId));
+        Check.Range(lastServerId > 0, lastServerId);
 
         var options = Clone();
 
@@ -120,7 +120,7 @@ public sealed class LauncherProcessOptions
 
     public LauncherProcessOptions WithWebUriProvider(Func<int, string[], Uri>? webUriProvider)
     {
-        ArgumentNullException.ThrowIfNull(webUriProvider);
+        Check.Null(webUriProvider);
 
         var options = Clone();
 

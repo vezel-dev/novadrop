@@ -40,15 +40,10 @@ public sealed class DataCenterKeys : IEquatable<DataCenterKeys>
         string? attributeName3 = null,
         string? attributeName4 = null)
     {
-        static void CheckName(string? name, [CallerArgumentExpression("name")] string? paramName = null)
-        {
-            _ = name != DataCenterConstants.ValueAttributeName ? true : throw new ArgumentException(null, paramName);
-        }
-
-        CheckName(attributeName1);
-        CheckName(attributeName2);
-        CheckName(attributeName3);
-        CheckName(attributeName4);
+        Check.Argument(attributeName1 != DataCenterConstants.ValueAttributeName, value: attributeName1);
+        Check.Argument(attributeName2 != DataCenterConstants.ValueAttributeName, value: attributeName2);
+        Check.Argument(attributeName3 != DataCenterConstants.ValueAttributeName, value: attributeName3);
+        Check.Argument(attributeName4 != DataCenterConstants.ValueAttributeName, value: attributeName4);
 
         AttributeName1 = attributeName1;
         AttributeName2 = attributeName2;

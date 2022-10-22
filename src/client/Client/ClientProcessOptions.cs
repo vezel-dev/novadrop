@@ -24,12 +24,12 @@ public sealed class ClientProcessOptions
     public ClientProcessOptions(
         string fileName, string accountName, string sessionTicket, IEnumerable<ClientServerInfo> servers)
     {
-        ArgumentNullException.ThrowIfNull(fileName);
-        ArgumentNullException.ThrowIfNull(accountName);
-        ArgumentNullException.ThrowIfNull(sessionTicket);
-        ArgumentNullException.ThrowIfNull(servers);
-        _ = servers.Any() ? true : throw new ArgumentException(null, nameof(servers));
-        _ = servers.All(s => s != null) ? true : throw new ArgumentException(null, nameof(servers));
+        Check.Null(fileName);
+        Check.Null(accountName);
+        Check.Null(sessionTicket);
+        Check.Null(servers);
+        Check.Argument(servers.Any(), servers);
+        Check.ForEach(servers, srv => Check.Argument(srv != null, servers));
 
         FileName = fileName;
         AccountName = accountName;
@@ -53,7 +53,7 @@ public sealed class ClientProcessOptions
 
     public ClientProcessOptions WithFileName(string fileName)
     {
-        ArgumentNullException.ThrowIfNull(fileName);
+        Check.Null(fileName);
 
         var options = Clone();
 
@@ -64,7 +64,7 @@ public sealed class ClientProcessOptions
 
     public ClientProcessOptions WithAccountName(string accountName)
     {
-        ArgumentNullException.ThrowIfNull(accountName);
+        Check.Null(accountName);
 
         var options = Clone();
 
@@ -75,7 +75,7 @@ public sealed class ClientProcessOptions
 
     public ClientProcessOptions WithSessionTicket(string sessionTicket)
     {
-        ArgumentNullException.ThrowIfNull(sessionTicket);
+        Check.Null(sessionTicket);
 
         var options = Clone();
 
@@ -96,9 +96,9 @@ public sealed class ClientProcessOptions
     [SuppressMessage("", "CA1851")]
     public ClientProcessOptions WithServers(IEnumerable<ClientServerInfo> servers)
     {
-        ArgumentNullException.ThrowIfNull(servers);
-        _ = servers.Any() ? true : throw new ArgumentException(null, nameof(servers));
-        _ = servers.All(s => s != null) ? true : throw new ArgumentException(null, nameof(servers));
+        Check.Null(servers);
+        Check.Argument(servers.Any(), servers);
+        Check.ForEach(servers, srv => Check.Argument(srv != null, servers));
 
         var options = Clone();
 
@@ -109,7 +109,7 @@ public sealed class ClientProcessOptions
 
     public ClientProcessOptions WithLastServerId(int lastServerId)
     {
-        _ = lastServerId > 0 ? true : throw new ArgumentOutOfRangeException(nameof(lastServerId));
+        Check.Range(lastServerId > 0, lastServerId);
 
         var options = Clone();
 
@@ -120,7 +120,7 @@ public sealed class ClientProcessOptions
 
     public ClientProcessOptions WithWebUriProvider(Func<int, string[], Uri>? webUriProvider)
     {
-        ArgumentNullException.ThrowIfNull(webUriProvider);
+        Check.Null(webUriProvider);
 
         var options = Clone();
 

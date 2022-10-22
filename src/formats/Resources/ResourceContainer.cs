@@ -42,9 +42,9 @@ public sealed class ResourceContainer
     public static async Task<ResourceContainer> LoadAsync(
         Stream stream, ResourceContainerLoadOptions options, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(stream);
-        _ = stream is { CanRead: true, CanSeek: true } ? true : throw new ArgumentException(null, nameof(stream));
-        ArgumentNullException.ThrowIfNull(options);
+        Check.Null(stream);
+        Check.Argument(stream is { CanRead: true, CanSeek: true }, stream);
+        Check.Null(options);
 
         var rc = new ResourceContainer();
 
@@ -128,9 +128,9 @@ public sealed class ResourceContainer
     public Task SaveAsync(
         Stream stream, ResourceContainerSaveOptions options, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(stream);
-        _ = stream.CanWrite ? true : throw new ArgumentException(null, nameof(stream));
-        ArgumentNullException.ThrowIfNull(options);
+        Check.Null(stream);
+        Check.Argument(stream.CanWrite, stream);
+        Check.Null(options);
 
         return Task.Run(
             async () =>

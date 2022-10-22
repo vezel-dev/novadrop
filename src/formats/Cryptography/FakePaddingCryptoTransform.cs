@@ -14,7 +14,7 @@ public sealed class FakePaddingCryptoTransform : ICryptoTransform
 
     public FakePaddingCryptoTransform(ICryptoTransform transform)
     {
-        ArgumentNullException.ThrowIfNull(transform);
+        Check.Null(transform);
 
         _transform = transform;
     }
@@ -38,7 +38,7 @@ public sealed class FakePaddingCryptoTransform : ICryptoTransform
 
     public byte[] TransformFinalBlock(byte[] inputBuffer, int inputOffset, int inputCount)
     {
-        ArgumentNullException.ThrowIfNull(inputBuffer);
+        Check.Null(inputBuffer);
 
         // The issue we are solving here is that various algorithms (e.g. AES) only want to operate on a final block
         // whose length is a multiple of the block size. So we create an array that satisfies that condition, copy the

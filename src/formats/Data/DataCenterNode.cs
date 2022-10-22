@@ -18,7 +18,7 @@ public abstract class DataCenterNode
         get => _keys;
         set
         {
-            ArgumentNullException.ThrowIfNull(value);
+            Check.Null(value);
 
             _keys = value;
         }

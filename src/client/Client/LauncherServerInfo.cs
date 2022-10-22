@@ -8,8 +8,8 @@ public sealed class LauncherServerInfo
 
     public LauncherServerInfo(int id, int characters)
     {
-        _ = id > 0 ? true : throw new ArgumentOutOfRangeException(nameof(id));
-        _ = characters >= 0 ? true : throw new ArgumentOutOfRangeException(nameof(characters));
+        Check.Range(id > 0, id);
+        Check.Range(characters >= 0, characters);
 
         Id = id;
         Characters = characters;

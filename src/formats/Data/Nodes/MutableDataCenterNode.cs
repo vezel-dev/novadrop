@@ -18,10 +18,9 @@ internal abstract class MutableDataCenterNode : DataCenterNode
 
     public override sealed DataCenterNode CreateChild(string name)
     {
-        ArgumentNullException.ThrowIfNull(name);
-        _ = name != DataCenterConstants.RootNodeName ? true : throw new ArgumentException(null, nameof(name));
-        _ = Children.Count != DataCenterAddress.MaxValue.ElementIndex + 1
-            ? true : throw new InvalidOperationException();
+        Check.Null(name);
+        Check.Argument(name != DataCenterConstants.RootNodeName, name);
+        Check.Operation(Children.Count != DataCenterAddress.MaxValue.ElementIndex + 1);
 
         var child = new UserDataCenterNode(this, name);
 
@@ -32,10 +31,9 @@ internal abstract class MutableDataCenterNode : DataCenterNode
 
     public override sealed DataCenterNode CreateChildAt(int index, string name)
     {
-        ArgumentNullException.ThrowIfNull(name);
-        _ = name != DataCenterConstants.RootNodeName ? true : throw new ArgumentException(null, nameof(name));
-        _ = Children.Count != DataCenterAddress.MaxValue.ElementIndex + 1
-            ? true : throw new InvalidOperationException();
+        Check.Null(name);
+        Check.Argument(name != DataCenterConstants.RootNodeName, name);
+        Check.Operation(Children.Count != DataCenterAddress.MaxValue.ElementIndex + 1);
 
         var child = new UserDataCenterNode(this, name);
 
@@ -46,8 +44,8 @@ internal abstract class MutableDataCenterNode : DataCenterNode
 
     public override sealed bool RemoveChild(DataCenterNode node)
     {
-        ArgumentNullException.ThrowIfNull(node);
-        _ = node.Parent == this ? true : throw new ArgumentException(null, nameof(node));
+        Check.Null(node);
+        Check.Argument(node.Parent == this, node);
 
         return Children.Remove(node);
     }
@@ -74,25 +72,24 @@ internal abstract class MutableDataCenterNode : DataCenterNode
 
     public override sealed void SortChildren(IComparer<DataCenterNode> comparer)
     {
-        ArgumentNullException.ThrowIfNull(comparer);
+        Check.Null(comparer);
 
         Children.Sort(comparer);
     }
 
     public override sealed void AddAttribute(string name, DataCenterValue value)
     {
-        _ = name != DataCenterConstants.ValueAttributeName ? true : throw new ArgumentException(null, nameof(name));
-        _ = !value.IsNull ? true : throw new ArgumentException(null, nameof(value));
-        _ = Attributes.Count != DataCenterAddress.MaxValue.ElementIndex + 1 ?
-            true : throw new InvalidOperationException();
+        Check.Argument(name != DataCenterConstants.ValueAttributeName, name);
+        Check.Argument(!value.IsNull, value);
+        Check.Operation(Attributes.Count != DataCenterAddress.MaxValue.ElementIndex + 1);
 
         Attributes.Add(name, value);
     }
 
     public override sealed void SetAttribute(string name, DataCenterValue value)
     {
-        _ = name != DataCenterConstants.ValueAttributeName ? true : throw new ArgumentException(null, nameof(name));
-        _ = !value.IsNull ? true : throw new ArgumentException(null, nameof(value));
+        Check.Argument(name != DataCenterConstants.ValueAttributeName, name);
+        Check.Argument(!value.IsNull, value);
 
         Attributes[name] = value;
 
@@ -106,7 +103,7 @@ internal abstract class MutableDataCenterNode : DataCenterNode
 
     public override sealed bool RemoveAttribute(string name)
     {
-        _ = name != DataCenterConstants.ValueAttributeName ? true : throw new ArgumentException(null, nameof(name));
+        Check.Argument(name != DataCenterConstants.ValueAttributeName, name);
 
         return Attributes.Remove(name);
     }

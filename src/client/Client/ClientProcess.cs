@@ -28,7 +28,7 @@ public sealed class ClientProcess : GameProcess
 
     public ClientProcess(ClientProcessOptions options)
     {
-        ArgumentNullException.ThrowIfNull(options);
+        Check.Null(options);
 
         Options = options;
     }
@@ -120,8 +120,7 @@ public sealed class ClientProcess : GameProcess
             if (Options.WebUriProvider?.Invoke(id, args) is not Uri uri)
                 return null;
 
-            if (!uri.IsAbsoluteUri)
-                throw new InvalidOperationException();
+            Check.Operation(uri.IsAbsoluteUri);
 
             var abs = uri.AbsoluteUri;
             var reply = new byte[sizeof(int) + utf16.GetByteCount(abs) + sizeof(char)]; // Add NUL terminator.

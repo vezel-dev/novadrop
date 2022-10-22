@@ -6,7 +6,7 @@ public sealed class MemoryWindowCodeWriter : CodeWriter
 
     public MemoryWindowCodeWriter(MemoryWindow window)
     {
-        _ = window.Accessor ?? throw new ArgumentException(null, nameof(window));
+        Check.Argument(window.Accessor != null, window);
 
         CurrentWindow = window;
     }

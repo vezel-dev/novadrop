@@ -27,9 +27,9 @@ internal sealed class DataCenterKeysTableWriter
 
         if (!_cache.TryGetValue(tup, out var index))
         {
-            if (_keys.Elements.Count == DataCenterConstants.KeysTableSize)
-                throw new InvalidOperationException(
-                    $"Keys table is full ({DataCenterConstants.KeysTableSize} elements).");
+            Check.Operation(
+                _keys.Elements.Count != DataCenterConstants.KeysTableSize,
+                $"Keys table is full ({DataCenterConstants.KeysTableSize} elements).");
 
             ushort GetIndex(string? value)
             {
