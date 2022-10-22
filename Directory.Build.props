@@ -35,7 +35,8 @@ unofficial server emulators.</PackageDescription>
         <PackageProjectUrl>https://docs.vezel.dev/novadrop</PackageProjectUrl>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <RepositoryUrl>https://github.com/vezel-dev/novadrop.git</RepositoryUrl>
-        <TargetFramework>net6.0</TargetFramework>
+        <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
+        <TargetFramework>net7.0</TargetFramework>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
 </Project>
