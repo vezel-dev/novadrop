@@ -105,12 +105,12 @@ public sealed partial class LauncherProcess : GameProcess
         return replyPayload != null ? (id, utf8.GetBytes(replyPayload)) : null;
     }
 
-    [GeneratedRegex("^gameEvent\\((\\d+)\\)$")]
+    [GeneratedRegex("^gameEvent\\((\\d+)\\)$", RegexOptions.Singleline | RegexOptions.CultureInvariant)]
     private static partial Regex GameEventRegex();
 
-    [GeneratedRegex("^endPopup\\((\\d+)\\)$")]
+    [GeneratedRegex("^endPopup\\((\\d+)\\)$", RegexOptions.Singleline | RegexOptions.CultureInvariant)]
     private static partial Regex EndPopupRegex();
 
-    [GeneratedRegex("^getWebLinkUrl\\((\\d+),(.*)\\)$")]
+    [GeneratedRegex("^getWebLinkUrl\\((\\d+),(.*)\\)$", RegexOptions.Singleline | RegexOptions.CultureInvariant)]
     private static partial Regex GetWebLinkUrlRegex();
 }
