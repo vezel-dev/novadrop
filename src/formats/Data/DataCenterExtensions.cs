@@ -91,7 +91,7 @@ public static class DataCenterExtensions
             DataCenterTypeCode.String => value.UnsafeAsString switch
             {
                 var s when bool.TryParse(s, out var b) => b,
-                var s => s.Trim() switch // TODO: AsSpan to avoid the possible allocation in .NET 7.
+                var s => s.AsSpan().Trim() switch
                 {
                     "0" => false,
                     "1" => true,
