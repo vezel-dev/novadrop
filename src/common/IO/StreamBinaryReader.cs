@@ -15,19 +15,9 @@ internal sealed class StreamBinaryReader
 
     public async ValueTask ReadAsync(Memory<byte> buffer, CancellationToken cancellationToken)
     {
-        var progress = 0;
+        await _stream.ReadExactlyAsync(buffer, cancellationToken).ConfigureAwait(false);
 
-        while (progress < buffer.Length)
-        {
-            var len = await _stream.ReadAsync(buffer[progress..], cancellationToken).ConfigureAwait(false);
-
-            if (len == 0)
-                throw new EndOfStreamException();
-
-            progress += len;
-        }
-
-        Progress += progress;
+        Progress += buffer.Length;
     }
 
     public async ValueTask<byte> ReadByteAsync(CancellationToken cancellationToken)
