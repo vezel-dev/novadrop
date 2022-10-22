@@ -1,6 +1,6 @@
 namespace Vezel.Novadrop.Client;
 
-public sealed class LauncherProcess : GameProcess
+public sealed partial class LauncherProcess : GameProcess
 {
     // Represents a Tl.exe process from the perspective of a launcher.exe-compatible process.
 
@@ -17,12 +17,6 @@ public sealed class LauncherProcess : GameProcess
     public LauncherProcessOptions Options { get; }
 
     private static readonly CultureInfo _culture = CultureInfo.InvariantCulture;
-
-    private static readonly Regex _gameEvent = new(@"^gameEvent\((\d+)\)$");
-
-    private static readonly Regex _endPopup = new(@"^endPopup\((\d+)\)$");
-
-    private static readonly Regex _getWebLinkUrl = new(@"^getWebLinkUrl\((\d+),(.*)\)$");
 
     public LauncherProcess(LauncherProcessOptions options)
     {
@@ -52,9 +46,9 @@ public sealed class LauncherProcess : GameProcess
         {
             // csPopup(), endPopup(%d), gameEvent(%d), promoPopup(%d)
 
-            if (_gameEvent.Match(value) is { Success: true } m1)
+            if (GameEventRegex().Match(value) is { Success: true } m1)
                 GameEventOccurred?.Invoke((GameEvent)int.Parse(m1.Groups[1].Value, _culture));
-            else if (_endPopup.Match(value) is { Success: true } m2)
+            else if (EndPopupRegex().Match(value) is { Success: true } m2)
                 GameExited?.Invoke((int)uint.Parse(m2.Groups[1].Value, _culture));
 
             return null;
@@ -103,10 +97,19 @@ public sealed class LauncherProcess : GameProcess
             (0x0, var value) => HandleGameEventOrExit(value),
             (_, "slsurl\0") => HandleServerListUriRequest(),
             (_, "gamestr\0" or "ticket\0" or "last_svr\0" or "char_cnt\0") => HandleAuthenticationInfoRequest(),
-            (_, var value) when _getWebLinkUrl.Match(value) is { Success: true } m => HandleWebUriRequest(m),
+            (_, var value) when GetWebLinkUrlRegex().Match(value) is { Success: true } m => HandleWebUriRequest(m),
             _ => null,
         };
 
         return replyPayload != null ? (id, utf8.GetBytes(replyPayload)) : null;
     }
+
+    [GeneratedRegex("^gameEvent\\((\\d+)\\)$")]
+    private static partial Regex GameEventRegex();
+
+    [GeneratedRegex("^endPopup\\((\\d+)\\)$")]
+    private static partial Regex EndPopupRegex();
+
+    [GeneratedRegex("^getWebLinkUrl\\((\\d+),(.*)\\)$")]
+    private static partial Regex GetWebLinkUrlRegex();
 }
