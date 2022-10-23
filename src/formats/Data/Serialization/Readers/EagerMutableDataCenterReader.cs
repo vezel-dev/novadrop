@@ -24,11 +24,12 @@ internal sealed class EagerMutableDataCenterReader : DataCenterReader
         var node = new EagerMutableDataCenterNode(parent, name, value, keys, attrCount, childCount);
 
         if (attrCount != 0)
-            ReadAttributes(raw, node.Attributes, static (attributes, name, value) =>
-            {
-                if (!attributes.TryAdd(name, value))
-                    throw new InvalidDataException($"Attribute named '{name}' was already recorded earlier.");
-            });
+            ReadAttributes(
+                raw,
+                node.Attributes,
+                static (attributes, name, value) =>
+                    Check.Data(
+                        attributes.TryAdd(name, value), $"Attribute named '{name}' was already recorded earlier."));
 
         if (childCount != 0)
             ReadChildren(raw, node, node.Children, static (children, node) => children.Add(node), cancellationToken);

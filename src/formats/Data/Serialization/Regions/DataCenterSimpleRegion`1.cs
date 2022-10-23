@@ -21,8 +21,7 @@ internal sealed class DataCenterSimpleRegion<T>
         if (_offByOne)
             count--;
 
-        if (count < 0)
-            throw new InvalidDataException($"Region length {count} is negative.");
+        Check.Data(count >= 0, $"Region length {count} is negative.");
 
         var length = Unsafe.SizeOf<T>() * count;
         var bytes = ArrayPool<byte>.Shared.Rent(length);
@@ -90,9 +89,9 @@ internal sealed class DataCenterSimpleRegion<T>
 
     public T GetElement(int index)
     {
-        return index < Elements.Count
-            ? Elements[index]
-            : throw new InvalidDataException($"Region element index {index} is out of bounds (0..{Elements.Count}).");
+        Check.Data(index < Elements.Count, $"Region element index {index} is out of bounds (0..{Elements.Count}).");
+
+        return Elements[index];
     }
 
     public void SetElement(int index, T value)

@@ -33,18 +33,13 @@ internal sealed class DataCenterHeader
         Unknown4 = await reader.ReadInt32Async(cancellationToken).ConfigureAwait(false);
         Unknown5 = await reader.ReadInt32Async(cancellationToken).ConfigureAwait(false);
 
-        if (Version != KnownVersion)
-            throw new InvalidDataException(
-                $"Unsupported data center version {Version} (expected {KnownVersion}).");
-
-        if (Timestamp != KnownTimestamp)
-            throw new InvalidDataException(
-                $"Unexpected data center timestamp {Timestamp} (expected {KnownTimestamp}).");
+        Check.Data(Version == KnownVersion, $"Unsupported data center version {Version} (expected {KnownVersion}).");
+        Check.Data(
+            Timestamp == KnownTimestamp, $"Unexpected data center timestamp {Timestamp} (expected {KnownTimestamp}).");
 
         var tup = (Unknown1, Unknown2, Unknown3, Unknown4, Unknown5);
 
-        if (strict && tup != (0, 0, 0, 0, 0))
-            throw new InvalidDataException($"Unexpected data center type tree values {tup}.");
+        Check.Data(!strict || tup == (0, 0, 0, 0, 0), $"Unexpected data center type tree values {tup}.");
     }
 
     public async ValueTask WriteAsync(StreamBinaryWriter writer, CancellationToken cancellationToken)

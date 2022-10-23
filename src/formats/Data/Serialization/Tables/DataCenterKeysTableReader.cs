@@ -23,33 +23,36 @@ internal sealed class DataCenterKeysTableReader
 
     public DataCenterKeys GetKeys(int index)
     {
-        return index < _keys.Elements.Count
-            ? _cache.GetOrAdd(
-                index,
-                i =>
+        Check.Data(
+            index < _keys.Elements.Count, $"Keys table index {index} is out of bounds (0..{_keys.Elements.Count}).");
+
+        return _cache.GetOrAdd(
+            index,
+            i =>
+            {
+                string? GetName(int index)
                 {
-                    string? GetName(int index)
-                    {
-                        var nameIdx = index - 1;
+                    var nameIdx = index - 1;
 
-                        if (nameIdx == -1)
-                            return null;
+                    if (nameIdx == -1)
+                        return null;
 
-                        var name = _names.GetString(nameIdx);
+                    var name = _names.GetString(nameIdx);
 
-                        return name != DataCenterConstants.ValueAttributeName
-                            ? name
-                            : throw new InvalidDataException($"Key entry refers to illegal attribute name '{name}'.");
-                    }
+                    Check.Data(
+                        name != DataCenterConstants.ValueAttributeName,
+                        $"Key entry refers to illegal attribute name '{name}'.");
 
-                    var raw = _keys.Elements[i];
+                    return name;
+                }
 
-                    return new(
-                        GetName(raw.NameIndex1),
-                        GetName(raw.NameIndex2),
-                        GetName(raw.NameIndex3),
-                        GetName(raw.NameIndex4));
-                })
-            : throw new InvalidDataException($"Keys table index {index} is out of bounds (0..{_keys.Elements.Count}).");
+                var raw = _keys.Elements[i];
+
+                return new(
+                    GetName(raw.NameIndex1),
+                    GetName(raw.NameIndex2),
+                    GetName(raw.NameIndex3),
+                    GetName(raw.NameIndex4));
+            });
     }
 }

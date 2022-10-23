@@ -26,8 +26,9 @@ internal sealed class DataCenterStringTableReader
         await _strings.ReadAsync(reader, cancellationToken).ConfigureAwait(false);
         await _addresses.ReadAsync(reader, cancellationToken).ConfigureAwait(false);
 
-        if (strict && _data.Segments.Count > DataCenterAddress.MaxValue.SegmentIndex)
-            throw new InvalidDataException($"String table is too large ({_data.Segments.Count} segments).");
+        Check.Data(
+            !strict || _data.Segments.Count <= DataCenterAddress.MaxValue.SegmentIndex,
+            $"String table is too large ({_data.Segments.Count} segments).");
 
         var cache = new List<(int Index, string Value)>(ushort.MaxValue);
 
@@ -39,30 +40,27 @@ internal sealed class DataCenterStringTableReader
             {
                 var index = str.Index - 1;
 
-                if (index < 0 || index >= _addresses.Elements.Count)
-                    throw new InvalidDataException(
-                        $"String index {index + 1} is out of bounds (1..{_addresses.Elements.Count}).");
+                Check.Data(
+                    index >= 0 && index < _addresses.Elements.Count,
+                    $"String index {index + 1} is out of bounds (1..{_addresses.Elements.Count}).");
 
                 var length = str.Length - 1; // Includes the terminator.
 
-                if (length < 0)
-                    throw new InvalidDataException($"String has invalid length {length + 1}.");
+                Check.Data(length >= 0, $"String has invalid length {length + 1}.");
 
                 var addr = str.Address;
                 var segIdx = addr.SegmentIndex;
                 var segs = _data.Segments;
 
-                if (segIdx >= segs.Count)
-                    throw new InvalidDataException(
-                        $"String segment index {segIdx} is out of bounds (0..{segs.Count}).");
+                Check.Data(segIdx < segs.Count, $"String segment index {segIdx} is out of bounds (0..{segs.Count}).");
 
                 var elemIdx = addr.ElementIndex;
                 var elems = segs[segIdx].Elements;
 
                 // Note that if the string straddles the end of the segment, the terminator may be omitted.
-                if (elemIdx + length >= elems.Count)
-                    throw new InvalidDataException(
-                        $"String range {elemIdx}..{elemIdx + length + 1} is out of bounds (0..{elems.Count - 1}).");
+                Check.Data(
+                    elemIdx + length < elems.Count,
+                    $"String range {elemIdx}..{elemIdx + length + 1} is out of bounds (0..{elems.Count - 1}).");
 
                 var value = new string(elems.GetRange(elemIdx, length).Select(c => c.Value).ToArray());
 
@@ -70,31 +68,25 @@ internal sealed class DataCenterStringTableReader
                 {
                     var realAddr = _addresses.Elements[index];
 
-                    if ((DataCenterAddress)addr != realAddr)
-                        throw new InvalidDataException(
-                            $"String address {addr} does not match expected address {realAddr}.");
+                    Check.Data(
+                        (DataCenterAddress)addr == realAddr,
+                        $"String address {addr} does not match expected address {realAddr}.");
 
                     var hash = str.Hash;
                     var realHash = DataCenterHash.ComputeStringHash(value);
 
-                    if (hash != realHash)
-                        throw new InvalidDataException(
-                            $"String hash 0x{hash:x8} does not match expected hash 0x{realHash:x8}.");
-
-                    if (hash < last)
-                        throw new InvalidDataException(
-                            $"String hash 0x{hash:x8} is less than previous hash (0x{last:x8}).");
+                    Check.Data(
+                        hash == realHash, $"String hash 0x{hash:x8} does not match expected hash 0x{realHash:x8}.");
+                    Check.Data(hash >= last, $"String hash 0x{hash:x8} is less than previous hash (0x{last:x8}).");
 
                     last = hash;
 
                     var bucket = (hash ^ hash >> 16) % (uint)_strings.Segments.Count;
 
-                    if (i != bucket)
-                        throw new InvalidDataException($"String bucket {i} does not match expected bucket {bucket}.");
+                    Check.Data(i == bucket, $"String bucket {i} does not match expected bucket {bucket}.");
                 }
 
-                if (!_addressCache.TryAdd(addr, value))
-                    throw new InvalidDataException($"String address {addr} already recorded earlier.");
+                Check.Data(_addressCache.TryAdd(addr, value), $"String address {addr} already recorded earlier.");
 
                 cache.Add((index, value));
             }
@@ -106,15 +98,15 @@ internal sealed class DataCenterStringTableReader
 
     public string GetString(int index)
     {
-        return index < _indexCache.Count
-            ? _indexCache[index]
-            : throw new InvalidDataException($"String table index {index} is invalid.");
+        Check.Data(index < _indexCache.Count, $"String table index {index} is invalid.");
+
+        return _indexCache[index];
     }
 
     public string GetString(DataCenterAddress address)
     {
-        return _addressCache.TryGetValue(address, out var s)
-            ? s
-            : throw new InvalidDataException($"String table address {address} is invalid.");
+        Check.Data(_addressCache.TryGetValue(address, out var str), $"String table address {address} is invalid.");
+
+        return str;
     }
 }

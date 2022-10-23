@@ -53,8 +53,8 @@ internal abstract class DataCenterReader
             // Node value attributes are handled in CreateNode.
             if (name != DataCenterConstants.ValueAttributeName)
                 action(state, name, value);
-            else if (i != raw.AttributeCount - 1)
-                throw new InvalidDataException($"Special '{name}' attribute is not sorted last.");
+            else
+                Check.Data(i == raw.AttributeCount - 1, $"Special '{name}' attribute is not sorted last.");
         }
     }
 
@@ -85,29 +85,18 @@ internal abstract class DataCenterReader
         var typeCode = rawAttr.TypeInfo & 0b0000000000000011;
         var extCode = (rawAttr.TypeInfo & 0b1111111111111100) >> 2;
 
-        var result = typeCode switch
+        var result = (typeCode, extCode, rawAttr.Value) switch
         {
-            1 => extCode switch
-            {
-                0 => rawAttr.Value,
-                1 => rawAttr.Value switch
-                {
-                    0 => false,
-                    1 => true,
-                    var v when _options.Strict =>
-                        throw new InvalidDataException($"Attribute has invalid Boolean value {v}."),
-                    _ => true,
-                },
-                var e => throw new InvalidDataException($"Attribute has invalid extended type code {e}."),
-            },
-            2 => extCode switch
-            {
-                not 0 and var e when _options.Strict =>
-                    throw new InvalidDataException($"Attribute has invalid extended type code {e}."),
-                _ => Unsafe.As<int, float>(ref rawAttr.Value),
-            },
-            3 => default(DataCenterValue), // Handled below.
-            var t => throw new InvalidDataException($"Attribute has invalid type code {t}."),
+            (1, 0, var value) => value,
+            (1, 1, 0) => false,
+            (1, 1, not 1 and var value) when _options.Strict =>
+                throw new InvalidDataException($"Attribute has invalid Boolean value {value}."),
+            (1, 1, _) => true,
+            (2, not 0, _) when _options.Strict =>
+                throw new InvalidDataException($"Attribute has invalid extended type code {extCode}."),
+            (2, _, var value) => Unsafe.As<int, float>(ref value),
+            (3, _, _) => default(DataCenterValue), // Handled below.
+            _ => throw new InvalidDataException($"Attribute has invalid type code {typeCode}."),
         };
 
         // String addresses need some extra work to handle endianness properly.
@@ -130,9 +119,7 @@ internal abstract class DataCenterReader
             {
                 var hash = DataCenterHash.ComputeValueHash(str);
 
-                if (extCode != hash)
-                    throw new InvalidDataException(
-                        $"Value hash 0x{extCode:x8} does not match expected hash 0x{hash:x8}.");
+                Check.Data(extCode == hash, $"Value hash 0x{extCode:x8} does not match expected hash 0x{hash:x8}.");
             }
         }
 
@@ -166,24 +153,21 @@ internal abstract class DataCenterReader
         {
             if (name == DataCenterConstants.RootNodeName)
             {
-                if (parent != null)
-                    throw new InvalidDataException($"Node name '{name}' is only valid for the root node.");
-
-                if (attrCount != 0)
-                    throw new InvalidDataException($"Root node has {attrCount} attributes (expected 0).");
+                Check.Data(parent == null, $"Node name '{name}' is only valid for the root node.");
+                Check.Data(attrCount == 0, $"Root node has {attrCount} attributes (expected 0).");
             }
 
             // TODO: Should we allow setting 0b0001 in the API?
-            if (keyFlags is not 0b0000 or 0b0001)
-                throw new InvalidDataException($"Node has invalid key flags 0x{keyFlags:x1}.");
+            Check.Data(keyFlags is 0b0000 or 0b0001, $"Node has invalid key flags 0x{keyFlags:x1}.");
 
             var max = DataCenterAddress.MaxValue;
 
-            if (attrAddr.ElementIndex + attrCount > max.ElementIndex + 1)
-                throw new InvalidDataException($"Cannot read {attrCount} contiguous attributes at {attrAddr}.");
-
-            if (childAddr.ElementIndex + childCount > max.ElementIndex + 1)
-                throw new InvalidDataException($"Cannot read {childCount} contiguous nodes at {childAddr}.");
+            Check.Data(
+                attrAddr.ElementIndex + attrCount <= max.ElementIndex + 1,
+                $"Cannot read {attrCount} contiguous attributes at {attrAddr}.");
+            Check.Data(
+                childAddr.ElementIndex + childCount <= max.ElementIndex + 1,
+                $"Cannot read {childCount} contiguous nodes at {childAddr}.");
         }
 
         var value = default(string);
@@ -196,10 +180,10 @@ internal abstract class DataCenterReader
 
             if (attrName == DataCenterConstants.ValueAttributeName)
             {
-                if (!attrValue.IsString)
-                    throw new InvalidDataException(
-                        $"Special '{attrName}' attribute has invalid type {attrValue.TypeCode} " +
-                        $"(expected {DataCenterTypeCode.String}).");
+                Check.Data(
+                    attrValue.IsString,
+                    $"Special '{attrName}' attribute has invalid type {attrValue.TypeCode} " +
+                    $"(expected {DataCenterTypeCode.String}).");
 
                 value = attrValue.UnsafeAsString;
             }
@@ -242,23 +226,20 @@ internal abstract class DataCenterReader
                         await _names.ReadAsync(strict, reader, cancellationToken).ConfigureAwait(false);
                         await _footer.ReadAsync(strict, reader, cancellationToken).ConfigureAwait(false);
 
-                        if (strict && reader.Progress != size)
-                            throw new InvalidDataException(
-                                $"Uncompressed data center size {size} does not match actual size {reader.Progress}.");
+                        Check.Data(
+                            !strict || reader.Progress == size,
+                            $"Uncompressed data center size {size} does not match actual size {reader.Progress}.");
                     }
                 }
 
                 var root = CreateNode(DataCenterAddress.MinValue, null, cancellationToken);
 
-                return root switch
-                {
-                    null => throw new InvalidDataException("Root node is empty."),
-                    { Name: not DataCenterConstants.RootNodeName } when _options.Strict =>
-                        throw new InvalidDataException(
-                            $"Root node name '{root.Name}' does not match expected " +
-                            $"'{DataCenterConstants.RootNodeName}'."),
-                    _ => root,
-                };
+                Check.Data(root != null, $"Root node is empty.");
+                Check.Data(
+                    !_options.Strict || root.Name == DataCenterConstants.RootNodeName,
+                    $"Root node name '{root.Name}' does not match expected '{DataCenterConstants.RootNodeName}'.");
+
+                return root;
             },
             cancellationToken);
     }

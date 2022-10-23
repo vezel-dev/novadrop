@@ -82,7 +82,7 @@ public sealed class Xor256 : SymmetricAlgorithm
         get => base.FeedbackSize;
         set
         {
-            _ = value == 0 ? true : throw new CryptographicException();
+            Check.Crypto(value == 0);
 
             FeedbackSizeValue = value;
         }
@@ -93,7 +93,7 @@ public sealed class Xor256 : SymmetricAlgorithm
         get => base.Mode;
         set
         {
-            _ = value == CipherMode.ECB ? true : throw new CryptographicException();
+            Check.Crypto(value == CipherMode.ECB);
 
             ModeValue = value;
         }
@@ -105,7 +105,7 @@ public sealed class Xor256 : SymmetricAlgorithm
         set
         {
             // TODO: Support padding?
-            _ = value == PaddingMode.None ? true : throw new CryptographicException();
+            Check.Crypto(value == PaddingMode.None);
 
             PaddingValue = value;
         }
@@ -117,8 +117,14 @@ public sealed class Xor256 : SymmetricAlgorithm
         PaddingValue = PaddingMode.None;
         KeySizeValue = KeyLength * 8;
         BlockSizeValue = KeySizeValue;
-        LegalKeySizesValue = new[] { new KeySizes(KeySizeValue, KeySizeValue, 0) };
-        LegalBlockSizesValue = new[] { new KeySizes(BlockSizeValue, BlockSizeValue, 0) };
+        LegalKeySizesValue = new[]
+        {
+            new KeySizes(KeySizeValue, KeySizeValue, 0),
+        };
+        LegalBlockSizesValue = new[]
+        {
+            new KeySizes(BlockSizeValue, BlockSizeValue, 0),
+        };
     }
 
     public static new Xor256 Create()

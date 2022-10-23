@@ -94,9 +94,27 @@ internal static class Check
             throw new InvalidOperationException(message.ToStringAndClear());
     }
 
+    public static void OperationSupported([DoesNotReturnIf(false)] bool condition)
+    {
+        if (!condition)
+            throw new NotSupportedException();
+    }
+
     public static void Usable([DoesNotReturnIf(false)] bool condition, object instance)
     {
         ObjectDisposedException.ThrowIf(!condition, instance);
+    }
+
+    public static void Data([DoesNotReturnIf(false)] bool condition, ref DefaultInterpolatedStringHandler message)
+    {
+        if (!condition)
+            throw new InvalidDataException(message.ToStringAndClear());
+    }
+
+    public static void Crypto([DoesNotReturnIf(false)] bool condition)
+    {
+        if (!condition)
+            throw new CryptographicException();
     }
 
     public static void ForEach<T>(IEnumerable<T> collection, Action<T> action)

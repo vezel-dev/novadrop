@@ -8,8 +8,7 @@ internal sealed class DataCenterFooter
     {
         Marker = await reader.ReadInt32Async(cancellationToken).ConfigureAwait(false);
 
-        if (strict && Marker != 0)
-            throw new InvalidDataException($"Unexpected data center footer marker {Marker}.");
+        Check.Data(!strict || Marker == 0, $"Unexpected data center footer marker {Marker}.");
     }
 
     public async ValueTask WriteAsync(StreamBinaryWriter writer, CancellationToken cancellationToken)

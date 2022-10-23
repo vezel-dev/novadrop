@@ -31,10 +31,11 @@ internal sealed class DataCenterSegmentedSimpleRegion<T>
 
     public T GetElement(DataCenterAddress address)
     {
-        return address.SegmentIndex < Segments.Count
-            ? Segments[address.SegmentIndex].GetElement(address.ElementIndex)
-            : throw new InvalidDataException(
-                $"Region segment index {address.SegmentIndex} is out of bounds (0..{Segments.Count}).");
+        Check.Data(
+            address.SegmentIndex < Segments.Count,
+            $"Region segment index {address.SegmentIndex} is out of bounds (0..{Segments.Count}).");
+
+        return Segments[address.SegmentIndex].GetElement(address.ElementIndex);
     }
 
     public void SetElement(DataCenterAddress address, T value)

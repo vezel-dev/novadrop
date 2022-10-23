@@ -36,11 +36,12 @@ internal sealed class EagerImmutableDataCenterReader : DataCenterReader
         {
             attributes = new OrderedDictionary<string, DataCenterValue>(attrCount);
 
-            ReadAttributes(raw, attributes, static (attributes, name, value) =>
-            {
-                if (!attributes.TryAdd(name, value))
-                    throw new InvalidDataException($"Attribute named '{name}' was already recorded earlier.");
-            });
+            ReadAttributes(
+                raw,
+                attributes,
+                static (attributes, name, value) =>
+                    Check.Data(
+                        attributes.TryAdd(name, value), $"Attribute named '{name}' was already recorded earlier."));
         }
 
         var children = _emptyChildren;
