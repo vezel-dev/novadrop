@@ -73,7 +73,7 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>
         return addr;
     }
 
-    public unsafe nuint ToOffset(NativeAddress address)
+    public nuint ToOffset(NativeAddress address)
     {
         Check.Range(TryGetOffset(address, out var off), address);
 
@@ -169,7 +169,7 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>
         return true;
     }
 
-    public unsafe bool TryRead<T>(nuint offset, out T value)
+    public bool TryRead<T>(nuint offset, out T value)
         where T : unmanaged
     {
         value = default;
@@ -182,7 +182,7 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>
         Check.Range(TryRead(offset, buffer), offset);
     }
 
-    public unsafe T Read<T>(nuint offset)
+    public T Read<T>(nuint offset)
         where T : unmanaged
     {
         Check.Range(TryRead<T>(offset, out var value), offset);
@@ -211,7 +211,7 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>
         Check.Range(TryWrite(offset, buffer), offset);
     }
 
-    public unsafe void Write<T>(nuint offset, T value)
+    public void Write<T>(nuint offset, T value)
         where T : unmanaged
     {
         Check.Range(TryWrite(offset, value), offset);
