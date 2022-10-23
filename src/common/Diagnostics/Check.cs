@@ -129,7 +129,7 @@ internal static class Check
 
     public static void Argument<T>(
         [DoesNotReturnIf(false)] bool condition,
-        scoped in T value,
+        in T value,
         [CallerArgumentExpression(nameof(value))] string? name = null)
     {
         _ = value;
@@ -145,7 +145,7 @@ internal static class Check
 
     public static void Range<T>(
         [DoesNotReturnIf(false)] bool condition,
-        scoped in T value,
+        in T value,
         [CallerArgumentExpression(nameof(value))] string? name = null)
     {
         _ = value;
