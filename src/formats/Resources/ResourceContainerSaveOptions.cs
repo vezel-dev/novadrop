@@ -12,7 +12,7 @@ public sealed class ResourceContainerSaveOptions
         };
     }
 
-    public ResourceContainerSaveOptions WithKey(ReadOnlySpan<byte> key)
+    public ResourceContainerSaveOptions WithKey(scoped ReadOnlySpan<byte> key)
     {
         Check.Argument(key.Length == ResourceContainer.LatestKey.Length, nameof(key));
 

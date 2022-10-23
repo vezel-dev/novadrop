@@ -43,7 +43,7 @@ public sealed class DataCenterSaveOptions
         return options;
     }
 
-    public DataCenterSaveOptions WithKey(ReadOnlySpan<byte> key)
+    public DataCenterSaveOptions WithKey(scoped ReadOnlySpan<byte> key)
     {
         Check.Argument(key.Length == DataCenter.LatestKey.Length, nameof(key));
 
@@ -54,7 +54,7 @@ public sealed class DataCenterSaveOptions
         return options;
     }
 
-    public DataCenterSaveOptions WithIV(ReadOnlySpan<byte> iv)
+    public DataCenterSaveOptions WithIV(scoped ReadOnlySpan<byte> iv)
     {
         Check.Argument(iv.Length == DataCenter.LatestIV.Length, nameof(iv));
 

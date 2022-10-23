@@ -9,12 +9,12 @@ public sealed class ManagedMemoryAccessor : MemoryAccessor
         Memory = memory;
     }
 
-    public override void Read(NativeAddress address, Span<byte> buffer)
+    public override void Read(NativeAddress address, scoped Span<byte> buffer)
     {
         Memory.Span.Slice((int)(nuint)address, buffer.Length).CopyTo(buffer);
     }
 
-    public override void Write(NativeAddress address, ReadOnlySpan<byte> buffer)
+    public override void Write(NativeAddress address, scoped ReadOnlySpan<byte> buffer)
     {
         buffer.CopyTo(Memory.Span[(int)(nuint)address..]);
     }

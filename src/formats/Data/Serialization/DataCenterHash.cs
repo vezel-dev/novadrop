@@ -49,7 +49,7 @@ internal static class DataCenterHash
                 ref MemoryMarshal.GetReference(_table.Span), (byte)(hash ^ ((byte*)&value)[i])) ^ hash >> 8;
     }
 
-    public static uint ComputeStringHash(ReadOnlySpan<char> value)
+    public static uint ComputeStringHash(scoped ReadOnlySpan<char> value)
     {
         var hash = 0u;
 
@@ -59,7 +59,7 @@ internal static class DataCenterHash
         return hash;
     }
 
-    public static ushort ComputeValueHash(ReadOnlySpan<char> value)
+    public static ushort ComputeValueHash(scoped ReadOnlySpan<char> value)
     {
         var hash = 0u;
 

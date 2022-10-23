@@ -25,7 +25,7 @@ public sealed class Xor256 : SymmetricAlgorithm
             // Nothing to clean up.
         }
 
-        public bool Transform(ReadOnlySpan<byte> source, Span<byte> destination, out int written)
+        public bool Transform(scoped ReadOnlySpan<byte> source, scoped Span<byte> destination, out int written)
         {
             if (destination.Length < source.Length)
             {

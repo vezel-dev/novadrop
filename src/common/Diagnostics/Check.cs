@@ -169,7 +169,7 @@ internal static class Check
 
     public static void Operation(
         [DoesNotReturnIf(false)] bool condition,
-        [InterpolatedStringHandlerArgument(nameof(condition))] ref CheckInterpolatedStringHandler message)
+        [InterpolatedStringHandlerArgument(nameof(condition))] scoped ref CheckInterpolatedStringHandler message)
     {
         if (!condition)
             throw new InvalidOperationException(message.ToStringAndClear());
@@ -188,7 +188,7 @@ internal static class Check
 
     public static void Data(
         [DoesNotReturnIf(false)] bool condition,
-        [InterpolatedStringHandlerArgument(nameof(condition))] ref CheckInterpolatedStringHandler message)
+        [InterpolatedStringHandlerArgument(nameof(condition))] scoped ref CheckInterpolatedStringHandler message)
     {
         if (!condition)
             throw new InvalidDataException(message.ToStringAndClear());

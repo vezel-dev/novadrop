@@ -176,7 +176,7 @@ public sealed unsafe class NativeProcess : IDisposable
             throw new Win32Exception();
     }
 
-    public void Read(NativeAddress address, Span<byte> buffer)
+    public void Read(NativeAddress address, scoped Span<byte> buffer)
     {
         Check.Usable(!_disposed, this);
 
@@ -185,7 +185,7 @@ public sealed unsafe class NativeProcess : IDisposable
                 throw new Win32Exception();
     }
 
-    public void Write(NativeAddress address, ReadOnlySpan<byte> buffer)
+    public void Write(NativeAddress address, scoped ReadOnlySpan<byte> buffer)
     {
         Check.Usable(!_disposed, this);
 

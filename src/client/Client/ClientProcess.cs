@@ -46,7 +46,7 @@ public sealed class ClientProcess : GameProcess
     }
 
     protected override (nuint Id, ReadOnlyMemory<byte> Payload)? HandleWindowMessage(
-        nuint id, ReadOnlySpan<byte> payload)
+        nuint id, scoped ReadOnlySpan<byte> payload)
     {
         var opts = Options;
         var utf16 = Encoding.Unicode;
@@ -65,7 +65,7 @@ public sealed class ClientProcess : GameProcess
             return (0x4, Encoding.UTF8.GetBytes(opts.SessionTicket));
         }
 
-        (nuint, ReadOnlyMemory<byte>) HandleServerListRequest(ReadOnlySpan<byte> payload)
+        (nuint, ReadOnlyMemory<byte>) HandleServerListRequest(scoped ReadOnlySpan<byte> payload)
         {
             ServerListRequested?.Invoke();
 
@@ -100,7 +100,7 @@ public sealed class ClientProcess : GameProcess
             return (0x6, ms.ToArray());
         }
 
-        (nuint, ReadOnlyMemory<byte>)? HandleEnterLobbyOrWorld(ReadOnlySpan<byte> payload)
+        (nuint, ReadOnlyMemory<byte>)? HandleEnterLobbyOrWorld(scoped ReadOnlySpan<byte> payload)
         {
             if (payload.IsEmpty)
                 LobbyEntered?.Invoke();
@@ -110,7 +110,7 @@ public sealed class ClientProcess : GameProcess
             return null;
         }
 
-        (nuint, ReadOnlyMemory<byte>)? HandleWebUriRequest(ReadOnlySpan<byte> payload)
+        (nuint, ReadOnlyMemory<byte>)? HandleWebUriRequest(scoped ReadOnlySpan<byte> payload)
         {
             var id = BinaryPrimitives.ReadInt32LittleEndian(payload);
             var args = utf16.GetString(payload[sizeof(int)..]).TrimEnd('\0').Split(',');
@@ -131,7 +131,7 @@ public sealed class ClientProcess : GameProcess
             return (0x1b, reply);
         }
 
-        (nuint, ReadOnlyMemory<byte>)? HandleGameStart(ReadOnlySpan<byte> payload)
+        (nuint, ReadOnlyMemory<byte>)? HandleGameStart(scoped ReadOnlySpan<byte> payload)
         {
             GameStarted?.Invoke(BinaryPrimitives.ReadInt32LittleEndian(payload));
 
@@ -145,14 +145,14 @@ public sealed class ClientProcess : GameProcess
             return null;
         }
 
-        (nuint, ReadOnlyMemory<byte>)? HandleGameExit(ReadOnlySpan<byte> payload)
+        (nuint, ReadOnlyMemory<byte>)? HandleGameExit(scoped ReadOnlySpan<byte> payload)
         {
             GameExited?.Invoke(BinaryPrimitives.ReadInt32LittleEndian(payload[(sizeof(int) * 2)..sizeof(int)]));
 
             return null;
         }
 
-        (nuint, ReadOnlyMemory<byte>)? HandleGameCrash(ReadOnlySpan<byte> payload)
+        (nuint, ReadOnlyMemory<byte>)? HandleGameCrash(scoped ReadOnlySpan<byte> payload)
         {
             GameCrashed?.Invoke(utf16.GetString(payload).Trim());
 

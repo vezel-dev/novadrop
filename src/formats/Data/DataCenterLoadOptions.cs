@@ -24,7 +24,7 @@ public sealed class DataCenterLoadOptions
         };
     }
 
-    public DataCenterLoadOptions WithKey(ReadOnlySpan<byte> key)
+    public DataCenterLoadOptions WithKey(scoped ReadOnlySpan<byte> key)
     {
         Check.Argument(key.Length == DataCenter.LatestKey.Length, nameof(key));
 
@@ -35,7 +35,7 @@ public sealed class DataCenterLoadOptions
         return options;
     }
 
-    public DataCenterLoadOptions WithIV(ReadOnlySpan<byte> iv)
+    public DataCenterLoadOptions WithIV(scoped ReadOnlySpan<byte> iv)
     {
         Check.Argument(iv.Length == DataCenter.LatestIV.Length, nameof(iv));
 

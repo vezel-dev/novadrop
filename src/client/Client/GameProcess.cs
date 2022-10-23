@@ -68,7 +68,7 @@ public abstract class GameProcess
     protected abstract void GetProcessConfiguration(out string fileName, out string[] arguments);
 
     protected abstract (nuint Id, ReadOnlyMemory<byte> Payload)? HandleWindowMessage(
-        nuint id, ReadOnlySpan<byte> payload);
+        nuint id, scoped ReadOnlySpan<byte> payload);
 
     [SuppressMessage("", "CA1031")]
     public unsafe Task<int> RunAsync(CancellationToken cancellationToken = default)

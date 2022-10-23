@@ -37,7 +37,7 @@ public sealed partial class LauncherProcess : GameProcess
     }
 
     protected override (nuint Id, ReadOnlyMemory<byte> Payload)? HandleWindowMessage(
-        nuint id, ReadOnlySpan<byte> payload)
+        nuint id, scoped ReadOnlySpan<byte> payload)
     {
         var opts = Options;
         var utf8 = Encoding.UTF8;

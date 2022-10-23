@@ -174,7 +174,7 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>
     {
         value = default;
 
-        return TryRead(offset, MemoryMarshal.AsBytes(MemoryMarshal.CreateSpan(ref value, 1)));
+        return TryRead(offset, MemoryMarshal.AsBytes(new Span<T>(ref value)));
     }
 
     public void Read(nuint offset, Span<byte> buffer)
@@ -190,7 +190,7 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>
         return value;
     }
 
-    public bool TryWrite(nuint offset, ReadOnlySpan<byte> buffer)
+    public bool TryWrite(nuint offset, scoped ReadOnlySpan<byte> buffer)
     {
         if (!ContainsRange(offset, (nuint)buffer.Length))
             return false;
@@ -203,10 +203,10 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>
     public bool TryWrite<T>(nuint offset, T value)
         where T : unmanaged
     {
-        return TryWrite(offset, MemoryMarshal.AsBytes(MemoryMarshal.CreateReadOnlySpan(ref value, 1)));
+        return TryWrite(offset, MemoryMarshal.AsBytes(new ReadOnlySpan<T>(value)));
     }
 
-    public void Write(nuint offset, ReadOnlySpan<byte> buffer)
+    public void Write(nuint offset, scoped ReadOnlySpan<byte> buffer)
     {
         Check.Range(TryWrite(offset, buffer), offset);
     }
