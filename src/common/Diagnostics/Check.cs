@@ -1,5 +1,6 @@
 namespace Vezel.Novadrop.Diagnostics;
 
+[StackTraceHidden]
 internal static class Check
 {
     [InterpolatedStringHandler]
