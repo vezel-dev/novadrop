@@ -45,7 +45,7 @@ public sealed class ClientProcessOptions
             AccountName = AccountName,
             SessionTicket = SessionTicket,
             Language = Language,
-            Servers = Servers,
+            Servers = Servers.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
             LastServerId = LastServerId,
             WebUriProvider = WebUriProvider,
         };
