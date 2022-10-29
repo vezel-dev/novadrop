@@ -61,10 +61,7 @@ internal sealed class LauncherCommand : CancellableAsyncCommand<LauncherCommand.
 
                 process.GameEventOccurred += e =>
                 {
-                    if (e is GameEvent.EnteredIntroCinematic or
-                        GameEvent.EnteredServerList or
-                        GameEvent.EnteringLobby or
-                        GameEvent.EnteredLobby)
+                    if (e is >= GameEvent.EnteredIntroCinematic and <= GameEvent.EnteredLobby)
                         increment();
                 };
 

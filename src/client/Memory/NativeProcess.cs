@@ -18,7 +18,6 @@ public sealed unsafe class NativeProcess : IDisposable
 
     public IEnumerable<NativeModule> Modules
     {
-        [SuppressMessage("", "CA1065")]
         get
         {
             Check.Usable(!_disposed, this);

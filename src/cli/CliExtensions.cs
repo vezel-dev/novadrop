@@ -39,8 +39,7 @@ internal static class CliExtensions
         return result;
     }
 
-    public static async Task RunTaskAsync(
-        this ProgressContext context, string description, Func<Task> function)
+    public static async Task RunTaskAsync(this ProgressContext context, string description, Func<Task> function)
     {
         _ = await context.RunTaskAsync(description, async () =>
         {
