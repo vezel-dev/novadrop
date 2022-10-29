@@ -43,7 +43,7 @@ public sealed class LauncherProcessOptions
             AccountName = AccountName,
             SessionTicket = SessionTicket,
             ServerListUri = ServerListUri,
-            Servers = Servers,
+            Servers = Servers.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
             LastServerId = LastServerId,
             WebUriProvider = WebUriProvider,
         };
