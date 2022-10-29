@@ -39,7 +39,7 @@ sealed class VerifyCommand : CancellableAsyncCommand<VerifyCommand.VerifyCommand
                 [SuppressMessage("", "CA1308")]
                 string ComputeHash(HashAlgorithm algorithm)
                 {
-                    return Convert.ToHexString(algorithm.ComputeHash(stream));
+                    return Convert.ToHexString(algorithm.ComputeHash(stream)).ToLowerInvariant();
                 }
 
                 using var sha1 = SHA1.Create();
