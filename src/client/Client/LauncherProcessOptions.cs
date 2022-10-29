@@ -98,7 +98,7 @@ public sealed class LauncherProcessOptions
     public LauncherProcessOptions WithServers(IEnumerable<LauncherServerInfo> servers)
     {
         Check.Null(servers);
-        Check.ForEach(servers, srv => Check.Argument(srv != null, servers));
+        Check.All(servers, static srv => srv != null);
 
         var options = Clone();
 

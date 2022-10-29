@@ -29,7 +29,7 @@ public sealed class ClientProcessOptions
         Check.Null(sessionTicket);
         Check.Null(servers);
         Check.Argument(servers.Any(), servers);
-        Check.ForEach(servers, srv => Check.Argument(srv != null, servers));
+        Check.All(servers, static srv => srv != null);
 
         FileName = fileName;
         AccountName = accountName;
@@ -98,7 +98,7 @@ public sealed class ClientProcessOptions
     {
         Check.Null(servers);
         Check.Argument(servers.Any(), servers);
-        Check.ForEach(servers, srv => Check.Argument(srv != null, servers));
+        Check.All(servers, static srv => srv != null);
 
         var options = Clone();
 
