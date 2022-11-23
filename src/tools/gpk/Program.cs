@@ -4,8 +4,9 @@ static class Program
 {
     static Task<int> Main(string[] args)
     {
-        // TODO: Add commands.
+        AnsiConsole.Profile.Capabilities.Ansi = !Console.IsOutputRedirected && !Console.IsErrorRedirected;
 
+        // TODO: Add commands.
         var app = new CommandApp();
 
         app.Configure(cfg =>
