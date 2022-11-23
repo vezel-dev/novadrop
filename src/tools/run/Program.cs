@@ -1,5 +1,7 @@
 using Vezel.Novadrop.Commands;
 
+AnsiConsole.Profile.Capabilities.Ansi = !Console.IsOutputRedirected && !Console.IsErrorRedirected;
+
 var app = new CommandApp();
 
 app.Configure(cfg =>
