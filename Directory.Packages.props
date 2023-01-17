@@ -30,6 +30,6 @@
         <PackageVersion Include="protobuf-net.BuildTools"
                         Version="3.1.25" />
         <PackageVersion Include="Spectre.Console.Cli"
-                        Version="0.45.1-preview.0.33" />
+                        Version="0.46.0" />
     </ItemGroup>
 </Project>
