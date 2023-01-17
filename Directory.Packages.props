@@ -16,7 +16,7 @@
 
     <ItemGroup>
         <PackageVersion Include="Iced"
-                        Version="1.17.0" />
+                        Version="1.18.0" />
         <PackageVersion Include="Microsoft.Experimental.Collections"
                         Version="1.0.6-e190117-3" />
         <PackageVersion Include="Microsoft.Windows.CsWin32"
