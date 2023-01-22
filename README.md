@@ -16,7 +16,7 @@
 
 [![License](https://img.shields.io/github/license/vezel-dev/novadrop?color=brown)](LICENSE-0BSD)
 [![Commits](https://img.shields.io/github/commit-activity/m/vezel-dev/novadrop/master?label=commits&color=slateblue)](https://github.com/vezel-dev/novadrop/commits/master)
-[![Build](https://img.shields.io/github/workflow/status/vezel-dev/novadrop/Build/master)](https://github.com/vezel-dev/novadrop/actions/workflows/build.yml)
+[![Build](https://img.shields.io/github/actions/workflow/status/vezel-dev/novadrop/build.yml?branch=master)](https://github.com/vezel-dev/novadrop/actions/workflows/build.yml)
 [![Discussions](https://img.shields.io/github/discussions/vezel-dev/novadrop?color=teal)](https://github.com/vezel-dev/novadrop/discussions)
 [![Discord](https://img.shields.io/discord/960716713136095232?color=peru&label=discord)](https://discord.gg/VRnzR7sjzd)
 
