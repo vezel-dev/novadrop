@@ -1,7 +1,8 @@
 namespace Vezel.Novadrop.Data;
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
-public sealed class DataCenterKeys : IEquatable<DataCenterKeys>
+public sealed class DataCenterKeys :
+    IEquatable<DataCenterKeys>, IEqualityOperators<DataCenterKeys, DataCenterKeys, bool>
 {
     public static DataCenterKeys None { get; } = new();
 
