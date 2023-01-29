@@ -1,7 +1,11 @@
 namespace Vezel.Novadrop.Data;
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
-public readonly struct DataCenterValue : IComparable<DataCenterValue>, IEquatable<DataCenterValue>
+public readonly struct DataCenterValue :
+    IEquatable<DataCenterValue>,
+    IEqualityOperators<DataCenterValue, DataCenterValue, bool>,
+    IComparable<DataCenterValue>,
+    IComparisonOperators<DataCenterValue, DataCenterValue, bool>
 {
     public DataCenterTypeCode TypeCode { get; }
 
