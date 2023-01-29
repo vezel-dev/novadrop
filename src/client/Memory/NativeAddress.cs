@@ -1,6 +1,10 @@
 namespace Vezel.Novadrop.Memory;
 
-public readonly struct NativeAddress : IComparable<NativeAddress>, IEquatable<NativeAddress>
+public readonly struct NativeAddress :
+    IEquatable<NativeAddress>,
+    IEqualityOperators<NativeAddress, NativeAddress, bool>,
+    IComparable<NativeAddress>,
+    IComparisonOperators<NativeAddress, NativeAddress, bool>
 {
     public static NativeAddress MinValue { get; } = new(nuint.MinValue);
 
@@ -83,11 +87,6 @@ public readonly struct NativeAddress : IComparable<NativeAddress>, IEquatable<Na
         return (new(q), new(r));
     }
 
-    public int CompareTo(NativeAddress other)
-    {
-        return _value.CompareTo(other._value);
-    }
-
     public bool Equals(NativeAddress other)
     {
         return _value == other._value;
@@ -96,6 +95,11 @@ public readonly struct NativeAddress : IComparable<NativeAddress>, IEquatable<Na
     public override bool Equals([NotNullWhen(true)] object? obj)
     {
         return obj is NativeAddress a && Equals(a);
+    }
+
+    public int CompareTo(NativeAddress other)
+    {
+        return _value.CompareTo(other._value);
     }
 
     public override int GetHashCode()
