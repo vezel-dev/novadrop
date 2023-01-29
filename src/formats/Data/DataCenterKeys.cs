@@ -96,7 +96,7 @@ public sealed class DataCenterKeys : IEquatable<DataCenterKeys>
 
     public override bool Equals(object? obj)
     {
-        return obj is DataCenterKeys k && Equals(k);
+        return Equals(obj as DataCenterKeys);
     }
 
     public override int GetHashCode()
