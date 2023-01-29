@@ -1,6 +1,6 @@
 namespace Vezel.Novadrop.Memory;
 
-public readonly struct MemoryWindow : IEquatable<MemoryWindow>
+public readonly struct MemoryWindow : IEquatable<MemoryWindow>, IEqualityOperators<MemoryWindow, MemoryWindow, bool>
 {
     public MemoryAccessor Accessor { get; }
 
