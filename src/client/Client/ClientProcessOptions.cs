@@ -98,22 +98,22 @@ public sealed class ClientProcessOptions
         Check.Null(servers);
         Check.All(servers, static srv => srv != null);
 
-        var builder = Clone();
+        var options = Clone();
 
-        builder.Servers = servers.ToImmutableSortedDictionary(srv => srv.Id, srv => srv);
+        options.Servers = servers.ToImmutableSortedDictionary(srv => srv.Id, srv => srv);
 
-        return builder;
+        return options;
     }
 
     public ClientProcessOptions AddServer(ClientServerInfo server)
     {
         Check.Null(server);
 
-        var builder = Clone();
+        var options = Clone();
 
-        builder.Servers = Servers.Add(server.Id, server);
+        options.Servers = Servers.Add(server.Id, server);
 
-        return builder;
+        return options;
     }
 
     public ClientProcessOptions AddServers(params ClientServerInfo[] servers)
@@ -126,20 +126,20 @@ public sealed class ClientProcessOptions
         Check.Null(servers);
         Check.All(servers, static srv => srv != null);
 
-        var builder = Clone();
+        var options = Clone();
 
-        builder.Servers = Servers.AddRange(servers.Select(srv => KeyValuePair.Create(srv.Id, srv)));
+        options.Servers = Servers.AddRange(servers.Select(srv => KeyValuePair.Create(srv.Id, srv)));
 
-        return builder;
+        return options;
     }
 
     public ClientProcessOptions RemoveServer(int id)
     {
-        var builder = Clone();
+        var options = Clone();
 
-        builder.Servers = Servers.Remove(id);
+        options.Servers = Servers.Remove(id);
 
-        return builder;
+        return options;
     }
 
     public ClientProcessOptions RemoveServers(params int[] ids)
@@ -149,11 +149,11 @@ public sealed class ClientProcessOptions
 
     public ClientProcessOptions RemoveServers(IEnumerable<int> ids)
     {
-        var builder = Clone();
+        var options = Clone();
 
-        builder.Servers = Servers.RemoveRange(ids);
+        options.Servers = Servers.RemoveRange(ids);
 
-        return builder;
+        return options;
     }
 
     public ClientProcessOptions ClearServers()

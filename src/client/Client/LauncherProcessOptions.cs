@@ -104,22 +104,22 @@ public sealed class LauncherProcessOptions
         Check.Null(servers);
         Check.All(servers, static srv => srv != null);
 
-        var builder = Clone();
+        var options = Clone();
 
-        builder.Servers = servers.ToImmutableSortedDictionary(srv => srv.Id, srv => srv);
+        options.Servers = servers.ToImmutableSortedDictionary(srv => srv.Id, srv => srv);
 
-        return builder;
+        return options;
     }
 
     public LauncherProcessOptions AddServer(LauncherServerInfo server)
     {
         Check.Null(server);
 
-        var builder = Clone();
+        var options = Clone();
 
-        builder.Servers = Servers.Add(server.Id, server);
+        options.Servers = Servers.Add(server.Id, server);
 
-        return builder;
+        return options;
     }
 
     public LauncherProcessOptions AddServers(params LauncherServerInfo[] servers)
@@ -132,20 +132,20 @@ public sealed class LauncherProcessOptions
         Check.Null(servers);
         Check.All(servers, static srv => srv != null);
 
-        var builder = Clone();
+        var options = Clone();
 
-        builder.Servers = Servers.AddRange(servers.Select(srv => KeyValuePair.Create(srv.Id, srv)));
+        options.Servers = Servers.AddRange(servers.Select(srv => KeyValuePair.Create(srv.Id, srv)));
 
-        return builder;
+        return options;
     }
 
     public LauncherProcessOptions RemoveServer(int id)
     {
-        var builder = Clone();
+        var options = Clone();
 
-        builder.Servers = Servers.Remove(id);
+        options.Servers = Servers.Remove(id);
 
-        return builder;
+        return options;
     }
 
     public LauncherProcessOptions RemoveServers(params int[] ids)
@@ -155,11 +155,11 @@ public sealed class LauncherProcessOptions
 
     public LauncherProcessOptions RemoveServers(IEnumerable<int> ids)
     {
-        var builder = Clone();
+        var options = Clone();
 
-        builder.Servers = Servers.RemoveRange(ids);
+        options.Servers = Servers.RemoveRange(ids);
 
-        return builder;
+        return options;
     }
 
     public LauncherProcessOptions ClearServers()
