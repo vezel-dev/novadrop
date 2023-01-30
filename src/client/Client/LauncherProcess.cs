@@ -39,7 +39,6 @@ public sealed partial class LauncherProcess : GameProcess
     protected override (nuint Id, ReadOnlyMemory<byte> Payload)? HandleWindowMessage(
         nuint id, scoped ReadOnlySpan<byte> payload)
     {
-        var opts = Options;
         var utf8 = Encoding.UTF8;
 
         string? HandleGameEventOrExit(string value)
@@ -58,7 +57,7 @@ public sealed partial class LauncherProcess : GameProcess
         {
             ServerListUriRequested?.Invoke();
 
-            return opts.ServerListUri.AbsoluteUri + '\0';
+            return Options.ServerListUri.AbsoluteUri + '\0';
         }
 
         string HandleAuthenticationInfoRequest()
@@ -67,11 +66,11 @@ public sealed partial class LauncherProcess : GameProcess
 
             return JsonSerializer.Serialize(
                 new LauncherAuthenticationInfo(
-                    opts.AccountName,
-                    opts.SessionTicket,
-                    opts.Servers.Values
-                        .Select(s => new LauncherAuthenticationInfo.ServerCharacters(s.Id, s.Characters)),
-                    opts.LastServerId),
+                    Options.AccountName,
+                    Options.SessionTicket,
+                    Options.Servers.Values.Select(
+                        s => new LauncherAuthenticationInfo.ServerCharacters(s.Id, s.Characters)),
+                    Options.LastServerId),
                 LauncherJsonContext.Default.LauncherAuthenticationInfo) + '\0';
         }
 

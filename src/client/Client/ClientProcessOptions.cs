@@ -10,31 +10,26 @@ public sealed class ClientProcessOptions
 
     public string? Language { get; private set; }
 
-    public IReadOnlyDictionary<int, ClientServerInfo> Servers { get; private set; } = null!;
+    public ImmutableSortedDictionary<int, ClientServerInfo> Servers { get; private set; } =
+        ImmutableSortedDictionary<int, ClientServerInfo>.Empty;
 
     public int LastServerId { get; private set; }
 
-    public Func<int, string[], Uri>? WebUriProvider { get; private set; }
+    public Func<int, ReadOnlyMemory<string>, Uri>? WebUriProvider { get; private set; }
 
     private ClientProcessOptions()
     {
     }
 
-    [SuppressMessage("", "CA1851")]
-    public ClientProcessOptions(
-        string fileName, string accountName, string sessionTicket, IEnumerable<ClientServerInfo> servers)
+    public ClientProcessOptions(string fileName, string accountName, string sessionTicket)
     {
         Check.Null(fileName);
         Check.Null(accountName);
         Check.Null(sessionTicket);
-        Check.Null(servers);
-        Check.Argument(servers.Any(), servers);
-        Check.All(servers, static srv => srv != null);
 
         FileName = fileName;
         AccountName = accountName;
         SessionTicket = sessionTicket;
-        Servers = servers.ToImmutableDictionary(s => s.Id);
     }
 
     private ClientProcessOptions Clone()
@@ -45,7 +40,7 @@ public sealed class ClientProcessOptions
             AccountName = AccountName,
             SessionTicket = SessionTicket,
             Language = Language,
-            Servers = Servers.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
+            Servers = Servers,
             LastServerId = LastServerId,
             WebUriProvider = WebUriProvider,
         };
@@ -93,18 +88,77 @@ public sealed class ClientProcessOptions
         return options;
     }
 
-    [SuppressMessage("", "CA1851")]
+    public ClientProcessOptions WithServers(params ClientServerInfo[] servers)
+    {
+        return WithServers(servers.AsEnumerable());
+    }
+
     public ClientProcessOptions WithServers(IEnumerable<ClientServerInfo> servers)
     {
         Check.Null(servers);
-        Check.Argument(servers.Any(), servers);
         Check.All(servers, static srv => srv != null);
 
-        var options = Clone();
+        var builder = Clone();
 
-        options.Servers = servers.ToImmutableDictionary(s => s.Id);
+        builder.Servers = servers.ToImmutableSortedDictionary(srv => srv.Id, srv => srv);
 
-        return options;
+        return builder;
+    }
+
+    public ClientProcessOptions AddServer(ClientServerInfo server)
+    {
+        Check.Null(server);
+
+        var builder = Clone();
+
+        builder.Servers = Servers.Add(server.Id, server);
+
+        return builder;
+    }
+
+    public ClientProcessOptions AddServers(params ClientServerInfo[] servers)
+    {
+        return AddServers(servers.AsEnumerable());
+    }
+
+    public ClientProcessOptions AddServers(IEnumerable<ClientServerInfo> servers)
+    {
+        Check.Null(servers);
+        Check.All(servers, static srv => srv != null);
+
+        var builder = Clone();
+
+        builder.Servers = Servers.AddRange(servers.Select(srv => KeyValuePair.Create(srv.Id, srv)));
+
+        return builder;
+    }
+
+    public ClientProcessOptions RemoveServer(int id)
+    {
+        var builder = Clone();
+
+        builder.Servers = Servers.Remove(id);
+
+        return builder;
+    }
+
+    public ClientProcessOptions RemoveServers(params int[] ids)
+    {
+        return RemoveServers(ids.AsEnumerable());
+    }
+
+    public ClientProcessOptions RemoveServers(IEnumerable<int> ids)
+    {
+        var builder = Clone();
+
+        builder.Servers = Servers.RemoveRange(ids);
+
+        return builder;
+    }
+
+    public ClientProcessOptions ClearServers()
+    {
+        return WithServers();
     }
 
     public ClientProcessOptions WithLastServerId(int lastServerId)
@@ -118,7 +172,7 @@ public sealed class ClientProcessOptions
         return options;
     }
 
-    public ClientProcessOptions WithWebUriProvider(Func<int, string[], Uri>? webUriProvider)
+    public ClientProcessOptions WithWebUriProvider(Func<int, ReadOnlyMemory<string>, Uri>? webUriProvider)
     {
         Check.Null(webUriProvider);
 

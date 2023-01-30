@@ -29,6 +29,7 @@ public sealed class ClientProcess : GameProcess
     public ClientProcess(ClientProcessOptions options)
     {
         Check.Null(options);
+        Check.Argument(!options.Servers.IsEmpty, options);
 
         Options = options;
     }
@@ -48,21 +49,20 @@ public sealed class ClientProcess : GameProcess
     protected override (nuint Id, ReadOnlyMemory<byte> Payload)? HandleWindowMessage(
         nuint id, scoped ReadOnlySpan<byte> payload)
     {
-        var opts = Options;
         var utf16 = Encoding.Unicode;
 
         (nuint, ReadOnlyMemory<byte>) HandleAccountNameRequest()
         {
             AccountNameRequested?.Invoke();
 
-            return (0x2, Encoding.Unicode.GetBytes(opts.AccountName));
+            return (0x2, Encoding.Unicode.GetBytes(Options.AccountName));
         }
 
         (nuint, ReadOnlyMemory<byte>) HandleSessionTicketRequest()
         {
             SessionTicketRequested?.Invoke();
 
-            return (0x4, Encoding.UTF8.GetBytes(opts.SessionTicket));
+            return (0x4, Encoding.UTF8.GetBytes(Options.SessionTicket));
         }
 
         (nuint, ReadOnlyMemory<byte>) HandleServerListRequest(scoped ReadOnlySpan<byte> payload)
@@ -73,11 +73,11 @@ public sealed class ClientProcess : GameProcess
 
             var csl = new ProtoBufServerList
             {
-                LastServerId = (uint)opts.LastServerId,
+                LastServerId = (uint)Options.LastServerId,
                 SortCriterion = BinaryPrimitives.ReadUInt32LittleEndian(payload),
             };
 
-            foreach (var srv in opts.Servers.Values.OrderBy(s => s.Id))
+            foreach (var srv in Options.Servers.Values.OrderBy(s => s.Id))
                 csl.Servers.Add(new()
                 {
                     Id = (uint)srv.Id,

@@ -54,18 +54,6 @@ internal sealed class ClientCommand : CancellableAsyncCommand<ClientCommand.Clie
         dynamic expando, ClientCommandSettings settings, ProgressContext progress, CancellationToken cancellationToken)
     {
         var srvName = $"{settings.ServerHost}:{settings.ServerPort}";
-        var srv = new ClientServerInfo(
-            42,
-            string.Empty,
-            srvName,
-            srvName,
-            string.Empty,
-            string.Empty,
-            true,
-            string.Empty,
-            settings.ServerHost,
-            null,
-            settings.ServerPort);
 
         Log.WriteLine($"Running client and connecting to [cyan]{srvName}[/]...");
 
@@ -75,9 +63,21 @@ internal sealed class ClientCommand : CancellableAsyncCommand<ClientCommand.Clie
             increment =>
             {
                 var process = new ClientProcess(
-                    new ClientProcessOptions(
-                        settings.Executable, settings.AccountName, settings.SessionTicket, new[] { srv })
+                    new ClientProcessOptions(settings.Executable, settings.AccountName, settings.SessionTicket)
                         .WithLanguage(settings.Language)
+                        .AddServer(
+                            new(
+                                42,
+                                string.Empty,
+                                srvName,
+                                srvName,
+                                string.Empty,
+                                string.Empty,
+                                true,
+                                string.Empty,
+                                settings.ServerHost,
+                                null,
+                                settings.ServerPort))
                         .WithLastServerId(42));
 
                 var patches = new List<(GamePatch, Task)>();
