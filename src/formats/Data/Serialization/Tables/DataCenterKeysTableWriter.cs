@@ -36,7 +36,7 @@ sealed class DataCenterKeysTableWriter
                 return (ushort)(value != null ? _names.AddString(value).Index : 0);
             }
 
-            _keys.Elements.Add(new DataCenterRawKeys
+            _keys.Elements.Add(new()
             {
                 NameIndex1 = GetIndex(attributeName1),
                 NameIndex2 = GetIndex(attributeName2),

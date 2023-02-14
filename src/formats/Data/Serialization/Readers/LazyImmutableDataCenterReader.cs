@@ -32,7 +32,7 @@ sealed class LazyImmutableDataCenterReader : DataCenterReader
             {
                 LazyImmutableDataCenterNode node = null!;
 
-                return node = new LazyImmutableDataCenterNode(
+                return node = new(
                     parent,
                     name,
                     value,
@@ -44,7 +44,7 @@ sealed class LazyImmutableDataCenterReader : DataCenterReader
 
                         if (attrCount != 0)
                         {
-                            attributes = new OrderedDictionary<string, DataCenterValue>(attrCount);
+                            attributes = new(attrCount);
 
                             ReadAttributes(raw, attributes, static (attributes, name, value) =>
                             {
@@ -62,7 +62,7 @@ sealed class LazyImmutableDataCenterReader : DataCenterReader
 
                         if (raw.ChildCount != 0)
                         {
-                            children = new List<DataCenterNode>(raw.ChildCount);
+                            children = new(raw.ChildCount);
 
                             ReadChildren(raw, node, children, static (children, node) => children.Add(node), default);
                         }

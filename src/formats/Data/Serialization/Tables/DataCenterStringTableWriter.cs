@@ -67,7 +67,7 @@ sealed class DataCenterStringTableWriter
                 if (segIdx > max.SegmentIndex)
                     throw new InvalidOperationException($"String table is full ({segIdx} segments).");
 
-                segment = new DataCenterRegion<DataCenterRawChar>();
+                segment = new();
 
                 _data.Segments.Add(segment);
             }
@@ -90,7 +90,7 @@ sealed class DataCenterStringTableWriter
 
             var hash = DataCenterHash.ComputeStringHash(value);
 
-            raw = new DataCenterRawString
+            raw = new()
             {
                 Hash = hash,
                 Length = value.Length + 1,

@@ -5,7 +5,7 @@ namespace Vezel.Novadrop.Data.Serialization.Regions;
 sealed class DataCenterRegion<T>
     where T : unmanaged, IDataCenterItem
 {
-    public List<T> Elements { get; } = new List<T>(ushort.MaxValue);
+    public List<T> Elements { get; } = new(ushort.MaxValue);
 
     public async ValueTask ReadAsync(bool strict, StreamBinaryReader reader, CancellationToken cancellationToken)
     {

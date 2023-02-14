@@ -7,7 +7,7 @@ sealed class DataCenterSimpleRegion<T>
 {
     readonly bool _offByOne;
 
-    public List<T> Elements { get; } = new List<T>(ushort.MaxValue);
+    public List<T> Elements { get; } = new(ushort.MaxValue);
 
     public DataCenterSimpleRegion(bool offByOne)
     {

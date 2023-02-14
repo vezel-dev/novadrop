@@ -27,7 +27,7 @@ sealed class TransientDataCenterReader : DataCenterReader
 
         var attrCount = raw.AttributeCount - (value != null ? 1 : 0);
 
-        return node = new TransientDataCenterNode(
+        return node = new(
             parent,
             name,
             value,
@@ -40,7 +40,7 @@ sealed class TransientDataCenterReader : DataCenterReader
 
                 if (node.HasAttributes)
                 {
-                    attributes = new OrderedDictionary<string, DataCenterValue>(attrCount);
+                    attributes = new(attrCount);
 
                     ReadAttributes(raw, attributes, static (attributes, name, value) =>
                     {
@@ -57,7 +57,7 @@ sealed class TransientDataCenterReader : DataCenterReader
 
                 if (node.HasChildren)
                 {
-                    children = new List<DataCenterNode>(raw.ChildCount);
+                    children = new(raw.ChildCount);
 
                     ReadChildren(raw, node, children, static (children, node) => children.Add(node), default);
                 }
