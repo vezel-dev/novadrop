@@ -5,7 +5,7 @@ namespace Vezel.Novadrop.Data.Serialization.Regions;
 internal sealed class DataCenterSegmentedRegion<T>
     where T : unmanaged, IDataCenterItem
 {
-    public List<DataCenterRegion<T>> Segments { get; } = new List<DataCenterRegion<T>>(ushort.MaxValue);
+    public List<DataCenterRegion<T>> Segments { get; } = new(ushort.MaxValue);
 
     public async ValueTask ReadAsync(bool strict, StreamBinaryReader reader, CancellationToken cancellationToken)
     {

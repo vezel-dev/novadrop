@@ -63,7 +63,7 @@ internal sealed class DataCenterWriter
 
                 Check.Operation(segIdx <= max.SegmentIndex, $"{description} region is full ({segIdx} segments).");
 
-                segment = new DataCenterRegion<T>();
+                segment = new();
 
                 region.Segments.Add(segment);
             }

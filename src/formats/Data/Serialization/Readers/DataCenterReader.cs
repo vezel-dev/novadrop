@@ -69,8 +69,7 @@ internal abstract class DataCenterReader
 
         for (var i = 0; i < raw.ChildCount; i++)
         {
-            var child = ResolveNode(
-                new DataCenterAddress(addr.SegmentIndex, (ushort)(addr.ElementIndex + i)), parent, cancellationToken);
+            var child = ResolveNode(new(addr.SegmentIndex, (ushort)(addr.ElementIndex + i)), parent, cancellationToken);
 
             // Discard empty nodes.
             if (child != null)

@@ -34,7 +34,7 @@ internal sealed class EagerImmutableDataCenterReader : DataCenterReader
 
         if (attrCount != 0)
         {
-            attributes = new OrderedDictionary<string, DataCenterValue>(attrCount);
+            attributes = new(attrCount);
 
             ReadAttributes(
                 raw,
@@ -48,7 +48,7 @@ internal sealed class EagerImmutableDataCenterReader : DataCenterReader
 
         if (raw.ChildCount != 0)
         {
-            children = new List<DataCenterNode>(raw.ChildCount);
+            children = new(raw.ChildCount);
 
             ReadChildren(raw, node, children, static (children, node) => children.Add(node), cancellationToken);
         }

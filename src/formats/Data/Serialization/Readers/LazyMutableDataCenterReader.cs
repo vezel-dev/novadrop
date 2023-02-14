@@ -21,7 +21,7 @@ internal sealed class LazyMutableDataCenterReader : DataCenterReader
     {
         LazyMutableDataCenterNode node = null!;
 
-        return node = new LazyMutableDataCenterNode(
+        return node = new(
             parent,
             name,
             value,
