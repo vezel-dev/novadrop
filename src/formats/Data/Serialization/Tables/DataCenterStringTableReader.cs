@@ -69,8 +69,7 @@ internal sealed class DataCenterStringTableReader
                     var realAddr = _addresses.Elements[index];
 
                     Check.Data(
-                        (DataCenterAddress)addr == realAddr,
-                        $"String address {addr} does not match expected address {realAddr}.");
+                        addr == realAddr, $"String address {addr} does not match expected address {realAddr}.");
 
                     var hash = str.Hash;
                     var realHash = DataCenterHash.ComputeStringHash(value);
