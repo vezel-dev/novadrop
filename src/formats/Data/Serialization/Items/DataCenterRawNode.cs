@@ -1,7 +1,7 @@
 namespace Vezel.Novadrop.Data.Serialization.Items;
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
-struct DataCenterRawNode : IDataCenterItem
+struct DataCenterRawNode : IDataCenterItem, IEquatable<DataCenterRawNode>
 {
     public ushort NameIndex;
 
@@ -29,5 +29,30 @@ struct DataCenterRawNode : IDataCenterItem
         ChildAddress.ReverseEndianness();
 
         // Note: Padding1 and Padding2 can be safely ignored.
+    }
+
+    public static bool operator ==(DataCenterRawNode left, DataCenterRawNode right) => left.Equals(right);
+
+    public static bool operator !=(DataCenterRawNode left, DataCenterRawNode right) => !left.Equals(right);
+
+    public bool Equals(DataCenterRawNode other)
+    {
+        return (NameIndex, KeysInfo, AttributeCount, ChildCount, AttributeAddress, ChildAddress) ==
+            (other.NameIndex,
+             other.KeysInfo,
+             other.AttributeCount,
+             other.ChildCount,
+             other.AttributeAddress,
+             other.ChildAddress);
+    }
+
+    public override bool Equals([NotNullWhen(true)] object? obj)
+    {
+        return obj is DataCenterRawNode n && Equals(n);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(NameIndex, KeysInfo, AttributeCount, ChildCount, AttributeAddress, ChildAddress);
     }
 }

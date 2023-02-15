@@ -70,7 +70,7 @@ sealed class DataCenterStringTableReader
                 {
                     var realAddr = _addresses.Elements[index];
 
-                    if ((DataCenterAddress)addr != realAddr)
+                    if (addr != realAddr)
                         throw new InvalidDataException(
                             $"String address {addr} does not match expected address {realAddr}.");
 
