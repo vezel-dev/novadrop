@@ -17,6 +17,9 @@ app.Configure(cfg =>
         .AddCommand<RepackCommand>("repack")
         .WithDescription("Repack the contents of a data center file.");
     _ = cfg
+        .AddCommand<SchemaCommand>("schema")
+        .WithDescription("Infer schemas from a data center file.");
+    _ = cfg
         .AddCommand<UnpackCommand>("unpack")
         .WithDescription("Unpack the contents of a data center file to a directory.");
     _ = cfg
