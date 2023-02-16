@@ -7,6 +7,11 @@ static class Log
         AnsiConsole.WriteLine();
     }
 
+    public static void WriteLine(string value)
+    {
+        AnsiConsole.MarkupLine(CultureInfo.CurrentCulture, value);
+    }
+
     public static void WriteLine(FormattableString value)
     {
         AnsiConsole.MarkupLineInterpolated(CultureInfo.CurrentCulture, value);
