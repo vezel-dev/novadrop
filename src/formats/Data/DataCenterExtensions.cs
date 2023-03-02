@@ -6,26 +6,43 @@ public static class DataCenterExtensions
     {
         Check.Null(node);
 
+        return node.Parent?.AncestorsAndSelf() ?? Array.Empty<DataCenterNode>();
+    }
+
+    public static IEnumerable<DataCenterNode> AncestorsAndSelf(this DataCenterNode node)
+    {
+        Check.Null(node);
+
         var current = node;
 
-        while ((current = current.Parent) != null)
+        do
+        {
             yield return current;
+
+            current = current.Parent;
+        }
+        while (current != null);
     }
 
     public static IEnumerable<DataCenterNode> Siblings(this DataCenterNode node)
     {
+        return node.SiblingsAndSelf().Where(n => n != node);
+    }
+
+    public static IEnumerable<DataCenterNode> SiblingsAndSelf(this DataCenterNode node)
+    {
         Check.Null(node);
 
-        var parent = node.Parent;
-
-        if (parent == null)
-            yield break;
-
-        foreach (var elem in parent.Children.Where(x => x != node))
-            yield return elem;
+        foreach (var sibling in node.Parent?.Children ?? Array.Empty<DataCenterNode>())
+            yield return sibling;
     }
 
     public static IEnumerable<DataCenterNode> Descendants(this DataCenterNode node)
+    {
+        return node.DescendantsAndSelf().Where(n => n != node);
+    }
+
+    public static IEnumerable<DataCenterNode> DescendantsAndSelf(this DataCenterNode node)
     {
         Check.Null(node);
 
@@ -37,8 +54,7 @@ public static class DataCenterExtensions
         {
             var current = work.Pop();
 
-            if (current != node)
-                yield return current;
+            yield return current;
 
             if (current.HasChildren)
                 foreach (var child in current.Children.Reverse())
