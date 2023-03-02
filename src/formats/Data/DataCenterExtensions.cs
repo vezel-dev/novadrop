@@ -29,24 +29,22 @@ public static class DataCenterExtensions
     {
         Check.Null(node);
 
-        var work = new Queue<DataCenterNode>();
+        var work = new Stack<DataCenterNode>();
 
-        work.Enqueue(node);
+        work.Push(node);
 
-        while (work.Count != 0)
+        do
         {
-            var current = work.Dequeue();
+            var current = work.Pop();
 
-            if (!current.HasChildren)
-                continue;
+            if (current != node)
+                yield return current;
 
-            foreach (var elem in current.Children)
-            {
-                yield return elem;
-
-                work.Enqueue(elem);
-            }
+            if (current.HasChildren)
+                foreach (var child in current.Children.Reverse())
+                    work.Push(child);
         }
+        while (work.Count != 0);
     }
 
     public static int ToInt32(this DataCenterValue value)
