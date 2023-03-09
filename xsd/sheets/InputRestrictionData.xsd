@@ -48,7 +48,7 @@
 
     <xsd:complexType name="InputRestrictionData_RegularExpressions_RegularExpression">
         <xsd:sequence>
-            <xsd:element name="Check" type="InputRestrictionData_RegularExpressions_RegularExpression_Check" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Check" type="InputRestrictionData_RegularExpressions_RegularExpression_Check" maxOccurs="unbounded" />
         </xsd:sequence>
 
         <xsd:attribute name="name" type="xsd:string" use="required" />

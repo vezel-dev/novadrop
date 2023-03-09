@@ -13,7 +13,7 @@
 
     <xsd:complexType name="TaskDef_TaskClass">
         <xsd:sequence>
-            <xsd:element name="Param" type="TaskDef_TaskClass_Param" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Param" type="TaskDef_TaskClass_Param" maxOccurs="unbounded" />
         </xsd:sequence>
 
         <xsd:attribute name="description" type="xsd:string" use="required" />
