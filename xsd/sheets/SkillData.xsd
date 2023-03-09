@@ -798,7 +798,7 @@
         <xsd:sequence>
             <xsd:element name="Direction" type="SkillData_Skill_Property_Direction" minOccurs="0" />
             <xsd:element name="ExplodeProjectileWhenHit" type="SkillData_Skill_Property_ExplodeProjectileWhenHit" minOccurs="0" />
-            <xsd:element name="Property" type="SkillData_Skill_Property" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Property" type="SkillData_Skill_Property" minOccurs="0" />
         </xsd:sequence>
 
         <xsd:attribute name="adjustLoopRepeat" type="xsd:boolean" />

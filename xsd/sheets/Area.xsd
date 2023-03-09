@@ -27,7 +27,7 @@
 
     <xsd:complexType name="Area_FlySection">
         <xsd:sequence>
-            <xsd:element name="Fence" type="Area_FlySection_Fence" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Fence" type="Area_FlySection_Fence" maxOccurs="unbounded" />
             <xsd:element name="FlyLicense" type="Area_FlySection_FlyLicense" minOccurs="0" />
             <xsd:element name="FlySection" type="Area_FlySection" minOccurs="0" maxOccurs="unbounded" />
         </xsd:sequence>
@@ -61,7 +61,7 @@
 
     <xsd:complexType name="Area_Section">
         <xsd:sequence>
-            <xsd:element name="Fence" type="Area_Section_Fence" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="Fence" type="Area_Section_Fence" maxOccurs="unbounded" />
             <xsd:element name="Section" type="Area_Section" minOccurs="0" maxOccurs="unbounded" />
         </xsd:sequence>
 
