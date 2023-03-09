@@ -41,7 +41,7 @@ sealed class DataCenterWriter
     {
         static int GetCollectionHashCode<T>(List<T> collection)
         {
-            var hash = new HashCode();
+            var hash = default(HashCode);
 
             foreach (var item in collection)
                 hash.Add(item);
