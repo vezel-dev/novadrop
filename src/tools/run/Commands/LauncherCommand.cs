@@ -40,7 +40,7 @@ sealed class LauncherCommand : CancellableAsyncCommand<LauncherCommand.LauncherC
         ProgressContext progress,
         CancellationToken cancellationToken)
     {
-        Log.WriteLine($"Running launcher and connecting to [cyan]{settings.ServerListUri}[/]...");
+        Log.MarkupLineInterpolated($"Running launcher and connecting to [cyan]{settings.ServerListUri}[/]...");
 
         return progress.RunTaskAsync(
             "Connecting to arbiter server",

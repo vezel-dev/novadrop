@@ -29,7 +29,7 @@ sealed class ValidateCommand : CancellableAsyncCommand<ValidateCommand.ValidateC
         ProgressContext progress,
         CancellationToken cancellationToken)
     {
-        Log.WriteLine($"Validating data sheets in [cyan]{settings.Input}[/]...");
+        Log.MarkupLineInterpolated($"Validating data sheets in [cyan]{settings.Input}[/]...");
 
         var files = await progress.RunTaskAsync(
             "Gather data sheet files",

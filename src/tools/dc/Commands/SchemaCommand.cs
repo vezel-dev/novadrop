@@ -64,9 +64,8 @@ should generate schemas with both the conservative and aggressive strategies, co
 the resulting schemas, and construct a more accurate set of schemas using good human
 judgement.[/]".ReplaceLineEndings());
         Log.WriteLine();
-        Log.WriteLine(
-            $"Inferring data sheet schemas of [cyan]{settings.Input}[/] to [cyan]{settings.Output}[/] " +
-            $"with strategy [cyan]{settings.Strategy}[/]...");
+        Log.MarkupLineInterpolated(
+            $"Inferring data sheet schemas of [cyan]{settings.Input}[/] to [cyan]{settings.Output}[/] with strategy [cyan]{settings.Strategy}[/]...");
 
         var root = await progress.RunTaskAsync(
             "Load data center",

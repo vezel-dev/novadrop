@@ -49,7 +49,7 @@ sealed class PackCommand : CancellableAsyncCommand<PackCommand.PackCommandSettin
     protected override async Task<int> ExecuteAsync(
         dynamic expando, PackCommandSettings settings, ProgressContext progress, CancellationToken cancellationToken)
     {
-        Log.WriteLine($"Packing [cyan]{settings.Input}[/] to [cyan]{settings.Output}[/]...");
+        Log.MarkupLineInterpolated($"Packing [cyan]{settings.Input}[/] to [cyan]{settings.Output}[/]...");
 
         var files = await progress.RunTaskAsync(
             "Gather data sheet files",

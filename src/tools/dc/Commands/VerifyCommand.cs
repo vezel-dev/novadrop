@@ -33,7 +33,7 @@ sealed class VerifyCommand : CancellableAsyncCommand<VerifyCommand.VerifyCommand
     protected override async Task<int> ExecuteAsync(
         dynamic expando, VerifyCommandSettings settings, ProgressContext progress, CancellationToken cancellationToken)
     {
-        Log.WriteLine($"Verifying [cyan]{settings.Input}[/]...");
+        Log.MarkupLineInterpolated($"Verifying [cyan]{settings.Input}[/]...");
 
         await progress.RunTaskAsync(
             "Compute data center hashes",
@@ -106,13 +106,13 @@ sealed class VerifyCommand : CancellableAsyncCommand<VerifyCommand.VerifyCommand
     protected override Task PostExecuteAsync(
         dynamic expando, VerifyCommandSettings settings, CancellationToken cancellationToken)
     {
-        Log.WriteLine($"SHA-1: [blue]{expando.SHA1}[/]");
-        Log.WriteLine($"SHA-256: [blue]{expando.SHA256}[/]");
-        Log.WriteLine($"SHA-384: [blue]{expando.SHA384}[/]");
-        Log.WriteLine($"SHA-512: [blue]{expando.SHA512}[/]");
+        Log.MarkupLineInterpolated($"SHA-1: [blue]{expando.SHA1}[/]");
+        Log.MarkupLineInterpolated($"SHA-256: [blue]{expando.SHA256}[/]");
+        Log.MarkupLineInterpolated($"SHA-384: [blue]{expando.SHA384}[/]");
+        Log.MarkupLineInterpolated($"SHA-512: [blue]{expando.SHA512}[/]");
         Log.WriteLine();
-        Log.WriteLine($"Nodes: [blue]{expando.Nodes}[/]");
-        Log.WriteLine($"Attributes: [blue]{expando.Attributes}[/]");
+        Log.MarkupLineInterpolated($"Nodes: [blue]{expando.Nodes}[/]");
+        Log.MarkupLineInterpolated($"Attributes: [blue]{expando.Attributes}[/]");
 
         return Task.CompletedTask;
     }

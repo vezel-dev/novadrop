@@ -67,7 +67,7 @@ sealed class ClientCommand : CancellableAsyncCommand<ClientCommand.ClientCommand
             null,
             settings.ServerPort);
 
-        Log.WriteLine($"Running client and connecting to [cyan]{srvName}[/]...");
+        Log.MarkupLineInterpolated($"Running client and connecting to [cyan]{srvName}[/]...");
 
         return progress.RunTaskAsync(
             "Connecting to arbiter server",

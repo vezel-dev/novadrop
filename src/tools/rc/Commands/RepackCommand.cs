@@ -37,7 +37,7 @@ sealed class RepackCommand : CancellableAsyncCommand<RepackCommand.RepackCommand
     protected override async Task<int> ExecuteAsync(
         dynamic expando, RepackCommandSettings settings, ProgressContext progress, CancellationToken cancellationToken)
     {
-        Log.WriteLine($"Repacking [cyan]{settings.Input}[/] to [cyan]{settings.Output}[/]...");
+        Log.MarkupLineInterpolated($"Repacking [cyan]{settings.Input}[/] to [cyan]{settings.Output}[/]...");
 
         var rc = await progress.RunTaskAsync(
             "Load resource container",
