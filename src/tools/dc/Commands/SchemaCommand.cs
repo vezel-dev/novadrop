@@ -66,9 +66,8 @@ internal sealed class SchemaCommand : CancellableAsyncCommand<SchemaCommand.Sche
             judgement.[/]
             """.ReplaceLineEndings());
         Log.WriteLine();
-        Log.WriteLine(
-            $"Inferring data sheet schemas of [cyan]{settings.Input}[/] to [cyan]{settings.Output}[/] " +
-            $"with strategy [cyan]{settings.Strategy}[/]...");
+        Log.MarkupLineInterpolated(
+            $"Inferring data sheet schemas of [cyan]{settings.Input}[/] to [cyan]{settings.Output}[/] with strategy [cyan]{settings.Strategy}[/]...");
 
         var root = await progress.RunTaskAsync(
             "Load data center",

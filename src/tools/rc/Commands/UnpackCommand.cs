@@ -32,7 +32,7 @@ internal sealed class UnpackCommand : CancellableAsyncCommand<UnpackCommand.Unpa
     protected override async Task<int> ExecuteAsync(
         dynamic expando, UnpackCommandSettings settings, ProgressContext progress, CancellationToken cancellationToken)
     {
-        Log.WriteLine($"Unpacking [cyan]{settings.Input}[/] to [cyan]{settings.Output}[/]...");
+        Log.MarkupLineInterpolated($"Unpacking [cyan]{settings.Input}[/] to [cyan]{settings.Output}[/]...");
 
         var rc = await progress.RunTaskAsync(
             "Load resource container",

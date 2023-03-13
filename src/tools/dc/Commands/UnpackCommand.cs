@@ -45,7 +45,7 @@ internal sealed class UnpackCommand : CancellableAsyncCommand<UnpackCommand.Unpa
     protected override async Task<int> ExecuteAsync(
         dynamic expando, UnpackCommandSettings settings, ProgressContext progress, CancellationToken cancellationToken)
     {
-        Log.WriteLine($"Unpacking [cyan]{settings.Input}[/] to [cyan]{settings.Output}[/]...");
+        Log.MarkupLineInterpolated($"Unpacking [cyan]{settings.Input}[/] to [cyan]{settings.Output}[/]...");
 
         var root = await progress.RunTaskAsync(
             "Load data center",
@@ -185,7 +185,7 @@ internal sealed class UnpackCommand : CancellableAsyncCommand<UnpackCommand.Unpa
         dynamic expando, UnpackCommandSettings settings, CancellationToken cancellationToken)
     {
         foreach (var name in (List<string>)expando.Missing)
-            Log.WriteLine($"[yellow]Data sheet [cyan]{name}[/] does not have a known schema.[/]");
+            Log.MarkupLineInterpolated($"[yellow]Data sheet [cyan]{name}[/] does not have a known schema.[/]");
 
         return Task.CompletedTask;
     }
