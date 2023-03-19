@@ -74,6 +74,7 @@ internal sealed class StreamBinaryWriter
         return WriteUInt64Async(Unsafe.As<double, ulong>(ref value), cancellationToken);
     }
 
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
     public async ValueTask WriteStringAsync(string value, CancellationToken cancellationToken)
     {
         foreach (var c in value)

@@ -13,6 +13,7 @@ internal sealed class StreamBinaryReader
         _stream = stream;
     }
 
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
     public async ValueTask ReadAsync(Memory<byte> buffer, CancellationToken cancellationToken)
     {
         await _stream.ReadExactlyAsync(buffer, cancellationToken).ConfigureAwait(false);
@@ -20,6 +21,7 @@ internal sealed class StreamBinaryReader
         Progress += buffer.Length;
     }
 
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder<>))]
     public async ValueTask<byte> ReadByteAsync(CancellationToken cancellationToken)
     {
         await ReadAsync(_buffer[..sizeof(byte)], cancellationToken).ConfigureAwait(false);
@@ -27,11 +29,13 @@ internal sealed class StreamBinaryReader
         return _buffer.Span[0];
     }
 
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder<>))]
     public async ValueTask<sbyte> ReadSByteAsync(CancellationToken cancellationToken)
     {
         return (sbyte)await ReadByteAsync(cancellationToken).ConfigureAwait(false);
     }
 
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder<>))]
     public async ValueTask<ushort> ReadUInt16Async(CancellationToken cancellationToken)
     {
         await ReadAsync(_buffer[..sizeof(ushort)], cancellationToken).ConfigureAwait(false);
@@ -39,11 +43,13 @@ internal sealed class StreamBinaryReader
         return BinaryPrimitives.ReadUInt16LittleEndian(_buffer.Span);
     }
 
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder<>))]
     public async ValueTask<short> ReadInt16Async(CancellationToken cancellationToken)
     {
         return (short)await ReadUInt16Async(cancellationToken).ConfigureAwait(false);
     }
 
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder<>))]
     public async ValueTask<uint> ReadUInt32Async(CancellationToken cancellationToken)
     {
         await ReadAsync(_buffer[..sizeof(uint)], cancellationToken).ConfigureAwait(false);
@@ -51,11 +57,13 @@ internal sealed class StreamBinaryReader
         return BinaryPrimitives.ReadUInt32LittleEndian(_buffer.Span);
     }
 
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder<>))]
     public async ValueTask<int> ReadInt32Async(CancellationToken cancellationToken)
     {
         return (int)await ReadUInt32Async(cancellationToken).ConfigureAwait(false);
     }
 
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder<>))]
     public async ValueTask<ulong> ReadUInt64Async(CancellationToken cancellationToken)
     {
         await ReadAsync(_buffer[..sizeof(ulong)], cancellationToken).ConfigureAwait(false);
@@ -63,11 +71,13 @@ internal sealed class StreamBinaryReader
         return BinaryPrimitives.ReadUInt64LittleEndian(_buffer.Span);
     }
 
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder<>))]
     public async ValueTask<long> ReadInt64Async(CancellationToken cancellationToken)
     {
         return (long)await ReadUInt64Async(cancellationToken).ConfigureAwait(false);
     }
 
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder<>))]
     public async ValueTask<float> ReadSingleAsync(CancellationToken cancellationToken)
     {
         var value = await ReadUInt32Async(cancellationToken).ConfigureAwait(false);
@@ -75,6 +85,7 @@ internal sealed class StreamBinaryReader
         return Unsafe.As<uint, float>(ref value);
     }
 
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder<>))]
     public async ValueTask<double> ReadDoubleAsync(CancellationToken cancellationToken)
     {
         var value = await ReadUInt64Async(cancellationToken).ConfigureAwait(false);
@@ -82,6 +93,7 @@ internal sealed class StreamBinaryReader
         return Unsafe.As<ulong, double>(ref value);
     }
 
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder<>))]
     public async ValueTask<string> ReadStringAsync(CancellationToken cancellationToken)
     {
         var sb = new StringBuilder(1024);

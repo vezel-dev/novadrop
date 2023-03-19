@@ -16,6 +16,7 @@ internal sealed class DataCenterKeysTableReader
         _names = names;
     }
 
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
     public async ValueTask ReadAsync(StreamBinaryReader reader, CancellationToken cancellationToken)
     {
         await _keys.ReadAsync(reader, cancellationToken).ConfigureAwait(false);

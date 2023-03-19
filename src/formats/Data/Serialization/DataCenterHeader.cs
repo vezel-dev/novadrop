@@ -22,6 +22,7 @@ internal sealed class DataCenterHeader
 
     public int Unknown5 { get; private set; }
 
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
     public async ValueTask ReadAsync(bool strict, StreamBinaryReader reader, CancellationToken cancellationToken)
     {
         Version = await reader.ReadInt32Async(cancellationToken).ConfigureAwait(false);
@@ -42,6 +43,7 @@ internal sealed class DataCenterHeader
         Check.Data(!strict || tup == (0, 0, 0, 0, 0), $"Unexpected data center type tree values {tup}.");
     }
 
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
     public async ValueTask WriteAsync(StreamBinaryWriter writer, CancellationToken cancellationToken)
     {
         await writer.WriteInt32Async(KnownVersion, cancellationToken).ConfigureAwait(false);

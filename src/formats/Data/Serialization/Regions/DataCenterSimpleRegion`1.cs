@@ -14,6 +14,7 @@ internal sealed class DataCenterSimpleRegion<T>
         _offByOne = offByOne;
     }
 
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
     public async ValueTask ReadAsync(StreamBinaryReader reader, CancellationToken cancellationToken)
     {
         var count = await reader.ReadInt32Async(cancellationToken).ConfigureAwait(false);
@@ -51,6 +52,7 @@ internal sealed class DataCenterSimpleRegion<T>
         }
     }
 
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
     public async ValueTask WriteAsync(StreamBinaryWriter writer, CancellationToken cancellationToken)
     {
         var count = Elements.Count;

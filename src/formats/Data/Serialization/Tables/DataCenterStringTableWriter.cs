@@ -21,6 +21,7 @@ internal sealed class DataCenterStringTableWriter
         _limit = limit;
     }
 
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
     public async ValueTask WriteAsync(StreamBinaryWriter writer, CancellationToken cancellationToken)
     {
         await _data.WriteAsync(writer, cancellationToken).ConfigureAwait(false);

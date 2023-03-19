@@ -20,6 +20,7 @@ internal sealed class DataCenterStringTableReader
         _strings = new(count);
     }
 
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
     public async ValueTask ReadAsync(bool strict, StreamBinaryReader reader, CancellationToken cancellationToken)
     {
         await _data.ReadAsync(strict, reader, cancellationToken).ConfigureAwait(false);

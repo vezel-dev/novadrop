@@ -17,12 +17,14 @@ internal sealed class DataCenterSegmentedSimpleRegion<T>
         Segments = segs;
     }
 
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
     public async ValueTask ReadAsync(StreamBinaryReader reader, CancellationToken cancellationToken)
     {
         foreach (var region in Segments)
             await region.ReadAsync(reader, cancellationToken).ConfigureAwait(false);
     }
 
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
     public async ValueTask WriteAsync(StreamBinaryWriter writer, CancellationToken cancellationToken)
     {
         foreach (var region in Segments)
