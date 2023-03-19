@@ -154,6 +154,7 @@ internal sealed class SchemaCommand : CancellableAsyncCommand<SchemaCommand.Sche
     {
         var writtenTypes = new Dictionary<DataCenterNodeSchema, string>();
 
+        [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
         async ValueTask WriteAttributesAsync(XmlWriter xmlWriter, DataCenterNodeSchema nodeSchema)
         {
             if (nodeSchema.Attributes.Count == 0)
@@ -182,6 +183,7 @@ internal sealed class SchemaCommand : CancellableAsyncCommand<SchemaCommand.Sche
             }
         }
 
+        [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
         async ValueTask WriteComplexTypeAsync(XmlWriter xmlWriter, string typeName, DataCenterNodeSchema nodeSchema)
         {
             cancellationToken.ThrowIfCancellationRequested();
