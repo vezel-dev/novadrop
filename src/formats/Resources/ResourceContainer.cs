@@ -39,18 +39,18 @@ public sealed class ResourceContainer
         return new();
     }
 
-    public static async Task<ResourceContainer> LoadAsync(
+    public static Task<ResourceContainer> LoadAsync(
         Stream stream, ResourceContainerLoadOptions options, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(stream);
         _ = stream is { CanRead: true, CanSeek: true } ? true : throw new ArgumentException(null, nameof(stream));
         ArgumentNullException.ThrowIfNull(options);
 
-        var rc = new ResourceContainer();
-
-        await Task.Run(
+        return Task.Run(
             async () =>
             {
+                var rc = new ResourceContainer();
+
                 stream.Position = stream.Length - FooterLength;
 
                 var footerReader = new StreamBinaryReader(stream);
@@ -119,10 +119,10 @@ public sealed class ResourceContainer
                 }
 
                 stream.Position = stream.Length;
-            },
-            cancellationToken).ConfigureAwait(false);
 
-        return rc;
+                return rc;
+            },
+            cancellationToken);
     }
 
     public Task SaveAsync(
