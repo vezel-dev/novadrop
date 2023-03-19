@@ -39,18 +39,18 @@ public sealed class ResourceContainer
         return new();
     }
 
-    public static async Task<ResourceContainer> LoadAsync(
+    public static Task<ResourceContainer> LoadAsync(
         Stream stream, ResourceContainerLoadOptions options, CancellationToken cancellationToken = default)
     {
         Check.Null(stream);
         Check.Argument(stream is { CanRead: true, CanSeek: true }, stream);
         Check.Null(options);
 
-        var rc = new ResourceContainer();
-
-        await Task.Run(
+        return Task.Run(
             async () =>
             {
+                var rc = new ResourceContainer();
+
                 stream.Position = stream.Length - FooterLength;
 
                 var footerReader = new StreamBinaryReader(stream);
@@ -109,14 +109,15 @@ public sealed class ResourceContainer
                         Data = data,
                     };
 
-                    Check.Data(rc._entries.TryAdd(name, entry), $"Entry named '{name}' was already recorded earlier.");
+                    Check.Data(
+                        rc._entries.TryAdd(name, entry), $"Entry named '{name}' was already recorded earlier.");
                 }
 
                 stream.Position = stream.Length;
-            },
-            cancellationToken).ConfigureAwait(false);
 
-        return rc;
+                return rc;
+            },
+            cancellationToken);
     }
 
     public Task SaveAsync(

@@ -98,65 +98,71 @@ public readonly struct MemoryWindow : IEquatable<MemoryWindow>, IEqualityOperato
         return SearchAsync(pattern, -1, cancellationToken);
     }
 
-    public async Task<IEnumerable<nuint>> SearchAsync(
+    public Task<IEnumerable<nuint>> SearchAsync(
         ReadOnlyMemory<byte?> pattern, int maxDegreeOfParallelism, CancellationToken cancellationToken = default)
     {
         Check.Argument(!pattern.IsEmpty, pattern);
         Check.Range(maxDegreeOfParallelism is -1 or > 0, maxDegreeOfParallelism);
 
         var window = this;
-        var length = pattern.Length;
 
-        IEnumerable<long> EnumerateOffsets()
+        return SearchAsync();
+
+        async Task<IEnumerable<nuint>> SearchAsync()
         {
-            for (nuint i = 0; window.ContainsRange(i, (nuint)length); i++)
-                yield return (long)i;
-        }
+            var length = pattern.Length;
 
-        var offsets = new List<nuint>();
+            IEnumerable<long> EnumerateOffsets()
+            {
+                for (nuint i = 0; window.ContainsRange(i, (nuint)length); i++)
+                    yield return (long)i;
+            }
 
-        await Parallel
-            .ForEachAsync(
-                EnumerateOffsets(),
-                new ParallelOptions
-                {
-                    MaxDegreeOfParallelism = maxDegreeOfParallelism,
-                    CancellationToken = cancellationToken,
-                },
-                (i, ct) =>
-                {
-                    ct.ThrowIfCancellationRequested();
+            var offsets = new List<nuint>();
 
-                    var offset = (nuint)i;
-                    var candidateSpan = length <= 256 ? stackalloc byte[length] : new byte[length];
-
-                    if (!window.TryRead(offset, candidateSpan))
-                        return default;
-
-                    var patternSpan = pattern.Span;
-                    var match = true;
-
-                    for (var j = 0; j < length; j++)
+            await Parallel
+                .ForEachAsync(
+                    EnumerateOffsets(),
+                    new ParallelOptions
                     {
-                        var b = Unsafe.Add(ref MemoryMarshal.GetReference(patternSpan), j);
+                        MaxDegreeOfParallelism = maxDegreeOfParallelism,
+                        CancellationToken = cancellationToken,
+                    },
+                    (i, ct) =>
+                    {
+                        ct.ThrowIfCancellationRequested();
 
-                        if (b != null && Unsafe.Add(ref MemoryMarshal.GetReference(candidateSpan), j) != b)
+                        var offset = (nuint)i;
+                        var candidateSpan = length <= 256 ? stackalloc byte[length] : new byte[length];
+
+                        if (!window.TryRead(offset, candidateSpan))
+                            return default;
+
+                        var patternSpan = pattern.Span;
+                        var match = true;
+
+                        for (var j = 0; j < length; j++)
                         {
-                            match = false;
+                            var b = Unsafe.Add(ref MemoryMarshal.GetReference(patternSpan), j);
 
-                            break;
+                            if (b != null && Unsafe.Add(ref MemoryMarshal.GetReference(candidateSpan), j) != b)
+                            {
+                                match = false;
+
+                                break;
+                            }
                         }
-                    }
 
-                    if (match)
-                        lock (offsets)
-                            offsets.Add(offset);
+                        if (match)
+                            lock (offsets)
+                                offsets.Add(offset);
 
-                    return default;
-                })
-            .ConfigureAwait(false);
+                        return default;
+                    })
+                .ConfigureAwait(false);
 
-        return offsets;
+            return offsets;
+        }
     }
 
     public bool TryRead(nuint offset, Span<byte> buffer)
