@@ -74,6 +74,7 @@ sealed class UnpackCommand : CancellableAsyncCommand<UnpackCommand.UnpackCommand
             {
                 output.Create();
 
+                [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
                 async ValueTask WriteSchemaAsync(DirectoryInfo directory, string name)
                 {
                     var xsdName = $"{name}.xsd";
@@ -133,6 +134,7 @@ sealed class UnpackCommand : CancellableAsyncCommand<UnpackCommand.UnpackCommand
 
                         await using (var xmlWriter = XmlWriter.Create(textWriter, xmlSettings))
                         {
+                            [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
                             async ValueTask WriteSheetAsync(DataCenterNode current, bool top)
                             {
                                 var uri = $"https://vezel.dev/novadrop/dc/{node.Name}";

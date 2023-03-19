@@ -152,6 +152,7 @@ judgement.[/]".ReplaceLineEndings());
     {
         var writtenTypes = new Dictionary<DataCenterNodeSchema, string>();
 
+        [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
         async ValueTask WriteAttributesAsync(XmlWriter xmlWriter, DataCenterNodeSchema nodeSchema)
         {
             if (nodeSchema.Attributes.Count == 0)
@@ -180,6 +181,7 @@ judgement.[/]".ReplaceLineEndings());
             }
         }
 
+        [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
         async ValueTask WriteComplexTypeAsync(XmlWriter xmlWriter, string typeName, DataCenterNodeSchema nodeSchema)
         {
             cancellationToken.ThrowIfCancellationRequested();
