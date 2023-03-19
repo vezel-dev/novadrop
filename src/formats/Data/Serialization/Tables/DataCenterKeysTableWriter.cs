@@ -16,6 +16,7 @@ sealed class DataCenterKeysTableWriter
         _names = names;
     }
 
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
     public async ValueTask WriteAsync(StreamBinaryWriter writer, CancellationToken cancellationToken)
     {
         await _keys.WriteAsync(writer, cancellationToken).ConfigureAwait(false);

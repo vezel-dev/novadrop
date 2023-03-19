@@ -7,6 +7,7 @@ sealed class DataCenterSegmentedRegion<T>
 {
     public List<DataCenterRegion<T>> Segments { get; } = new(ushort.MaxValue);
 
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
     public async ValueTask ReadAsync(bool strict, StreamBinaryReader reader, CancellationToken cancellationToken)
     {
         var count = await reader.ReadInt32Async(cancellationToken).ConfigureAwait(false);
@@ -24,6 +25,7 @@ sealed class DataCenterSegmentedRegion<T>
         }
     }
 
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
     public async ValueTask WriteAsync(StreamBinaryWriter writer, CancellationToken cancellationToken)
     {
         await writer.WriteInt32Async(Segments.Count, cancellationToken).ConfigureAwait(false);

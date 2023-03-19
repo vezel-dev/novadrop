@@ -7,6 +7,7 @@ sealed class DataCenterRegion<T>
 {
     public List<T> Elements { get; } = new(ushort.MaxValue);
 
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
     public async ValueTask ReadAsync(bool strict, StreamBinaryReader reader, CancellationToken cancellationToken)
     {
         var capacity = await reader.ReadInt32Async(cancellationToken).ConfigureAwait(false);
@@ -52,6 +53,7 @@ sealed class DataCenterRegion<T>
         }
     }
 
+    [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
     public async ValueTask WriteAsync(StreamBinaryWriter writer, CancellationToken cancellationToken)
     {
         var count = Elements.Count;
