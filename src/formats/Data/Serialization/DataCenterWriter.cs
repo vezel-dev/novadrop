@@ -107,7 +107,7 @@ internal sealed class DataCenterWriter
             ref var ranges = ref CollectionsMarshal.GetValueRefOrAddDefault(
                 cache, GetCollectionHashCode(elements), out _);
 
-            ranges ??= new(1);
+            ranges ??= new();
 
             ranges.Add((address, elements.Count));
         }
