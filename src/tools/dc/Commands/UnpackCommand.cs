@@ -126,15 +126,15 @@ internal sealed class UnpackCommand : CancellableAsyncCommand<UnpackCommand.Unpa
 
                 return Parallel.ForEachAsync(
                     sheets
-                        .GroupBy(n => n.Name, (name, elems) => elems.Select((n, i) => (Node: n, Index: i)))
+                        .GroupBy(n => n.Name, (name, elems) => elems.Select((node, index) => (node, index)))
                         .SelectMany(elems => elems),
                     cancellationToken,
                     async (item, cancellationToken) =>
                     {
-                        var node = item.Node;
+                        var node = item.node;
 
                         await using var textWriter = new StreamWriter(Path.Combine(
-                            output.CreateSubdirectory(node.Name).FullName, $"{node.Name}-{item.Index:d5}.xml"));
+                            output.CreateSubdirectory(node.Name).FullName, $"{node.Name}-{item.index:d5}.xml"));
 
                         await using (var xmlWriter = XmlWriter.Create(textWriter, xmlSettings))
                         {

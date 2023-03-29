@@ -57,7 +57,7 @@ internal sealed class PackCommand : CancellableAsyncCommand<PackCommand.PackComm
                 new DirectoryInfo(settings.Input)
                     .EnumerateFiles("?*-?*.xml", SearchOption.AllDirectories)
                     .OrderBy(f => f.FullName, StringComparer.Ordinal)
-                    .Select((f, i) => (Index: i, File: f))
+                    .Select((file, index) => (index, file))
                     .ToArray()));
 
         var root = DataCenter.Create();
@@ -74,7 +74,7 @@ internal sealed class PackCommand : CancellableAsyncCommand<PackCommand.PackComm
                     .Select(item => Task.Run(
                         async () =>
                         {
-                            var file = item.File;
+                            var file = item.file;
                             var xmlSettings = new XmlReaderSettings
                             {
                                 Async = true,
@@ -92,7 +92,7 @@ internal sealed class PackCommand : CancellableAsyncCommand<PackCommand.PackComm
                             {
                                 handler.HandleException(file, ex);
 
-                                return (item.Index, Node: default(DataCenterNode));
+                                return (item.index, node: default(DataCenterNode));
                             }
 
                             // We need to access type and key info from the schema during tree construction, so we do
@@ -222,7 +222,7 @@ internal sealed class PackCommand : CancellableAsyncCommand<PackCommand.PackComm
 
                             increment();
 
-                            return (Index: item.Index, Node: node);
+                            return (item.index, node);
                         },
                         cancellationToken))));
 
@@ -233,7 +233,7 @@ internal sealed class PackCommand : CancellableAsyncCommand<PackCommand.PackComm
             "Sort root child nodes",
             () =>
             {
-                var lookup = nodes.ToDictionary(item => item.Node!, item => item.Index);
+                var lookup = nodes.ToDictionary(item => item.node!, item => item.index);
 
                 // Since we process data sheets in parallel (i.e. non-deterministically), the data center we now have in
                 // memory will not have the correct order for the immediate children of the root node. We fix that here.
