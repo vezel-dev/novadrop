@@ -28,7 +28,7 @@
         <PackageVersion Include="Microsoft.Windows.SDK.Win32Metadata"
                         Version="48.0.19-preview" />
         <PackageVersion Include="protobuf-net"
-                        Version="3.2.12" />
+                        Version="3.2.16" />
         <PackageVersion Include="protobuf-net.BuildTools"
                         Version="3.2.12" />
         <PackageVersion Include="Spectre.Console.Cli"
