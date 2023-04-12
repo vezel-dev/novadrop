@@ -22,7 +22,7 @@
 
 </div>
 
----
+--------------------------------------------------------------------------------
 
 **Novadrop** provides a collection of libraries, tools, and documentation for
 modifying the [TERA](https://en.wikipedia.org/wiki/TERA_(video_game)) game
