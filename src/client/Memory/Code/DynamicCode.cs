@@ -96,7 +96,7 @@ public sealed class DynamicCode : IDisposable
             null);
 
         return !handle.IsInvalid
-            ? WaitForSingleObject(handle, INFINITE) == (uint)WIN32_ERROR.WAIT_OBJECT_0
+            ? WaitForSingleObject(handle, INFINITE) == WAIT_EVENT.WAIT_OBJECT_0
                 ? GetExitCodeThread(handle, out var result)
                     ? result
                     : throw new Win32Exception()
