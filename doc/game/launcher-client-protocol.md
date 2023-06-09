@@ -670,7 +670,7 @@ module (e.g. [XIGNCODE3](https://www.wellbia.com) or
 [GameGuard](https://gameguard.nprotect.com)). Note that only some regions have a
 client build with an anti-cheat module.
 
-#### Anti-Cheat Starting Notification
+#### Anti-Cheat Starting Notification (`0x3fe`)
 
 `TERA.exe` will notify `Tl.exe` that the anti-cheat module is starting.
 
@@ -680,7 +680,7 @@ struct LauncherAntiCheatStartingNotification
 };
 ```
 
-#### Anti-Cheat Started Notification
+#### Anti-Cheat Started Notification (`0x3ff`)
 
 `TERA.exe` will notify `Tl.exe` that the anti-cheat module has successfully
 started.
@@ -691,7 +691,7 @@ struct LauncherAntiCheatStartedNotification
 };
 ```
 
-#### Anti-Cheat Error Notification
+#### Anti-Cheat Error Notification (`0x400`)
 
 `TERA.exe` will notify `Tl.exe` that the anti-cheat module failed to start.
 
