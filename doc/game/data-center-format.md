@@ -88,10 +88,10 @@ struct DataCenterHeader
 
 `unknown_1`, `unknown_2`, `unknown_3`, `unknown_4`, and `unknown5` are all
 always `0`. They are actually part of a tree structure describing the
-[XSD](https://www.w3.org/TR/xmlschema-1) schema of the data tree, but official
+[XSD](https://www.w3.org/TR/xmlschema-1) schema of the data graph, but official
 data centers never include this information.
 
-`revision` indicates the version of the data tree contained within the file. It
+`revision` indicates the version of the data graph contained within the file. It
 is sometimes (but not always) equal to the value sent by the client in the
 `C_CHECK_VERSION` packet.
 
@@ -226,8 +226,8 @@ and `values` must both have valid `addresses` regions.
 
 ### String Hash
 
-The `data_center_string_hash` function is a variant of CRC32 and is defined as
-follows:
+The `data_center_string_hash` function is a bizarre variant of CRC32. It is
+defined as follows:
 
 ```cpp
 const uint32_t string_hash_table[256] =
@@ -284,9 +284,9 @@ uint32_t data_center_string_hash(char16_t *string)
 
 (Note that `string_hash_table` is the same as [`value_hash_table`](#value-hash).)
 
-## Data Tree
+## Data Graph
 
-The actual content in a data center file is stored as a sort of tree structure,
+The actual content in a data center file is stored as a directed acyclic graph,
 which is essentially [XML](https://www.w3.org/TR/xml) serialized to a binary
 format.
 
@@ -349,7 +349,7 @@ name can be significant for the interpretation of the data.
 `padding_1` and `padding_2` should be considered undefined. They were added in
 the 64-bit data center format.
 
-The root node of the data tree must be located at the address `0:0`. It must
+The root node of the data graph must be located at the address `0:0`. It must
 have the name `__root__` and have zero attributes.
 
 ### Keys
@@ -357,7 +357,7 @@ have the name `__root__` and have zero attributes.
 Keys are used to signal to a data center reading layer (e.g. in the client) that
 certain attributes of a node will be used frequently for lookups. The reading
 layer can then decide to construct an optimized lookup table for those specific
-paths in the tree, transparently making those lookups faster. It is effectively
+paths in the graph, transparently making those lookups faster. It is effectively
 a trade-off between speed and memory usage.
 
 ```cpp
@@ -382,7 +382,7 @@ no keys) which all nodes can point to by default.
 
 ### Attributes
 
-Each node in the data tree has zero or more attributes, which are name/value
+Each node in the data graph has zero or more attributes, which are name/value
 pairs. They are of the form:
 
 ```cpp
@@ -420,9 +420,9 @@ enum DataCenterTypeCode : uint8_t
 `extended_code` specifies extra information based on the value of `type_code`:
 
 * If `type_code` is `DATA_CENTER_TYPE_CODE_INT`, then the lowest bit of
-  `extended_code` is either `0` or `1` to indicate whether the attribute's value
-  is constrained to `1` (`true`) and `0` (`false`), i.e. whether it is a Boolean
-  value. The higher bits are `0`.
+  `extended_code` is set if the attribute's value should be considered a
+  Boolean, meaning that `value` can only be `1` (`true`) or `0` (`false`).
+  Either way, the higher bits are `0`.
 * If `type_code` is `DATA_CENTER_TYPE_CODE_FLOAT`, then `extended_code` is `0`.
 * If `type_code` is `DATA_CENTER_TYPE_CODE_STRING`, then `extended_code` is
   given by the expression `data_center_value_hash(value)` where `value` is the
@@ -457,8 +457,9 @@ Note that the `__value__` attribute, if present, may only be a string.
 
 #### Value Hash
 
-The `data_center_value_hash` function is a bizarre variant of CRC32 and is
-defined as follows:
+The `data_center_value_hash` function uses a bizarre variant of CRC32 combined
+with a minimal effort to ignore the casing of characters. It is defined as
+follows:
 
 ```cpp
 const uint32_t value_hash_table[256] =
