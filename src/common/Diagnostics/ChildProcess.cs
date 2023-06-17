@@ -46,7 +46,7 @@ internal sealed class ChildProcess
         // We register the cancellation callback here, after it has started, so that we do not potentially kill the
         // process prior to or during startup.
         ctr = cancellationToken.UnsafeRegister(
-            static (state, token) => ((ChildProcess)state!)._completion.TrySetCanceled(token), this);
+            static (state, token) => Unsafe.As<ChildProcess>(state!)._completion.TrySetCanceled(token), this);
 
         Completion = Task.Run(async () =>
         {
