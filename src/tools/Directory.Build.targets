@@ -1,4 +1,8 @@
 <Project>
+    <PropertyGroup>
+        <CopyDebugSymbolFilesFromPackages Condition="'$(DebugSymbols)' == 'true'">true</CopyDebugSymbolFilesFromPackages>
+    </PropertyGroup>
+
     <ItemGroup>
         <Using Include="Spectre.Console" />
         <Using Include="Spectre.Console.Cli" />
