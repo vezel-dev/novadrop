@@ -511,7 +511,7 @@ uint16_t data_center_value_hash(char16_t *string)
         else if (value == u'\xff')
             value = u'\x9f';
         else if (value == u'\x151')
-            value = u'\x151';
+            value = u'\x150';
         else if (((value >= u'a' && value <= u'z') || (value >= u'\xe0' && value <= u'\xfe')) &&
             !(value == u'\xf0' || value == u'\xf7'))
             value = c - u' ';
