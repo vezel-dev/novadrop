@@ -77,10 +77,10 @@ public readonly struct DataCenterValue :
 
     internal bool UnsafeAsBoolean => Unsafe.As<int, bool>(ref Unsafe.AsRef(_primitiveValue));
 
+    private readonly string? _stringValue;
+
     [SuppressMessage("", "IDE0032")]
     private readonly int _primitiveValue;
-
-    private readonly string? _stringValue;
 
     private DataCenterValue(DataCenterTypeCode typeCode, int primitiveValue, string? stringValue)
     {
