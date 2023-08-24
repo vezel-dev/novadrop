@@ -2,6 +2,5 @@
     <ItemGroup Condition="'$(ImplicitUsings)' == 'true' or '$(ImplicitUsings)' == 'enable'">
         <Using Include="Vezel.Novadrop.Client" />
         <Using Include="Vezel.Novadrop.Memory" />
-        <Using Include="Vezel.Novadrop.Patches" />
     </ItemGroup>
 </Project>
