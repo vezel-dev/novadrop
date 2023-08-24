@@ -704,9 +704,16 @@ struct LauncherAntiCheatStartedNotification
 
 `error` contains the error code from the anti-cheat module.
 
-### Unknown Command 1025 (`0x401`)
+### Open Customer Support Command (`0x401`)
 
-The exact purpose of this message is currently unknown.
+`TERA.exe` asks `Tl.exe` to open the customer support website in the default Web
+browser.
+
+```cpp
+struct LauncherOpenCustomerSupportCommand
+{
+};
+```
 
 ### Unknown Command 1027 (`0x403`)
 
