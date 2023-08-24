@@ -1,6 +1,5 @@
 namespace Vezel.Novadrop.Data;
 
-[StructLayout(LayoutKind.Sequential, Pack = 1)]
 public readonly struct DataCenterValue :
     IEquatable<DataCenterValue>,
     IEqualityOperators<DataCenterValue, DataCenterValue, bool>,

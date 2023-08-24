@@ -2,7 +2,6 @@ using Vezel.Novadrop.Data.Serialization;
 
 namespace Vezel.Novadrop.Data.Nodes;
 
-[StructLayout(LayoutKind.Sequential, Pack = 1)]
 internal abstract class MutableDataCenterNode : DataCenterNode
 {
     public abstract override OrderedDictionary<string, DataCenterValue> Attributes { get; }

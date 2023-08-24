@@ -1,6 +1,5 @@
 namespace Vezel.Novadrop.Data;
 
-[StructLayout(LayoutKind.Sequential, Pack = 1)]
 public abstract class DataCenterNode
 {
     public DataCenterNode? Parent { get; }

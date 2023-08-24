@@ -2,7 +2,6 @@ using Vezel.Novadrop.Data.Serialization.Items;
 
 namespace Vezel.Novadrop.Data.Serialization;
 
-[StructLayout(LayoutKind.Sequential, Pack = 1)]
 internal readonly struct DataCenterAddress : IEquatable<DataCenterAddress>
 {
     public static readonly DataCenterAddress MinValue = new(ushort.MinValue, ushort.MinValue);

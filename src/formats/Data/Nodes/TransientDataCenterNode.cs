@@ -1,6 +1,5 @@
 namespace Vezel.Novadrop.Data.Nodes;
 
-[StructLayout(LayoutKind.Sequential, Pack = 1)]
 internal sealed class TransientDataCenterNode : ImmutableDataCenterNode
 {
     public override IReadOnlyDictionary<string, DataCenterValue> Attributes => _getAttributes();
