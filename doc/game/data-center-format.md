@@ -22,8 +22,9 @@ algorithm in CFB mode and with block, key, and feedback sizes all set to 128
 bits. No padding is done for the final block.
 
 The encryption key and initialization vector can both be extracted from a
-running TERA client, e.g. with the [novadrop-scan](../tools/scan.md) tool. These
-values are usually freshly generated for each client build.
+TERA client. This can be done with a running TERA process or an
+[unpacked executable](https://github.com/alexrp/tera-re). These values are
+usually freshly generated for each client build.
 
 ## Physical Structure
 

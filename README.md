@@ -45,28 +45,24 @@ This project offers the following packages:
 | [![novadrop-dc][dc-img]][dc-pkg] | Provides the .NET global tool for manipulating TERA's data center files. | ![Downloads][dc-dls] |
 | [![novadrop-rc][rc-img]][rc-pkg] | Provides the .NET global tool for manipulating TERA's resource container files. | ![Downloads][rc-dls] |
 | [![novadrop-run][run-img]][run-pkg] | Provides the .NET global tool for running the TERA launcher or client from the command line. | ![Downloads][run-dls] |
-| [![novadrop-scan][scan-img]][scan-pkg] | Provides the .NET global tool for extracting useful data from a running TERA client. | ![Downloads][scan-dls] |
 | [![Vezel.Novadrop.Formats][formats-img]][formats-pkg] | Provides support for TERA's various file formats. | ![Downloads][formats-dls] |
 | [![Vezel.Novadrop.Client][client-img]][client-pkg] | Provides support for interacting with the TERA launcher and client. | ![Downloads][client-dls] |
 
 [dc-pkg]: https://www.nuget.org/packages/novadrop-dc
 [rc-pkg]: https://www.nuget.org/packages/novadrop-rc
 [run-pkg]: https://www.nuget.org/packages/novadrop-run
-[scan-pkg]: https://www.nuget.org/packages/novadrop-scan
 [formats-pkg]: https://www.nuget.org/packages/Vezel.Novadrop.Formats
 [client-pkg]: https://www.nuget.org/packages/Vezel.Novadrop.Client
 
 [dc-img]: https://img.shields.io/nuget/v/novadrop-dc?label=novadrop-dc
 [rc-img]: https://img.shields.io/nuget/v/novadrop-rc?label=novadrop-rc
 [run-img]: https://img.shields.io/nuget/v/novadrop-run?label=novadrop-run
-[scan-img]: https://img.shields.io/nuget/v/novadrop-scan?label=novadrop-scan
 [formats-img]: https://img.shields.io/nuget/v/Vezel.Novadrop.Formats?label=Vezel.Novadrop.Formats
 [client-img]: https://img.shields.io/nuget/v/Vezel.Novadrop.Client?label=Vezel.Novadrop.Client
 
 [dc-dls]: https://img.shields.io/nuget/dt/novadrop-dc?label=
 [rc-dls]: https://img.shields.io/nuget/dt/novadrop-rc?label=
 [run-dls]: https://img.shields.io/nuget/dt/novadrop-run?label=
-[scan-dls]: https://img.shields.io/nuget/dt/novadrop-scan?label=
 [formats-dls]: https://img.shields.io/nuget/dt/Vezel.Novadrop.Formats?label=
 [client-dls]: https://img.shields.io/nuget/dt/Vezel.Novadrop.Client?label=
 

@@ -18,6 +18,11 @@ The encryption key can be extracted from a running TERA client, e.g. with the
 [novadrop-scan](../tools/scan.md) tool. The key appears to be static; it does
 not change with each client build.
 
+The encryption key can be extracted from a TERA client. This can be done with a
+running TERA process or an
+[unpacked executable](https://github.com/alexrp/tera-re). The key appears to be
+static; it does not change with each client build.
+
 ## Physical Structure
 
 The overall structure can be described like this:

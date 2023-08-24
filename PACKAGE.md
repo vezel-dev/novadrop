@@ -21,8 +21,6 @@ This project offers the following packages:
 * [novadrop-run](https://www.nuget.org/packages/novadrop-run): Provides
   the .NET global tool for running the TERA launcher or client from the command
   line.
-* [novadrop-scan](https://www.nuget.org/packages/novadrop-scan): Provides the
-  .NET global tool for extracting useful data from a running TERA client.
 * [Vezel.Novadrop.Formats](https://www.nuget.org/packages/Vezel.Novadrop.Data):
   Provides support for TERA's various file formats.
 * [Vezel.Novadrop.Client](https://www.nuget.org/packages/Vezel.Novadrop.Client):
