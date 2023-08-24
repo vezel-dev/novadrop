@@ -1,34 +1,12 @@
-CreateRemoteThread
-CreateToolhelp32Snapshot
 CreateWindowExW
 DefWindowProcW
-FlushInstructionCache
-GetExitCodeThread
 GetWindowLongPtrW
-K32GetModuleBaseNameW
-Module32FirstW
-Module32NextW
-OpenProcess
-OpenThread
-ReadProcessMemory
 RegisterClassExW
-ResumeThread
 SendMessageW
 SetWindowLongPtrW
-SuspendThread
-Thread32First
-Thread32Next
 UnregisterClassW
-VirtualAllocEx
-VirtualFreeEx
-VirtualProtectEx
-WaitForSingleObject
-WriteProcessMemory
 
 COPYDATASTRUCT
-WIN32_ERROR
 
-INFINITE
-MAX_PATH
 WM_CLOSE
 WM_COPYDATA
