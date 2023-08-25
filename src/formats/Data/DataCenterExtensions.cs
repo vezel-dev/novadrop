@@ -147,6 +147,51 @@ public static class DataCenterExtensions
         return node.DescendantsAndSelf().Where(n => n.Name == name);
     }
 
+    public static DataCenterNode DescendantAt(this DataCenterNode node, params string[] path)
+    {
+        return node.DescendantsAt(path).Single();
+    }
+
+    public static DataCenterNode DescendantAt(this DataCenterNode node, IEnumerable<string> path)
+    {
+        return node.DescendantsAt(path).Single();
+    }
+
+    public static IEnumerable<DataCenterNode> DescendantsAt(this DataCenterNode node, params string[] path)
+    {
+        Check.Null(node);
+        Check.Null(path);
+        Check.All(path, static name => name != null);
+
+        var results = new List<DataCenterNode>();
+
+        void Evaluate(DataCenterNode node, ReadOnlySpan<string> path)
+        {
+            var name = path[0];
+            var remaining = path[1..];
+
+            foreach (var child in node.Children)
+            {
+                if (node.Name != name)
+                    continue;
+
+                if (path.Length == 1)
+                    results.Add(child);
+                else
+                    Evaluate(child, remaining);
+            }
+        }
+
+        Evaluate(node, path);
+
+        return results;
+    }
+
+    public static IEnumerable<DataCenterNode> DescendantsAt(this DataCenterNode node, IEnumerable<string> path)
+    {
+        return node.DescendantsAt(path.ToArray());
+    }
+
     public static int ToInt32(this DataCenterValue value)
     {
         return value.TypeCode switch
