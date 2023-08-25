@@ -80,4 +80,8 @@ internal abstract class ImmutableDataCenterNode : DataCenterNode
     {
         throw new NotSupportedException();
     }
+
+    public override void TrimExcess()
+    {
+    }
 }

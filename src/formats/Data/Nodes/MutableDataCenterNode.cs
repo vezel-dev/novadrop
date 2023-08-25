@@ -111,4 +111,10 @@ internal abstract class MutableDataCenterNode : DataCenterNode
     {
         Attributes.Clear();
     }
+
+    public override void TrimExcess()
+    {
+        Attributes.TrimExcess();
+        Children.TrimExcess();
+    }
 }

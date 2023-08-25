@@ -80,6 +80,8 @@ public abstract class DataCenterNode
 
     public abstract void ClearAttributes();
 
+    public abstract void TrimExcess();
+
     public override string ToString()
     {
         return $"{{Name: {Name}, Value: {Value}, Keys: {Keys}, " +
