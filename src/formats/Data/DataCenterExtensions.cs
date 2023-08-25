@@ -2,11 +2,41 @@ namespace Vezel.Novadrop.Data;
 
 public static class DataCenterExtensions
 {
+    public static DataCenterNode Child(this DataCenterNode node)
+    {
+        Check.Null(node);
+
+        return node.Children.Single();
+    }
+
+    public static DataCenterNode Child(this DataCenterNode node, string name)
+    {
+        Check.Null(node);
+        Check.Null(name);
+
+        return node.Children.Single(n => n.Name == name);
+    }
+
+    public static IEnumerable<DataCenterNode> Children(this DataCenterNode node, string name)
+    {
+        Check.Null(node);
+        Check.Null(name);
+
+        return node.Children.Where(n => n.Name == name);
+    }
+
     public static IEnumerable<DataCenterNode> Ancestors(this DataCenterNode node)
     {
         Check.Null(node);
 
         return node.Parent?.AncestorsAndSelf() ?? Array.Empty<DataCenterNode>();
+    }
+
+    public static IEnumerable<DataCenterNode> Ancestors(this DataCenterNode node, string name)
+    {
+        Check.Null(name);
+
+        return node.Ancestors().Where(n => n.Name == name);
     }
 
     public static IEnumerable<DataCenterNode> AncestorsAndSelf(this DataCenterNode node)
@@ -24,9 +54,35 @@ public static class DataCenterExtensions
         while (current != null);
     }
 
+    public static IEnumerable<DataCenterNode> AncestorsAndSelf(this DataCenterNode node, string name)
+    {
+        Check.Null(name);
+
+        return node.AncestorsAndSelf().Where(n => n.Name == name);
+    }
+
+    public static DataCenterNode Sibling(this DataCenterNode node)
+    {
+        return node.Siblings().Single();
+    }
+
+    public static DataCenterNode Sibling(this DataCenterNode node, string name)
+    {
+        Check.Null(name);
+
+        return node.Siblings().Single(n => n.Name == name);
+    }
+
     public static IEnumerable<DataCenterNode> Siblings(this DataCenterNode node)
     {
         return node.SiblingsAndSelf().Where(n => n != node);
+    }
+
+    public static IEnumerable<DataCenterNode> Siblings(this DataCenterNode node, string name)
+    {
+        Check.Null(name);
+
+        return node.Siblings().Where(n => n.Name == name);
     }
 
     public static IEnumerable<DataCenterNode> SiblingsAndSelf(this DataCenterNode node)
@@ -37,9 +93,30 @@ public static class DataCenterExtensions
             yield return sibling;
     }
 
+    public static IEnumerable<DataCenterNode> SiblingsAndSelf(this DataCenterNode node, string name)
+    {
+        Check.Null(name);
+
+        return node.SiblingsAndSelf().Where(n => n.Name == name);
+    }
+
+    public static DataCenterNode Descendant(this DataCenterNode node, string name)
+    {
+        Check.Null(name);
+
+        return node.Descendants().Single(n => n.Name == name);
+    }
+
     public static IEnumerable<DataCenterNode> Descendants(this DataCenterNode node)
     {
         return node.DescendantsAndSelf().Where(n => n != node);
+    }
+
+    public static IEnumerable<DataCenterNode> Descendants(this DataCenterNode node, string name)
+    {
+        Check.Null(name);
+
+        return node.Descendants().Where(n => n.Name == name);
     }
 
     public static IEnumerable<DataCenterNode> DescendantsAndSelf(this DataCenterNode node)
@@ -61,6 +138,13 @@ public static class DataCenterExtensions
                     work.Push(child);
         }
         while (work.Count != 0);
+    }
+
+    public static IEnumerable<DataCenterNode> DescendantsAndSelf(this DataCenterNode node, string name)
+    {
+        Check.Null(name);
+
+        return node.DescendantsAndSelf().Where(n => n.Name == name);
     }
 
     public static int ToInt32(this DataCenterValue value)
