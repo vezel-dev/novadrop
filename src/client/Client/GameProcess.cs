@@ -137,7 +137,10 @@ public abstract class GameProcess
             thread.Start();
             thread.Join();
 
-            return exception == null ? code : throw exception;
+            if (exception != null)
+                ExceptionDispatchInfo.Throw(exception);
+
+            return code;
         });
     }
 }
