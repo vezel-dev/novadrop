@@ -1,66 +1,44 @@
 namespace Vezel.Novadrop.Client;
 
-public sealed class LauncherProcessOptions
+public sealed class ClientMessageServerOptions
 {
-    public string FileName { get; private set; } = null!;
-
     public string AccountName { get; private set; } = null!;
 
     public string SessionTicket { get; private set; } = null!;
 
-    public Uri ServerListUri { get; private set; } = null!;
-
-    public ImmutableSortedDictionary<int, LauncherServerInfo> Servers { get; private set; } =
-        ImmutableSortedDictionary<int, LauncherServerInfo>.Empty;
+    public ImmutableSortedDictionary<int, ClientServerInfo> Servers { get; private set; } =
+        ImmutableSortedDictionary<int, ClientServerInfo>.Empty;
 
     public int LastServerId { get; private set; }
 
     public Func<int, ReadOnlyMemory<string>, Uri>? WebUriProvider { get; private set; }
 
-    private LauncherProcessOptions()
+    private ClientMessageServerOptions()
     {
     }
 
-    public LauncherProcessOptions(string fileName, string accountName, string sessionTicket, Uri serverListUri)
+    public ClientMessageServerOptions(string accountName, string sessionTicket)
     {
-        Check.Null(fileName);
         Check.Null(accountName);
         Check.Null(sessionTicket);
-        Check.Null(serverListUri);
-        Check.Argument(serverListUri.IsAbsoluteUri, serverListUri);
 
-        FileName = fileName;
         AccountName = accountName;
         SessionTicket = sessionTicket;
-        ServerListUri = serverListUri;
     }
 
-    private LauncherProcessOptions Clone()
+    private ClientMessageServerOptions Clone()
     {
         return new()
         {
-            FileName = FileName,
             AccountName = AccountName,
             SessionTicket = SessionTicket,
-            ServerListUri = ServerListUri,
             Servers = Servers,
             LastServerId = LastServerId,
             WebUriProvider = WebUriProvider,
         };
     }
 
-    public LauncherProcessOptions WithFileName(string fileName)
-    {
-        Check.Null(fileName);
-
-        var options = Clone();
-
-        options.FileName = fileName;
-
-        return options;
-    }
-
-    public LauncherProcessOptions WithAccountName(string accountName)
+    public ClientMessageServerOptions WithAccountName(string accountName)
     {
         Check.Null(accountName);
 
@@ -71,7 +49,7 @@ public sealed class LauncherProcessOptions
         return options;
     }
 
-    public LauncherProcessOptions WithSessionTicket(string sessionTicket)
+    public ClientMessageServerOptions WithSessionTicket(string sessionTicket)
     {
         Check.Null(sessionTicket);
 
@@ -82,24 +60,12 @@ public sealed class LauncherProcessOptions
         return options;
     }
 
-    public LauncherProcessOptions WithServerListUri(Uri serverListUri)
-    {
-        Check.Null(serverListUri);
-        Check.Argument(serverListUri.IsAbsoluteUri, serverListUri);
-
-        var options = Clone();
-
-        options.ServerListUri = serverListUri;
-
-        return options;
-    }
-
-    public LauncherProcessOptions WithServers(params LauncherServerInfo[] servers)
+    public ClientMessageServerOptions WithServers(params ClientServerInfo[] servers)
     {
         return WithServers(servers.AsEnumerable());
     }
 
-    public LauncherProcessOptions WithServers(IEnumerable<LauncherServerInfo> servers)
+    public ClientMessageServerOptions WithServers(IEnumerable<ClientServerInfo> servers)
     {
         Check.Null(servers);
         Check.All(servers, static srv => srv != null);
@@ -111,7 +77,7 @@ public sealed class LauncherProcessOptions
         return options;
     }
 
-    public LauncherProcessOptions AddServer(LauncherServerInfo server)
+    public ClientMessageServerOptions AddServer(ClientServerInfo server)
     {
         Check.Null(server);
 
@@ -122,12 +88,12 @@ public sealed class LauncherProcessOptions
         return options;
     }
 
-    public LauncherProcessOptions AddServers(params LauncherServerInfo[] servers)
+    public ClientMessageServerOptions AddServers(params ClientServerInfo[] servers)
     {
         return AddServers(servers.AsEnumerable());
     }
 
-    public LauncherProcessOptions AddServers(IEnumerable<LauncherServerInfo> servers)
+    public ClientMessageServerOptions AddServers(IEnumerable<ClientServerInfo> servers)
     {
         Check.Null(servers);
         Check.All(servers, static srv => srv != null);
@@ -139,7 +105,7 @@ public sealed class LauncherProcessOptions
         return options;
     }
 
-    public LauncherProcessOptions RemoveServer(int id)
+    public ClientMessageServerOptions RemoveServer(int id)
     {
         var options = Clone();
 
@@ -148,12 +114,12 @@ public sealed class LauncherProcessOptions
         return options;
     }
 
-    public LauncherProcessOptions RemoveServers(params int[] ids)
+    public ClientMessageServerOptions RemoveServers(params int[] ids)
     {
         return RemoveServers(ids.AsEnumerable());
     }
 
-    public LauncherProcessOptions RemoveServers(IEnumerable<int> ids)
+    public ClientMessageServerOptions RemoveServers(IEnumerable<int> ids)
     {
         var options = Clone();
 
@@ -162,12 +128,12 @@ public sealed class LauncherProcessOptions
         return options;
     }
 
-    public LauncherProcessOptions ClearServers()
+    public ClientMessageServerOptions ClearServers()
     {
         return WithServers();
     }
 
-    public LauncherProcessOptions WithLastServerId(int lastServerId)
+    public ClientMessageServerOptions WithLastServerId(int lastServerId)
     {
         Check.Range(lastServerId > 0, lastServerId);
 
@@ -178,7 +144,7 @@ public sealed class LauncherProcessOptions
         return options;
     }
 
-    public LauncherProcessOptions WithWebUriProvider(Func<int, ReadOnlyMemory<string>, Uri>? webUriProvider)
+    public ClientMessageServerOptions WithWebUriProvider(Func<int, ReadOnlyMemory<string>, Uri>? webUriProvider)
     {
         Check.Null(webUriProvider);
 

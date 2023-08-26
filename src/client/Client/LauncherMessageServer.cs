@@ -1,6 +1,6 @@
 namespace Vezel.Novadrop.Client;
 
-public sealed partial class LauncherProcess : GameProcess
+public sealed partial class LauncherMessageServer : GameMessageServer
 {
     // Represents a Tl.exe process from the perspective of a launcher.exe-compatible process.
 
@@ -14,29 +14,32 @@ public sealed partial class LauncherProcess : GameProcess
 
     public event Action<int>? GameExited;
 
-    public LauncherProcessOptions Options { get; }
+    public LauncherMessageServerOptions Options { get; }
 
     private static readonly CultureInfo _culture = CultureInfo.InvariantCulture;
 
-    public LauncherProcess(LauncherProcessOptions options)
+    private LauncherMessageServer(LauncherMessageServerOptions options)
     {
-        Check.Null(options);
-
         Options = options;
     }
 
-    protected override void GetWindowConfiguration(out string className, out string windowName)
+    public static LauncherMessageServer Start(LauncherMessageServerOptions options)
+    {
+        Check.Null(options);
+
+        var server = new LauncherMessageServer(options);
+
+        server.Start();
+
+        return server;
+    }
+
+    private protected override void GetWindowConfiguration(out string className, out string windowName)
     {
         className = windowName = "EME.LauncherWnd";
     }
 
-    protected override void GetProcessConfiguration(out string fileName, out string[] arguments)
-    {
-        fileName = Options.FileName;
-        arguments = Array.Empty<string>();
-    }
-
-    protected override (nuint Id, ReadOnlyMemory<byte> Payload)? HandleWindowMessage(
+    private protected override (nuint Id, ReadOnlyMemory<byte> Payload)? HandleWindowMessage(
         nuint id, scoped ReadOnlySpan<byte> payload)
     {
         var utf8 = Encoding.UTF8;

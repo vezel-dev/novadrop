@@ -1,6 +1,6 @@
 namespace Vezel.Novadrop.Client;
 
-public sealed class ClientProcess : GameProcess
+public sealed class ClientMessageServer : GameMessageServer
 {
     // Represents a TERA.exe process from the perspective of a Tl.exe-compatible process.
 
@@ -24,29 +24,32 @@ public sealed class ClientProcess : GameProcess
 
     public event Action<string>? GameCrashed;
 
-    public ClientProcessOptions Options { get; }
+    public ClientMessageServerOptions Options { get; }
 
-    public ClientProcess(ClientProcessOptions options)
+    private ClientMessageServer(ClientMessageServerOptions options)
+    {
+        Options = options;
+    }
+
+    public static ClientMessageServer Start(ClientMessageServerOptions options)
     {
         Check.Null(options);
         Check.Argument(!options.Servers.IsEmpty, options);
 
-        Options = options;
+        var server = new ClientMessageServer(options);
+
+        server.Start();
+
+        return server;
     }
 
-    protected override void GetWindowConfiguration(out string className, out string windowName)
+    private protected override void GetWindowConfiguration(out string className, out string windowName)
     {
         className = "LAUNCHER_CLASS";
         windowName = "LAUNCHER_WINDOW";
     }
 
-    protected override void GetProcessConfiguration(out string fileName, out string[] arguments)
-    {
-        fileName = Options.FileName;
-        arguments = Options.Language is string lang ? new[] { $"-LANGUAGEEXT={lang}" } : Array.Empty<string>();
-    }
-
-    protected override (nuint Id, ReadOnlyMemory<byte> Payload)? HandleWindowMessage(
+    private protected override (nuint Id, ReadOnlyMemory<byte> Payload)? HandleWindowMessage(
         nuint id, scoped ReadOnlySpan<byte> payload)
     {
         var utf16 = Encoding.Unicode;
