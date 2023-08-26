@@ -13,7 +13,6 @@
         <InternalsVisibleTo Include="novadrop-dc" />
         <InternalsVisibleTo Include="novadrop-gpk" />
         <InternalsVisibleTo Include="novadrop-rc" />
-        <InternalsVisibleTo Include="novadrop-run" />
     </ItemGroup>
 
     <ItemGroup>

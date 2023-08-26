@@ -13,7 +13,6 @@ This package provides common functionality used by all Novadrop packages.</Packa
         <InternalsVisibleTo Include="novadrop-dc" />
         <InternalsVisibleTo Include="novadrop-gpk" />
         <InternalsVisibleTo Include="novadrop-rc" />
-        <InternalsVisibleTo Include="novadrop-run" />
         <InternalsVisibleTo Include="Vezel.Novadrop.Cli" />
         <InternalsVisibleTo Include="Vezel.Novadrop.Client" />
         <InternalsVisibleTo Include="Vezel.Novadrop.Formats" />

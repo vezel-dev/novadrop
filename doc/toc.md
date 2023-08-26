@@ -14,4 +14,3 @@
 
 * [novadrop-dc](tools/dc.md)
 * [novadrop-rc](tools/rc.md)
-* [novadrop-run](tools/run.md)
