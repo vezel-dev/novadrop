@@ -704,13 +704,13 @@ struct LauncherAntiCheatStartedNotification
 
 `error` contains the error code from the anti-cheat module.
 
-### Open Customer Support Command (`0x401`)
+### Open Support Website Command (`0x401`)
 
 `TERA.exe` asks `Tl.exe` to open the customer support website in the default Web
 browser.
 
 ```cpp
-struct LauncherOpenCustomerSupportCommand
+struct LauncherOpenSupportWebsiteCommand
 {
 };
 ```

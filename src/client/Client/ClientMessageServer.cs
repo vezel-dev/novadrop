@@ -16,6 +16,8 @@ public sealed class ClientMessageServer : GameMessageServer
 
     public event Action<string>? WorldEntered;
 
+    public event Action<int>? OpenWebsiteRequested;
+
     public event ReadOnlySpanAction<string, int>? WebUriRequested;
 
     public event Action<GameEvent>? GameEventOccurred;
@@ -23,6 +25,8 @@ public sealed class ClientMessageServer : GameMessageServer
     public event Action<int>? GameExited;
 
     public event Action<string>? GameCrashed;
+
+    public event Action? OpenSupportWebsiteRequested;
 
     public ClientMessageServerOptions Options { get; }
 
@@ -113,6 +117,13 @@ public sealed class ClientMessageServer : GameMessageServer
             return null;
         }
 
+        (nuint, ReadOnlyMemory<byte>)? HandleOpenWebsiteRequest(scoped ReadOnlySpan<byte> payload)
+        {
+            OpenWebsiteRequested?.Invoke(BinaryPrimitives.ReadInt32LittleEndian(payload));
+
+            return null;
+        }
+
         (nuint, ReadOnlyMemory<byte>)? HandleWebUriRequest(scoped ReadOnlySpan<byte> payload)
         {
             var id = BinaryPrimitives.ReadInt32LittleEndian(payload);
@@ -162,6 +173,13 @@ public sealed class ClientMessageServer : GameMessageServer
             return null;
         }
 
+        (nuint, ReadOnlyMemory<byte>)? HandleOpenSupportWebsiteRequest()
+        {
+            OpenSupportWebsiteRequested?.Invoke();
+
+            return null;
+        }
+
         return id switch
         {
             0x1 => HandleAccountNameRequest(),
@@ -174,7 +192,7 @@ public sealed class ClientMessageServer : GameMessageServer
             0x13 => null,
             0x14 => null,
             0x15 => null,
-            0x19 => null,
+            0x19 => HandleOpenWebsiteRequest(payload),
             0x1a => HandleWebUriRequest(payload),
             0x1c => null,
             0x3e8 => HandleGameStart(payload),
@@ -184,7 +202,7 @@ public sealed class ClientMessageServer : GameMessageServer
             0x3fe => null,
             0x3ff => null,
             0x400 => null,
-            0x401 => null,
+            0x401 => HandleOpenSupportWebsiteRequest(),
             0x403 => null,
             _ => null,
         };
