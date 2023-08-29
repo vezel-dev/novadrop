@@ -16,6 +16,7 @@ This package provides common functionality used by all Novadrop packages.</Packa
         <InternalsVisibleTo Include="Vezel.Novadrop.Cli" />
         <InternalsVisibleTo Include="Vezel.Novadrop.Client" />
         <InternalsVisibleTo Include="Vezel.Novadrop.Formats" />
+        <InternalsVisibleTo Include="Vezel.Novadrop.Interop" />
         <InternalsVisibleTo Include="Vezel.Novadrop.Net" />
     </ItemGroup>
 </Project>

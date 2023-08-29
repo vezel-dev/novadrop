@@ -46,21 +46,25 @@ This project offers the following packages:
 | [![novadrop-rc][rc-img]][rc-pkg] | Provides the .NET global tool for manipulating TERA's resource container files. | ![Downloads][rc-dls] |
 | [![Vezel.Novadrop.Formats][formats-img]][formats-pkg] | Provides support for TERA's various file formats. | ![Downloads][formats-dls] |
 | [![Vezel.Novadrop.Client][client-img]][client-pkg] | Provides support for interacting with the TERA launcher and client. | ![Downloads][client-dls] |
+| [![Vezel.Novadrop.Interop][interop-img]][interop-pkg] | Provides low-level bindings for in-memory interoperation with the TERA client. | ![Downloads][interop-dls] |
 
 [dc-pkg]: https://www.nuget.org/packages/novadrop-dc
 [rc-pkg]: https://www.nuget.org/packages/novadrop-rc
 [formats-pkg]: https://www.nuget.org/packages/Vezel.Novadrop.Formats
 [client-pkg]: https://www.nuget.org/packages/Vezel.Novadrop.Client
+[interop-pkg]: https://www.nuget.org/packages/Vezel.Novadrop.Interop
 
 [dc-img]: https://img.shields.io/nuget/v/novadrop-dc?label=novadrop-dc
 [rc-img]: https://img.shields.io/nuget/v/novadrop-rc?label=novadrop-rc
 [formats-img]: https://img.shields.io/nuget/v/Vezel.Novadrop.Formats?label=Vezel.Novadrop.Formats
 [client-img]: https://img.shields.io/nuget/v/Vezel.Novadrop.Client?label=Vezel.Novadrop.Client
+[interop-img]: https://img.shields.io/nuget/v/Vezel.Novadrop.Interop?label=Vezel.Novadrop.Interop
 
 [dc-dls]: https://img.shields.io/nuget/dt/novadrop-dc?label=
 [rc-dls]: https://img.shields.io/nuget/dt/novadrop-rc?label=
 [formats-dls]: https://img.shields.io/nuget/dt/Vezel.Novadrop.Formats?label=
 [client-dls]: https://img.shields.io/nuget/dt/Vezel.Novadrop.Client?label=
+[interop-dls]: https://img.shields.io/nuget/dt/Vezel.Novadrop.Interop?label=
 
 To install a tool package in a project, run `dotnet tool install <name>`. To
 install it globally, also pass `-g`.

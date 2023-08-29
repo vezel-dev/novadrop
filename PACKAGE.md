@@ -22,6 +22,8 @@ This project offers the following packages:
   Provides support for TERA's various file formats.
 * [Vezel.Novadrop.Client](https://www.nuget.org/packages/Vezel.Novadrop.Client):
   Provides support for interacting with the TERA launcher and client.
+* [Vezel.Novadrop.Interop](https://www.nuget.org/packages/Vezel.Novadrop.Interop):
+  Provides low-level bindings for in-memory interoperation with the TERA client.
 
 For more information, please visit the
 [project home page](https://docs.vezel.dev/novadrop).

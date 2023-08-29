@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <AssemblyName>Vezel.Novadrop.Interop</AssemblyName>
+        <IsPackable>true</IsPackable>
+        <PackageDescription>$(PackageDescription)
+
+This package provides low-level bindings for in-memory interoperation with the
+TERA client.</PackageDescription>
+        <PackageId>Vezel.Novadrop.Interop</PackageId>
+        <RootNamespace>Vezel.Novadrop.Interop</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="buildTransitive/**"
+              Pack="true"
+              PackagePath="%(Identity)" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="../common/common.csproj" />
+    </ItemGroup>
+</Project>

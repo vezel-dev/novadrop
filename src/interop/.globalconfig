@@ -1,0 +1,14 @@
+global_level = 2
+
+dotnet_diagnostic.CA1707.severity = none
+dotnet_diagnostic.CA1711.severity = none
+dotnet_diagnostic.CA1815.severity = none
+
+dotnet_diagnostic.IDE0044.severity = none # TODO: https://github.com/dotnet/roslyn/issues/69143
+dotnet_diagnostic.IDE0051.severity = none # TODO: https://github.com/dotnet/roslyn/issues/69143
+dotnet_diagnostic.IDE0250.severity = none
+dotnet_diagnostic.IDE1006.severity = none
+
+dotnet_diagnostic.SA1300.severity = none
+dotnet_diagnostic.SA1307.severity = none
+dotnet_diagnostic.SA1310.severity = none

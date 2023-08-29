@@ -16,6 +16,7 @@
     <ItemGroup>
         <TrimmerRootAssembly Include="Vezel.Novadrop.Common" />
         <TrimmerRootAssembly Include="Vezel.Novadrop.Formats" />
+        <TrimmerRootAssembly Include="Vezel.Novadrop.Interop" />
         <TrimmerRootAssembly Include="Vezel.Novadrop.Net" />
     </ItemGroup>
 
