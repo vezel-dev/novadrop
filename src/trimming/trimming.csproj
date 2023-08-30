@@ -23,6 +23,7 @@
     <ItemGroup>
         <ProjectReference Include="../common/common.csproj" />
         <ProjectReference Include="../formats/formats.csproj" />
+        <ProjectReference Include="../interop/interop.csproj" />
         <ProjectReference Include="../net/net.csproj" />
     </ItemGroup>
 </Project>
