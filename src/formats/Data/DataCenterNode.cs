@@ -4,23 +4,22 @@ public abstract class DataCenterNode
 {
     public DataCenterNode? Parent { get; }
 
-    public string Name { get; }
-
-    public virtual string? Value
+    public string Name
     {
-        get => _value;
-        set => _value = value;
+        get => _name;
+        set => SetName(value);
     }
 
-    public virtual DataCenterKeys Keys
+    public string? Value
+    {
+        get => _value;
+        set => SetValue(value);
+    }
+
+    public DataCenterKeys Keys
     {
         get => _keys;
-        set
-        {
-            Check.Null(value);
-
-            _keys = value;
-        }
+        set => SetKeys(value);
     }
 
     public abstract IReadOnlyDictionary<string, DataCenterValue> Attributes { get; }
@@ -39,6 +38,8 @@ public abstract class DataCenterNode
         set => SetAttribute(name, value);
     }
 
+    private string _name;
+
     private string? _value;
 
     private DataCenterKeys _keys;
@@ -46,8 +47,28 @@ public abstract class DataCenterNode
     private protected DataCenterNode(DataCenterNode? parent, string name, string? value, DataCenterKeys keys)
     {
         Parent = parent;
-        Name = name;
+        _name = name;
         _value = value;
+        _keys = keys;
+    }
+
+    private protected virtual void SetName(string name)
+    {
+        Check.Null(name);
+        Check.Argument(name != DataCenterConstants.RootNodeName, name);
+
+        _name = name;
+    }
+
+    private protected virtual void SetValue(string? value)
+    {
+        _value = value;
+    }
+
+    private protected virtual void SetKeys(DataCenterKeys keys)
+    {
+        Check.Null(keys);
+
         _keys = keys;
     }
 
@@ -84,7 +105,7 @@ public abstract class DataCenterNode
 
     public override string ToString()
     {
-        return $"{{Name: {Name}, Value: {Value}, Keys: {Keys}, " +
+        return $"{{Name: {_name}, Value: {_value}, Keys: {_keys}, " +
             $"Attributes: [{Attributes.Count}], Children: [{Children.Count}]}}";
     }
 }

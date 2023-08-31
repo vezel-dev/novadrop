@@ -2,23 +2,26 @@ namespace Vezel.Novadrop.Data.Nodes;
 
 internal abstract class ImmutableDataCenterNode : DataCenterNode
 {
-    public override sealed string? Value
-    {
-        get => base.Value;
-        set => throw new NotSupportedException();
-    }
-
-    public override sealed DataCenterKeys Keys
-    {
-        get => base.Keys;
-        set => throw new NotSupportedException();
-    }
-
     public override sealed bool IsImmutable => true;
 
     public ImmutableDataCenterNode(DataCenterNode? parent, string name, string? value, DataCenterKeys keys)
         : base(parent, name, value, keys)
     {
+    }
+
+    private protected override sealed void SetName(string name)
+    {
+        throw new NotSupportedException();
+    }
+
+    private protected override sealed void SetValue(string? value)
+    {
+        throw new NotSupportedException();
+    }
+
+    private protected override sealed void SetKeys(DataCenterKeys keys)
+    {
+        throw new NotSupportedException();
     }
 
     public override sealed DataCenterNode CreateChild(string name)
