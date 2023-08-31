@@ -44,9 +44,10 @@ internal static class DataCenterHash
         if (!BitConverter.IsLittleEndian)
             value = BinaryPrimitives.ReverseEndianness(value);
 
+        ref var table = ref MemoryMarshal.GetReference(_table.Span);
+
         for (var i = 0; i < 2; i++)
-            hash = Unsafe.Add(
-                ref MemoryMarshal.GetReference(_table.Span), (byte)(hash ^ ((byte*)&value)[i])) ^ hash >> 8;
+            hash = Unsafe.Add(ref table, (byte)(hash ^ ((byte*)&value)[i])) ^ hash >> 8;
     }
 
     public static uint ComputeStringHash(scoped ReadOnlySpan<char> value)

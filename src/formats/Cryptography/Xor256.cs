@@ -34,10 +34,12 @@ public sealed class Xor256 : SymmetricAlgorithm
                 return false;
             }
 
+            ref var dst = ref MemoryMarshal.GetReference(destination);
+            ref var src = ref MemoryMarshal.GetReference(source);
+            ref var key = ref MemoryMarshal.GetReference(_key.Span);
+
             for (var i = 0; i < source.Length; i++)
-                Unsafe.Add(ref MemoryMarshal.GetReference(destination), i) =
-                    (byte)(Unsafe.Add(ref MemoryMarshal.GetReference(source), i) ^
-                    Unsafe.Add(ref MemoryMarshal.GetReference(_key.Span), i % KeyLength));
+                Unsafe.Add(ref dst, i) = (byte)(Unsafe.Add(ref src, i) ^ Unsafe.Add(ref key, i % KeyLength));
 
             written = source.Length;
 

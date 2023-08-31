@@ -33,8 +33,7 @@ internal sealed class DataCenterSimpleRegion<T>
 
             void ProcessElements()
             {
-                foreach (ref var elem in MemoryMarshal.CreateSpan(
-                    ref Unsafe.As<byte, T>(ref MemoryMarshal.GetArrayDataReference(bytes)), count))
+                foreach (ref var elem in MemoryMarshal.Cast<byte, T>(bytes)[..count])
                 {
                     if (!BitConverter.IsLittleEndian)
                         elem.ReverseEndianness();
@@ -68,8 +67,7 @@ internal sealed class DataCenterSimpleRegion<T>
             {
                 var i = 0;
 
-                foreach (ref var elem in MemoryMarshal.CreateSpan(
-                    ref Unsafe.As<byte, T>(ref MemoryMarshal.GetArrayDataReference(bytes)), count))
+                foreach (ref var elem in MemoryMarshal.Cast<byte, T>(bytes)[..count])
                 {
                     elem = Elements[i++];
 

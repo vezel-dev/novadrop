@@ -50,9 +50,9 @@ internal sealed class LazyMutableDataCenterReader : DataCenterReader
             });
     }
 
-    protected override LazyImmutableDataCenterNode? ResolveNode(
+    protected override LazyMutableDataCenterNode? ResolveNode(
         DataCenterAddress address, DataCenterNode? parent, CancellationToken cancellationToken)
     {
-        return Unsafe.As<LazyImmutableDataCenterNode>(CreateNode(address, parent, default));
+        return Unsafe.As<LazyMutableDataCenterNode>(CreateNode(address, parent, default));
     }
 }
