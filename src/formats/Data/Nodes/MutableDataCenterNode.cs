@@ -85,7 +85,7 @@ internal abstract class MutableDataCenterNode : DataCenterNode
         Attributes.Add(name, value);
     }
 
-    public override sealed void SetAttribute(string name, DataCenterValue value)
+    private protected override sealed void SetAttribute(string name, DataCenterValue value)
     {
         Check.Argument(name != DataCenterConstants.ValueAttributeName, name);
         Check.Argument(!value.IsNull, value);

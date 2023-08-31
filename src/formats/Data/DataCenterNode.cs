@@ -74,7 +74,7 @@ public abstract class DataCenterNode
 
     public abstract void AddAttribute(string name, DataCenterValue value);
 
-    public abstract void SetAttribute(string name, DataCenterValue value);
+    private protected abstract void SetAttribute(string name, DataCenterValue value);
 
     public abstract bool RemoveAttribute(string name);
 

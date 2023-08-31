@@ -66,7 +66,7 @@ internal abstract class ImmutableDataCenterNode : DataCenterNode
         throw new NotSupportedException();
     }
 
-    public override sealed void SetAttribute(string name, DataCenterValue value)
+    private protected override sealed void SetAttribute(string name, DataCenterValue value)
     {
         throw new NotSupportedException();
     }
