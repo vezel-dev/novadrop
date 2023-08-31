@@ -86,7 +86,7 @@ internal sealed class PackCommand : CancellableAsyncCommand<PackCommand.PackComm
 
                             try
                             {
-                                doc = await XDocument.LoadAsync(reader, LoadOptions.None, cancellationToken);
+                                doc = await XDocument.LoadAsync(reader, LoadOptions.SetLineInfo, cancellationToken);
                             }
                             catch (XmlException ex)
                             {
@@ -108,6 +108,7 @@ internal sealed class PackCommand : CancellableAsyncCommand<PackCommand.PackComm
                             {
                                 XmlResolver = new XmlUrlResolver(),
                                 SourceUri = new Uri(reader.BaseURI),
+                                LineInfoProvider = doc,
                             };
 
                             validator.ValidationEventHandler += handler.GetEventHandlerFor(file);
