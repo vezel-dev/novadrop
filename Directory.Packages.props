@@ -24,7 +24,7 @@
         <PackageVersion Include="Microsoft.Windows.SDK.Win32Docs"
                         Version="0.1.42-alpha" />
         <PackageVersion Include="Microsoft.Windows.SDK.Win32Metadata"
-                        Version="54.0.44-preview" />
+                        Version="55.0.45-preview" />
         <PackageVersion Include="protobuf-net"
                         Version="3.2.26" />
         <PackageVersion Include="protobuf-net.BuildTools"
