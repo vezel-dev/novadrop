@@ -8,6 +8,7 @@
         <PackAsTool>true</PackAsTool>
         <RollForward>LatestMajor</RollForward>
         <RootNamespace>Vezel.Novadrop</RootNamespace>
+        <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
         <SelfContained>false</SelfContained>
     </PropertyGroup>
 </Project>
