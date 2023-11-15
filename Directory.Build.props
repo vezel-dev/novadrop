@@ -31,7 +31,7 @@ unofficial server emulators.</PackageDescription>
         <PackageOutputPath>$(MSBuildThisFileDirectory)pkg/feed/</PackageOutputPath>
         <PackageProjectUrl>https://docs.vezel.dev/novadrop</PackageProjectUrl>
         <RepositoryUrl>https://github.com/vezel-dev/novadrop.git</RepositoryUrl>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
 </Project>
