@@ -1,7 +1,7 @@
 <Project>
     <PropertyGroup>
         <Product>Novadrop</Product>
-        <Description>Novadrop is a developer toolkit for interacting with and modifying the TERA game client.</Description>
+        <Description>$(Product) is a developer toolkit for interacting with and modifying the TERA game client.</Description>
         <Company>Vezel</Company>
         <Authors>$(Company) Contributors</Authors>
         <Copyright>Copyright © $(Authors)</Copyright>
@@ -18,6 +18,7 @@
         <IsPublishable>false</IsPublishable>
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
+        <PackRelease>false</PackRelease>
         <PackageDescription>$(Description)
 
 Development of TERA stopped on April 20, 2022. Official game servers shut down
@@ -30,6 +31,7 @@ unofficial server emulators.</PackageDescription>
         <PackageLicenseExpression>0BSD</PackageLicenseExpression>
         <PackageOutputPath>$(MSBuildThisFileDirectory)pkg/feed/</PackageOutputPath>
         <PackageProjectUrl>https://docs.vezel.dev/novadrop</PackageProjectUrl>
+        <PublishRelease>false</PublishRelease>
         <RepositoryUrl>https://github.com/vezel-dev/novadrop.git</RepositoryUrl>
         <TargetFramework>net8.0</TargetFramework>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
