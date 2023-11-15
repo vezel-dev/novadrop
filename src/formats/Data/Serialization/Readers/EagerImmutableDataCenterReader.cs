@@ -5,11 +5,11 @@ namespace Vezel.Novadrop.Data.Serialization.Readers;
 
 internal sealed class EagerImmutableDataCenterReader : DataCenterReader
 {
-    private static readonly OrderedDictionary<string, DataCenterValue> _emptyAttributes = new();
+    private static readonly OrderedDictionary<string, DataCenterValue> _emptyAttributes = [];
 
-    private static readonly List<DataCenterNode> _emptyChildren = new();
+    private static readonly List<DataCenterNode> _emptyChildren = [];
 
-    private readonly Dictionary<DataCenterAddress, EagerImmutableDataCenterNode> _cache = new();
+    private readonly Dictionary<DataCenterAddress, EagerImmutableDataCenterNode> _cache = [];
 
     public EagerImmutableDataCenterReader(DataCenterLoadOptions options)
         : base(options)

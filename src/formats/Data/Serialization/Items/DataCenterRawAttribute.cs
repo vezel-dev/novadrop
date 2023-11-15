@@ -24,17 +24,17 @@ internal struct DataCenterRawAttribute : IDataCenterItem, IEquatable<DataCenterR
 
     public static bool operator !=(DataCenterRawAttribute left, DataCenterRawAttribute right) => !left.Equals(right);
 
-    public bool Equals(DataCenterRawAttribute other)
+    public readonly bool Equals(DataCenterRawAttribute other)
     {
         return (NameIndex, TypeInfo, Value) == (other.NameIndex, other.TypeInfo, other.Value);
     }
 
-    public override bool Equals([NotNullWhen(true)] object? obj)
+    public override readonly bool Equals([NotNullWhen(true)] object? obj)
     {
         return obj is DataCenterRawAttribute a && Equals(a);
     }
 
-    public override int GetHashCode()
+    public override readonly int GetHashCode()
     {
         return HashCode.Combine(NameIndex, TypeInfo, Value);
     }

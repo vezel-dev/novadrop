@@ -17,17 +17,17 @@ internal struct DataCenterRawAddress : IDataCenterItem, IEquatable<DataCenterRaw
 
     public static bool operator !=(DataCenterRawAddress left, DataCenterRawAddress right) => !left.Equals(right);
 
-    public bool Equals(DataCenterRawAddress other)
+    public readonly bool Equals(DataCenterRawAddress other)
     {
         return (SegmentIndex, ElementIndex) == (other.SegmentIndex, other.ElementIndex);
     }
 
-    public override bool Equals([NotNullWhen(true)] object? obj)
+    public override readonly bool Equals([NotNullWhen(true)] object? obj)
     {
         return obj is DataCenterRawAddress a && Equals(a);
     }
 
-    public override int GetHashCode()
+    public override readonly int GetHashCode()
     {
         return HashCode.Combine(SegmentIndex, ElementIndex);
     }

@@ -2,9 +2,9 @@ namespace Vezel.Novadrop.Data.Nodes;
 
 internal sealed class EagerMutableDataCenterNode : MutableDataCenterNode
 {
-    public override OrderedDictionary<string, DataCenterValue> Attributes => _attributes ??= new();
+    public override OrderedDictionary<string, DataCenterValue> Attributes => _attributes ??= [];
 
-    public override List<DataCenterNode> Children => _children ??= new();
+    public override List<DataCenterNode> Children => _children ??= [];
 
     private OrderedDictionary<string, DataCenterValue>? _attributes;
 

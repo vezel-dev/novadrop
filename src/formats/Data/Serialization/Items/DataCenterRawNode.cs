@@ -35,7 +35,7 @@ internal struct DataCenterRawNode : IDataCenterItem, IEquatable<DataCenterRawNod
 
     public static bool operator !=(DataCenterRawNode left, DataCenterRawNode right) => !left.Equals(right);
 
-    public bool Equals(DataCenterRawNode other)
+    public readonly bool Equals(DataCenterRawNode other)
     {
         return (NameIndex, KeysInfo, AttributeCount, ChildCount, AttributeAddress, ChildAddress) ==
             (other.NameIndex,
@@ -46,12 +46,12 @@ internal struct DataCenterRawNode : IDataCenterItem, IEquatable<DataCenterRawNod
              other.ChildAddress);
     }
 
-    public override bool Equals([NotNullWhen(true)] object? obj)
+    public override readonly bool Equals([NotNullWhen(true)] object? obj)
     {
         return obj is DataCenterRawNode n && Equals(n);
     }
 
-    public override int GetHashCode()
+    public override readonly int GetHashCode()
     {
         return HashCode.Combine(NameIndex, KeysInfo, AttributeCount, ChildCount, AttributeAddress, ChildAddress);
     }

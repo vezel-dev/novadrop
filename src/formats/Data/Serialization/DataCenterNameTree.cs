@@ -6,9 +6,9 @@ internal static class DataCenterNameTree
     {
         public string Name { get; }
 
-        public Dictionary<string, bool> Attributes { get; } = new();
+        public Dictionary<string, bool> Attributes { get; } = [];
 
-        public Dictionary<string, DataCenterNameNode> Children { get; } = new();
+        public Dictionary<string, DataCenterNameNode> Children { get; } = [];
 
         public DataCenterNameNode(string name)
         {

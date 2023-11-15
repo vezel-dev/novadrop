@@ -95,7 +95,7 @@ public abstract class GameMessageServer : IDisposable
     private protected abstract (nuint Id, ReadOnlyMemory<byte> Payload)? HandleWindowMessage(
         nuint id, scoped ReadOnlySpan<byte> payload);
 
-    [UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvStdcall) })]
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvStdcall)])]
     private static unsafe LRESULT WindowProcedure(HWND hWnd, uint msg, WPARAM wParam, LPARAM lParam)
     {
         if (msg != WM_COPYDATA)

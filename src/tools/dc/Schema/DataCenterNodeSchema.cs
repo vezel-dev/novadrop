@@ -14,9 +14,9 @@ internal sealed class DataCenterNodeSchema
 
     public bool HasMixedContent => HasValue && _children.Count != 0;
 
-    private readonly Dictionary<string, DataCenterAttributeSchema> _attributes = new();
+    private readonly Dictionary<string, DataCenterAttributeSchema> _attributes = [];
 
-    private readonly Dictionary<string, DataCenterEdgeSchema> _children = new();
+    private readonly Dictionary<string, DataCenterEdgeSchema> _children = [];
 
     private IEnumerable<string>? _keys;
 

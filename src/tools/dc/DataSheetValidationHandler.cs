@@ -4,7 +4,7 @@ internal sealed class DataSheetValidationHandler
 {
     public bool HasProblems => _problems.Count != 0;
 
-    private readonly List<(FileInfo File, int, int, XmlSeverityType, string)> _problems = new();
+    private readonly List<(FileInfo File, int, int, XmlSeverityType, string)> _problems = [];
 
     public void Print()
     {

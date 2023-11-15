@@ -13,11 +13,11 @@ internal sealed class DataCenterWriter
 
     private readonly DataCenterSegmentedRegion<DataCenterRawAttribute> _attributes = new();
 
-    private readonly Dictionary<int, List<(DataCenterAddress, int)>> _attributeCache = new();
+    private readonly Dictionary<int, List<(DataCenterAddress, int)>> _attributeCache = [];
 
     private readonly DataCenterSegmentedRegion<DataCenterRawNode> _nodes = new();
 
-    private readonly Dictionary<int, List<(DataCenterAddress, int)>> _nodeCache = new();
+    private readonly Dictionary<int, List<(DataCenterAddress, int)>> _nodeCache = [];
 
     private readonly DataCenterStringTableWriter _values = new(DataCenterConstants.ValueTableSize, false);
 
@@ -107,7 +107,7 @@ internal sealed class DataCenterWriter
             ref var ranges = ref CollectionsMarshal.GetValueRefOrAddDefault(
                 cache, GetCollectionHashCode(elements), out _);
 
-            ranges ??= new();
+            ranges ??= [];
 
             ranges.Add((address, elements.Count));
         }

@@ -18,7 +18,7 @@ public sealed class ResourceContainer
 
     public IReadOnlyDictionary<string, ResourceContainerEntry> Entries => _entries;
 
-    private readonly Dictionary<string, ResourceContainerEntry> _entries = new();
+    private readonly Dictionary<string, ResourceContainerEntry> _entries = [];
 
     private ResourceContainer()
     {

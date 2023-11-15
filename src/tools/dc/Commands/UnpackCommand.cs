@@ -34,6 +34,7 @@ internal sealed class UnpackCommand : CancellableAsyncCommand<UnpackCommand.Unpa
         }
     }
 
+    [SuppressMessage("", "IDE0028")] // TODO: https://github.com/dotnet/roslyn/issues/70822
     protected override Task PreExecuteAsync(
         dynamic expando, UnpackCommandSettings settings, CancellationToken cancellationToken)
     {

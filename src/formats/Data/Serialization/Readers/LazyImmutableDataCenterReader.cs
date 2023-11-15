@@ -5,9 +5,9 @@ namespace Vezel.Novadrop.Data.Serialization.Readers;
 
 internal sealed class LazyImmutableDataCenterReader : DataCenterReader
 {
-    private static readonly OrderedDictionary<string, DataCenterValue> _emptyAttributes = new();
+    private static readonly OrderedDictionary<string, DataCenterValue> _emptyAttributes = [];
 
-    private static readonly List<DataCenterNode> _emptyChildren = new();
+    private static readonly List<DataCenterNode> _emptyChildren = [];
 
     private readonly ConcurrentDictionary<DataCenterAddress, LazyImmutableDataCenterNode> _cache = new();
 
