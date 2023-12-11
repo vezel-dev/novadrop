@@ -2,5 +2,6 @@
     <ItemGroup Condition="'$(ImplicitUsings)' == 'true' or '$(ImplicitUsings)' == 'enable'">
         <Using Include="Vezel.Novadrop.Interop" />
         <Using Include="Vezel.Novadrop.Interop.Support" />
+        <Using Include="Vezel.Novadrop.Interop.System" />
     </ItemGroup>
 </Project>

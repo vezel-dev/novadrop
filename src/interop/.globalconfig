@@ -1,5 +1,6 @@
 global_level = 2
 
+dotnet_diagnostic.CA1008.severity = none
 dotnet_diagnostic.CA1707.severity = none
 dotnet_diagnostic.CA1711.severity = none
 dotnet_diagnostic.CA1815.severity = none
