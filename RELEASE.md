@@ -9,9 +9,9 @@ Patch-level releases should be done out of the relevant major/minor branch. For
 example, both `1.0.1` and `1.0.5` should come out of `release/v1.0`. So, there
 is no need to run `dotnet nbgv prepare-release` in this case.
 
-Before tagging a release, build the release branch locally on all platforms that
-you have access to. Verify that nothing has regressed. Also, ensure that the
-release branch builds and tests successfully on
+Before tagging a release, run `./cake` in the release branch locally on all
+platforms that you have access to. Verify that nothing has regressed. Also,
+ensure that the release branch builds and tests successfully on
 [CI](https://github.com/vezel-dev/novadrop/actions).
 
 Next, run `dotnet nbgv tag` from the release branch to create a release tag,

@@ -2,7 +2,8 @@
 
 <div align="center">
     <img src="novadrop.svg"
-         width="128" />
+         width="128"
+         alt="Novadrop" />
 </div>
 
 <p align="center">
@@ -73,6 +74,13 @@ To install a library package, run `dotnet add package <name>`.
 
 For more information, please visit the
 [project home page](https://docs.vezel.dev/novadrop).
+
+## Building
+
+Simply run `./cake` (a [Bash](https://www.gnu.org/software/bash) script) to
+build artifacts. This will use the `Debug` configuration by default, which is
+suitable for development and debugging. Pass `-c Release` instead to use that
+configuration, resulting in an optimized build.
 
 ## License
 
