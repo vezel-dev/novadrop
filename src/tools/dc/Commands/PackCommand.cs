@@ -227,7 +227,7 @@ internal sealed class PackCommand : CancellableAsyncCommand<PackCommand.PackComm
                         },
                         cancellationToken))));
 
-        if (handler.HasProblems)
+        if (handler.HasDiagnostics)
             return 1;
 
         await progress.RunTaskAsync(

@@ -77,7 +77,7 @@ internal sealed class ValidateCommand : CancellableAsyncCommand<ValidateCommand.
                     increment();
                 }));
 
-        return handler.HasProblems ? 1 : 0;
+        return handler.HasDiagnostics ? 1 : 0;
     }
 
     protected override Task PostExecuteAsync(

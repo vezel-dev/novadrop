@@ -2,49 +2,36 @@ namespace Vezel.Novadrop;
 
 internal sealed class DataSheetValidationHandler
 {
-    public bool HasProblems => _problems.Count != 0;
+    private record struct Diagnostic(FileInfo File, int Line, int Column, XmlSeverityType Severity, string Message);
 
-    private readonly List<(FileInfo File, int, int, XmlSeverityType, string)> _problems = [];
+    public bool HasDiagnostics => !_diagnostics.IsEmpty;
+
+    private readonly ConcurrentBag<Diagnostic> _diagnostics = [];
 
     public void Print()
     {
-        if (_problems.Count == 0)
-            return;
-
-        Log.WriteLine();
-
-        foreach (var fileGroup in _problems.GroupBy(tup => tup.File.Name))
+        foreach (var diag in _diagnostics
+            .OrderBy(static diag => diag.File.FullName)
+            .ThenBy(static diag => diag.Line)
+            .ThenBy(static diag => diag.Column)
+            .ThenBy(static diag => diag.Severity))
         {
-            var shownProblems = fileGroup.Take(10).ToArray();
-
-            Log.WriteLine($"{fileGroup.Key}:");
-
-            foreach (var (_, line, col, severity, msg) in shownProblems)
+            var color = diag.Severity switch
             {
-                var (type, color) = severity switch
-                {
-                    XmlSeverityType.Error => ('E', "red"),
-                    XmlSeverityType.Warning => ('W', "yellow"),
-                    _ => throw new UnreachableException(),
-                };
+                XmlSeverityType.Error => "red",
+                XmlSeverityType.Warning => "yellow",
+                _ => throw new UnreachableException(),
+            };
 
-                Log.MarkupLineInterpolated($"  [[[{color}]{type}[/]]] ([blue]{line}[/],[blue]{col}[/]): {msg}");
-            }
-
-            var remainingProblems = fileGroup.Count() - shownProblems.Length;
-
-            if (remainingProblems != 0)
-                Log.MarkupLineInterpolated($"    ... [darkorange]{remainingProblems}[/] more problem(s) ...");
+            Log.MarkupLineInterpolated(
+                $"[{color}]{diag.File}({diag.Line},{diag.Column}): {diag.Severity}: {diag.Message}[/]");
         }
-
-        Log.WriteLine();
     }
 
     public void HandleException(FileInfo file, XmlException exception)
     {
-        lock (_problems)
-            _problems.Add(
-                (file, exception.LineNumber, exception.LinePosition, XmlSeverityType.Error, exception.Message));
+        _diagnostics.Add(
+            new(file, exception.LineNumber, exception.LinePosition, XmlSeverityType.Error, exception.Message));
     }
 
     public ValidationEventHandler GetEventHandlerFor(FileInfo file)
@@ -53,8 +40,7 @@ internal sealed class DataSheetValidationHandler
         {
             var ex = e.Exception;
 
-            lock (_problems)
-                _problems.Add((file, ex.LineNumber, ex.LinePosition, e.Severity, e.Message));
+            _diagnostics.Add(new(file, ex.LineNumber, ex.LinePosition, e.Severity, ex.Message));
         };
     }
 }
