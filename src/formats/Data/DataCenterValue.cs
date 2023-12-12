@@ -67,7 +67,6 @@ public readonly struct DataCenterValue :
         }
     }
 
-    [SuppressMessage("", "IDE0032")]
     internal int UnsafeAsInt32 => _primitiveValue;
 
     internal float UnsafeAsSingle => Unsafe.As<int, float>(ref Unsafe.AsRef(in _primitiveValue));
@@ -78,7 +77,6 @@ public readonly struct DataCenterValue :
 
     private readonly string? _stringValue;
 
-    [SuppressMessage("", "IDE0032")]
     private readonly int _primitiveValue;
 
     private DataCenterValue(DataCenterTypeCode typeCode, int primitiveValue, string? stringValue)
