@@ -2,6 +2,8 @@ namespace Vezel.Novadrop.Data;
 
 public static class DataCenterExtensions
 {
+    private static readonly CultureInfo _culture = CultureInfo.InvariantCulture;
+
     public static DataCenterNode Child(this DataCenterNode node)
     {
         Check.Null(node);
@@ -192,16 +194,20 @@ public static class DataCenterExtensions
         return node.DescendantsAt(path.ToArray());
     }
 
-    public static int ToInt32(this DataCenterValue value)
+    public static int ToInt32(this DataCenterValue value, int radix = 10)
     {
+        Check.Range(radix is 2 or 10 or 16, radix);
+
         return value.TypeCode switch
         {
             DataCenterTypeCode.Int32 => value.UnsafeAsInt32,
             DataCenterTypeCode.Single => (int)value.UnsafeAsSingle,
-            DataCenterTypeCode.String => value.UnsafeAsString switch
+            DataCenterTypeCode.String => radix switch
             {
-                var s when int.TryParse(s, NumberStyles.Integer, CultureInfo.InvariantCulture, out var i) => i,
-                var s => int.Parse(s, NumberStyles.HexNumber, CultureInfo.InvariantCulture),
+                2 => int.Parse(value.UnsafeAsString, NumberStyles.BinaryNumber, _culture),
+                10 => int.Parse(value.UnsafeAsString, NumberStyles.Integer, _culture),
+                16 => int.Parse(value.UnsafeAsString, NumberStyles.HexNumber, _culture),
+                _ => throw new UnreachableException(),
             },
             DataCenterTypeCode.Boolean => value.UnsafeAsInt32, // Normalized internally; reinterpret as 0 or 1.
             _ => 0,
@@ -214,8 +220,7 @@ public static class DataCenterExtensions
         {
             DataCenterTypeCode.Int32 => value.UnsafeAsInt32,
             DataCenterTypeCode.Single => value.UnsafeAsSingle,
-            DataCenterTypeCode.String =>
-                float.Parse(value.UnsafeAsString, NumberStyles.Float, CultureInfo.InvariantCulture),
+            DataCenterTypeCode.String => float.Parse(value.UnsafeAsString, NumberStyles.Float, _culture),
             DataCenterTypeCode.Boolean => value.UnsafeAsInt32, // Normalized internally; reinterpret as 0 or 1.
             _ => 0.0f,
         };
