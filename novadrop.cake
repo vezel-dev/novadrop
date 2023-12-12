@@ -62,6 +62,36 @@ DotNetMSBuildSettings ConfigureMSBuild(string target)
     };
 }
 
+void RunDotNet(Func<ProcessArgumentBuilder, ProcessArgumentBuilder> appender, Func<string, string, bool> checker)
+{
+    var code = StartProcess(
+        Context.Tools.Resolve(new[] { "dotnet", "dotnet.exe" }) ??
+        throw new CakeException(".NET CLI: Could not locate executable."),
+        new()
+        {
+            Arguments = appender(new()),
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            RedirectedStandardOutputHandler = text =>
+            {
+                Console.Out.WriteLine(text);
+
+                return text;
+            },
+            RedirectedStandardErrorHandler = text =>
+            {
+                Console.Error.WriteLine(text);
+
+                return text;
+            },
+        },
+        out var stdOut,
+        out var stdErr);
+
+    if (code != 0 && checker(string.Join(null, stdOut), string.Join(null, stdErr)))
+        throw new CakeException(code, $".NET CLI: Process returned an error (exit code {code}).");
+}
+
 // Tasks
 
 Task("default")
@@ -130,6 +160,42 @@ Task("pack-core")
 
 Task("pack")
     .IsDependentOn("pack-core");
+
+Task("install-core")
+    .IsDependentOn("pack-core")
+    .Does(() =>
+    {
+        foreach (var tool in new[] { "dc", "rc" })
+            RunDotNet(
+                args =>
+                    args
+                        .Append("tool")
+                        .Append("update")
+                        .Append($"novadrop-{tool}")
+                        .Append("--prerelease")
+                        .Append("-g"),
+                (_, _) => true);
+    });
+
+Task("install")
+    .IsDependentOn("install-core");
+
+Task("uninstall-core")
+    .Does(() =>
+    {
+        foreach (var tool in new[] { "dc", "rc" })
+            RunDotNet(
+                args =>
+                    args
+                        .Append("tool")
+                        .Append("uninstall")
+                        .Append($"novadrop-{tool}")
+                        .Append("-g"),
+                (_, stdErr) => !stdErr.StartsWith($"A tool with the package Id 'novadrop-{tool}' could not be found."));
+    });
+
+Task("uninstall")
+    .IsDependentOn("uninstall-core");
 
 Task("upload-core-github")
     .WithCriteria(BuildSystem.GitHubActions.Environment.Workflow.Ref == "refs/heads/master")
