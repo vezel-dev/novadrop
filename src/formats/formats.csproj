@@ -21,12 +21,6 @@ This package provides support for TERA's various file formats.</PackageDescripti
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="buildTransitive/**"
-              Pack="true"
-              PackagePath="%(Identity)" />
-    </ItemGroup>
-
-    <ItemGroup>
         <ProjectReference Include="../common/common.csproj" />
     </ItemGroup>
 
