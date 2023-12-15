@@ -37,7 +37,6 @@
         <When Condition="'$(IsPackable)' == 'true'">
             <PropertyGroup>
                 <ApplicationIcon>$(MSBuildThisFileDirectory)novadrop.ico</ApplicationIcon>
-                <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
                 <PackageIcon>novadrop.png</PackageIcon>
                 <PackageReadmeFile>PACKAGE.md</PackageReadmeFile>
             </PropertyGroup>
