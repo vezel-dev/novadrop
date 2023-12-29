@@ -45,9 +45,15 @@ public sealed class FakePaddingCryptoTransform : ICryptoTransform
         // data we want to decrypt into it (leaving the rest zeroed), decrypt the block-sized array, and finally return
         // only the 'real' decrypted bytes.
 
-        var input = new byte[InputBlockSize];
+        var inputSpan = inputBuffer.AsSpan(inputOffset, inputCount);
+        var inputLength = inputSpan.Length;
 
-        inputBuffer.AsSpan(inputOffset, inputCount).CopyTo(input);
+        if (inputLength % InputBlockSize is var rem and not 0)
+            inputLength += InputBlockSize - rem;
+
+        var input = new byte[inputLength];
+
+        inputSpan.CopyTo(input);
 
         var result = _transform.TransformFinalBlock(input, 0, input.Length);
 
