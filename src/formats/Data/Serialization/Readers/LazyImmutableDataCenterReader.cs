@@ -28,25 +28,28 @@ internal sealed class LazyImmutableDataCenterReader : DataCenterReader
         // This may result in redundant node allocations, but that has no side effects anyway, and only one wins.
         return _cache.GetOrAdd(
             address,
-            _ =>
+            static (_, tup) =>
             {
+                var @this = tup.This;
+                var raw = tup.Raw;
+
                 LazyImmutableDataCenterNode node = null!;
 
                 return node = new(
-                    parent,
-                    name,
-                    value,
-                    keys,
+                    tup.Parent,
+                    tup.Name,
+                    tup.Value,
+                    tup.Keys,
                     () =>
                     {
                         var attributes = _emptyAttributes;
-                        var attrCount = raw.AttributeCount - (value != null ? 1 : 0);
+                        var attrCount = raw.AttributeCount - (@tup.Value != null ? 1 : 0);
 
                         if (attrCount != 0)
                         {
                             attributes = new(attrCount);
 
-                            ReadAttributes(
+                            @this.ReadAttributes(
                                 raw,
                                 attributes,
                                 static (attributes, name, value) =>
@@ -65,12 +68,14 @@ internal sealed class LazyImmutableDataCenterReader : DataCenterReader
                         {
                             children = new(raw.ChildCount);
 
-                            ReadChildren(raw, node, children, static (children, node) => children.Add(node), default);
+                            @this.ReadChildren(
+                                raw, node, children, static (children, node) => children.Add(node), default);
                         }
 
                         return children;
                     });
-            });
+            },
+            (This: this, Raw: raw, Parent: parent, Name: name, Value: value, Keys: keys));
     }
 
     protected override LazyImmutableDataCenterNode? ResolveNode(

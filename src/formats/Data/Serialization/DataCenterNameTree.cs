@@ -34,7 +34,7 @@ internal static class DataCenterNameTree
 
             if (dataNode.HasAttributes)
             {
-                foreach (var (name, _) in dataNode.Attributes)
+                foreach (var (name, _) in dataNode.UnsafeAttributes)
                 {
                     ref var isKey = ref CollectionsMarshal.GetValueRefOrAddDefault(
                         nameNode.Attributes, name, out var exists);
@@ -46,7 +46,7 @@ internal static class DataCenterNameTree
 
             if (dataNode.HasChildren)
             {
-                foreach (var dataChild in dataNode.Children)
+                foreach (var dataChild in dataNode.UnsafeChildren)
                 {
                     ref var nameChild = ref CollectionsMarshal.GetValueRefOrAddDefault(
                         nameNode.Children, dataChild.Name, out var exists);
@@ -76,13 +76,13 @@ internal static class DataCenterNameTree
             var attrs = nameNode.Attributes;
             var comparer = StringComparer.OrdinalIgnoreCase;
 
-            foreach (var (name, _) in attrs.Where(kvp => kvp.Value).OrderBy(kvp => kvp.Key, comparer))
+            foreach (var (name, _) in attrs.Where(static kvp => kvp.Value).OrderBy(static kvp => kvp.Key, comparer))
                 InvokeHandler(name);
 
-            foreach (var (name, _) in attrs.Where(kvp => !kvp.Value).OrderBy(kvp => kvp.Key, comparer))
+            foreach (var (name, _) in attrs.Where(static kvp => !kvp.Value).OrderBy(static kvp => kvp.Key, comparer))
                 InvokeHandler(name);
 
-            foreach (var (_, child) in nameNode.Children.OrderBy(kvp => kvp.Key, comparer))
+            foreach (var (_, child) in nameNode.Children.OrderBy(static kvp => kvp.Key, comparer))
                 WalkTree(child);
         }
 
