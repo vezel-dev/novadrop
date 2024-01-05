@@ -24,9 +24,14 @@ public abstract class DataCenterNode
 
     public abstract IReadOnlyDictionary<string, DataCenterValue> Attributes { get; }
 
+    internal OrderedDictionary<string, DataCenterValue> UnsafeAttributes =>
+        Unsafe.As<OrderedDictionary<string, DataCenterValue>>(Attributes);
+
     public virtual bool HasAttributes => Attributes.Count != 0;
 
     public abstract IReadOnlyList<DataCenterNode> Children { get; }
+
+    internal List<DataCenterNode> UnsafeChildren => Unsafe.As<List<DataCenterNode>>(Children);
 
     public virtual bool HasChildren => Children.Count != 0;
 

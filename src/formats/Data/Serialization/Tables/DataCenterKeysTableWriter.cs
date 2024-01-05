@@ -26,7 +26,9 @@ internal sealed class DataCenterKeysTableWriter
     {
         var tup = (attributeName1, attributeName2, attributeName3, attributeName4);
 
-        if (!_cache.TryGetValue(tup, out var index))
+        ref var index = ref CollectionsMarshal.GetValueRefOrAddDefault(_cache, tup, out var exists);
+
+        if (!exists)
         {
             Check.Operation(
                 _keys.Elements.Count != DataCenterConstants.KeysTableSize,
@@ -46,8 +48,6 @@ internal sealed class DataCenterKeysTableWriter
             });
 
             index = _keys.Elements.Count - 1;
-
-            _cache.Add(tup, index);
         }
 
         return index;

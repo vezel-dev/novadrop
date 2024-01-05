@@ -33,7 +33,7 @@ internal sealed class DataCenterStringTableReader
 
         var cache = new List<(int Index, string Value)>(ushort.MaxValue);
 
-        foreach (var (i, seg) in _strings.Segments.Select((seg, i) => (i, seg)))
+        foreach (var (i, seg) in _strings.Segments.Select(static (seg, i) => (i, seg)))
         {
             var last = -1L;
 
@@ -63,7 +63,7 @@ internal sealed class DataCenterStringTableReader
                     elemIdx + length < elems.Count,
                     $"String range {elemIdx}..{elemIdx + length + 1} is out of bounds (0..{elems.Count - 1}).");
 
-                var value = new string(elems.GetRange(elemIdx, length).Select(c => c.Value).ToArray());
+                var value = new string(elems.GetRange(elemIdx, length).Select(static c => c.Value).ToArray());
 
                 if (strict)
                 {
@@ -92,7 +92,7 @@ internal sealed class DataCenterStringTableReader
             }
         }
 
-        foreach (var (_, val) in cache.OrderBy(tup => tup.Index))
+        foreach (var (_, val) in cache.OrderBy(static tup => tup.Index))
             _indexCache.Add(val);
     }
 

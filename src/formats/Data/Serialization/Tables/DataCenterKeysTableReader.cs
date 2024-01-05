@@ -29,7 +29,7 @@ internal sealed class DataCenterKeysTableReader
 
         return _cache.GetOrAdd(
             index,
-            i =>
+            static (i, @this) =>
             {
                 string? GetName(int index)
                 {
@@ -38,7 +38,7 @@ internal sealed class DataCenterKeysTableReader
                     if (nameIdx == -1)
                         return null;
 
-                    var name = _names.GetString(nameIdx);
+                    var name = @this._names.GetString(nameIdx);
 
                     Check.Data(
                         name != DataCenterConstants.ValueAttributeName,
@@ -47,13 +47,14 @@ internal sealed class DataCenterKeysTableReader
                     return name;
                 }
 
-                var raw = _keys.Elements[i];
+                var raw = @this._keys.Elements[i];
 
                 return new(
                     GetName(raw.NameIndex1),
                     GetName(raw.NameIndex2),
                     GetName(raw.NameIndex3),
                     GetName(raw.NameIndex4));
-            });
+            },
+            this);
     }
 }

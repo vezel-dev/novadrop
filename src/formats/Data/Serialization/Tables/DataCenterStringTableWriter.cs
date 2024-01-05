@@ -27,7 +27,7 @@ internal sealed class DataCenterStringTableWriter
         await _data.WriteAsync(writer, cancellationToken).ConfigureAwait(false);
 
         foreach (var seg in _strings.Segments)
-            seg.Elements.Sort((a, b) => a.Hash.CompareTo(b.Hash));
+            seg.Elements.Sort(static (a, b) => a.Hash.CompareTo(b.Hash));
 
         await _strings.WriteAsync(writer, cancellationToken).ConfigureAwait(false);
         await _addresses.WriteAsync(writer, cancellationToken).ConfigureAwait(false);
@@ -35,7 +35,9 @@ internal sealed class DataCenterStringTableWriter
 
     public DataCenterRawString AddString(string value)
     {
-        if (!_cache.TryGetValue(value, out var raw))
+        ref var raw = ref CollectionsMarshal.GetValueRefOrAddDefault(_cache, value, out var exists);
+
+        if (!exists)
         {
             // The name table is accessed with one-based 16-bit indexes rather than full addresses.
             Check.Operation(
@@ -99,8 +101,6 @@ internal sealed class DataCenterStringTableWriter
             };
 
             _strings.Segments[(int)((hash ^ hash >> 16) % (uint)_strings.Segments.Count)].Elements.Add(raw);
-
-            _cache.Add(value, raw);
         }
 
         return raw;
