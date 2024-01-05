@@ -38,6 +38,9 @@ internal sealed class PackCommand : CancellableAsyncCommand<PackCommand.PackComm
         }
     }
 
+    private static readonly XName _schemaLocation =
+        XName.Get("schemaLocation", "http://www.w3.org/2001/XMLSchema-instance");
+
     protected override Task PreExecuteAsync(
         dynamic expando, PackCommandSettings settings, CancellationToken cancellationToken)
     {
@@ -57,175 +60,171 @@ internal sealed class PackCommand : CancellableAsyncCommand<PackCommand.PackComm
                 new DirectoryInfo(settings.Input)
                     .EnumerateFiles("?*-?*.xml", SearchOption.AllDirectories)
                     .OrderBy(f => f.FullName, StringComparer.Ordinal)
-                    .Select((file, index) => (index, file))
+                    .Select((file, index) => (File: file, Index: index))
                     .ToArray()));
 
         var root = DataCenter.Create();
-        var xsi = (XNamespace)"http://www.w3.org/2001/XMLSchema-instance";
         var handler = (DataSheetValidationHandler)expando.Handler;
 
         var nodes = await progress.RunTaskAsync(
             "Load data sheets",
             files.Length,
-            increment => Task.WhenAll(
-                files
-                    .AsParallel()
-                    .WithCancellation(cancellationToken)
-                    .Select(item => Task.Run(
-                        async () =>
+            async increment =>
+            {
+                var keyCache = new ConcurrentDictionary<(string?, string?, string?, string?), DataCenterKeys>();
+                var nodes = new ConcurrentBag<(DataCenterNode Node, int Index)>();
+
+                await Parallel.ForEachAsync(
+                    files,
+                    cancellationToken,
+                    async (tup, cancellationToken) =>
+                    {
+                        var file = tup.File;
+                        var xmlSettings = new XmlReaderSettings
                         {
-                            var file = item.file;
-                            var xmlSettings = new XmlReaderSettings
-                            {
-                                Async = true,
-                            };
+                            Async = true,
+                        };
 
-                            using var reader = XmlReader.Create(file.FullName, xmlSettings);
+                        using var reader = XmlReader.Create(file.FullName, xmlSettings);
 
-                            XDocument doc;
+                        XDocument doc;
+
+                        try
+                        {
+                            doc = await XDocument.LoadAsync(reader, LoadOptions.SetLineInfo, cancellationToken);
+                        }
+                        catch (XmlException ex)
+                        {
+                            handler.HandleException(file, ex);
+
+                            return;
+                        }
+
+                        // We need to access type and key info from the schema during tree construction, so we do the
+                        // validation manually as we go rather than relying on validation support in XmlReader or
+                        // XDocument. (Notably, the latter also has a very broken implementation that does not respect
+                        // xsi:schemaLocation, even with an XmlUrlResolver set...)
+                        var validator = new XmlSchemaValidator(
+                            reader.NameTable,
+                            xmlSettings.Schemas,
+                            new XmlNamespaceManager(reader.NameTable),
+                            XmlSchemaValidationFlags.ProcessSchemaLocation |
+                            XmlSchemaValidationFlags.ReportValidationWarnings)
+                        {
+                            XmlResolver = new XmlUrlResolver(),
+                            SourceUri = new Uri(reader.BaseURI),
+                            LineInfoProvider = doc,
+                        };
+
+                        validator.ValidationEventHandler += handler.GetEventHandlerFor(file);
+
+                        validator.Initialize();
+
+                        var info = new XmlSchemaInfo();
+
+                        DataCenterNode ElementToNode(XElement element, DataCenterNode parent, bool top)
+                        {
+                            cancellationToken.ThrowIfCancellationRequested();
+
+                            var name = element.Name;
+
+                            validator.ValidateElement(
+                                name.LocalName,
+                                name.NamespaceName,
+                                info,
+                                null,
+                                null,
+                                top ? (string?)element.Attribute(_schemaLocation) : null,
+                                null);
+
+                            DataCenterNode current;
+
+                            var locked = false;
+
+                            // Multiple threads will be creating children on the root node so we need to lock.
+                            if (parent == root)
+                                Monitor.Enter(root, ref locked);
 
                             try
                             {
-                                doc = await XDocument.LoadAsync(reader, LoadOptions.SetLineInfo, cancellationToken);
+                                current = parent.CreateChild(name.LocalName);
                             }
-                            catch (XmlException ex)
+                            finally
                             {
-                                handler.HandleException(file, ex);
-
-                                return (item.index, node: default(DataCenterNode));
-                            }
-
-                            // We need to access type and key info from the schema during tree construction, so we do
-                            // the validation manually as we go rather than relying on validation support in XmlReader
-                            // or XDocument. (Notably, the latter also has a very broken implementation that does not
-                            // respect xsi:schemaLocation, even with an XmlUrlResolver set...)
-                            var validator = new XmlSchemaValidator(
-                                reader.NameTable,
-                                xmlSettings.Schemas,
-                                new XmlNamespaceManager(reader.NameTable),
-                                XmlSchemaValidationFlags.ProcessSchemaLocation |
-                                XmlSchemaValidationFlags.ReportValidationWarnings)
-                            {
-                                XmlResolver = new XmlUrlResolver(),
-                                SourceUri = new Uri(reader.BaseURI),
-                                LineInfoProvider = doc,
-                            };
-
-                            validator.ValidationEventHandler += handler.GetEventHandlerFor(file);
-
-                            validator.Initialize();
-
-                            var keyCache = new Dictionary<(string?, string?, string?, string?), DataCenterKeys>();
-                            var info = new XmlSchemaInfo();
-
-                            DataCenterNode ElementToNode(XElement element, DataCenterNode parent, bool top)
-                            {
-                                cancellationToken.ThrowIfCancellationRequested();
-
-                                var name = element.Name;
-
-                                validator.ValidateElement(
-                                    name.LocalName,
-                                    name.NamespaceName,
-                                    info,
-                                    null,
-                                    null,
-                                    top ? (string?)element.Attribute(xsi + "schemaLocation") : null,
-                                    null);
-
-                                DataCenterNode current;
-
-                                var locked = false;
-
-                                // Multiple threads will be creating children on the root node so we need to lock.
-                                if (parent == root)
-                                    Monitor.Enter(root, ref locked);
-
-                                try
-                                {
-                                    current = parent.CreateChild(name.LocalName);
-                                }
-                                finally
-                                {
-                                    if (locked)
-                                        Monitor.Exit(root);
-                                }
-
-                                foreach (var attr in element.Attributes().Where(
-                                    a => !a.IsNamespaceDeclaration && a.Name.Namespace == XNamespace.None))
-                                {
-                                    var attrName = attr.Name;
-                                    var attrValue = validator.ValidateAttribute(
-                                        attrName.LocalName, attrName.NamespaceName, attr.Value, null)!;
-
-                                    current.AddAttribute(attr.Name.LocalName, attrValue switch
-                                    {
-                                        int i => i,
-                                        float f => f,
-                                        string s => s,
-                                        bool b => b,
-                                        _ => 42, // Dummy value in case of validation failure.
-                                    });
-                                }
-
-                                validator.ValidateEndOfAttributes(null);
-
-                                if (info.SchemaElement?.ElementSchemaType?.UnhandledAttributes is { Length: not 0 } un)
-                                {
-                                    var names = un
-                                        .Where(a =>
-                                            a.NamespaceURI == "https://vezel.dev/novadrop/dc" && a.LocalName == "keys")
-                                        .Select(a => a.Value.Split(
-                                            ' ',
-                                            StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
-                                        .Select(arr =>
-                                        {
-                                            Array.Resize(ref arr, 4);
-
-                                            return (arr[0], arr[1], arr[2], arr[3]);
-                                        })
-                                        .LastOrDefault();
-
-                                    if (names is not (null, null, null, null))
-                                    {
-                                        ref var entry = ref CollectionsMarshal.GetValueRefOrAddDefault(
-                                            keyCache, names, out var exists);
-
-                                        if (!exists)
-                                            entry = new(names.Item1, names.Item2, names.Item3, names.Item4);
-
-                                        current.Keys = entry!;
-                                    }
-                                }
-
-                                foreach (var node in element.Nodes())
-                                {
-                                    switch (node)
-                                    {
-                                        case XElement child:
-                                            _ = ElementToNode(child, current, false);
-                                            break;
-                                        case XText text:
-                                            validator.ValidateText(text.Value);
-                                            break;
-                                    }
-                                }
-
-                                var value = validator.ValidateEndElement(null)?.ToString();
-
-                                if (!string.IsNullOrEmpty(value))
-                                    current.Value = value;
-
-                                return current;
+                                if (locked)
+                                    Monitor.Exit(root);
                             }
 
-                            var node = ElementToNode(doc.Root!, root, true);
+                            foreach (var attr in element
+                                .Attributes()
+                                .Where(static a => !a.IsNamespaceDeclaration && a.Name.Namespace == XNamespace.None))
+                            {
+                                var attrName = attr.Name;
+                                var attrValue = validator.ValidateAttribute(
+                                    attrName.LocalName, attrName.NamespaceName, attr.Value, null)!;
 
-                            increment();
+                                current.AddAttribute(attr.Name.LocalName, attrValue switch
+                                {
+                                    int i => i,
+                                    float f => f,
+                                    string s => s,
+                                    bool b => b,
+                                    _ => 42, // Dummy value in case of validation failure.
+                                });
+                            }
 
-                            return (item.index, node);
-                        },
-                        cancellationToken))));
+                            validator.ValidateEndOfAttributes(null);
+
+                            if (info.SchemaElement?.ElementSchemaType?.UnhandledAttributes is [_, ..] unhandled)
+                            {
+                                var names = unhandled
+                                    .Where(static a =>
+                                        a.NamespaceURI == "https://vezel.dev/novadrop/dc" && a.LocalName == "keys")
+                                    .Select(static a => a.Value.Split(
+                                        ' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+                                    .Select(static arr =>
+                                    {
+                                        Array.Resize(ref arr, 4);
+
+                                        return (arr[0], arr[1], arr[2], arr[3]);
+                                    })
+                                    .LastOrDefault();
+
+                                if (names is not (null, null, null, null))
+                                    current.Keys = keyCache.GetOrAdd(
+                                        names, static names => new(names.Item1, names.Item2, names.Item3, names.Item4));
+                            }
+
+                            foreach (var node in element.Nodes())
+                            {
+                                switch (node)
+                                {
+                                    case XElement child:
+                                        _ = ElementToNode(child, current, false);
+                                        break;
+                                    case XText text:
+                                        validator.ValidateText(text.Value);
+                                        break;
+                                }
+                            }
+
+                            var value = validator.ValidateEndElement(null)?.ToString();
+
+                            if (!string.IsNullOrEmpty(value))
+                                current.Value = value;
+
+                            return current;
+                        }
+
+                        var node = ElementToNode(doc.Root!, root, true);
+
+                        increment();
+
+                        nodes.Add((node, tup.Index));
+                    });
+
+                return nodes;
+            });
 
         if (handler.HasDiagnostics)
             return 1;
@@ -234,7 +233,7 @@ internal sealed class PackCommand : CancellableAsyncCommand<PackCommand.PackComm
             "Sort root child nodes",
             () =>
             {
-                var lookup = nodes.ToDictionary(item => item.node!, item => item.index);
+                var lookup = nodes.ToDictionary(item => item.Node, item => item.Index);
 
                 // Since we process data sheets in parallel (i.e. non-deterministically), the data center we now have in
                 // memory will not have the correct order for the immediate children of the root node. We fix that here.
