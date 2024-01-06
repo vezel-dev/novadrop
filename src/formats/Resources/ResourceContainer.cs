@@ -24,7 +24,6 @@ public sealed class ResourceContainer
     {
     }
 
-    [SuppressMessage("", "CA5358")]
     internal static Xor256 CreateCipher(ReadOnlyMemory<byte> key)
     {
         var xor = Xor256.Create();
