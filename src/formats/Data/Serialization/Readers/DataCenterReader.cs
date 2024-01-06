@@ -215,14 +215,15 @@ internal abstract class DataCenterReader
                     await using (zlibStream.ConfigureAwait(false))
                     {
                         var reader = new StreamBinaryReader(zlibStream);
+                        var arch = _options.Architecture;
                         var strict = _options.Strict;
 
                         await _header.ReadAsync(strict, reader, cancellationToken).ConfigureAwait(false);
-                        await _keys.ReadAsync(reader, cancellationToken).ConfigureAwait(false);
-                        await _attributes.ReadAsync(strict, reader, cancellationToken).ConfigureAwait(false);
-                        await _nodes.ReadAsync(strict, reader, cancellationToken).ConfigureAwait(false);
-                        await _values.ReadAsync(strict, reader, cancellationToken).ConfigureAwait(false);
-                        await _names.ReadAsync(strict, reader, cancellationToken).ConfigureAwait(false);
+                        await _keys.ReadAsync(arch, reader, cancellationToken).ConfigureAwait(false);
+                        await _attributes.ReadAsync(arch, reader, cancellationToken).ConfigureAwait(false);
+                        await _nodes.ReadAsync(arch, reader, cancellationToken).ConfigureAwait(false);
+                        await _values.ReadAsync(arch, strict, reader, cancellationToken).ConfigureAwait(false);
+                        await _names.ReadAsync(arch, strict, reader, cancellationToken).ConfigureAwait(false);
 
                         _keys.Populate();
 

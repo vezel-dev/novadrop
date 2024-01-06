@@ -13,6 +13,10 @@ internal sealed class PackCommand : CancellableAsyncCommand<PackCommand.PackComm
         [Description("Output file")]
         public string Output { get; }
 
+        [CommandOption("--format <format>")]
+        [Description("Set format variant")]
+        public DataCenterFormat Format { get; init; } = DataCenterFormat.V6X64;
+
         [CommandOption("--revision <value>")]
         [Description("Set data revision")]
         public int Revision { get; init; } = DataCenter.LatestRevision;
@@ -252,6 +256,7 @@ internal sealed class PackCommand : CancellableAsyncCommand<PackCommand.PackComm
                     root,
                     stream,
                     new DataCenterSaveOptions()
+                        .WithFormat(settings.Format)
                         .WithRevision(settings.Revision)
                         .WithCompressionLevel(settings.Compression)
                         .WithKey(settings.EncryptionKey.Span)

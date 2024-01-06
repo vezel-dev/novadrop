@@ -16,11 +16,13 @@ supports the following tasks:
   to a fresh data center file usable by the client.
 * Format integrity verification of data center files, optionally with strict
   compliance checks.
+* Support for various iterations of the data center format throughout the game's
+  history.
 
 In general, novadrop-dc is quite fast: It exploits as many cores as are
 available for parallel extraction, validation, and packing. On a modern system,
-unpacking an official data center file takes around 20 seconds, while packing
-the resulting data sheets takes around 40 seconds.
+unpacking an official data center file takes around 15 seconds, while packing
+the resulting data sheets takes around 25 seconds.
 
 ## novadrop-dc pack
 
@@ -37,6 +39,7 @@ The `output` argument specifies the path of the resulting data center file.
 
 | Option | Description |
 | - | - |
+| `--format <format>` | Specifies the data center format variant (defaults to `V6X64`). |
 | `--revision <value>` | Specifies the data tree revision number (defaults to latest known revision). |
 | `--compression <level>` | Specifies a compression level (defaults to `Optimal`). |
 | `--encryption-key <key>` | Specifies an encryption key (defaults to the latest known key). |
@@ -58,7 +61,9 @@ specifies the path of the resulting data center file.
 | - | - |
 | `--decryption-key <key>` | Specifies a decryption key (defaults to the latest known key). |
 | `--decryption-iv <iv>` | Specifies a decryption IV (defaults to the latest known IV). |
+| `--architecture <architecture>` | Specifies the data center format architecture (defaults to `X64`). |
 | `--strict` | Enables strict format compliance checks while reading the input file. |
+| `--format <format>` | Specifies the data center format variant (defaults to `V6X64`). |
 | `--revision <value>` | Specifies the data tree revision number (defaults to latest known revision). |
 | `--compression <level>` | Specifies a compression level (defaults to `Optimal`). |
 | `--encryption-key <key>` | Specifies an encryption key (defaults to the latest known key). |
@@ -108,6 +113,7 @@ specifies the path of the directory to extract data sheets and schemas to.
 | - | - |
 | `--decryption-key <key>` | Specifies a decryption key (defaults to the latest known key). |
 | `--decryption-iv <iv>` | Specifies a decryption IV (defaults to the latest known IV). |
+| `--architecture <architecture>` | Specifies the data center format architecture (defaults to `X64`). |
 | `--strict` | Enables strict format compliance checks while reading the input file. |
 
 ## novadrop-dc validate
@@ -138,4 +144,5 @@ The `input` argument specifies the input data center file.
 | - | - |
 | `--decryption-key <key>` | Specifies a decryption key (defaults to the latest known key). |
 | `--decryption-iv <iv>` | Specifies a decryption IV (defaults to the latest known IV). |
+| `--architecture <architecture>` | Specifies the data center format architecture (defaults to `X64`). |
 | `--strict` | Enables strict format compliance checks while reading the input file. |

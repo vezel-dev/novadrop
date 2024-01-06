@@ -66,12 +66,12 @@ internal sealed class StreamBinaryWriter
 
     public ValueTask WriteSingleAsync(float value, CancellationToken cancellationToken)
     {
-        return WriteUInt32Async(Unsafe.As<float, uint>(ref value), cancellationToken);
+        return WriteUInt32Async(Unsafe.BitCast<float, uint>(value), cancellationToken);
     }
 
     public ValueTask WriteDoubleAsync(double value, CancellationToken cancellationToken)
     {
-        return WriteUInt64Async(Unsafe.As<double, ulong>(ref value), cancellationToken);
+        return WriteUInt64Async(Unsafe.BitCast<double, ulong>(value), cancellationToken);
     }
 
     [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]

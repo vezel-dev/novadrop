@@ -21,11 +21,15 @@ internal sealed class DataCenterStringTableReader
     }
 
     [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
-    public async ValueTask ReadAsync(bool strict, StreamBinaryReader reader, CancellationToken cancellationToken)
+    public async ValueTask ReadAsync(
+        DataCenterArchitecture architecture,
+        bool strict,
+        StreamBinaryReader reader,
+        CancellationToken cancellationToken)
     {
-        await _data.ReadAsync(strict, reader, cancellationToken).ConfigureAwait(false);
-        await _strings.ReadAsync(reader, cancellationToken).ConfigureAwait(false);
-        await _addresses.ReadAsync(reader, cancellationToken).ConfigureAwait(false);
+        await _data.ReadAsync(architecture, reader, cancellationToken).ConfigureAwait(false);
+        await _strings.ReadAsync(architecture, reader, cancellationToken).ConfigureAwait(false);
+        await _addresses.ReadAsync(architecture, reader, cancellationToken).ConfigureAwait(false);
 
         Check.Data(
             !strict || _data.Segments.Count <= DataCenterAddress.MaxValue.SegmentIndex,

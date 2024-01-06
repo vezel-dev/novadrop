@@ -11,11 +11,24 @@ internal struct DataCenterRawKeys : IDataCenterItem
 
     public ushort NameIndex4;
 
-    public void ReverseEndianness()
+    public static unsafe int GetSize(DataCenterArchitecture architecture)
     {
-        NameIndex1 = BinaryPrimitives.ReverseEndianness(NameIndex1);
-        NameIndex2 = BinaryPrimitives.ReverseEndianness(NameIndex2);
-        NameIndex3 = BinaryPrimitives.ReverseEndianness(NameIndex3);
-        NameIndex4 = BinaryPrimitives.ReverseEndianness(NameIndex4);
+        return sizeof(DataCenterRawKeys);
+    }
+
+    public void Read(DataCenterArchitecture architecture, ref SpanReader reader)
+    {
+        NameIndex1 = reader.ReadUInt16();
+        NameIndex2 = reader.ReadUInt16();
+        NameIndex3 = reader.ReadUInt16();
+        NameIndex4 = reader.ReadUInt16();
+    }
+
+    public readonly void Write(DataCenterArchitecture architecture, ref SpanWriter writer)
+    {
+        writer.WriteUInt16(NameIndex1);
+        writer.WriteUInt16(NameIndex2);
+        writer.WriteUInt16(NameIndex3);
+        writer.WriteUInt16(NameIndex4);
     }
 }

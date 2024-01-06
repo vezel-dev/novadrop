@@ -17,9 +17,10 @@ internal sealed class DataCenterKeysTableWriter
     }
 
     [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
-    public async ValueTask WriteAsync(StreamBinaryWriter writer, CancellationToken cancellationToken)
+    public async ValueTask WriteAsync(
+        DataCenterArchitecture architecture, StreamBinaryWriter writer, CancellationToken cancellationToken)
     {
-        await _keys.WriteAsync(writer, cancellationToken).ConfigureAwait(false);
+        await _keys.WriteAsync(architecture, writer, cancellationToken).ConfigureAwait(false);
     }
 
     public int AddKeys(string? attributeName1, string? attributeName2, string? attributeName3, string? attributeName4)

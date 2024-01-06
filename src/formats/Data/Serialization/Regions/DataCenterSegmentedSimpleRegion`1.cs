@@ -18,17 +18,19 @@ internal sealed class DataCenterSegmentedSimpleRegion<T>
     }
 
     [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
-    public async ValueTask ReadAsync(StreamBinaryReader reader, CancellationToken cancellationToken)
+    public async ValueTask ReadAsync(
+        DataCenterArchitecture architecture, StreamBinaryReader reader, CancellationToken cancellationToken)
     {
         foreach (var region in Segments)
-            await region.ReadAsync(reader, cancellationToken).ConfigureAwait(false);
+            await region.ReadAsync(architecture, reader, cancellationToken).ConfigureAwait(false);
     }
 
     [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
-    public async ValueTask WriteAsync(StreamBinaryWriter writer, CancellationToken cancellationToken)
+    public async ValueTask WriteAsync(
+        DataCenterArchitecture architecture, StreamBinaryWriter writer, CancellationToken cancellationToken)
     {
         foreach (var region in Segments)
-            await region.WriteAsync(writer, cancellationToken).ConfigureAwait(false);
+            await region.WriteAsync(architecture, writer, cancellationToken).ConfigureAwait(false);
     }
 
     public T GetElement(DataCenterAddress address)

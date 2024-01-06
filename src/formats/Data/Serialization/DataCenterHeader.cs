@@ -2,8 +2,6 @@ namespace Vezel.Novadrop.Data.Serialization;
 
 internal sealed class DataCenterHeader
 {
-    private const int KnownVersion = 6;
-
     private const double KnownTimestamp = -1.0;
 
     public int Version { get; private set; }
@@ -26,17 +24,22 @@ internal sealed class DataCenterHeader
     public async ValueTask ReadAsync(bool strict, StreamBinaryReader reader, CancellationToken cancellationToken)
     {
         Version = await reader.ReadInt32Async(cancellationToken).ConfigureAwait(false);
+
+        Check.Data(Version is 3 or 6, $"Unsupported data center version {Version} (expected 3 or 6).");
+
         Timestamp = await reader.ReadDoubleAsync(cancellationToken).ConfigureAwait(false);
-        Revision = await reader.ReadInt32Async(cancellationToken).ConfigureAwait(false);
+
+        Check.Data(
+            Timestamp == KnownTimestamp, $"Unexpected data center timestamp {Timestamp} (expected {KnownTimestamp}).");
+
+        if (Version == 6)
+            Revision = await reader.ReadInt32Async(cancellationToken).ConfigureAwait(false);
+
         Unknown1 = await reader.ReadInt16Async(cancellationToken).ConfigureAwait(false);
         Unknown2 = await reader.ReadInt16Async(cancellationToken).ConfigureAwait(false);
         Unknown3 = await reader.ReadInt32Async(cancellationToken).ConfigureAwait(false);
         Unknown4 = await reader.ReadInt32Async(cancellationToken).ConfigureAwait(false);
         Unknown5 = await reader.ReadInt32Async(cancellationToken).ConfigureAwait(false);
-
-        Check.Data(Version == KnownVersion, $"Unsupported data center version {Version} (expected {KnownVersion}).");
-        Check.Data(
-            Timestamp == KnownTimestamp, $"Unexpected data center timestamp {Timestamp} (expected {KnownTimestamp}).");
 
         var tup = (Unknown1, Unknown2, Unknown3, Unknown4, Unknown5);
 
@@ -44,11 +47,17 @@ internal sealed class DataCenterHeader
     }
 
     [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
-    public async ValueTask WriteAsync(StreamBinaryWriter writer, CancellationToken cancellationToken)
+    public async ValueTask WriteAsync(
+        StreamBinaryWriter writer, DataCenterFormat format, CancellationToken cancellationToken)
     {
-        await writer.WriteInt32Async(KnownVersion, cancellationToken).ConfigureAwait(false);
+        var is6 = format != DataCenterFormat.V3;
+
+        await writer.WriteInt32Async(is6 ? 6 : 3, cancellationToken).ConfigureAwait(false);
         await writer.WriteDoubleAsync(KnownTimestamp, cancellationToken).ConfigureAwait(false);
-        await writer.WriteInt32Async(Revision, cancellationToken).ConfigureAwait(false);
+
+        if (is6)
+            await writer.WriteInt32Async(Revision, cancellationToken).ConfigureAwait(false);
+
         await writer.WriteInt16Async(Unknown1, cancellationToken).ConfigureAwait(false);
         await writer.WriteInt16Async(Unknown2, cancellationToken).ConfigureAwait(false);
         await writer.WriteInt32Async(Unknown3, cancellationToken).ConfigureAwait(false);
