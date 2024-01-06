@@ -105,36 +105,38 @@ public abstract class GameMessageServer : IDisposable
         var id = cds.dwData;
         var payload = new ReadOnlySpan<byte>(cds.lpData, (int)cds.cbData);
 
-        var process = Unsafe.As<GameMessageServer>(((GCHandle)GetWindowLongPtrW(hWnd, 0)).Target!);
+        var @this = Unsafe.As<GameMessageServer>(((GCHandle)GetWindowLongPtrW(hWnd, 0)).Target!);
 
-        process.MessageReceived?.Invoke(payload, id);
+        @this.MessageReceived?.Invoke(payload, id);
 
-        var result = process.HandleWindowMessage(id, payload);
+        var result = @this.HandleWindowMessage(id, payload);
 
         if (result is not var (replyId, replyPayload))
             return (LRESULT)1;
 
         // We have to fire off the reply in a separate thread or we will cause a deadlock.
         _ = ThreadPool.UnsafeQueueUserWorkItem(
-            _ =>
+            static tup =>
             {
-                var replySpan = replyPayload.Span;
+                var replySpan = tup.ReplyPayload.Span;
 
                 fixed (byte* ptr = replySpan)
                 {
                     var response = new COPYDATASTRUCT
                     {
-                        dwData = replyId,
+                        dwData = tup.ReplyId,
                         lpData = ptr,
-                        cbData = (uint)replyPayload.Length,
+                        cbData = (uint)replySpan.Length,
                     };
 
-                    _ = SendMessageW((HWND)(nint)(nuint)wParam, msg, (nuint)(nint)hWnd, (nint)(&response));
+                    _ = SendMessageW(
+                        (HWND)(nint)(nuint)tup.Sender, tup.Message, (nuint)(nint)tup.Receiver, (nint)(&response));
 
-                    process.MessageSent?.Invoke(replySpan, replyId);
+                    tup.This.MessageSent?.Invoke(replySpan, tup.ReplyId);
                 }
             },
-            null);
+            (This: @this, Sender: wParam, Receiver: hWnd, Message: msg, ReplyId: replyId, ReplyPayload: replyPayload),
+            preferLocal: true);
 
         return (LRESULT)1;
     }

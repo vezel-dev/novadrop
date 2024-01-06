@@ -84,7 +84,7 @@ public sealed class ClientMessageServer : GameMessageServer
                 SortCriterion = BinaryPrimitives.ReadUInt32LittleEndian(payload),
             };
 
-            foreach (var srv in Options.Servers.Values.OrderBy(s => s.Id))
+            foreach (var srv in Options.Servers.Values.OrderBy(static s => s.Id))
                 csl.Servers.Add(new()
                 {
                     Id = (uint)srv.Id,

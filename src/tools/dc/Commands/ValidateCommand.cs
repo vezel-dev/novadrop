@@ -36,7 +36,7 @@ internal sealed class ValidateCommand : CancellableAsyncCommand<ValidateCommand.
             () => Task.FromResult(
                 new DirectoryInfo(settings.Input)
                     .EnumerateFiles("?*-?*.xml", SearchOption.AllDirectories)
-                    .OrderBy(f => f.FullName, StringComparer.Ordinal)
+                    .OrderBy(static f => f.FullName, StringComparer.Ordinal)
                     .ToArray()));
 
         var handler = (DataSheetValidationHandler)expando.Handler;

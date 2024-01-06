@@ -72,7 +72,7 @@ public sealed partial class LauncherMessageServer : GameMessageServer
                     Options.AccountName,
                     Options.SessionTicket,
                     Options.Servers.Values.Select(
-                        s => new LauncherAuthenticationInfo.ServerCharacters(s.Id, s.Characters)),
+                        static s => new LauncherAuthenticationInfo.ServerCharacters(s.Id, s.Characters)),
                     Options.LastServerId),
                 LauncherJsonContext.Default.LauncherAuthenticationInfo) + '\0';
         }

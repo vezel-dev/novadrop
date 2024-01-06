@@ -59,8 +59,8 @@ internal sealed class PackCommand : CancellableAsyncCommand<PackCommand.PackComm
             () => Task.FromResult(
                 new DirectoryInfo(settings.Input)
                     .EnumerateFiles("?*-?*.xml", SearchOption.AllDirectories)
-                    .OrderBy(f => f.FullName, StringComparer.Ordinal)
-                    .Select((file, index) => (File: file, Index: index))
+                    .OrderBy(static f => f.FullName, StringComparer.Ordinal)
+                    .Select(static (file, index) => (File: file, Index: index))
                     .ToArray()));
 
         var root = DataCenter.Create();
@@ -233,7 +233,7 @@ internal sealed class PackCommand : CancellableAsyncCommand<PackCommand.PackComm
             "Sort root child nodes",
             () =>
             {
-                var lookup = nodes.ToDictionary(item => item.Node, item => item.Index);
+                var lookup = nodes.ToDictionary(static item => item.Node, static item => item.Index);
 
                 // Since we process data sheets in parallel (i.e. non-deterministically), the data center we now have in
                 // memory will not have the correct order for the immediate children of the root node. We fix that here.

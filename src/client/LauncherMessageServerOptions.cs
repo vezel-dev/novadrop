@@ -90,7 +90,7 @@ public sealed class LauncherMessageServerOptions
 
         var options = Clone();
 
-        options.Servers = servers.ToImmutableSortedDictionary(srv => srv.Id, srv => srv);
+        options.Servers = servers.ToImmutableSortedDictionary(static srv => srv.Id, static srv => srv);
 
         return options;
     }
@@ -118,7 +118,7 @@ public sealed class LauncherMessageServerOptions
 
         var options = Clone();
 
-        options.Servers = Servers.AddRange(servers.Select(srv => KeyValuePair.Create(srv.Id, srv)));
+        options.Servers = Servers.AddRange(servers.Select(static srv => KeyValuePair.Create(srv.Id, srv)));
 
         return options;
     }

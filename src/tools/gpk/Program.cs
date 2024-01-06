@@ -3,7 +3,7 @@ AnsiConsole.Profile.Capabilities.Ansi = !Console.IsOutputRedirected && !Console.
 var app = new CommandApp();
 
 // TODO: Add commands.
-app.Configure(cfg =>
+app.Configure(static cfg =>
     cfg
         .SetApplicationName("novadrop-gpk")
         .PropagateExceptions());
