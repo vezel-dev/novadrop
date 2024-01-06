@@ -7,7 +7,7 @@ internal sealed class DataCenterKeysTableWriter
 {
     private readonly DataCenterSimpleRegion<DataCenterRawKeys> _keys = new(false);
 
-    private readonly Dictionary<(string?, string?, string?, string?), int> _cache = new(ushort.MaxValue);
+    private readonly Dictionary<(string?, string?, string?, string?), int> _indexes = new(ushort.MaxValue);
 
     private readonly DataCenterStringTableWriter _names;
 
@@ -26,7 +26,7 @@ internal sealed class DataCenterKeysTableWriter
     {
         var tup = (attributeName1, attributeName2, attributeName3, attributeName4);
 
-        ref var index = ref CollectionsMarshal.GetValueRefOrAddDefault(_cache, tup, out var exists);
+        ref var index = ref CollectionsMarshal.GetValueRefOrAddDefault(_indexes, tup, out var exists);
 
         if (!exists)
         {

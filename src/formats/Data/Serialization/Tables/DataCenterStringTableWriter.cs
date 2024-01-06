@@ -11,7 +11,7 @@ internal sealed class DataCenterStringTableWriter
 
     private readonly DataCenterSimpleRegion<DataCenterRawAddress> _addresses = new(true);
 
-    private readonly Dictionary<string, DataCenterRawString> _cache = new(ushort.MaxValue);
+    private readonly Dictionary<string, DataCenterRawString> _entries = new(ushort.MaxValue);
 
     private readonly bool _limit;
 
@@ -35,7 +35,7 @@ internal sealed class DataCenterStringTableWriter
 
     public DataCenterRawString AddString(string value)
     {
-        ref var raw = ref CollectionsMarshal.GetValueRefOrAddDefault(_cache, value, out var exists);
+        ref var raw = ref CollectionsMarshal.GetValueRefOrAddDefault(_entries, value, out var exists);
 
         if (!exists)
         {
@@ -108,6 +108,6 @@ internal sealed class DataCenterStringTableWriter
 
     public DataCenterRawString GetString(string value)
     {
-        return _cache[value];
+        return _entries[value];
     }
 }
