@@ -92,6 +92,7 @@ specifies the path of the directory to write inferred schemas to.
 | - | - |
 | `--decryption-key <key>` | Specifies a decryption key (defaults to the latest known key). |
 | `--decryption-iv <iv>` | Specifies a decryption IV (defaults to the latest known IV). |
+| `--architecture <architecture>` | Specifies the data center format architecture (defaults to `X64`). |
 | `--strict` | Enables strict format compliance checks while reading the input file. |
 | `--strategy <level>` | Specifies a schema inference strategy (defaults to `Conservative`). |
 | `--subdirectories` | Enables using output subdirectories based on data sheet names. |

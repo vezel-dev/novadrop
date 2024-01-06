@@ -25,6 +25,10 @@ internal sealed class SchemaCommand : CancellableAsyncCommand<SchemaCommand.Sche
         [TypeConverter(typeof(HexStringConverter))]
         public ReadOnlyMemory<byte> DecryptionIV { get; init; } = DataCenter.LatestIV;
 
+        [CommandOption("--architecture <architecture>")]
+        [Description("Set format architecture")]
+        public DataCenterArchitecture Architecture { get; init; } = DataCenterArchitecture.X64;
+
         [CommandOption("--strict")]
         [Description("Enable strict verification")]
         public bool Strict { get; init; }
@@ -80,6 +84,7 @@ internal sealed class SchemaCommand : CancellableAsyncCommand<SchemaCommand.Sche
                     new DataCenterLoadOptions()
                         .WithKey(settings.DecryptionKey.Span)
                         .WithIV(settings.DecryptionIV.Span)
+                        .WithArchitecture(settings.Architecture)
                         .WithStrict(settings.Strict)
                         .WithLoaderMode(DataCenterLoaderMode.Eager)
                         .WithMutability(DataCenterMutability.Immutable),
