@@ -26,7 +26,7 @@ internal sealed class DataCenterKeysTableReader
     {
         // This has to happen after the names string table has been read.
 
-        for (var i = 0; i < _keys.Elements.Count; i++)
+        foreach (var raw in _keys.Elements)
         {
             string? GetName(int index)
             {
@@ -44,10 +44,8 @@ internal sealed class DataCenterKeysTableReader
                 return name;
             }
 
-            var raw = _keys.Elements[i];
-
-            _byIndex[i] = new(
-                GetName(raw.NameIndex1), GetName(raw.NameIndex2), GetName(raw.NameIndex3), GetName(raw.NameIndex4));
+            _byIndex.Add(new(
+                GetName(raw.NameIndex1), GetName(raw.NameIndex2), GetName(raw.NameIndex3), GetName(raw.NameIndex4)));
         }
     }
 
