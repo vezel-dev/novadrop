@@ -80,17 +80,13 @@ internal sealed class StreamBinaryReader
     [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder<>))]
     public async ValueTask<float> ReadSingleAsync(CancellationToken cancellationToken)
     {
-        var value = await ReadUInt32Async(cancellationToken).ConfigureAwait(false);
-
-        return Unsafe.As<uint, float>(ref value);
+        return Unsafe.BitCast<uint, float>(await ReadUInt32Async(cancellationToken).ConfigureAwait(false));
     }
 
     [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder<>))]
     public async ValueTask<double> ReadDoubleAsync(CancellationToken cancellationToken)
     {
-        var value = await ReadUInt64Async(cancellationToken).ConfigureAwait(false);
-
-        return Unsafe.As<ulong, double>(ref value);
+        return Unsafe.BitCast<ulong, double>(await ReadUInt64Async(cancellationToken).ConfigureAwait(false));
     }
 
     [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder<>))]

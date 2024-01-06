@@ -2,6 +2,8 @@ namespace Vezel.Novadrop.Data;
 
 public sealed class DataCenterSaveOptions
 {
+    public DataCenterFormat Format { get; private set; } = DataCenterFormat.V6X64;
+
     public int Revision { get; private set; } = DataCenter.LatestRevision;
 
     public CompressionLevel CompressionLevel { get; private set; }
@@ -18,7 +20,19 @@ public sealed class DataCenterSaveOptions
             CompressionLevel = CompressionLevel,
             Key = Key,
             IV = IV,
+            Format = Format,
         };
+    }
+
+    public DataCenterSaveOptions WithFormat(DataCenterFormat format)
+    {
+        Check.Enum(format);
+
+        var options = Clone();
+
+        options.Format = format;
+
+        return options;
     }
 
     public DataCenterSaveOptions WithRevision(int revision)

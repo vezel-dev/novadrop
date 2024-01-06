@@ -13,27 +13,56 @@ internal struct DataCenterRawNode : IDataCenterItem, IEquatable<DataCenterRawNod
 
     public DataCenterRawAddress AttributeAddress;
 
-    public uint Padding1;
+    public uint Padding1; // This can be safely ignored.
 
     public DataCenterRawAddress ChildAddress;
 
-    public uint Padding2;
-
-    public void ReverseEndianness()
-    {
-        NameIndex = BinaryPrimitives.ReverseEndianness(NameIndex);
-        KeysInfo = BinaryPrimitives.ReverseEndianness(KeysInfo);
-        AttributeCount = BinaryPrimitives.ReverseEndianness(AttributeCount);
-        ChildCount = BinaryPrimitives.ReverseEndianness(ChildCount);
-        AttributeAddress.ReverseEndianness();
-        ChildAddress.ReverseEndianness();
-
-        // Note: Padding1 and Padding2 can be safely ignored.
-    }
+    public uint Padding2; // This can be safely ignored.
 
     public static bool operator ==(DataCenterRawNode left, DataCenterRawNode right) => left.Equals(right);
 
     public static bool operator !=(DataCenterRawNode left, DataCenterRawNode right) => !left.Equals(right);
+
+    public static unsafe int GetSize(DataCenterArchitecture architecture)
+    {
+        return architecture == DataCenterArchitecture.X64
+            ? sizeof(DataCenterRawNode)
+            : sizeof(DataCenterRawNode) - sizeof(uint) * 2;
+    }
+
+    public void Read(DataCenterArchitecture architecture, ref SpanReader reader)
+    {
+        NameIndex = reader.ReadUInt16();
+        KeysInfo = reader.ReadUInt16();
+        AttributeCount = reader.ReadUInt16();
+        ChildCount = reader.ReadUInt16();
+        AttributeAddress.Read(architecture, ref reader);
+
+        if (architecture == DataCenterArchitecture.X64)
+            reader.Advance(sizeof(uint));
+
+        ChildAddress.Read(architecture, ref reader);
+
+        if (architecture == DataCenterArchitecture.X64)
+            reader.Advance(sizeof(uint));
+    }
+
+    public readonly void Write(DataCenterArchitecture architecture, ref SpanWriter writer)
+    {
+        writer.WriteUInt16(NameIndex);
+        writer.WriteUInt16(KeysInfo);
+        writer.WriteUInt16(AttributeCount);
+        writer.WriteUInt16(ChildCount);
+        AttributeAddress.Write(architecture, ref writer);
+
+        if (architecture == DataCenterArchitecture.X64)
+            writer.Advance(sizeof(uint));
+
+        ChildAddress.Write(architecture, ref writer);
+
+        if (architecture == DataCenterArchitecture.X64)
+            writer.Advance(sizeof(uint));
+    }
 
     public readonly bool Equals(DataCenterRawNode other)
     {

@@ -9,20 +9,38 @@ internal struct DataCenterRawAttribute : IDataCenterItem, IEquatable<DataCenterR
 
     public int Value;
 
-    public uint Padding1;
-
-    public void ReverseEndianness()
-    {
-        NameIndex = BinaryPrimitives.ReverseEndianness(NameIndex);
-        TypeInfo = BinaryPrimitives.ReverseEndianness(TypeInfo);
-        Value = BinaryPrimitives.ReverseEndianness(Value);
-
-        // Note: Padding1 can be safely ignored.
-    }
+    public uint Padding1; // This can be safely ignored.
 
     public static bool operator ==(DataCenterRawAttribute left, DataCenterRawAttribute right) => left.Equals(right);
 
     public static bool operator !=(DataCenterRawAttribute left, DataCenterRawAttribute right) => !left.Equals(right);
+
+    public static unsafe int GetSize(DataCenterArchitecture architecture)
+    {
+        return architecture == DataCenterArchitecture.X64
+            ? sizeof(DataCenterRawAttribute)
+            : sizeof(DataCenterRawAttribute) - sizeof(uint);
+    }
+
+    public void Read(DataCenterArchitecture architecture, ref SpanReader reader)
+    {
+        NameIndex = reader.ReadUInt16();
+        TypeInfo = reader.ReadUInt16();
+        Value = reader.ReadInt32();
+
+        if (architecture == DataCenterArchitecture.X64)
+            reader.Advance(sizeof(uint));
+    }
+
+    public readonly void Write(DataCenterArchitecture architecture, ref SpanWriter writer)
+    {
+        writer.WriteUInt16(NameIndex);
+        writer.WriteUInt16(TypeInfo);
+        writer.WriteInt32(Value);
+
+        if (architecture == DataCenterArchitecture.X64)
+            writer.Advance(sizeof(uint));
+    }
 
     public readonly bool Equals(DataCenterRawAttribute other)
     {

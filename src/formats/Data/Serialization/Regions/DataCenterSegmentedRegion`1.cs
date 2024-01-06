@@ -8,7 +8,8 @@ internal sealed class DataCenterSegmentedRegion<T>
     public List<DataCenterRegion<T>> Segments { get; } = new(ushort.MaxValue);
 
     [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
-    public async ValueTask ReadAsync(bool strict, StreamBinaryReader reader, CancellationToken cancellationToken)
+    public async ValueTask ReadAsync(
+        DataCenterArchitecture architecture, StreamBinaryReader reader, CancellationToken cancellationToken)
     {
         var count = await reader.ReadInt32Async(cancellationToken).ConfigureAwait(false);
 
@@ -18,19 +19,20 @@ internal sealed class DataCenterSegmentedRegion<T>
         {
             var region = new DataCenterRegion<T>();
 
-            await region.ReadAsync(strict, reader, cancellationToken).ConfigureAwait(false);
+            await region.ReadAsync(architecture, reader, cancellationToken).ConfigureAwait(false);
 
             Segments.Add(region);
         }
     }
 
     [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
-    public async ValueTask WriteAsync(StreamBinaryWriter writer, CancellationToken cancellationToken)
+    public async ValueTask WriteAsync(
+        DataCenterArchitecture architecture, StreamBinaryWriter writer, CancellationToken cancellationToken)
     {
         await writer.WriteInt32Async(Segments.Count, cancellationToken).ConfigureAwait(false);
 
         foreach (var region in Segments)
-            await region.WriteAsync(writer, cancellationToken).ConfigureAwait(false);
+            await region.WriteAsync(architecture, writer, cancellationToken).ConfigureAwait(false);
     }
 
     public T GetElement(DataCenterAddress address)

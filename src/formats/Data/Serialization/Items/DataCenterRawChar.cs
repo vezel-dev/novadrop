@@ -5,8 +5,18 @@ internal struct DataCenterRawChar : IDataCenterItem
 {
     public char Value;
 
-    public void ReverseEndianness()
+    public static unsafe int GetSize(DataCenterArchitecture architecture)
     {
-        Value = (char)BinaryPrimitives.ReverseEndianness(Value);
+        return sizeof(DataCenterRawChar);
+    }
+
+    public void Read(DataCenterArchitecture architecture, ref SpanReader reader)
+    {
+        Value = reader.ReadChar();
+    }
+
+    public readonly void Write(DataCenterArchitecture architecture, ref SpanWriter writer)
+    {
+        writer.WriteChar(Value);
     }
 }

@@ -8,39 +8,39 @@ internal sealed class DataCenterRegion<T>
     public List<T> Elements { get; } = new(ushort.MaxValue);
 
     [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
-    public async ValueTask ReadAsync(bool strict, StreamBinaryReader reader, CancellationToken cancellationToken)
+    public async ValueTask ReadAsync(
+        DataCenterArchitecture architecture, StreamBinaryReader reader, CancellationToken cancellationToken)
     {
         var capacity = await reader.ReadInt32Async(cancellationToken).ConfigureAwait(false);
         var count = await reader.ReadInt32Async(cancellationToken).ConfigureAwait(false);
 
         Check.Data(count >= 0, $"Region length {count} is negative.");
+        Check.Data(capacity >= 0, $"Region capacity {capacity} is negative.");
+        Check.Data(count <= capacity, $"Region length {count} is greater than region capacity {capacity}.");
 
-        if (strict)
-        {
-            Check.Data(capacity >= 0, $"Region capacity {capacity} is negative.");
-            Check.Data(count <= capacity, $"Region length {count} is greater than region capacity {capacity}.");
-        }
-
-        var length = Unsafe.SizeOf<T>() * capacity;
+        var length = T.GetSize(architecture) * capacity;
         var bytes = ArrayPool<byte>.Shared.Rent(length);
 
         try
         {
             await reader.ReadAsync(bytes.AsMemory(0, length), cancellationToken).ConfigureAwait(false);
 
-            void ProcessElements()
+            void ReadElements()
             {
-                foreach (ref var elem in MemoryMarshal.Cast<byte, T>(bytes)[..count])
+                var reader = new SpanReader(bytes);
+
+                for (var i = 0; i < count; i++)
                 {
-                    if (!BitConverter.IsLittleEndian)
-                        elem.ReverseEndianness();
+                    var elem = default(T);
+
+                    elem.Read(architecture, ref reader);
 
                     Elements.Add(elem);
                 }
             }
 
             // Cannot use refs in async methods...
-            ProcessElements();
+            ReadElements();
         }
         finally
         {
@@ -49,33 +49,29 @@ internal sealed class DataCenterRegion<T>
     }
 
     [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
-    public async ValueTask WriteAsync(StreamBinaryWriter writer, CancellationToken cancellationToken)
+    public async ValueTask WriteAsync(
+        DataCenterArchitecture architecture, StreamBinaryWriter writer, CancellationToken cancellationToken)
     {
         var count = Elements.Count;
 
         for (var i = 0; i < 2; i++)
             await writer.WriteInt32Async(count, cancellationToken).ConfigureAwait(false);
 
-        var length = Unsafe.SizeOf<T>() * count;
+        var length = T.GetSize(architecture) * count;
         var bytes = ArrayPool<byte>.Shared.Rent(length);
 
         try
         {
-            void ProcessElements()
+            void WriteElements()
             {
-                var i = 0;
+                var writer = new SpanWriter(bytes);
 
-                foreach (ref var elem in MemoryMarshal.Cast<byte, T>(bytes)[..count])
-                {
-                    elem = Elements[i++];
-
-                    if (!BitConverter.IsLittleEndian)
-                        elem.ReverseEndianness();
-                }
+                foreach (var elem in Elements)
+                    elem.Write(architecture, ref writer);
             }
 
             // Cannot use refs in async methods...
-            ProcessElements();
+            WriteElements();
 
             await writer.WriteAsync(bytes.AsMemory(0, length), cancellationToken).ConfigureAwait(false);
         }

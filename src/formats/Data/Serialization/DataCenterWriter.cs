@@ -378,13 +378,16 @@ internal sealed class DataCenterWriter
                 using var memoryStream = new MemoryStream();
 
                 var writer = new StreamBinaryWriter(memoryStream);
+                var arch = _options.Format == DataCenterFormat.V6X64
+                    ? DataCenterArchitecture.X64
+                    : DataCenterArchitecture.X86;
 
-                await _header.WriteAsync(writer, cancellationToken).ConfigureAwait(false);
-                await _keys.WriteAsync(writer, cancellationToken).ConfigureAwait(false);
-                await _attributes.WriteAsync(writer, cancellationToken).ConfigureAwait(false);
-                await _nodes.WriteAsync(writer, cancellationToken).ConfigureAwait(false);
-                await _values.WriteAsync(writer, cancellationToken).ConfigureAwait(false);
-                await _names.WriteAsync(writer, cancellationToken).ConfigureAwait(false);
+                await _header.WriteAsync(writer, _options.Format, cancellationToken).ConfigureAwait(false);
+                await _keys.WriteAsync(arch, writer, cancellationToken).ConfigureAwait(false);
+                await _attributes.WriteAsync(arch, writer, cancellationToken).ConfigureAwait(false);
+                await _nodes.WriteAsync(arch, writer, cancellationToken).ConfigureAwait(false);
+                await _values.WriteAsync(arch, writer, cancellationToken).ConfigureAwait(false);
+                await _names.WriteAsync(arch, writer, cancellationToken).ConfigureAwait(false);
                 await _footer.WriteAsync(writer, cancellationToken).ConfigureAwait(false);
 
                 await memoryStream.FlushAsync(cancellationToken).ConfigureAwait(false);

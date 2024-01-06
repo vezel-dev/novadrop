@@ -22,15 +22,16 @@ internal sealed class DataCenterStringTableWriter
     }
 
     [AsyncMethodBuilder(typeof(PoolingAsyncValueTaskMethodBuilder))]
-    public async ValueTask WriteAsync(StreamBinaryWriter writer, CancellationToken cancellationToken)
+    public async ValueTask WriteAsync(
+        DataCenterArchitecture architecture, StreamBinaryWriter writer, CancellationToken cancellationToken)
     {
-        await _data.WriteAsync(writer, cancellationToken).ConfigureAwait(false);
+        await _data.WriteAsync(architecture, writer, cancellationToken).ConfigureAwait(false);
 
         foreach (var seg in _strings.Segments)
             seg.Elements.Sort(static (a, b) => a.Hash.CompareTo(b.Hash));
 
-        await _strings.WriteAsync(writer, cancellationToken).ConfigureAwait(false);
-        await _addresses.WriteAsync(writer, cancellationToken).ConfigureAwait(false);
+        await _strings.WriteAsync(architecture, writer, cancellationToken).ConfigureAwait(false);
+        await _addresses.WriteAsync(architecture, writer, cancellationToken).ConfigureAwait(false);
     }
 
     public DataCenterRawString AddString(string value)

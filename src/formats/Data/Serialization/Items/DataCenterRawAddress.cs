@@ -7,15 +7,26 @@ internal struct DataCenterRawAddress : IDataCenterItem, IEquatable<DataCenterRaw
 
     public ushort ElementIndex;
 
-    public void ReverseEndianness()
-    {
-        SegmentIndex = BinaryPrimitives.ReverseEndianness(SegmentIndex);
-        ElementIndex = BinaryPrimitives.ReverseEndianness(ElementIndex);
-    }
-
     public static bool operator ==(DataCenterRawAddress left, DataCenterRawAddress right) => left.Equals(right);
 
     public static bool operator !=(DataCenterRawAddress left, DataCenterRawAddress right) => !left.Equals(right);
+
+    public static unsafe int GetSize(DataCenterArchitecture architecture)
+    {
+        return sizeof(DataCenterRawAddress);
+    }
+
+    public void Read(DataCenterArchitecture architecture, ref SpanReader reader)
+    {
+        SegmentIndex = reader.ReadUInt16();
+        ElementIndex = reader.ReadUInt16();
+    }
+
+    public readonly void Write(DataCenterArchitecture architecture, ref SpanWriter writer)
+    {
+        writer.WriteUInt16(SegmentIndex);
+        writer.WriteUInt16(ElementIndex);
+    }
 
     public readonly bool Equals(DataCenterRawAddress other)
     {

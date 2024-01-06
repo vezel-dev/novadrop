@@ -83,7 +83,9 @@ struct DataCenterHeader
 };
 ```
 
-`version` is currently `6`.
+`version` is currently `6`. A past version `3` also existed. Note that this
+field has no distinguishing value for the 32-bit and 64-bit formats, but version
+`3` was only 32-bit.
 
 `timestamp` is a Unix timestamp indicating when the file was produced.
 
@@ -94,7 +96,7 @@ data centers never include this information.
 
 `revision` indicates the version of the data graph contained within the file. It
 is sometimes (but not always) equal to the value sent by the client in the
-`C_CHECK_VERSION` packet.
+`C_CHECK_VERSION` packet. This field is not present if `version` is `3`.
 
 ### File Footer
 
@@ -348,7 +350,7 @@ sort should be stable since the order of multiple sibling nodes with the same
 name can be significant for the interpretation of the data.
 
 `padding_1` and `padding_2` should be considered undefined. They were added in
-the 64-bit data center format.
+the 64-bit data center format, and are not present in the 32-bit format.
 
 The root node of the data graph must be located at the address `0:0`. It must
 have the name `__root__` and have zero attributes.
@@ -436,7 +438,7 @@ type codes, the value is written directly and is accessed through the `i`, `b`,
 or `f` fields.
 
 `padding_1` should be considered undefined. It was added in the 64-bit data
-center format.
+center format, and is not present in the 32-bit format.
 
 Some nodes will have a special attribute named `__value__`. In XML terms, this
 represents the text of a node. For example, `<Foo>bar</Foo>` would be serialized
