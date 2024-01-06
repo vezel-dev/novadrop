@@ -160,7 +160,7 @@ internal sealed class SchemaCommand : CancellableAsyncCommand<SchemaCommand.Sche
             if (nodeSchema.Attributes.Count == 0)
                 return;
 
-            foreach (var (name, attrSchema) in nodeSchema.Attributes.OrderBy(n => n.Key, StringComparer.Ordinal))
+            foreach (var (name, attrSchema) in nodeSchema.Attributes.OrderBy(static n => n.Key, StringComparer.Ordinal))
             {
                 await xmlWriter.WriteStartElementAsync("xsd", "attribute", null);
 
@@ -206,7 +206,9 @@ internal sealed class SchemaCommand : CancellableAsyncCommand<SchemaCommand.Sche
                 {
                     await xmlWriter.WriteStartElementAsync("xsd", "sequence", null);
 
-                    foreach (var (childName, edge) in nodeSchema.Children.OrderBy(n => n.Key, StringComparer.Ordinal))
+                    foreach (var (childName, edge) in nodeSchema
+                        .Children
+                        .OrderBy(static n => n.Key, StringComparer.Ordinal))
                     {
                         var fullChildName = writtenTypes.GetValueOrDefault(edge.Node) ?? $"{typeName}_{childName}";
 
@@ -251,7 +253,9 @@ internal sealed class SchemaCommand : CancellableAsyncCommand<SchemaCommand.Sche
             await xmlWriter.WriteEndElementAsync();
 
             if (nodeSchema.Children.Count != 0)
-                foreach (var (childName, child) in nodeSchema.Children.OrderBy(n => n.Key, StringComparer.Ordinal))
+                foreach (var (childName, child) in nodeSchema
+                    .Children
+                    .OrderBy(static n => n.Key, StringComparer.Ordinal))
                     if (!writtenTypes.ContainsKey(child.Node))
                         await WriteComplexTypeAsync(xmlWriter, $"{typeName}_{childName}", child.Node);
         }

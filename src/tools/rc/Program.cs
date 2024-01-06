@@ -4,7 +4,7 @@ AnsiConsole.Profile.Capabilities.Ansi = !Console.IsOutputRedirected && !Console.
 
 var app = new CommandApp();
 
-app.Configure(cfg =>
+app.Configure(static cfg =>
 {
     _ = cfg
         .SetApplicationName("novadrop-rc")

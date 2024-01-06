@@ -4923,7 +4923,7 @@ public sealed class SystemMessageTable
         Check.Range(revision >= 0, revision);
         Check.Null(mapping);
 
-        NameToCode = mapping.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-        CodeToName = mapping.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
+        NameToCode = mapping.ToDictionary(static kvp => kvp.Key, static kvp => kvp.Value);
+        CodeToName = mapping.ToDictionary(static kvp => kvp.Value, static kvp => kvp.Key);
     }
 }

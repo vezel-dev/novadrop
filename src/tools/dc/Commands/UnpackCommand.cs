@@ -65,7 +65,7 @@ internal sealed class UnpackCommand : CancellableAsyncCommand<UnpackCommand.Unpa
 
         var output = new DirectoryInfo(settings.Output);
         var sheets = root.Children;
-        var sheetNames = sheets.Select(n => n.Name).Distinct().ToArray();
+        var sheetNames = sheets.Select(static n => n.Name).Distinct().ToArray();
         var missing = (List<string>)expando.Missing;
 
         await progress.RunTaskAsync(
@@ -127,8 +127,10 @@ internal sealed class UnpackCommand : CancellableAsyncCommand<UnpackCommand.Unpa
 
                 return Parallel.ForEachAsync(
                     sheets
-                        .GroupBy(n => n.Name, (name, elems) => elems.Select((node, index) => (node, index)))
-                        .SelectMany(elems => elems),
+                        .GroupBy(
+                            static n => n.Name,
+                            static (name, elems) => elems.Select(static (node, index) => (node, index)))
+                        .SelectMany(static elems => elems),
                     cancellationToken,
                     async (item, cancellationToken) =>
                     {
@@ -166,7 +168,9 @@ internal sealed class UnpackCommand : CancellableAsyncCommand<UnpackCommand.Unpa
                                     await xmlWriter.WriteStringAsync(current.Value);
 
                                 if (current.HasChildren)
-                                    foreach (var child in current.Children.OrderBy(n => n.Name, StringComparer.Ordinal))
+                                    foreach (var child in current
+                                        .Children
+                                        .OrderBy(static n => n.Name, StringComparer.Ordinal))
                                         await WriteSheetAsync(child, false);
 
                                 await xmlWriter.WriteEndElementAsync();
