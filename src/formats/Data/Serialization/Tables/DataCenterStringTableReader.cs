@@ -11,9 +11,9 @@ internal sealed class DataCenterStringTableReader
 
     private readonly DataCenterSimpleRegion<DataCenterRawAddress> _addresses = new(true);
 
-    private readonly Dictionary<DataCenterAddress, string> _addressCache = new(ushort.MaxValue);
+    private readonly Dictionary<DataCenterAddress, string> _byAddress = new(ushort.MaxValue);
 
-    private readonly List<string> _indexCache = new(ushort.MaxValue);
+    private readonly List<string> _byIndex = new(ushort.MaxValue);
 
     public DataCenterStringTableReader(int count)
     {
@@ -86,26 +86,25 @@ internal sealed class DataCenterStringTableReader
                     Check.Data(i == bucket, $"String bucket {i} does not match expected bucket {bucket}.");
                 }
 
-                Check.Data(_addressCache.TryAdd(addr, value), $"String address {addr} already recorded earlier.");
+                Check.Data(_byAddress.TryAdd(addr, value), $"String address {addr} already recorded earlier.");
 
                 cache.Add((index, value));
             }
         }
 
-        foreach (var (_, val) in cache.OrderBy(static tup => tup.Index))
-            _indexCache.Add(val);
+        _byIndex.AddRange(cache.OrderBy(static tup => tup.Index).Select(static tup => tup.Value));
     }
 
     public string GetString(int index)
     {
-        Check.Data(index < _indexCache.Count, $"String table index {index} is invalid.");
+        Check.Data(index < _byIndex.Count, $"String table index {index} is out of bounds (0..{_byIndex.Count}).");
 
-        return _indexCache[index];
+        return _byIndex[index];
     }
 
     public string GetString(DataCenterAddress address)
     {
-        Check.Data(_addressCache.TryGetValue(address, out var str), $"String table address {address} is invalid.");
+        Check.Data(_byAddress.TryGetValue(address, out var str), $"String table address {address} is invalid.");
 
         return str;
     }

@@ -7,7 +7,7 @@ internal sealed class DataCenterKeysTableReader
 {
     private readonly DataCenterSimpleRegion<DataCenterRawKeys> _keys = new(false);
 
-    private readonly ConcurrentDictionary<int, DataCenterKeys> _cache = new();
+    private readonly List<DataCenterKeys> _byIndex = new(ushort.MaxValue);
 
     private readonly DataCenterStringTableReader _names;
 
@@ -22,39 +22,39 @@ internal sealed class DataCenterKeysTableReader
         await _keys.ReadAsync(reader, cancellationToken).ConfigureAwait(false);
     }
 
+    public void Populate()
+    {
+        // This has to happen after the names string table has been read.
+
+        for (var i = 0; i < _keys.Elements.Count; i++)
+        {
+            string? GetName(int index)
+            {
+                var nameIdx = index - 1;
+
+                if (nameIdx == -1)
+                    return null;
+
+                var name = _names.GetString(nameIdx);
+
+                Check.Data(
+                    name != DataCenterConstants.ValueAttributeName,
+                    $"Key entry refers to illegal attribute name '{name}'.");
+
+                return name;
+            }
+
+            var raw = _keys.Elements[i];
+
+            _byIndex[i] = new(
+                GetName(raw.NameIndex1), GetName(raw.NameIndex2), GetName(raw.NameIndex3), GetName(raw.NameIndex4));
+        }
+    }
+
     public DataCenterKeys GetKeys(int index)
     {
-        Check.Data(
-            index < _keys.Elements.Count, $"Keys table index {index} is out of bounds (0..{_keys.Elements.Count}).");
+        Check.Data(index < _byIndex.Count, $"Keys table index {index} is out of bounds (0..{_byIndex.Count}).");
 
-        return _cache.GetOrAdd(
-            index,
-            static (i, @this) =>
-            {
-                string? GetName(int index)
-                {
-                    var nameIdx = index - 1;
-
-                    if (nameIdx == -1)
-                        return null;
-
-                    var name = @this._names.GetString(nameIdx);
-
-                    Check.Data(
-                        name != DataCenterConstants.ValueAttributeName,
-                        $"Key entry refers to illegal attribute name '{name}'.");
-
-                    return name;
-                }
-
-                var raw = @this._keys.Elements[i];
-
-                return new(
-                    GetName(raw.NameIndex1),
-                    GetName(raw.NameIndex2),
-                    GetName(raw.NameIndex3),
-                    GetName(raw.NameIndex4));
-            },
-            this);
+        return _byIndex[index];
     }
 }

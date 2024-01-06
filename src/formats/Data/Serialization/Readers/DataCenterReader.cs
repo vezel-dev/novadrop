@@ -223,6 +223,9 @@ internal abstract class DataCenterReader
                         await _nodes.ReadAsync(strict, reader, cancellationToken).ConfigureAwait(false);
                         await _values.ReadAsync(strict, reader, cancellationToken).ConfigureAwait(false);
                         await _names.ReadAsync(strict, reader, cancellationToken).ConfigureAwait(false);
+
+                        _keys.Populate();
+
                         await _footer.ReadAsync(strict, reader, cancellationToken).ConfigureAwait(false);
 
                         Check.Data(
