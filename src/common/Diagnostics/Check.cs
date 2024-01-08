@@ -77,41 +77,6 @@ internal static class Check
         }
     }
 
-    public static class Always
-    {
-        public static void Assert(
-            [DoesNotReturnIf(false)] bool condition,
-            [CallerArgumentExpression(nameof(condition))] string? expression = null)
-        {
-            if (!condition)
-                throw new UnreachableException($"Hard assertion '{expression}' failed.");
-        }
-    }
-
-    public static class Debug
-    {
-        [Conditional("DEBUG")]
-        public static void Assert(
-            [DoesNotReturnIf(false)] bool condition,
-            [CallerArgumentExpression(nameof(condition))] string? expression = null)
-        {
-            if (!condition)
-                throw new UnreachableException($"Debug assertion '{expression}' failed.");
-        }
-    }
-
-    public static class Release
-    {
-        [Conditional("RELEASE")]
-        public static void Assert(
-            [DoesNotReturnIf(false)] bool condition,
-            [CallerArgumentExpression(nameof(condition))] string? expression = null)
-        {
-            if (!condition)
-                throw new UnreachableException($"Release assertion '{expression}' failed.");
-        }
-    }
-
     public static void Argument([DoesNotReturnIf(false)] bool condition)
     {
         if (!condition)
@@ -121,18 +86,6 @@ internal static class Check
     public static void Argument<T>(
         [DoesNotReturnIf(false)] bool condition,
         in T value,
-        [CallerArgumentExpression(nameof(value))] string? name = null)
-    {
-        _ = value;
-
-        if (!condition)
-            throw new ArgumentException(message: null, name);
-    }
-
-    // TODO: https://github.com/dotnet/csharplang/issues/1148
-    public static void Argument<T>(
-        [DoesNotReturnIf(false)] bool condition,
-        scoped ReadOnlySpan<T> value,
         [CallerArgumentExpression(nameof(value))] string? name = null)
     {
         _ = value;
@@ -176,17 +129,6 @@ internal static class Check
     {
         if (!condition)
             throw new InvalidOperationException(message.ToStringAndClear());
-    }
-
-    public static void OperationSupported([DoesNotReturnIf(false)] bool condition)
-    {
-        if (!condition)
-            throw new NotSupportedException();
-    }
-
-    public static void Usable([DoesNotReturnIf(false)] bool condition, object instance)
-    {
-        ObjectDisposedException.ThrowIf(!condition, instance);
     }
 
     public static void Data(
