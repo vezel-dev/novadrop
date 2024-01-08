@@ -44,7 +44,8 @@ internal sealed class LazyMutableDataCenterReader : DataCenterReader
             {
                 var children = new List<DataCenterNode>(raw.ChildCount);
 
-                ReadChildren(raw, node, children, static (children, node) => children.Add(node), default);
+                ReadChildren(
+                    raw, node, children, static (children, node) => children.Add(node), CancellationToken.None);
 
                 return children;
             });
@@ -53,6 +54,6 @@ internal sealed class LazyMutableDataCenterReader : DataCenterReader
     protected override LazyMutableDataCenterNode? ResolveNode(
         DataCenterAddress address, DataCenterNode? parent, CancellationToken cancellationToken)
     {
-        return Unsafe.As<LazyMutableDataCenterNode>(CreateNode(address, parent, default));
+        return Unsafe.As<LazyMutableDataCenterNode>(CreateNode(address, parent, CancellationToken.None));
     }
 }

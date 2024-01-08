@@ -12,7 +12,7 @@ internal sealed class DataCenterSegmentedSimpleRegion<T>
         var segs = new List<DataCenterSimpleRegion<T>>(count);
 
         for (var i = 0; i < count; i++)
-            segs.Add(new(false));
+            segs.Add(new(offByOne: false));
 
         Segments = segs;
     }

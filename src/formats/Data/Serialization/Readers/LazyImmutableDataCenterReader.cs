@@ -69,7 +69,11 @@ internal sealed class LazyImmutableDataCenterReader : DataCenterReader
                             children = new(raw.ChildCount);
 
                             @this.ReadChildren(
-                                raw, node, children, static (children, node) => children.Add(node), default);
+                                raw,
+                                node,
+                                children,
+                                static (children, node) => children.Add(node),
+                                CancellationToken.None);
                         }
 
                         return children;
@@ -82,6 +86,6 @@ internal sealed class LazyImmutableDataCenterReader : DataCenterReader
         DataCenterAddress address, DataCenterNode? parent, CancellationToken cancellationToken)
     {
         return _cache.GetValueOrDefault(address) ??
-            Unsafe.As<LazyImmutableDataCenterNode>(CreateNode(address, parent, default));
+            Unsafe.As<LazyImmutableDataCenterNode>(CreateNode(address, parent, CancellationToken.None));
     }
 }

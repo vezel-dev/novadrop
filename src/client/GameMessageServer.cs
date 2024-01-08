@@ -26,7 +26,7 @@ public abstract class GameMessageServer : IDisposable
 
             var handle = default(GCHandle);
             var atom = 0;
-            var hwnd = default(HWND);
+            var hwnd = HWND.Null;
 
             try
             {
@@ -44,22 +44,34 @@ public abstract class GameMessageServer : IDisposable
                 if (atom == 0)
                     throw new Win32Exception();
 
-                hwnd = CreateWindowExW(0, className, windowName, 0, 0, 0, 0, 0, default, null, null, null);
+                hwnd = CreateWindowExW(
+                    dwExStyle: 0,
+                    className,
+                    windowName,
+                    dwStyle: 0,
+                    X: 0,
+                    Y: 0,
+                    nWidth: 0,
+                    nHeight: 0,
+                    hWndParent: HWND.Null,
+                    hMenu: null,
+                    hInstance: null,
+                    lpParam: null);
 
                 if ((nint)hwnd == 0)
                     throw new Win32Exception();
 
-                _ = SetWindowLongPtrW(hwnd, 0, (nint)handle);
+                _ = SetWindowLongPtrW(hwnd, nIndex: 0, (nint)handle);
 
                 _done.Task.GetAwaiter().GetResult();
             }
             finally
             {
                 if ((nint)hwnd != 0)
-                    _ = DefWindowProcW(hwnd, WM_CLOSE, 0, 0);
+                    _ = DefWindowProcW(hwnd, WM_CLOSE, wParam: 0, lParam: 0);
 
                 if (atom != 0)
-                    _ = UnregisterClassW(className, null);
+                    _ = UnregisterClassW(className, hInstance: null);
 
                 if (handle.IsAllocated)
                     handle.Free();
@@ -105,7 +117,7 @@ public abstract class GameMessageServer : IDisposable
         var id = cds.dwData;
         var payload = new ReadOnlySpan<byte>(cds.lpData, (int)cds.cbData);
 
-        var @this = Unsafe.As<GameMessageServer>(((GCHandle)GetWindowLongPtrW(hWnd, 0)).Target!);
+        var @this = Unsafe.As<GameMessageServer>(((GCHandle)GetWindowLongPtrW(hWnd, nIndex: 0)).Target!);
 
         @this.MessageReceived?.Invoke(payload, id);
 

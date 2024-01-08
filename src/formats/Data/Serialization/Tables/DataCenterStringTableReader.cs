@@ -9,7 +9,7 @@ internal sealed class DataCenterStringTableReader
 
     private readonly DataCenterSegmentedSimpleRegion<DataCenterRawString> _strings;
 
-    private readonly DataCenterSimpleRegion<DataCenterRawAddress> _addresses = new(true);
+    private readonly DataCenterSimpleRegion<DataCenterRawAddress> _addresses = new(offByOne: true);
 
     private readonly Dictionary<DataCenterAddress, string> _byAddress = new(ushort.MaxValue);
 

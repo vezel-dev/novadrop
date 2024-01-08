@@ -67,7 +67,7 @@ public sealed class ResourceContainer
                 using var xor = CreateCipher(options.Key);
                 using var decryptor = xor.CreateDecryptor();
 
-                var dirStream = new CryptoStream(stream, decryptor, CryptoStreamMode.Read, true);
+                var dirStream = new CryptoStream(stream, decryptor, CryptoStreamMode.Read, leaveOpen: true);
                 var entries = new List<(string, int, int)>();
 
                 await using (dirStream.ConfigureAwait(false))
@@ -95,7 +95,7 @@ public sealed class ResourceContainer
                 {
                     stream.Position = offset;
 
-                    var entryStream = new CryptoStream(stream, decryptor, CryptoStreamMode.Read, true);
+                    var entryStream = new CryptoStream(stream, decryptor, CryptoStreamMode.Read, leaveOpen: true);
                     var data = GC.AllocateUninitializedArray<byte>(length);
 
                     await using (entryStream.ConfigureAwait(false))
@@ -136,7 +136,7 @@ public sealed class ResourceContainer
 
                 foreach (var (name, entry) in _entries)
                 {
-                    var entryStream = new CryptoStream(stream, encryptor, CryptoStreamMode.Write, true);
+                    var entryStream = new CryptoStream(stream, encryptor, CryptoStreamMode.Write, leaveOpen: true);
                     var entryWriter = new StreamBinaryWriter(entryStream);
 
                     await using (entryStream.ConfigureAwait(false))
@@ -151,7 +151,7 @@ public sealed class ResourceContainer
 
                 var dirStart = stream.Position;
 
-                var dirStream = new CryptoStream(stream, encryptor, CryptoStreamMode.Write, true);
+                var dirStream = new CryptoStream(stream, encryptor, CryptoStreamMode.Write, leaveOpen: true);
                 var dirWriter = new StreamBinaryWriter(dirStream);
 
                 await using (dirStream.ConfigureAwait(false))

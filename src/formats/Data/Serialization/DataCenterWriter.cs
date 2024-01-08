@@ -395,7 +395,7 @@ internal sealed class DataCenterWriter
                 using var aes = DataCenter.CreateCipher(_options.Key, _options.IV);
                 using var encryptor = aes.CreateEncryptor();
                 using var padder = new FakePaddingCryptoTransform(encryptor);
-                var cryptoStream = new CryptoStream(stream, padder, CryptoStreamMode.Write, true);
+                var cryptoStream = new CryptoStream(stream, padder, CryptoStreamMode.Write, leaveOpen: true);
 
                 await using (cryptoStream.ConfigureAwait(false))
                 {
@@ -403,7 +403,7 @@ internal sealed class DataCenterWriter
                         .WriteUInt32Async((uint)memoryStream.Length, cancellationToken)
                         .ConfigureAwait(false);
 
-                    var zlibStream = new ZLibStream(cryptoStream, _options.CompressionLevel, true);
+                    var zlibStream = new ZLibStream(cryptoStream, _options.CompressionLevel, leaveOpen: true);
 
                     await using (zlibStream.ConfigureAwait(false))
                     {

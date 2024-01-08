@@ -36,7 +36,7 @@ public static class DataCenter
 
     public static DataCenterNode Create()
     {
-        return new UserDataCenterNode(null, DataCenterConstants.RootNodeName);
+        return new UserDataCenterNode(parent: null, DataCenterConstants.RootNodeName);
     }
 
     public static Task<DataCenterNode> LoadAsync(
@@ -54,7 +54,7 @@ public static class DataCenter
             (DataCenterLoaderMode.Lazy, _) => new LazyMutableDataCenterReader(options),
             (DataCenterLoaderMode.Eager, DataCenterMutability.Immutable) => new EagerImmutableDataCenterReader(options),
             (DataCenterLoaderMode.Eager, _) => new EagerMutableDataCenterReader(options),
-            _ => throw new ArgumentException(null, nameof(options)),
+            _ => throw new ArgumentException(message: null, nameof(options)),
         };
 
         return reader.ReadAsync(stream, cancellationToken);

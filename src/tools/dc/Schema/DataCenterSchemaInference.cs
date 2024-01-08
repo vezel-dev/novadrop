@@ -7,7 +7,7 @@ internal static class DataCenterSchemaInference
     {
         var nodeSchema = new DataCenterNodeSchema();
 
-        InferSchema(strategy, root, nodeSchema, false, increment, cancellationToken);
+        InferSchema(strategy, root, nodeSchema, nodeExistedBefore: false, increment, cancellationToken);
 
         return nodeSchema;
     }
@@ -54,8 +54,8 @@ internal static class DataCenterSchemaInference
                     strategy,
                     child,
                     edgeSchema.Node,
-                    childSchemaExistedBefore || !firstInGroup,
-                    null,
+                    nodeExistedBefore: childSchemaExistedBefore || !firstInGroup,
+                    increment: null,
                     cancellationToken);
 
                 firstInGroup = false;

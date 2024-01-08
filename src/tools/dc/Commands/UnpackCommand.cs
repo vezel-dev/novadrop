@@ -151,19 +151,20 @@ internal sealed class UnpackCommand : CancellableAsyncCommand<UnpackCommand.Unpa
                             {
                                 var uri = $"https://vezel.dev/novadrop/dc/{node.Name}";
 
-                                await xmlWriter.WriteStartElementAsync(null, current.Name, top ? uri : null);
+                                await xmlWriter.WriteStartElementAsync(prefix: null, current.Name, top ? uri : null);
 
                                 if (top)
                                 {
                                     await xmlWriter.WriteAttributeStringAsync(
-                                        "xmlns", "xsi", null, "http://www.w3.org/2001/XMLSchema-instance");
+                                        "xmlns", "xsi", ns: null, "http://www.w3.org/2001/XMLSchema-instance");
                                     await xmlWriter.WriteAttributeStringAsync(
-                                        "xsi", "schemaLocation", null, $"{uri} {node.Name}.xsd");
+                                        "xsi", "schemaLocation", ns: null, $"{uri} {node.Name}.xsd");
                                 }
 
                                 if (current.HasAttributes)
                                     foreach (var (name, attr) in current.Attributes)
-                                        await xmlWriter.WriteAttributeStringAsync(null, name, null, attr.ToString());
+                                        await xmlWriter.WriteAttributeStringAsync(
+                                            prefix: null, name, ns: null, attr.ToString());
 
                                 // Some ~225 nodes in official data center files have __value__ set even when they have
                                 // children, but the strings are random symbols or broken XML tags. The fact that they
@@ -176,12 +177,12 @@ internal sealed class UnpackCommand : CancellableAsyncCommand<UnpackCommand.Unpa
                                     foreach (var child in current
                                         .Children
                                         .OrderBy(static n => n.Name, StringComparer.Ordinal))
-                                        await WriteSheetAsync(child, false);
+                                        await WriteSheetAsync(child, top: false);
 
                                 await xmlWriter.WriteEndElementAsync();
                             }
 
-                            await WriteSheetAsync(node, true);
+                            await WriteSheetAsync(node, top: true);
                         }
 
                         await textWriter.WriteLineAsync();

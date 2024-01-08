@@ -61,7 +61,8 @@ internal sealed class TransientDataCenterReader : DataCenterReader
                 {
                     children = new(raw.ChildCount);
 
-                    ReadChildren(raw, node, children, static (children, node) => children.Add(node), default);
+                    ReadChildren(
+                        raw, node, children, static (children, node) => children.Add(node), CancellationToken.None);
                 }
 
                 return children;
@@ -71,6 +72,6 @@ internal sealed class TransientDataCenterReader : DataCenterReader
     protected override DataCenterNode? ResolveNode(
         DataCenterAddress address, DataCenterNode? parent, CancellationToken cancellationToken)
     {
-        return CreateNode(address, parent, default);
+        return CreateNode(address, parent, CancellationToken.None);
     }
 }

@@ -167,11 +167,11 @@ internal sealed class SchemaCommand : CancellableAsyncCommand<SchemaCommand.Sche
 
             foreach (var (name, attrSchema) in nodeSchema.Attributes.OrderBy(static n => n.Key, StringComparer.Ordinal))
             {
-                await xmlWriter.WriteStartElementAsync("xsd", "attribute", null);
+                await xmlWriter.WriteStartElementAsync("xsd", "attribute", ns: null);
 
                 {
-                    await xmlWriter.WriteAttributeStringAsync(null, "name", null, name);
-                    await xmlWriter.WriteAttributeStringAsync(null, "type", null, attrSchema.TypeCode switch
+                    await xmlWriter.WriteAttributeStringAsync(prefix: null, "name", ns: null, name);
+                    await xmlWriter.WriteAttributeStringAsync(prefix: null, "type", ns: null, attrSchema.TypeCode switch
                     {
                         DataCenterTypeCode.Int32 => "xsd:int",
                         DataCenterTypeCode.Single => "xsd:float",
@@ -181,7 +181,7 @@ internal sealed class SchemaCommand : CancellableAsyncCommand<SchemaCommand.Sche
                     });
 
                     if (!attrSchema.IsOptional)
-                        await xmlWriter.WriteAttributeStringAsync(null, "use", null, "required");
+                        await xmlWriter.WriteAttributeStringAsync(prefix: null, "use", ns: null, "required");
                 }
 
                 await xmlWriter.WriteEndElementAsync();
@@ -195,21 +195,21 @@ internal sealed class SchemaCommand : CancellableAsyncCommand<SchemaCommand.Sche
 
             writtenTypes.Add(nodeSchema, typeName);
 
-            await xmlWriter.WriteStartElementAsync("xsd", "complexType", null);
+            await xmlWriter.WriteStartElementAsync("xsd", "complexType", ns: null);
 
             {
-                await xmlWriter.WriteAttributeStringAsync(null, "name", null, typeName);
+                await xmlWriter.WriteAttributeStringAsync(prefix: null, "name", ns: null, typeName);
 
                 if (nodeSchema.HasKeys)
                     await xmlWriter.WriteAttributeStringAsync(
                         "dc", "keys", null, string.Join(" ", nodeSchema.Keys.Distinct()));
 
                 if (nodeSchema.HasMixedContent)
-                    await xmlWriter.WriteAttributeStringAsync(null, "mixed", null, "true");
+                    await xmlWriter.WriteAttributeStringAsync(prefix: null, "mixed", ns: null, "true");
 
                 if (nodeSchema.Children.Count != 0)
                 {
-                    await xmlWriter.WriteStartElementAsync("xsd", "sequence", null);
+                    await xmlWriter.WriteStartElementAsync("xsd", "sequence", ns: null);
 
                     foreach (var (childName, edge) in nodeSchema
                         .Children
@@ -217,15 +217,15 @@ internal sealed class SchemaCommand : CancellableAsyncCommand<SchemaCommand.Sche
                     {
                         var fullChildName = writtenTypes.GetValueOrDefault(edge.Node) ?? $"{typeName}_{childName}";
 
-                        await xmlWriter.WriteStartElementAsync("xsd", "element", null);
-                        await xmlWriter.WriteAttributeStringAsync(null, "name", null, childName);
-                        await xmlWriter.WriteAttributeStringAsync(null, "type", null, fullChildName);
+                        await xmlWriter.WriteStartElementAsync("xsd", "element", ns: null);
+                        await xmlWriter.WriteAttributeStringAsync(prefix: null, "name", ns: null, childName);
+                        await xmlWriter.WriteAttributeStringAsync(prefix: null, "type", ns: null, fullChildName);
 
                         if (edge.IsOptional)
-                            await xmlWriter.WriteAttributeStringAsync(null, "minOccurs", null, "0");
+                            await xmlWriter.WriteAttributeStringAsync(prefix: null, "minOccurs", ns: null, "0");
 
                         if (edge.IsRepeatable)
-                            await xmlWriter.WriteAttributeStringAsync(null, "maxOccurs", null, "unbounded");
+                            await xmlWriter.WriteAttributeStringAsync(prefix: null, "maxOccurs", ns: null, "unbounded");
 
                         await xmlWriter.WriteEndElementAsync();
                     }
@@ -235,13 +235,13 @@ internal sealed class SchemaCommand : CancellableAsyncCommand<SchemaCommand.Sche
 
                 if (nodeSchema.HasValue && !nodeSchema.HasMixedContent)
                 {
-                    await xmlWriter.WriteStartElementAsync("xsd", "simpleContent", null);
+                    await xmlWriter.WriteStartElementAsync("xsd", "simpleContent", ns: null);
 
                     {
-                        await xmlWriter.WriteStartElementAsync("xsd", "extension", null);
+                        await xmlWriter.WriteStartElementAsync("xsd", "extension", ns: null);
 
                         {
-                            await xmlWriter.WriteAttributeStringAsync(null, "base", null, "xsd:string");
+                            await xmlWriter.WriteAttributeStringAsync(prefix: null, "base", ns: null, "xsd:string");
 
                             await WriteAttributesAsync(xmlWriter, nodeSchema);
                         }
@@ -275,23 +275,24 @@ internal sealed class SchemaCommand : CancellableAsyncCommand<SchemaCommand.Sche
 
             {
                 await xmlWriter.WriteAttributeStringAsync(
-                    "xmlns", "xsd", null, "http://www.w3.org/2001/XMLSchema");
+                    "xmlns", "xsd", ns: null, "http://www.w3.org/2001/XMLSchema");
                 await xmlWriter.WriteAttributeStringAsync(
-                    "xmlns", "xsi", null, "http://www.w3.org/2001/XMLSchema-instance");
-                await xmlWriter.WriteAttributeStringAsync("xmlns", "dc", null, baseUri);
-                await xmlWriter.WriteAttributeStringAsync(null, "xmlns", null, $"{baseUri}/{name}");
-                await xmlWriter.WriteAttributeStringAsync(null, "targetNamespace", null, $"{baseUri}/{name}");
+                    "xmlns", "xsi", ns: null, "http://www.w3.org/2001/XMLSchema-instance");
+                await xmlWriter.WriteAttributeStringAsync("xmlns", "dc", ns: null, baseUri);
+                await xmlWriter.WriteAttributeStringAsync(prefix: null, "xmlns", ns: null, $"{baseUri}/{name}");
                 await xmlWriter.WriteAttributeStringAsync(
-                    "xsi", "schemaLocation", null, $"{baseUri} ../DataCenter.xsd");
-                await xmlWriter.WriteAttributeStringAsync(null, "elementFormDefault", null, "qualified");
+                    prefix: null, "targetNamespace", ns: null, $"{baseUri}/{name}");
+                await xmlWriter.WriteAttributeStringAsync(
+                    "xsi", "schemaLocation", ns: null, $"{baseUri} ../DataCenter.xsd");
+                await xmlWriter.WriteAttributeStringAsync(prefix: null, "elementFormDefault", ns: null, "qualified");
 
                 await WriteComplexTypeAsync(xmlWriter, name, nodeSchema);
 
-                await xmlWriter.WriteStartElementAsync("xsd", "element", null);
+                await xmlWriter.WriteStartElementAsync("xsd", "element", ns: null);
 
                 {
-                    await xmlWriter.WriteAttributeStringAsync(null, "name", null, name);
-                    await xmlWriter.WriteAttributeStringAsync(null, "type", null, name);
+                    await xmlWriter.WriteAttributeStringAsync(prefix: null, "name", ns: null, name);
+                    await xmlWriter.WriteAttributeStringAsync(prefix: null, "type", ns: null, name);
                 }
 
                 await xmlWriter.WriteEndElementAsync();

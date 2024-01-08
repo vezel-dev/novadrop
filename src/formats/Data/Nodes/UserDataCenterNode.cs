@@ -15,7 +15,7 @@ internal sealed class UserDataCenterNode : MutableDataCenterNode
     private List<DataCenterNode>? _children;
 
     public UserDataCenterNode(DataCenterNode? parent, string name)
-        : base(parent, name, default, DataCenterKeys.None)
+        : base(parent, name, value: null, DataCenterKeys.None)
     {
     }
 }

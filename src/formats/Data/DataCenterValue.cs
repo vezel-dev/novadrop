@@ -6,6 +6,8 @@ public readonly struct DataCenterValue :
     IComparable<DataCenterValue>,
     IComparisonOperators<DataCenterValue, DataCenterValue, bool>
 {
+    public static DataCenterValue Null { get; } = new(DataCenterTypeCode.Null, primitiveValue: 0, stringValue: null);
+
     public DataCenterTypeCode TypeCode { get; }
 
     public bool IsNull => TypeCode == DataCenterTypeCode.Null;
@@ -67,16 +69,18 @@ public readonly struct DataCenterValue :
         }
     }
 
+    [SuppressMessage("", "IDE0032")]
     internal int UnsafeAsInt32 => _primitiveValue;
 
-    internal float UnsafeAsSingle => Unsafe.As<int, float>(ref Unsafe.AsRef(in _primitiveValue));
+    internal float UnsafeAsSingle => Unsafe.BitCast<int, float>(_primitiveValue);
 
     internal string UnsafeAsString => _stringValue!;
 
-    internal bool UnsafeAsBoolean => Unsafe.As<int, bool>(ref Unsafe.AsRef(in _primitiveValue));
+    internal bool UnsafeAsBoolean => Unsafe.BitCast<int, bool>(_primitiveValue);
 
     private readonly string? _stringValue;
 
+    [SuppressMessage("", "IDE0032")]
     private readonly int _primitiveValue;
 
     private DataCenterValue(DataCenterTypeCode typeCode, int primitiveValue, string? stringValue)
@@ -87,23 +91,23 @@ public readonly struct DataCenterValue :
     }
 
     public DataCenterValue(int value)
-        : this(DataCenterTypeCode.Int32, value, null)
+        : this(DataCenterTypeCode.Int32, value, stringValue: null)
     {
     }
 
     public DataCenterValue(float value)
-        : this(DataCenterTypeCode.Single, Unsafe.As<float, int>(ref value), null)
+        : this(DataCenterTypeCode.Single, Unsafe.BitCast<float, int>(value), stringValue: null)
     {
     }
 
     public DataCenterValue(string value)
-        : this(DataCenterTypeCode.String, 0, value)
+        : this(DataCenterTypeCode.String, primitiveValue: 0, value)
     {
         Check.Null(value);
     }
 
     public DataCenterValue(bool value)
-        : this(DataCenterTypeCode.Boolean, value ? 1 : 0, null)
+        : this(DataCenterTypeCode.Boolean, value ? 1 : 0, stringValue: null)
     {
     }
 

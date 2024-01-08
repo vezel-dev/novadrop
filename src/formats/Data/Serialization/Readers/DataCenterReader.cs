@@ -93,8 +93,8 @@ internal abstract class DataCenterReader
             (1, 1, _) => true,
             (2, not 0, _) when _options.Strict =>
                 throw new InvalidDataException($"Attribute has invalid extended type code {extCode}."),
-            (2, _, var value) => Unsafe.As<int, float>(ref value),
-            (3, _, _) => default(DataCenterValue), // Handled below.
+            (2, _, var value) => Unsafe.BitCast<int, float>(value),
+            (3, _, _) => DataCenterValue.Null, // Handled below.
             _ => throw new InvalidDataException($"Attribute has invalid type code {typeCode}."),
         };
 
@@ -202,7 +202,7 @@ internal abstract class DataCenterReader
                 using var aes = DataCenter.CreateCipher(_options.Key, _options.IV);
                 using var decryptor = aes.CreateDecryptor();
                 using var padder = new FakePaddingCryptoTransform(decryptor);
-                var cryptoStream = new CryptoStream(stream, padder, CryptoStreamMode.Read, true);
+                var cryptoStream = new CryptoStream(stream, padder, CryptoStreamMode.Read, leaveOpen: true);
 
                 await using (cryptoStream.ConfigureAwait(false))
                 {
@@ -210,7 +210,7 @@ internal abstract class DataCenterReader
                         .ReadUInt32Async(cancellationToken)
                         .ConfigureAwait(false);
 
-                    var zlibStream = new ZLibStream(cryptoStream, CompressionMode.Decompress, true);
+                    var zlibStream = new ZLibStream(cryptoStream, CompressionMode.Decompress, leaveOpen: true);
 
                     await using (zlibStream.ConfigureAwait(false))
                     {
@@ -235,7 +235,7 @@ internal abstract class DataCenterReader
                     }
                 }
 
-                var root = CreateNode(DataCenterAddress.MinValue, null, cancellationToken);
+                var root = CreateNode(DataCenterAddress.MinValue, parent: null, cancellationToken);
 
                 Check.Data(root != null, $"Root node is empty.");
                 Check.Data(

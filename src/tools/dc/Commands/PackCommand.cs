@@ -136,10 +136,10 @@ internal sealed class PackCommand : CancellableAsyncCommand<PackCommand.PackComm
                                 name.LocalName,
                                 name.NamespaceName,
                                 info,
-                                null,
-                                null,
+                                xsiType: null,
+                                xsiNil: null,
                                 top ? (string?)element.Attribute(_schemaLocation) : null,
-                                null);
+                                xsiNoNamespaceSchemaLocation: null);
 
                             DataCenterNode current;
 
@@ -165,7 +165,7 @@ internal sealed class PackCommand : CancellableAsyncCommand<PackCommand.PackComm
                             {
                                 var attrName = attr.Name;
                                 var attrValue = validator.ValidateAttribute(
-                                    attrName.LocalName, attrName.NamespaceName, attr.Value, null)!;
+                                    attrName.LocalName, attrName.NamespaceName, attr.Value, schemaInfo: null)!;
 
                                 current.AddAttribute(attr.Name.LocalName, attrValue switch
                                 {
@@ -177,7 +177,7 @@ internal sealed class PackCommand : CancellableAsyncCommand<PackCommand.PackComm
                                 });
                             }
 
-                            validator.ValidateEndOfAttributes(null);
+                            validator.ValidateEndOfAttributes(schemaInfo: null);
 
                             if (info.SchemaElement?.ElementSchemaType?.UnhandledAttributes is [_, ..] unhandled)
                             {
@@ -204,7 +204,7 @@ internal sealed class PackCommand : CancellableAsyncCommand<PackCommand.PackComm
                                 switch (node)
                                 {
                                     case XElement child:
-                                        _ = ElementToNode(child, current, false);
+                                        _ = ElementToNode(child, current, top: false);
                                         break;
                                     case XText text:
                                         validator.ValidateText(text.Value);
@@ -212,7 +212,7 @@ internal sealed class PackCommand : CancellableAsyncCommand<PackCommand.PackComm
                                 }
                             }
 
-                            var value = validator.ValidateEndElement(null)?.ToString();
+                            var value = validator.ValidateEndElement(schemaInfo: null)?.ToString();
 
                             if (!string.IsNullOrEmpty(value))
                                 current.Value = value;
@@ -220,7 +220,7 @@ internal sealed class PackCommand : CancellableAsyncCommand<PackCommand.PackComm
                             return current;
                         }
 
-                        var node = ElementToNode(doc.Root!, root, true);
+                        var node = ElementToNode(doc.Root!, root, top: true);
 
                         increment();
 

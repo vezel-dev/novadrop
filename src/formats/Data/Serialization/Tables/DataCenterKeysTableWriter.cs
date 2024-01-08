@@ -5,7 +5,7 @@ namespace Vezel.Novadrop.Data.Serialization.Tables;
 
 internal sealed class DataCenterKeysTableWriter
 {
-    private readonly DataCenterSimpleRegion<DataCenterRawKeys> _keys = new(false);
+    private readonly DataCenterSimpleRegion<DataCenterRawKeys> _keys = new(offByOne: false);
 
     private readonly Dictionary<(string?, string?, string?, string?), int> _indexes = new(ushort.MaxValue);
 
