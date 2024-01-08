@@ -7,9 +7,9 @@ public readonly unsafe struct HWND :
     IComparable<HWND>,
     IComparisonOperators<HWND, HWND, bool>
 {
-    public static HWND INVALID_HANDLE_VALUE { get; } = new((void*)-1);
+    public static HWND INVALID_HANDLE_VALUE { get; } = new(value: (void*)-1);
 
-    public static HWND NULL { get; } = new(null);
+    public static HWND NULL { get; } = new(value: null);
 
     private readonly void* _value;
 

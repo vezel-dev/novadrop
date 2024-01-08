@@ -7,7 +7,7 @@ public readonly unsafe struct WSAEVENT :
     IComparable<WSAEVENT>,
     IComparisonOperators<WSAEVENT, WSAEVENT, bool>
 {
-    public static WSAEVENT WSA_INVALID_EVENT { get; } = new(null);
+    public static WSAEVENT WSA_INVALID_EVENT { get; } = new(value: null);
 
     private readonly void* _value;
 

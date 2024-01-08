@@ -7,7 +7,7 @@ public readonly unsafe struct SOCKET :
     IComparable<SOCKET>,
     IComparisonOperators<SOCKET, SOCKET, bool>
 {
-    public static SOCKET INVALID_SOCKET { get; } = new(~0u);
+    public static SOCKET INVALID_SOCKET { get; } = new(value: ~0u);
 
     private readonly ulong _value;
 

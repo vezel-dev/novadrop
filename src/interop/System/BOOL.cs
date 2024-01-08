@@ -7,9 +7,9 @@ public readonly unsafe struct BOOL :
     IComparable<BOOL>,
     IComparisonOperators<BOOL, BOOL, bool>
 {
-    public static BOOL TRUE { get; } = new(1);
+    public static BOOL TRUE { get; } = new(value: 1);
 
-    public static BOOL FALSE { get; } = new(0);
+    public static BOOL FALSE { get; } = new(value: 0);
 
     private readonly int _value;
 
