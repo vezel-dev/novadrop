@@ -174,10 +174,10 @@ public static class DataCenterExtensions
 
             foreach (var child in node.Children)
             {
-                if (node.Name != name)
+                if (child.Name != name)
                     continue;
 
-                if (path.Length == 1)
+                if (remaining is [])
                     results.Add(child);
                 else
                     Evaluate(child, remaining);
