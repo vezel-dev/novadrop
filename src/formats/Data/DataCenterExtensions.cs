@@ -168,6 +168,9 @@ public static class DataCenterExtensions
 
         void Evaluate(DataCenterNode node, ReadOnlySpan<string> path)
         {
+            if (!node.HasChildren)
+                return;
+
             var name = path[0];
             var remaining = path[1..];
 
