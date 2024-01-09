@@ -91,7 +91,7 @@ public static class DataCenterExtensions
     {
         Check.Null(node);
 
-        foreach (var sibling in node.Parent?.Children ?? Array.Empty<DataCenterNode>())
+        foreach (var sibling in node.Parent?.UnsafeChildren ?? [])
             yield return sibling;
     }
 
@@ -172,7 +172,7 @@ public static class DataCenterExtensions
             var name = path[0];
             var remaining = path[1..];
 
-            foreach (var child in node.Children)
+            foreach (var child in node.UnsafeChildren)
             {
                 if (child.Name != name)
                     continue;
