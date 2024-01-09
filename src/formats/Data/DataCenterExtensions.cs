@@ -91,8 +91,7 @@ public static class DataCenterExtensions
     {
         Check.Null(node);
 
-        foreach (var sibling in node.Parent?.UnsafeChildren ?? [])
-            yield return sibling;
+        return node.Parent is { } parent ? parent.Children : [node];
     }
 
     public static IEnumerable<DataCenterNode> SiblingsAndSelf(this DataCenterNode node, string name)
