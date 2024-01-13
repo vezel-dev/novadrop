@@ -1,0 +1,211 @@
+#nullable enable
+abstract Vezel.Novadrop.Data.DataCenterNode.AddAttribute(string! name, Vezel.Novadrop.Data.DataCenterValue value) -> void
+abstract Vezel.Novadrop.Data.DataCenterNode.Attributes.get -> System.Collections.Generic.IReadOnlyDictionary<string!, Vezel.Novadrop.Data.DataCenterValue>!
+abstract Vezel.Novadrop.Data.DataCenterNode.Children.get -> System.Collections.Generic.IReadOnlyList<Vezel.Novadrop.Data.DataCenterNode!>!
+abstract Vezel.Novadrop.Data.DataCenterNode.ClearAttributes() -> void
+abstract Vezel.Novadrop.Data.DataCenterNode.ClearChildren() -> void
+abstract Vezel.Novadrop.Data.DataCenterNode.CreateChild(string! name) -> Vezel.Novadrop.Data.DataCenterNode!
+abstract Vezel.Novadrop.Data.DataCenterNode.CreateChildAt(int index, string! name) -> Vezel.Novadrop.Data.DataCenterNode!
+abstract Vezel.Novadrop.Data.DataCenterNode.IsImmutable.get -> bool
+abstract Vezel.Novadrop.Data.DataCenterNode.RemoveAttribute(string! name) -> bool
+abstract Vezel.Novadrop.Data.DataCenterNode.RemoveChild(Vezel.Novadrop.Data.DataCenterNode! node) -> bool
+abstract Vezel.Novadrop.Data.DataCenterNode.RemoveChildAt(int index) -> void
+abstract Vezel.Novadrop.Data.DataCenterNode.RemoveChildRange(int index, int count) -> void
+abstract Vezel.Novadrop.Data.DataCenterNode.ReverseChildren(int index, int count) -> void
+abstract Vezel.Novadrop.Data.DataCenterNode.SortChildren(System.Collections.Generic.IComparer<Vezel.Novadrop.Data.DataCenterNode!>! comparer) -> void
+abstract Vezel.Novadrop.Data.DataCenterNode.TrimExcess() -> void
+override Vezel.Novadrop.Cryptography.Xor256.CreateDecryptor(byte[]! rgbKey, byte[]? rgbIV) -> System.Security.Cryptography.ICryptoTransform!
+override Vezel.Novadrop.Cryptography.Xor256.CreateEncryptor(byte[]! rgbKey, byte[]? rgbIV) -> System.Security.Cryptography.ICryptoTransform!
+override Vezel.Novadrop.Cryptography.Xor256.FeedbackSize.get -> int
+override Vezel.Novadrop.Cryptography.Xor256.FeedbackSize.set -> void
+override Vezel.Novadrop.Cryptography.Xor256.GenerateIV() -> void
+override Vezel.Novadrop.Cryptography.Xor256.GenerateKey() -> void
+override Vezel.Novadrop.Cryptography.Xor256.Mode.get -> System.Security.Cryptography.CipherMode
+override Vezel.Novadrop.Cryptography.Xor256.Mode.set -> void
+override Vezel.Novadrop.Cryptography.Xor256.Padding.get -> System.Security.Cryptography.PaddingMode
+override Vezel.Novadrop.Cryptography.Xor256.Padding.set -> void
+override Vezel.Novadrop.Data.DataCenterKeys.Equals(object? obj) -> bool
+override Vezel.Novadrop.Data.DataCenterKeys.GetHashCode() -> int
+override Vezel.Novadrop.Data.DataCenterKeys.ToString() -> string!
+override Vezel.Novadrop.Data.DataCenterNode.ToString() -> string!
+override Vezel.Novadrop.Data.DataCenterValue.Equals(object? obj) -> bool
+override Vezel.Novadrop.Data.DataCenterValue.GetHashCode() -> int
+override Vezel.Novadrop.Data.DataCenterValue.ToString() -> string!
+override Vezel.Novadrop.Resources.ResourceContainerEntry.ToString() -> string!
+static Vezel.Novadrop.Cryptography.Xor256.Create() -> Vezel.Novadrop.Cryptography.Xor256!
+static Vezel.Novadrop.Data.DataCenter.Create() -> Vezel.Novadrop.Data.DataCenterNode!
+static Vezel.Novadrop.Data.DataCenter.LatestIV.get -> System.ReadOnlyMemory<byte>
+static Vezel.Novadrop.Data.DataCenter.LatestKey.get -> System.ReadOnlyMemory<byte>
+static Vezel.Novadrop.Data.DataCenter.LatestRevision.get -> int
+static Vezel.Novadrop.Data.DataCenter.LoadAsync(System.IO.Stream! stream, Vezel.Novadrop.Data.DataCenterLoadOptions! options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Vezel.Novadrop.Data.DataCenterNode!>!
+static Vezel.Novadrop.Data.DataCenter.SaveAsync(Vezel.Novadrop.Data.DataCenterNode! root, System.IO.Stream! stream, Vezel.Novadrop.Data.DataCenterSaveOptions! options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+static Vezel.Novadrop.Data.DataCenterExtensions.Ancestors(this Vezel.Novadrop.Data.DataCenterNode! node) -> System.Collections.Generic.IEnumerable<Vezel.Novadrop.Data.DataCenterNode!>!
+static Vezel.Novadrop.Data.DataCenterExtensions.Ancestors(this Vezel.Novadrop.Data.DataCenterNode! node, string! name) -> System.Collections.Generic.IEnumerable<Vezel.Novadrop.Data.DataCenterNode!>!
+static Vezel.Novadrop.Data.DataCenterExtensions.AncestorsAndSelf(this Vezel.Novadrop.Data.DataCenterNode! node) -> System.Collections.Generic.IEnumerable<Vezel.Novadrop.Data.DataCenterNode!>!
+static Vezel.Novadrop.Data.DataCenterExtensions.AncestorsAndSelf(this Vezel.Novadrop.Data.DataCenterNode! node, string! name) -> System.Collections.Generic.IEnumerable<Vezel.Novadrop.Data.DataCenterNode!>!
+static Vezel.Novadrop.Data.DataCenterExtensions.Child(this Vezel.Novadrop.Data.DataCenterNode! node) -> Vezel.Novadrop.Data.DataCenterNode!
+static Vezel.Novadrop.Data.DataCenterExtensions.Child(this Vezel.Novadrop.Data.DataCenterNode! node, string! name) -> Vezel.Novadrop.Data.DataCenterNode!
+static Vezel.Novadrop.Data.DataCenterExtensions.Children(this Vezel.Novadrop.Data.DataCenterNode! node, string! name) -> System.Collections.Generic.IEnumerable<Vezel.Novadrop.Data.DataCenterNode!>!
+static Vezel.Novadrop.Data.DataCenterExtensions.Descendant(this Vezel.Novadrop.Data.DataCenterNode! node, string! name) -> Vezel.Novadrop.Data.DataCenterNode!
+static Vezel.Novadrop.Data.DataCenterExtensions.DescendantAt(this Vezel.Novadrop.Data.DataCenterNode! node, params string![]! path) -> Vezel.Novadrop.Data.DataCenterNode!
+static Vezel.Novadrop.Data.DataCenterExtensions.DescendantAt(this Vezel.Novadrop.Data.DataCenterNode! node, System.Collections.Generic.IEnumerable<string!>! path) -> Vezel.Novadrop.Data.DataCenterNode!
+static Vezel.Novadrop.Data.DataCenterExtensions.Descendants(this Vezel.Novadrop.Data.DataCenterNode! node) -> System.Collections.Generic.IEnumerable<Vezel.Novadrop.Data.DataCenterNode!>!
+static Vezel.Novadrop.Data.DataCenterExtensions.Descendants(this Vezel.Novadrop.Data.DataCenterNode! node, string! name) -> System.Collections.Generic.IEnumerable<Vezel.Novadrop.Data.DataCenterNode!>!
+static Vezel.Novadrop.Data.DataCenterExtensions.DescendantsAndSelf(this Vezel.Novadrop.Data.DataCenterNode! node) -> System.Collections.Generic.IEnumerable<Vezel.Novadrop.Data.DataCenterNode!>!
+static Vezel.Novadrop.Data.DataCenterExtensions.DescendantsAndSelf(this Vezel.Novadrop.Data.DataCenterNode! node, string! name) -> System.Collections.Generic.IEnumerable<Vezel.Novadrop.Data.DataCenterNode!>!
+static Vezel.Novadrop.Data.DataCenterExtensions.DescendantsAt(this Vezel.Novadrop.Data.DataCenterNode! node, params string![]! path) -> System.Collections.Generic.IEnumerable<Vezel.Novadrop.Data.DataCenterNode!>!
+static Vezel.Novadrop.Data.DataCenterExtensions.DescendantsAt(this Vezel.Novadrop.Data.DataCenterNode! node, System.Collections.Generic.IEnumerable<string!>! path) -> System.Collections.Generic.IEnumerable<Vezel.Novadrop.Data.DataCenterNode!>!
+static Vezel.Novadrop.Data.DataCenterExtensions.Sibling(this Vezel.Novadrop.Data.DataCenterNode! node) -> Vezel.Novadrop.Data.DataCenterNode!
+static Vezel.Novadrop.Data.DataCenterExtensions.Sibling(this Vezel.Novadrop.Data.DataCenterNode! node, string! name) -> Vezel.Novadrop.Data.DataCenterNode!
+static Vezel.Novadrop.Data.DataCenterExtensions.Siblings(this Vezel.Novadrop.Data.DataCenterNode! node) -> System.Collections.Generic.IEnumerable<Vezel.Novadrop.Data.DataCenterNode!>!
+static Vezel.Novadrop.Data.DataCenterExtensions.Siblings(this Vezel.Novadrop.Data.DataCenterNode! node, string! name) -> System.Collections.Generic.IEnumerable<Vezel.Novadrop.Data.DataCenterNode!>!
+static Vezel.Novadrop.Data.DataCenterExtensions.SiblingsAndSelf(this Vezel.Novadrop.Data.DataCenterNode! node) -> System.Collections.Generic.IEnumerable<Vezel.Novadrop.Data.DataCenterNode!>!
+static Vezel.Novadrop.Data.DataCenterExtensions.SiblingsAndSelf(this Vezel.Novadrop.Data.DataCenterNode! node, string! name) -> System.Collections.Generic.IEnumerable<Vezel.Novadrop.Data.DataCenterNode!>!
+static Vezel.Novadrop.Data.DataCenterExtensions.ToBoolean(this Vezel.Novadrop.Data.DataCenterValue value) -> bool
+static Vezel.Novadrop.Data.DataCenterExtensions.ToInt32(this Vezel.Novadrop.Data.DataCenterValue value, int radix = 10) -> int
+static Vezel.Novadrop.Data.DataCenterExtensions.ToSingle(this Vezel.Novadrop.Data.DataCenterValue value) -> float
+static Vezel.Novadrop.Data.DataCenterKeys.None.get -> Vezel.Novadrop.Data.DataCenterKeys!
+static Vezel.Novadrop.Data.DataCenterKeys.operator !=(Vezel.Novadrop.Data.DataCenterKeys? left, Vezel.Novadrop.Data.DataCenterKeys? right) -> bool
+static Vezel.Novadrop.Data.DataCenterKeys.operator ==(Vezel.Novadrop.Data.DataCenterKeys? left, Vezel.Novadrop.Data.DataCenterKeys? right) -> bool
+static Vezel.Novadrop.Data.DataCenterValue.explicit operator bool(Vezel.Novadrop.Data.DataCenterValue value) -> bool
+static Vezel.Novadrop.Data.DataCenterValue.explicit operator float(Vezel.Novadrop.Data.DataCenterValue value) -> float
+static Vezel.Novadrop.Data.DataCenterValue.explicit operator int(Vezel.Novadrop.Data.DataCenterValue value) -> int
+static Vezel.Novadrop.Data.DataCenterValue.explicit operator string!(Vezel.Novadrop.Data.DataCenterValue value) -> string!
+static Vezel.Novadrop.Data.DataCenterValue.implicit operator Vezel.Novadrop.Data.DataCenterValue(bool value) -> Vezel.Novadrop.Data.DataCenterValue
+static Vezel.Novadrop.Data.DataCenterValue.implicit operator Vezel.Novadrop.Data.DataCenterValue(float value) -> Vezel.Novadrop.Data.DataCenterValue
+static Vezel.Novadrop.Data.DataCenterValue.implicit operator Vezel.Novadrop.Data.DataCenterValue(int value) -> Vezel.Novadrop.Data.DataCenterValue
+static Vezel.Novadrop.Data.DataCenterValue.implicit operator Vezel.Novadrop.Data.DataCenterValue(string! value) -> Vezel.Novadrop.Data.DataCenterValue
+static Vezel.Novadrop.Data.DataCenterValue.Null.get -> Vezel.Novadrop.Data.DataCenterValue
+static Vezel.Novadrop.Data.DataCenterValue.operator !=(Vezel.Novadrop.Data.DataCenterValue left, Vezel.Novadrop.Data.DataCenterValue right) -> bool
+static Vezel.Novadrop.Data.DataCenterValue.operator <(Vezel.Novadrop.Data.DataCenterValue left, Vezel.Novadrop.Data.DataCenterValue right) -> bool
+static Vezel.Novadrop.Data.DataCenterValue.operator <=(Vezel.Novadrop.Data.DataCenterValue left, Vezel.Novadrop.Data.DataCenterValue right) -> bool
+static Vezel.Novadrop.Data.DataCenterValue.operator ==(Vezel.Novadrop.Data.DataCenterValue left, Vezel.Novadrop.Data.DataCenterValue right) -> bool
+static Vezel.Novadrop.Data.DataCenterValue.operator >(Vezel.Novadrop.Data.DataCenterValue left, Vezel.Novadrop.Data.DataCenterValue right) -> bool
+static Vezel.Novadrop.Data.DataCenterValue.operator >=(Vezel.Novadrop.Data.DataCenterValue left, Vezel.Novadrop.Data.DataCenterValue right) -> bool
+static Vezel.Novadrop.Resources.ResourceContainer.Create() -> Vezel.Novadrop.Resources.ResourceContainer!
+static Vezel.Novadrop.Resources.ResourceContainer.LatestKey.get -> System.ReadOnlyMemory<byte>
+static Vezel.Novadrop.Resources.ResourceContainer.LoadAsync(System.IO.Stream! stream, Vezel.Novadrop.Resources.ResourceContainerLoadOptions! options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Vezel.Novadrop.Resources.ResourceContainer!>!
+Vezel.Novadrop.Cryptography.FakePaddingCryptoTransform
+Vezel.Novadrop.Cryptography.FakePaddingCryptoTransform.CanReuseTransform.get -> bool
+Vezel.Novadrop.Cryptography.FakePaddingCryptoTransform.CanTransformMultipleBlocks.get -> bool
+Vezel.Novadrop.Cryptography.FakePaddingCryptoTransform.Dispose() -> void
+Vezel.Novadrop.Cryptography.FakePaddingCryptoTransform.FakePaddingCryptoTransform(System.Security.Cryptography.ICryptoTransform! transform) -> void
+Vezel.Novadrop.Cryptography.FakePaddingCryptoTransform.InputBlockSize.get -> int
+Vezel.Novadrop.Cryptography.FakePaddingCryptoTransform.OutputBlockSize.get -> int
+Vezel.Novadrop.Cryptography.FakePaddingCryptoTransform.TransformBlock(byte[]! inputBuffer, int inputOffset, int inputCount, byte[]! outputBuffer, int outputOffset) -> int
+Vezel.Novadrop.Cryptography.FakePaddingCryptoTransform.TransformFinalBlock(byte[]! inputBuffer, int inputOffset, int inputCount) -> byte[]!
+Vezel.Novadrop.Cryptography.Xor256
+Vezel.Novadrop.Data.DataCenter
+Vezel.Novadrop.Data.DataCenterArchitecture
+Vezel.Novadrop.Data.DataCenterArchitecture.X64 = 1 -> Vezel.Novadrop.Data.DataCenterArchitecture
+Vezel.Novadrop.Data.DataCenterArchitecture.X86 = 0 -> Vezel.Novadrop.Data.DataCenterArchitecture
+Vezel.Novadrop.Data.DataCenterExtensions
+Vezel.Novadrop.Data.DataCenterFormat
+Vezel.Novadrop.Data.DataCenterFormat.V3 = 0 -> Vezel.Novadrop.Data.DataCenterFormat
+Vezel.Novadrop.Data.DataCenterFormat.V6X64 = 2 -> Vezel.Novadrop.Data.DataCenterFormat
+Vezel.Novadrop.Data.DataCenterFormat.V6X86 = 1 -> Vezel.Novadrop.Data.DataCenterFormat
+Vezel.Novadrop.Data.DataCenterKeys
+Vezel.Novadrop.Data.DataCenterKeys.AttributeName1.get -> string?
+Vezel.Novadrop.Data.DataCenterKeys.AttributeName2.get -> string?
+Vezel.Novadrop.Data.DataCenterKeys.AttributeName3.get -> string?
+Vezel.Novadrop.Data.DataCenterKeys.AttributeName4.get -> string?
+Vezel.Novadrop.Data.DataCenterKeys.AttributeNames.get -> System.Collections.Generic.IEnumerable<string!>!
+Vezel.Novadrop.Data.DataCenterKeys.DataCenterKeys(string? attributeName1 = null, string? attributeName2 = null, string? attributeName3 = null, string? attributeName4 = null) -> void
+Vezel.Novadrop.Data.DataCenterKeys.Equals(Vezel.Novadrop.Data.DataCenterKeys? other) -> bool
+Vezel.Novadrop.Data.DataCenterKeys.HasAttributeNames.get -> bool
+Vezel.Novadrop.Data.DataCenterKeys.WithAttributeName1(string! attributeName1) -> Vezel.Novadrop.Data.DataCenterKeys!
+Vezel.Novadrop.Data.DataCenterKeys.WithAttributeName2(string! attributeName2) -> Vezel.Novadrop.Data.DataCenterKeys!
+Vezel.Novadrop.Data.DataCenterKeys.WithAttributeName3(string! attributeName3) -> Vezel.Novadrop.Data.DataCenterKeys!
+Vezel.Novadrop.Data.DataCenterKeys.WithAttributeName4(string! attributeName4) -> Vezel.Novadrop.Data.DataCenterKeys!
+Vezel.Novadrop.Data.DataCenterLoaderMode
+Vezel.Novadrop.Data.DataCenterLoaderMode.Eager = 2 -> Vezel.Novadrop.Data.DataCenterLoaderMode
+Vezel.Novadrop.Data.DataCenterLoaderMode.Lazy = 1 -> Vezel.Novadrop.Data.DataCenterLoaderMode
+Vezel.Novadrop.Data.DataCenterLoaderMode.Transient = 0 -> Vezel.Novadrop.Data.DataCenterLoaderMode
+Vezel.Novadrop.Data.DataCenterLoadOptions
+Vezel.Novadrop.Data.DataCenterLoadOptions.Architecture.get -> Vezel.Novadrop.Data.DataCenterArchitecture
+Vezel.Novadrop.Data.DataCenterLoadOptions.DataCenterLoadOptions() -> void
+Vezel.Novadrop.Data.DataCenterLoadOptions.IV.get -> System.ReadOnlyMemory<byte>
+Vezel.Novadrop.Data.DataCenterLoadOptions.Key.get -> System.ReadOnlyMemory<byte>
+Vezel.Novadrop.Data.DataCenterLoadOptions.Mode.get -> Vezel.Novadrop.Data.DataCenterLoaderMode
+Vezel.Novadrop.Data.DataCenterLoadOptions.Mutability.get -> Vezel.Novadrop.Data.DataCenterMutability
+Vezel.Novadrop.Data.DataCenterLoadOptions.Strict.get -> bool
+Vezel.Novadrop.Data.DataCenterLoadOptions.WithArchitecture(Vezel.Novadrop.Data.DataCenterArchitecture architecture) -> Vezel.Novadrop.Data.DataCenterLoadOptions!
+Vezel.Novadrop.Data.DataCenterLoadOptions.WithIV(scoped System.ReadOnlySpan<byte> iv) -> Vezel.Novadrop.Data.DataCenterLoadOptions!
+Vezel.Novadrop.Data.DataCenterLoadOptions.WithKey(scoped System.ReadOnlySpan<byte> key) -> Vezel.Novadrop.Data.DataCenterLoadOptions!
+Vezel.Novadrop.Data.DataCenterLoadOptions.WithLoaderMode(Vezel.Novadrop.Data.DataCenterLoaderMode mode) -> Vezel.Novadrop.Data.DataCenterLoadOptions!
+Vezel.Novadrop.Data.DataCenterLoadOptions.WithMutability(Vezel.Novadrop.Data.DataCenterMutability mutability) -> Vezel.Novadrop.Data.DataCenterLoadOptions!
+Vezel.Novadrop.Data.DataCenterLoadOptions.WithStrict(bool strict) -> Vezel.Novadrop.Data.DataCenterLoadOptions!
+Vezel.Novadrop.Data.DataCenterMutability
+Vezel.Novadrop.Data.DataCenterMutability.Auto = 0 -> Vezel.Novadrop.Data.DataCenterMutability
+Vezel.Novadrop.Data.DataCenterMutability.Immutable = 2 -> Vezel.Novadrop.Data.DataCenterMutability
+Vezel.Novadrop.Data.DataCenterMutability.Mutable = 1 -> Vezel.Novadrop.Data.DataCenterMutability
+Vezel.Novadrop.Data.DataCenterNode
+Vezel.Novadrop.Data.DataCenterNode.Keys.get -> Vezel.Novadrop.Data.DataCenterKeys!
+Vezel.Novadrop.Data.DataCenterNode.Keys.set -> void
+Vezel.Novadrop.Data.DataCenterNode.Name.get -> string!
+Vezel.Novadrop.Data.DataCenterNode.Name.set -> void
+Vezel.Novadrop.Data.DataCenterNode.Parent.get -> Vezel.Novadrop.Data.DataCenterNode?
+Vezel.Novadrop.Data.DataCenterNode.ReverseChildren() -> void
+Vezel.Novadrop.Data.DataCenterNode.this[string! name].get -> Vezel.Novadrop.Data.DataCenterValue
+Vezel.Novadrop.Data.DataCenterNode.this[string! name].set -> void
+Vezel.Novadrop.Data.DataCenterNode.Value.get -> string?
+Vezel.Novadrop.Data.DataCenterNode.Value.set -> void
+Vezel.Novadrop.Data.DataCenterSaveOptions
+Vezel.Novadrop.Data.DataCenterSaveOptions.CompressionLevel.get -> System.IO.Compression.CompressionLevel
+Vezel.Novadrop.Data.DataCenterSaveOptions.DataCenterSaveOptions() -> void
+Vezel.Novadrop.Data.DataCenterSaveOptions.Format.get -> Vezel.Novadrop.Data.DataCenterFormat
+Vezel.Novadrop.Data.DataCenterSaveOptions.IV.get -> System.ReadOnlyMemory<byte>
+Vezel.Novadrop.Data.DataCenterSaveOptions.Key.get -> System.ReadOnlyMemory<byte>
+Vezel.Novadrop.Data.DataCenterSaveOptions.Revision.get -> int
+Vezel.Novadrop.Data.DataCenterSaveOptions.WithCompressionLevel(System.IO.Compression.CompressionLevel compressionLevel) -> Vezel.Novadrop.Data.DataCenterSaveOptions!
+Vezel.Novadrop.Data.DataCenterSaveOptions.WithFormat(Vezel.Novadrop.Data.DataCenterFormat format) -> Vezel.Novadrop.Data.DataCenterSaveOptions!
+Vezel.Novadrop.Data.DataCenterSaveOptions.WithIV(scoped System.ReadOnlySpan<byte> iv) -> Vezel.Novadrop.Data.DataCenterSaveOptions!
+Vezel.Novadrop.Data.DataCenterSaveOptions.WithKey(scoped System.ReadOnlySpan<byte> key) -> Vezel.Novadrop.Data.DataCenterSaveOptions!
+Vezel.Novadrop.Data.DataCenterSaveOptions.WithRevision(int revision) -> Vezel.Novadrop.Data.DataCenterSaveOptions!
+Vezel.Novadrop.Data.DataCenterTypeCode
+Vezel.Novadrop.Data.DataCenterTypeCode.Boolean = 4 -> Vezel.Novadrop.Data.DataCenterTypeCode
+Vezel.Novadrop.Data.DataCenterTypeCode.Int32 = 1 -> Vezel.Novadrop.Data.DataCenterTypeCode
+Vezel.Novadrop.Data.DataCenterTypeCode.Null = 0 -> Vezel.Novadrop.Data.DataCenterTypeCode
+Vezel.Novadrop.Data.DataCenterTypeCode.Single = 2 -> Vezel.Novadrop.Data.DataCenterTypeCode
+Vezel.Novadrop.Data.DataCenterTypeCode.String = 3 -> Vezel.Novadrop.Data.DataCenterTypeCode
+Vezel.Novadrop.Data.DataCenterValue
+Vezel.Novadrop.Data.DataCenterValue.AsBoolean.get -> bool
+Vezel.Novadrop.Data.DataCenterValue.AsInt32.get -> int
+Vezel.Novadrop.Data.DataCenterValue.AsSingle.get -> float
+Vezel.Novadrop.Data.DataCenterValue.AsString.get -> string!
+Vezel.Novadrop.Data.DataCenterValue.CompareTo(Vezel.Novadrop.Data.DataCenterValue other) -> int
+Vezel.Novadrop.Data.DataCenterValue.DataCenterValue() -> void
+Vezel.Novadrop.Data.DataCenterValue.DataCenterValue(bool value) -> void
+Vezel.Novadrop.Data.DataCenterValue.DataCenterValue(float value) -> void
+Vezel.Novadrop.Data.DataCenterValue.DataCenterValue(int value) -> void
+Vezel.Novadrop.Data.DataCenterValue.DataCenterValue(string! value) -> void
+Vezel.Novadrop.Data.DataCenterValue.Equals(Vezel.Novadrop.Data.DataCenterValue other) -> bool
+Vezel.Novadrop.Data.DataCenterValue.IsBoolean.get -> bool
+Vezel.Novadrop.Data.DataCenterValue.IsInt32.get -> bool
+Vezel.Novadrop.Data.DataCenterValue.IsNull.get -> bool
+Vezel.Novadrop.Data.DataCenterValue.IsSingle.get -> bool
+Vezel.Novadrop.Data.DataCenterValue.IsString.get -> bool
+Vezel.Novadrop.Data.DataCenterValue.TypeCode.get -> Vezel.Novadrop.Data.DataCenterTypeCode
+Vezel.Novadrop.Data.DataCenterValue.Value.get -> object?
+Vezel.Novadrop.Resources.ResourceContainer
+Vezel.Novadrop.Resources.ResourceContainer.CreateEntry(string! name) -> Vezel.Novadrop.Resources.ResourceContainerEntry!
+Vezel.Novadrop.Resources.ResourceContainer.Entries.get -> System.Collections.Generic.IReadOnlyDictionary<string!, Vezel.Novadrop.Resources.ResourceContainerEntry!>!
+Vezel.Novadrop.Resources.ResourceContainer.RemoveEntry(string! name) -> bool
+Vezel.Novadrop.Resources.ResourceContainer.SaveAsync(System.IO.Stream! stream, Vezel.Novadrop.Resources.ResourceContainerSaveOptions! options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Vezel.Novadrop.Resources.ResourceContainerEntry
+Vezel.Novadrop.Resources.ResourceContainerEntry.Container.get -> Vezel.Novadrop.Resources.ResourceContainer!
+Vezel.Novadrop.Resources.ResourceContainerEntry.Data.get -> System.Memory<byte>
+Vezel.Novadrop.Resources.ResourceContainerEntry.Data.set -> void
+Vezel.Novadrop.Resources.ResourceContainerEntry.Name.get -> string!
+Vezel.Novadrop.Resources.ResourceContainerLoadOptions
+Vezel.Novadrop.Resources.ResourceContainerLoadOptions.Key.get -> System.ReadOnlyMemory<byte>
+Vezel.Novadrop.Resources.ResourceContainerLoadOptions.ResourceContainerLoadOptions() -> void
+Vezel.Novadrop.Resources.ResourceContainerLoadOptions.Strict.get -> bool
+Vezel.Novadrop.Resources.ResourceContainerLoadOptions.WithKey(scoped System.ReadOnlySpan<byte> key) -> Vezel.Novadrop.Resources.ResourceContainerLoadOptions!
+Vezel.Novadrop.Resources.ResourceContainerLoadOptions.WithStrict(bool strict) -> Vezel.Novadrop.Resources.ResourceContainerLoadOptions!
+Vezel.Novadrop.Resources.ResourceContainerSaveOptions
+Vezel.Novadrop.Resources.ResourceContainerSaveOptions.Key.get -> System.ReadOnlyMemory<byte>
+Vezel.Novadrop.Resources.ResourceContainerSaveOptions.ResourceContainerSaveOptions() -> void
+Vezel.Novadrop.Resources.ResourceContainerSaveOptions.WithKey(scoped System.ReadOnlySpan<byte> key) -> Vezel.Novadrop.Resources.ResourceContainerSaveOptions!
+virtual Vezel.Novadrop.Data.DataCenterNode.HasAttributes.get -> bool
+virtual Vezel.Novadrop.Data.DataCenterNode.HasChildren.get -> bool

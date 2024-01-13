@@ -1,0 +1,13 @@
+#nullable enable
+static Vezel.Novadrop.Net.NetworkPacketTable.LatestTable.get -> Vezel.Novadrop.Net.NetworkPacketTable!
+static Vezel.Novadrop.Net.SystemMessageTable.LatestTable.get -> Vezel.Novadrop.Net.SystemMessageTable!
+Vezel.Novadrop.Net.NetworkPacketTable
+Vezel.Novadrop.Net.NetworkPacketTable.CodeToName.get -> System.Collections.Generic.IReadOnlyDictionary<ushort, string!>!
+Vezel.Novadrop.Net.NetworkPacketTable.NameToCode.get -> System.Collections.Generic.IReadOnlyDictionary<string!, ushort>!
+Vezel.Novadrop.Net.NetworkPacketTable.NetworkPacketTable(int revision, System.Collections.Generic.IReadOnlyDictionary<string!, ushort>! mapping) -> void
+Vezel.Novadrop.Net.NetworkPacketTable.Revision.get -> int
+Vezel.Novadrop.Net.SystemMessageTable
+Vezel.Novadrop.Net.SystemMessageTable.CodeToName.get -> System.Collections.Generic.IReadOnlyDictionary<ushort, string!>!
+Vezel.Novadrop.Net.SystemMessageTable.NameToCode.get -> System.Collections.Generic.IReadOnlyDictionary<string!, ushort>!
+Vezel.Novadrop.Net.SystemMessageTable.Revision.get -> int
+Vezel.Novadrop.Net.SystemMessageTable.SystemMessageTable(int revision, System.Collections.Generic.IReadOnlyDictionary<string!, ushort>! mapping) -> void

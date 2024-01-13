@@ -1,0 +1,106 @@
+#nullable enable
+override Vezel.Novadrop.Client.ClientServerInfo.ToString() -> string!
+override Vezel.Novadrop.Client.LauncherServerInfo.ToString() -> string!
+static Vezel.Novadrop.Client.ClientMessageServer.Start(Vezel.Novadrop.Client.ClientMessageServerOptions! options) -> Vezel.Novadrop.Client.ClientMessageServer!
+static Vezel.Novadrop.Client.LauncherMessageServer.Start(Vezel.Novadrop.Client.LauncherMessageServerOptions! options) -> Vezel.Novadrop.Client.LauncherMessageServer!
+Vezel.Novadrop.Client.ClientMessageServer
+Vezel.Novadrop.Client.ClientMessageServer.AccountNameRequested -> System.Action?
+Vezel.Novadrop.Client.ClientMessageServer.GameCrashed -> System.Action<string!>?
+Vezel.Novadrop.Client.ClientMessageServer.GameEventOccurred -> System.Action<Vezel.Novadrop.Client.GameEvent>?
+Vezel.Novadrop.Client.ClientMessageServer.GameExited -> System.Action<int>?
+Vezel.Novadrop.Client.ClientMessageServer.GameStarted -> System.Action<int>?
+Vezel.Novadrop.Client.ClientMessageServer.LobbyEntered -> System.Action?
+Vezel.Novadrop.Client.ClientMessageServer.OpenSupportWebsiteRequested -> System.Action?
+Vezel.Novadrop.Client.ClientMessageServer.OpenWebsiteRequested -> System.Action<int>?
+Vezel.Novadrop.Client.ClientMessageServer.Options.get -> Vezel.Novadrop.Client.ClientMessageServerOptions!
+Vezel.Novadrop.Client.ClientMessageServer.ServerListRequested -> System.Action?
+Vezel.Novadrop.Client.ClientMessageServer.SessionTicketRequested -> System.Action?
+Vezel.Novadrop.Client.ClientMessageServer.WebUriRequested -> System.Buffers.ReadOnlySpanAction<string!, int>?
+Vezel.Novadrop.Client.ClientMessageServer.WorldEntered -> System.Action<string!>?
+Vezel.Novadrop.Client.ClientMessageServerOptions
+Vezel.Novadrop.Client.ClientMessageServerOptions.AccountName.get -> string!
+Vezel.Novadrop.Client.ClientMessageServerOptions.AddServer(Vezel.Novadrop.Client.ClientServerInfo! server) -> Vezel.Novadrop.Client.ClientMessageServerOptions!
+Vezel.Novadrop.Client.ClientMessageServerOptions.AddServers(params Vezel.Novadrop.Client.ClientServerInfo![]! servers) -> Vezel.Novadrop.Client.ClientMessageServerOptions!
+Vezel.Novadrop.Client.ClientMessageServerOptions.AddServers(System.Collections.Generic.IEnumerable<Vezel.Novadrop.Client.ClientServerInfo!>! servers) -> Vezel.Novadrop.Client.ClientMessageServerOptions!
+Vezel.Novadrop.Client.ClientMessageServerOptions.ClearServers() -> Vezel.Novadrop.Client.ClientMessageServerOptions!
+Vezel.Novadrop.Client.ClientMessageServerOptions.ClientMessageServerOptions(string! accountName, string! sessionTicket) -> void
+Vezel.Novadrop.Client.ClientMessageServerOptions.LastServerId.get -> int
+Vezel.Novadrop.Client.ClientMessageServerOptions.RemoveServer(int id) -> Vezel.Novadrop.Client.ClientMessageServerOptions!
+Vezel.Novadrop.Client.ClientMessageServerOptions.RemoveServers(params int[]! ids) -> Vezel.Novadrop.Client.ClientMessageServerOptions!
+Vezel.Novadrop.Client.ClientMessageServerOptions.RemoveServers(System.Collections.Generic.IEnumerable<int>! ids) -> Vezel.Novadrop.Client.ClientMessageServerOptions!
+Vezel.Novadrop.Client.ClientMessageServerOptions.Servers.get -> System.Collections.Immutable.ImmutableSortedDictionary<int, Vezel.Novadrop.Client.ClientServerInfo!>!
+Vezel.Novadrop.Client.ClientMessageServerOptions.SessionTicket.get -> string!
+Vezel.Novadrop.Client.ClientMessageServerOptions.WebUriProvider.get -> System.Func<int, System.ReadOnlyMemory<string!>, System.Uri!>?
+Vezel.Novadrop.Client.ClientMessageServerOptions.WithAccountName(string! accountName) -> Vezel.Novadrop.Client.ClientMessageServerOptions!
+Vezel.Novadrop.Client.ClientMessageServerOptions.WithLastServerId(int lastServerId) -> Vezel.Novadrop.Client.ClientMessageServerOptions!
+Vezel.Novadrop.Client.ClientMessageServerOptions.WithServers(params Vezel.Novadrop.Client.ClientServerInfo![]! servers) -> Vezel.Novadrop.Client.ClientMessageServerOptions!
+Vezel.Novadrop.Client.ClientMessageServerOptions.WithServers(System.Collections.Generic.IEnumerable<Vezel.Novadrop.Client.ClientServerInfo!>! servers) -> Vezel.Novadrop.Client.ClientMessageServerOptions!
+Vezel.Novadrop.Client.ClientMessageServerOptions.WithSessionTicket(string! sessionTicket) -> Vezel.Novadrop.Client.ClientMessageServerOptions!
+Vezel.Novadrop.Client.ClientMessageServerOptions.WithWebUriProvider(System.Func<int, System.ReadOnlyMemory<string!>, System.Uri!>? webUriProvider) -> Vezel.Novadrop.Client.ClientMessageServerOptions!
+Vezel.Novadrop.Client.ClientServerInfo
+Vezel.Novadrop.Client.ClientServerInfo.Address.get -> System.Net.IPAddress?
+Vezel.Novadrop.Client.ClientServerInfo.Category.get -> string!
+Vezel.Novadrop.Client.ClientServerInfo.ClientServerInfo(int id, string! category, string! name, string! title, string! queue, string! population, bool available, string! unavailableMessage, string? host, System.Net.IPAddress? address, int port) -> void
+Vezel.Novadrop.Client.ClientServerInfo.Host.get -> string?
+Vezel.Novadrop.Client.ClientServerInfo.Id.get -> int
+Vezel.Novadrop.Client.ClientServerInfo.IsAvailable.get -> bool
+Vezel.Novadrop.Client.ClientServerInfo.Name.get -> string!
+Vezel.Novadrop.Client.ClientServerInfo.Population.get -> string!
+Vezel.Novadrop.Client.ClientServerInfo.Port.get -> int
+Vezel.Novadrop.Client.ClientServerInfo.Queue.get -> string!
+Vezel.Novadrop.Client.ClientServerInfo.Title.get -> string!
+Vezel.Novadrop.Client.ClientServerInfo.UnavailableMessage.get -> string!
+Vezel.Novadrop.Client.GameEvent
+Vezel.Novadrop.Client.GameEvent.CanceledCharacterCreation = 1008 -> Vezel.Novadrop.Client.GameEvent
+Vezel.Novadrop.Client.GameEvent.ChangedChannel = 1016 -> Vezel.Novadrop.Client.GameEvent
+Vezel.Novadrop.Client.GameEvent.CreatedCharacter = 1010 -> Vezel.Novadrop.Client.GameEvent
+Vezel.Novadrop.Client.GameEvent.DeletedCharacter = 1007 -> Vezel.Novadrop.Client.GameEvent
+Vezel.Novadrop.Client.GameEvent.DismountedPegasus = 1015 -> Vezel.Novadrop.Client.GameEvent
+Vezel.Novadrop.Client.GameEvent.EnteredCharacterCreation = 1009 -> Vezel.Novadrop.Client.GameEvent
+Vezel.Novadrop.Client.GameEvent.EnteredIntroCinematic = 1001 -> Vezel.Novadrop.Client.GameEvent
+Vezel.Novadrop.Client.GameEvent.EnteredLobby = 1004 -> Vezel.Novadrop.Client.GameEvent
+Vezel.Novadrop.Client.GameEvent.EnteredServerList = 1002 -> Vezel.Novadrop.Client.GameEvent
+Vezel.Novadrop.Client.GameEvent.EnteredWorld = 1011 -> Vezel.Novadrop.Client.GameEvent
+Vezel.Novadrop.Client.GameEvent.EnteringCharacterCreation = 1005 -> Vezel.Novadrop.Client.GameEvent
+Vezel.Novadrop.Client.GameEvent.EnteringLobby = 1003 -> Vezel.Novadrop.Client.GameEvent
+Vezel.Novadrop.Client.GameEvent.FinishedLoadingScreen = 1012 -> Vezel.Novadrop.Client.GameEvent
+Vezel.Novadrop.Client.GameEvent.LeftLobby = 1006 -> Vezel.Novadrop.Client.GameEvent
+Vezel.Novadrop.Client.GameEvent.LeftWorld = 1013 -> Vezel.Novadrop.Client.GameEvent
+Vezel.Novadrop.Client.GameEvent.MountedPegasus = 1014 -> Vezel.Novadrop.Client.GameEvent
+Vezel.Novadrop.Client.GameMessageServer
+Vezel.Novadrop.Client.GameMessageServer.Dispose() -> void
+Vezel.Novadrop.Client.GameMessageServer.MessageReceived -> System.Buffers.ReadOnlySpanAction<byte, nuint>?
+Vezel.Novadrop.Client.GameMessageServer.MessageSent -> System.Buffers.ReadOnlySpanAction<byte, nuint>?
+Vezel.Novadrop.Client.LauncherMessageServer
+Vezel.Novadrop.Client.LauncherMessageServer.AuthenticationInfoRequested -> System.Action?
+Vezel.Novadrop.Client.LauncherMessageServer.GameEventOccurred -> System.Action<Vezel.Novadrop.Client.GameEvent>?
+Vezel.Novadrop.Client.LauncherMessageServer.GameExited -> System.Action<int>?
+Vezel.Novadrop.Client.LauncherMessageServer.Options.get -> Vezel.Novadrop.Client.LauncherMessageServerOptions!
+Vezel.Novadrop.Client.LauncherMessageServer.ServerListUriRequested -> System.Action?
+Vezel.Novadrop.Client.LauncherMessageServer.WebUriRequested -> System.Buffers.ReadOnlySpanAction<string!, int>?
+Vezel.Novadrop.Client.LauncherMessageServerOptions
+Vezel.Novadrop.Client.LauncherMessageServerOptions.AccountName.get -> string!
+Vezel.Novadrop.Client.LauncherMessageServerOptions.AddServer(Vezel.Novadrop.Client.LauncherServerInfo! server) -> Vezel.Novadrop.Client.LauncherMessageServerOptions!
+Vezel.Novadrop.Client.LauncherMessageServerOptions.AddServers(params Vezel.Novadrop.Client.LauncherServerInfo![]! servers) -> Vezel.Novadrop.Client.LauncherMessageServerOptions!
+Vezel.Novadrop.Client.LauncherMessageServerOptions.AddServers(System.Collections.Generic.IEnumerable<Vezel.Novadrop.Client.LauncherServerInfo!>! servers) -> Vezel.Novadrop.Client.LauncherMessageServerOptions!
+Vezel.Novadrop.Client.LauncherMessageServerOptions.ClearServers() -> Vezel.Novadrop.Client.LauncherMessageServerOptions!
+Vezel.Novadrop.Client.LauncherMessageServerOptions.LastServerId.get -> int
+Vezel.Novadrop.Client.LauncherMessageServerOptions.LauncherMessageServerOptions(string! accountName, string! sessionTicket, System.Uri! serverListUri) -> void
+Vezel.Novadrop.Client.LauncherMessageServerOptions.RemoveServer(int id) -> Vezel.Novadrop.Client.LauncherMessageServerOptions!
+Vezel.Novadrop.Client.LauncherMessageServerOptions.RemoveServers(params int[]! ids) -> Vezel.Novadrop.Client.LauncherMessageServerOptions!
+Vezel.Novadrop.Client.LauncherMessageServerOptions.RemoveServers(System.Collections.Generic.IEnumerable<int>! ids) -> Vezel.Novadrop.Client.LauncherMessageServerOptions!
+Vezel.Novadrop.Client.LauncherMessageServerOptions.ServerListUri.get -> System.Uri!
+Vezel.Novadrop.Client.LauncherMessageServerOptions.Servers.get -> System.Collections.Immutable.ImmutableSortedDictionary<int, Vezel.Novadrop.Client.LauncherServerInfo!>!
+Vezel.Novadrop.Client.LauncherMessageServerOptions.SessionTicket.get -> string!
+Vezel.Novadrop.Client.LauncherMessageServerOptions.WebUriProvider.get -> System.Func<int, System.ReadOnlyMemory<string!>, System.Uri!>?
+Vezel.Novadrop.Client.LauncherMessageServerOptions.WithAccountName(string! accountName) -> Vezel.Novadrop.Client.LauncherMessageServerOptions!
+Vezel.Novadrop.Client.LauncherMessageServerOptions.WithLastServerId(int lastServerId) -> Vezel.Novadrop.Client.LauncherMessageServerOptions!
+Vezel.Novadrop.Client.LauncherMessageServerOptions.WithServerListUri(System.Uri! serverListUri) -> Vezel.Novadrop.Client.LauncherMessageServerOptions!
+Vezel.Novadrop.Client.LauncherMessageServerOptions.WithServers(params Vezel.Novadrop.Client.LauncherServerInfo![]! servers) -> Vezel.Novadrop.Client.LauncherMessageServerOptions!
+Vezel.Novadrop.Client.LauncherMessageServerOptions.WithServers(System.Collections.Generic.IEnumerable<Vezel.Novadrop.Client.LauncherServerInfo!>! servers) -> Vezel.Novadrop.Client.LauncherMessageServerOptions!
+Vezel.Novadrop.Client.LauncherMessageServerOptions.WithSessionTicket(string! sessionTicket) -> Vezel.Novadrop.Client.LauncherMessageServerOptions!
+Vezel.Novadrop.Client.LauncherMessageServerOptions.WithWebUriProvider(System.Func<int, System.ReadOnlyMemory<string!>, System.Uri!>? webUriProvider) -> Vezel.Novadrop.Client.LauncherMessageServerOptions!
+Vezel.Novadrop.Client.LauncherServerInfo
+Vezel.Novadrop.Client.LauncherServerInfo.Characters.get -> int
+Vezel.Novadrop.Client.LauncherServerInfo.Id.get -> int
+Vezel.Novadrop.Client.LauncherServerInfo.LauncherServerInfo(int id, int characters) -> void
