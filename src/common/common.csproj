@@ -2,7 +2,7 @@
     <PropertyGroup>
         <AssemblyName>Vezel.Novadrop.Common</AssemblyName>
         <IsPackable>true</IsPackable>
-        <PackageDescription>$(PackageDescription)
+        <PackageDescription>$(Description)
 
 This package provides common functionality used by all Novadrop packages.</PackageDescription>
         <PackageId>Vezel.Novadrop.Common</PackageId>
