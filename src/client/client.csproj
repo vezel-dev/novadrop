@@ -2,7 +2,7 @@
     <PropertyGroup>
         <AssemblyName>Vezel.Novadrop.Client</AssemblyName>
         <IsPackable>true</IsPackable>
-        <PackageDescription>$(PackageDescription)
+        <PackageDescription>$(Description)
 
 This package provides support for interacting with the TERA launcher and client.</PackageDescription>
         <PackageId>Vezel.Novadrop.Client</PackageId>

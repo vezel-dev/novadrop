@@ -3,7 +3,7 @@
         <AssemblyName>Vezel.Novadrop.Net</AssemblyName>
         <!-- TODO: Ship this package. -->
         <IsPackable>false</IsPackable>
-        <PackageDescription>$(PackageDescription)
+        <PackageDescription>$(Description)
 
 This package provides support for TERA's network protocol.</PackageDescription>
         <PackageId>Vezel.Novadrop.Net</PackageId>

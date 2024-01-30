@@ -2,7 +2,7 @@
     <PropertyGroup>
         <AssemblyName>Vezel.Novadrop.Interop</AssemblyName>
         <IsPackable>true</IsPackable>
-        <PackageDescription>$(PackageDescription)
+        <PackageDescription>$(Description)
 
 This package provides low-level bindings for in-memory interoperation with the
 TERA client.</PackageDescription>
