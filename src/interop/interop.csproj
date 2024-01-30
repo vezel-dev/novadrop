@@ -8,6 +8,7 @@ This package provides low-level bindings for in-memory interoperation with the
 TERA client.</PackageDescription>
         <PackageId>Vezel.Novadrop.Interop</PackageId>
         <RootNamespace>Vezel.Novadrop.Interop</RootNamespace>
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     </PropertyGroup>
 
     <ItemGroup>
