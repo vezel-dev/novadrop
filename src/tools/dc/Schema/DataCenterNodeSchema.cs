@@ -2,7 +2,7 @@ namespace Vezel.Novadrop.Schema;
 
 internal sealed class DataCenterNodeSchema
 {
-    public IEnumerable<string> Keys => _keys ?? Array.Empty<string>();
+    public IEnumerable<string> Keys => _keys ?? [];
 
     public IReadOnlyDictionary<string, DataCenterAttributeSchema> Attributes => _attributes;
 

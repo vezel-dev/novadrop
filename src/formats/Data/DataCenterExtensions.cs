@@ -31,7 +31,7 @@ public static class DataCenterExtensions
     {
         Check.Null(node);
 
-        return node.Parent?.AncestorsAndSelf() ?? Array.Empty<DataCenterNode>();
+        return node.Parent?.AncestorsAndSelf() ?? [];
     }
 
     public static IEnumerable<DataCenterNode> Ancestors(this DataCenterNode node, string name)
