@@ -193,7 +193,7 @@ public static class DataCenterExtensions
 
     public static IEnumerable<DataCenterNode> DescendantsAt(this DataCenterNode node, IEnumerable<string> path)
     {
-        return node.DescendantsAt(path.ToArray());
+        return node.DescendantsAt([.. path]);
     }
 
     public static int ToInt32(this DataCenterValue value, int radix = 10)

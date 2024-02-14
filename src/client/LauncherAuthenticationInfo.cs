@@ -44,7 +44,7 @@ internal sealed class LauncherAuthenticationInfo
     {
         MasterAccountName = accountName;
         SessionTicket = sessionTicket;
-        CharactersPerServer = charactersPerServer.ToArray();
+        CharactersPerServer = [.. charactersPerServer];
         LastServerId = lastServerId;
     }
 }

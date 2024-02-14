@@ -67,7 +67,7 @@ internal sealed class DataCenterStringTableReader
                     elemIdx + length < elems.Count,
                     $"String range {elemIdx}..{elemIdx + length + 1} is out of bounds (0..{elems.Count - 1}).");
 
-                var value = new string(elems.GetRange(elemIdx, length).Select(static c => c.Value).ToArray());
+                var value = new string([.. elems.GetRange(elemIdx, length).Select(static c => c.Value)]);
 
                 if (strict)
                 {
