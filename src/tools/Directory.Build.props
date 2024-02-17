@@ -6,7 +6,7 @@
         <IsPublishable>true</IsPublishable>
         <OutputType>Exe</OutputType>
         <PackAsTool>true</PackAsTool>
-        <RollForward>LatestMajor</RollForward>
+        <RollForward>Major</RollForward>
         <RootNamespace>Vezel.Novadrop</RootNamespace>
         <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
         <SelfContained>false</SelfContained>
