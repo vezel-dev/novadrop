@@ -10,6 +10,7 @@
     <PropertyGroup>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <AnalysisLevel>latest-all</AnalysisLevel>
+        <ApplicationIcon>$(MSBuildThisFileDirectory)novadrop.ico</ApplicationIcon>
         <DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
         <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
         <EnablePackageValidation>true</EnablePackageValidation>
@@ -20,8 +21,10 @@
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
         <PackRelease>false</PackRelease>
+        <PackageIcon>novadrop.png</PackageIcon>
         <PackageLicenseExpression>0BSD</PackageLicenseExpression>
         <PackageProjectUrl>https://docs.vezel.dev/novadrop</PackageProjectUrl>
+        <PackageReadmeFile>PACKAGE.md</PackageReadmeFile>
         <PublishRelease>false</PublishRelease>
         <RepositoryUrl>https://github.com/vezel-dev/novadrop.git</RepositoryUrl>
         <TargetFramework>net8.0</TargetFramework>
