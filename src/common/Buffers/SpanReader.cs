@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: 0BSD
+
 namespace Vezel.Novadrop.Buffers;
 
 internal ref struct SpanReader

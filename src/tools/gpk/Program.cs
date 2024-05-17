@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: 0BSD
+
 AnsiConsole.Profile.Capabilities.Ansi = !Console.IsOutputRedirected && !Console.IsErrorRedirected;
 
 var app = new CommandApp();

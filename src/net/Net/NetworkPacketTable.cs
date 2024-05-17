@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: 0BSD
+
 namespace Vezel.Novadrop.Net;
 
 public sealed class NetworkPacketTable

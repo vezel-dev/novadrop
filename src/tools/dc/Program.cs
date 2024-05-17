@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: 0BSD
+
 using Vezel.Novadrop.Commands;
 
 AnsiConsole.Profile.Capabilities.Ansi = !Console.IsOutputRedirected && !Console.IsErrorRedirected;

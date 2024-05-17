@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: 0BSD
+
 namespace Vezel.Novadrop.Resources;
 
 public sealed class ResourceContainerLoadOptions

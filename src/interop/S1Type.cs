@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: 0BSD
+
 using Vezel.Novadrop.Interop.Support;
 using Vezel.Novadrop.Interop.System;
 

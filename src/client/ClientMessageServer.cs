@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: 0BSD
+
 namespace Vezel.Novadrop.Client;
 
 public sealed class ClientMessageServer : GameMessageServer

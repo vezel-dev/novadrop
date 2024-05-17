@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: 0BSD
+
 using Vezel.Novadrop.Data.Serialization.Items;
 
 namespace Vezel.Novadrop.Data.Serialization;

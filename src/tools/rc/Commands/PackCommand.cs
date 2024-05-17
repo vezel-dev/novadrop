@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: 0BSD
+
 namespace Vezel.Novadrop.Commands;
 
 [SuppressMessage("", "CA1812")]

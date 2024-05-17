@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: 0BSD
+
 using Vezel.Novadrop.Schema;
 
 namespace Vezel.Novadrop.Commands;

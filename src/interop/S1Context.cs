@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: 0BSD
+
 namespace Vezel.Novadrop.Interop;
 
 [StructLayout(LayoutKind.Explicit, Size = 0x470)]
