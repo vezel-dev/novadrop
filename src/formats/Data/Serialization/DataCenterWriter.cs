@@ -160,22 +160,25 @@ internal sealed class DataCenterWriter
         }
 
         var comparison = new Comparison<(int Index, DataCenterNode Node)>(
-            Comparer<(int Index, DataCenterNode Node)>.Create((x, y) =>
+            Comparer<(int Position, DataCenterNode Node)>.Create((x, y) =>
             {
-                var (indexX, nodeX) = x;
-                var (indexY, nodeY) = y;
+                var (posX, nodeX) = x;
+                var (posY, nodeY) = y;
 
                 var cmp = _names.GetString(nodeX.Name).Index.CompareTo(_names.GetString(nodeY.Name).Index);
 
                 if (nodeX.HasAttributes || nodeY.HasAttributes)
                 {
                     // Note that the node value attribute cannot be a key.
+
                     var attrsA = nodeX.Attributes;
                     var attrsB = nodeY.Attributes;
 
                     int CompareBy(string? name)
                     {
-                        return name != null ? attrsA.GetValueOrDefault(name).CompareTo(attrsB.GetValueOrDefault(name)) : 0;
+                        return name != null
+                            ? attrsA.GetValueOrDefault(name).CompareTo(attrsB.GetValueOrDefault(name))
+                            : 0;
                     }
 
                     var keys = nodeX.Keys;
@@ -195,7 +198,7 @@ internal sealed class DataCenterWriter
 
                 // Node sorting must be stable.
                 if (cmp == 0)
-                    cmp = indexX.CompareTo(indexY);
+                    cmp = posX.CompareTo(posY);
 
                 return cmp;
             }).Compare);
@@ -218,9 +221,9 @@ internal sealed class DataCenterWriter
 
                 var sortedAttributes = new (int Index, DataCenterValue Value)[attrCount];
 
-                void AddAttribute(int index, string name, DataCenterValue value)
+                void AddAttribute(int position, string name, DataCenterValue value)
                 {
-                    sortedAttributes[index] = (_names.GetString(name).Index, value);
+                    sortedAttributes[position] = (_names.GetString(name).Index, value);
                 }
 
                 if (node.HasAttributes)
@@ -314,7 +317,7 @@ internal sealed class DataCenterWriter
 
                 childCount = nodeChildren.Count;
 
-                var sortedChildren = new (int Index, DataCenterNode Node)[childCount];
+                var sortedChildren = new (int Position, DataCenterNode Node)[childCount];
 
                 for (var i = 0; i < childCount; i++)
                     sortedChildren[i] = (i, nodeChildren[i]);
