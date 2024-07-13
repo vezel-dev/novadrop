@@ -27,7 +27,7 @@ internal static class DataCenterNameTree
             var keys = dataNode.Keys;
 
             // There can be keys that refer to attributes that do not exist even in the official data center, so we need
-            // to explicitly add these attribute names.
+            // to explicitly add these attribute names first.
             if (keys.HasAttributeNames)
                 foreach (var name in keys.AttributeNames)
                     nameNode.Attributes[name] = true;
@@ -40,7 +40,7 @@ internal static class DataCenterNameTree
                         nameNode.Attributes, name, out var exists);
 
                     if (!exists)
-                        isKey |= false;
+                        isKey = false;
                 }
             }
 
