@@ -5,7 +5,7 @@ using Vezel.Novadrop.Data.Serialization.Items;
 namespace Vezel.Novadrop.Data.Serialization.Regions;
 
 internal sealed class DataCenterSimpleRegion<T>
-    where T : unmanaged, IDataCenterItem
+    where T : struct, IDataCenterItem<T>
 {
     private readonly bool _offByOne;
 
@@ -40,9 +40,7 @@ internal sealed class DataCenterSimpleRegion<T>
 
                 for (var i = 0; i < count; i++)
                 {
-                    var elem = default(T);
-
-                    elem.Read(architecture, ref reader);
+                    T.Read(ref reader, architecture, out var elem);
 
                     Elements.Add(elem);
                 }
@@ -75,7 +73,7 @@ internal sealed class DataCenterSimpleRegion<T>
                 var writer = new SpanWriter(bytes);
 
                 foreach (var elem in Elements)
-                    elem.Write(architecture, ref writer);
+                    T.Write(ref writer, architecture, elem);
             }
 
             // Cannot use refs in async methods...

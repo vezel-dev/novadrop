@@ -4,7 +4,8 @@ using Vezel.Novadrop.Data.Serialization.Items;
 
 namespace Vezel.Novadrop.Data.Serialization;
 
-internal readonly struct DataCenterAddress : IEquatable<DataCenterAddress>
+internal readonly struct DataCenterAddress :
+    IEqualityOperators<DataCenterAddress, DataCenterAddress, bool>, IEquatable<DataCenterAddress>
 {
     public static readonly DataCenterAddress MinValue = new(ushort.MinValue, ushort.MinValue);
 
