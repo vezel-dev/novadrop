@@ -62,12 +62,12 @@ internal struct DataCenterRawNode : IDataCenterItem<DataCenterRawNode>
         DataCenterRawAddress.Write(ref writer, architecture, item.AttributeAddress);
 
         if (architecture == DataCenterArchitecture.X64)
-            writer.Advance(sizeof(uint));
+            writer.WriteUInt32(0); // Write a deterministic padding value.
 
         DataCenterRawAddress.Write(ref writer, architecture, item.ChildAddress);
 
         if (architecture == DataCenterArchitecture.X64)
-            writer.Advance(sizeof(uint));
+            writer.WriteUInt32(0); // Write a deterministic padding value.
     }
 
     public readonly bool Equals(DataCenterRawNode other)

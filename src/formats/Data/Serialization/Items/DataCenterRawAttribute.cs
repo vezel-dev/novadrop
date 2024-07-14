@@ -43,7 +43,7 @@ internal struct DataCenterRawAttribute : IDataCenterItem<DataCenterRawAttribute>
         writer.WriteInt32(item.Value);
 
         if (architecture == DataCenterArchitecture.X64)
-            writer.Advance(sizeof(uint));
+            writer.WriteUInt32(0); // Write a deterministic padding value.
     }
 
     public readonly bool Equals(DataCenterRawAttribute other)
