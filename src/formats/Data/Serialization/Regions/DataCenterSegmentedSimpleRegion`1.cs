@@ -3,7 +3,7 @@ using Vezel.Novadrop.Data.Serialization.Items;
 namespace Vezel.Novadrop.Data.Serialization.Regions;
 
 internal sealed class DataCenterSegmentedSimpleRegion<T>
-    where T : unmanaged, IDataCenterItem
+    where T : struct, IDataCenterItem<T>
 {
     public IReadOnlyList<DataCenterSimpleRegion<T>> Segments { get; }
 

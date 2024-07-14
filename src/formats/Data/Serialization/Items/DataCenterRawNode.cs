@@ -1,7 +1,7 @@
 namespace Vezel.Novadrop.Data.Serialization.Items;
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
-internal struct DataCenterRawNode : IDataCenterItem, IEquatable<DataCenterRawNode>
+internal struct DataCenterRawNode : IDataCenterItem<DataCenterRawNode>
 {
     public ushort NameIndex;
 
@@ -30,35 +30,39 @@ internal struct DataCenterRawNode : IDataCenterItem, IEquatable<DataCenterRawNod
             : sizeof(DataCenterRawNode) - sizeof(uint) * 2;
     }
 
-    public void Read(DataCenterArchitecture architecture, ref SpanReader reader)
+    public static void Read(ref SpanReader reader, DataCenterArchitecture architecture, out DataCenterRawNode item)
     {
-        NameIndex = reader.ReadUInt16();
-        KeysInfo = reader.ReadUInt16();
-        AttributeCount = reader.ReadUInt16();
-        ChildCount = reader.ReadUInt16();
-        AttributeAddress.Read(architecture, ref reader);
+        item.NameIndex = reader.ReadUInt16();
+        item.KeysInfo = reader.ReadUInt16();
+        item.AttributeCount = reader.ReadUInt16();
+        item.ChildCount = reader.ReadUInt16();
+
+        DataCenterRawAddress.Read(ref reader, architecture, out item.AttributeAddress);
+        Unsafe.SkipInit(out item.Padding1);
 
         if (architecture == DataCenterArchitecture.X64)
             reader.Advance(sizeof(uint));
 
-        ChildAddress.Read(architecture, ref reader);
+        DataCenterRawAddress.Read(ref reader, architecture, out item.ChildAddress);
+        Unsafe.SkipInit(out item.Padding2);
 
         if (architecture == DataCenterArchitecture.X64)
             reader.Advance(sizeof(uint));
     }
 
-    public readonly void Write(DataCenterArchitecture architecture, ref SpanWriter writer)
+    public static void Write(ref SpanWriter writer, DataCenterArchitecture architecture, in DataCenterRawNode item)
     {
-        writer.WriteUInt16(NameIndex);
-        writer.WriteUInt16(KeysInfo);
-        writer.WriteUInt16(AttributeCount);
-        writer.WriteUInt16(ChildCount);
-        AttributeAddress.Write(architecture, ref writer);
+        writer.WriteUInt16(item.NameIndex);
+        writer.WriteUInt16(item.KeysInfo);
+        writer.WriteUInt16(item.AttributeCount);
+        writer.WriteUInt16(item.ChildCount);
+
+        DataCenterRawAddress.Write(ref writer, architecture, item.AttributeAddress);
 
         if (architecture == DataCenterArchitecture.X64)
             writer.Advance(sizeof(uint));
 
-        ChildAddress.Write(architecture, ref writer);
+        DataCenterRawAddress.Write(ref writer, architecture, item.ChildAddress);
 
         if (architecture == DataCenterArchitecture.X64)
             writer.Advance(sizeof(uint));
@@ -83,5 +87,10 @@ internal struct DataCenterRawNode : IDataCenterItem, IEquatable<DataCenterRawNod
     public override readonly int GetHashCode()
     {
         return HashCode.Combine(NameIndex, KeysInfo, AttributeCount, ChildCount, AttributeAddress, ChildAddress);
+    }
+
+    public override readonly string ToString()
+    {
+        return $"({NameIndex}:{KeysInfo}:{AttributeCount}:{ChildCount}:{AttributeAddress}:{ChildAddress})";
     }
 }

@@ -23,9 +23,9 @@ internal sealed class DataCenterWriter
 
     private readonly Dictionary<int, List<(DataCenterAddress, int)>> _nodeCache = [];
 
-    private readonly DataCenterStringTableWriter _values = new(DataCenterConstants.ValueTableSize, false);
+    private readonly DataCenterStringTableWriter _values = new(DataCenterConstants.ValueTableSize, limit: false);
 
-    private readonly DataCenterStringTableWriter _names = new(DataCenterConstants.NameTableSize, true);
+    private readonly DataCenterStringTableWriter _names = new(DataCenterConstants.NameTableSize, limit: true);
 
     private readonly DataCenterFooter _footer = new();
 
@@ -54,7 +54,7 @@ internal sealed class DataCenterWriter
         }
 
         static DataCenterAddress AllocateRange<T>(DataCenterSegmentedRegion<T> region, int count, string description)
-            where T : unmanaged, IDataCenterItem
+            where T : struct, IDataCenterItem<T>
         {
             var max = DataCenterAddress.MaxValue;
             var segIdx = 0;
@@ -97,7 +97,7 @@ internal sealed class DataCenterWriter
             Dictionary<int, List<(DataCenterAddress Address, int Count)>> cache,
             ReadOnlySpan<T> items,
             DataCenterAddress address)
-            where T : unmanaged, IDataCenterItem, IEquatable<T>
+            where T : struct, IDataCenterItem<T>
         {
             var i = 0;
 
@@ -118,7 +118,7 @@ internal sealed class DataCenterWriter
             Dictionary<int, List<(DataCenterAddress Address, int Count)>> cache,
             ReadOnlySpan<T> items,
             out DataCenterAddress address)
-            where T : unmanaged, IDataCenterItem, IEquatable<T>
+            where T : struct, IDataCenterItem<T>
         {
             if (cache.TryGetValue(GetItemsHashCode(items), out var ranges))
             {

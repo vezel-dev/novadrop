@@ -1,7 +1,7 @@
 namespace Vezel.Novadrop.Data.Serialization.Items;
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
-internal struct DataCenterRawAddress : IDataCenterItem, IEquatable<DataCenterRawAddress>
+internal struct DataCenterRawAddress : IDataCenterItem<DataCenterRawAddress>
 {
     public ushort SegmentIndex;
 
@@ -16,16 +16,16 @@ internal struct DataCenterRawAddress : IDataCenterItem, IEquatable<DataCenterRaw
         return sizeof(DataCenterRawAddress);
     }
 
-    public void Read(DataCenterArchitecture architecture, ref SpanReader reader)
+    public static void Read(ref SpanReader reader, DataCenterArchitecture architecture, out DataCenterRawAddress item)
     {
-        SegmentIndex = reader.ReadUInt16();
-        ElementIndex = reader.ReadUInt16();
+        item.SegmentIndex = reader.ReadUInt16();
+        item.ElementIndex = reader.ReadUInt16();
     }
 
-    public readonly void Write(DataCenterArchitecture architecture, ref SpanWriter writer)
+    public static void Write(ref SpanWriter writer, DataCenterArchitecture architecture, in DataCenterRawAddress item)
     {
-        writer.WriteUInt16(SegmentIndex);
-        writer.WriteUInt16(ElementIndex);
+        writer.WriteUInt16(item.SegmentIndex);
+        writer.WriteUInt16(item.ElementIndex);
     }
 
     public readonly bool Equals(DataCenterRawAddress other)
@@ -41,5 +41,10 @@ internal struct DataCenterRawAddress : IDataCenterItem, IEquatable<DataCenterRaw
     public override readonly int GetHashCode()
     {
         return HashCode.Combine(SegmentIndex, ElementIndex);
+    }
+
+    public override readonly string ToString()
+    {
+        return $"({SegmentIndex}:{ElementIndex})";
     }
 }
