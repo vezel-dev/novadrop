@@ -49,7 +49,7 @@ jobs:
           ./cake -c ${{ matrix.cfg }}
       - name: Upload artifacts
         if: always()
-        uses: actions/upload-artifact@v4.3.6
+        uses: actions/upload-artifact@v4.4.0
         with:
           name: ${{ github.workflow }}-${{ github.run_number }}-${{ github.run_attempt }}-${{ matrix.os }}-${{ matrix.cfg }}
           path: |
