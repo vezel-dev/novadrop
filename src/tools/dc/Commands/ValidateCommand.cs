@@ -5,7 +5,7 @@ namespace Vezel.Novadrop.Commands;
 [SuppressMessage("", "CA1812")]
 internal sealed class ValidateCommand : CancellableAsyncCommand<ValidateCommand.ValidateCommandSettings>
 {
-    public sealed class ValidateCommandSettings : CommandSettings
+    internal sealed class ValidateCommandSettings : CommandSettings
     {
         [CommandArgument(0, "<input>")]
         [Description("Input directory")]

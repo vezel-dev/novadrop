@@ -7,7 +7,7 @@ namespace Vezel.Novadrop.Commands;
 [SuppressMessage("", "CA1812")]
 internal sealed class SchemaCommand : CancellableAsyncCommand<SchemaCommand.SchemaCommandSettings>
 {
-    public sealed class SchemaCommandSettings : CommandSettings
+    internal sealed class SchemaCommandSettings : CommandSettings
     {
         [CommandArgument(0, "<input>")]
         [Description("Input file")]

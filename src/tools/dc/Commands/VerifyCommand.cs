@@ -5,7 +5,7 @@ namespace Vezel.Novadrop.Commands;
 [SuppressMessage("", "CA1812")]
 internal sealed class VerifyCommand : CancellableAsyncCommand<VerifyCommand.VerifyCommandSettings>
 {
-    public sealed class VerifyCommandSettings : CommandSettings
+    internal sealed class VerifyCommandSettings : CommandSettings
     {
         [CommandArgument(0, "<input>")]
         [Description("Input file")]

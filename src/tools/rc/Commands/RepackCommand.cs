@@ -5,7 +5,7 @@ namespace Vezel.Novadrop.Commands;
 [SuppressMessage("", "CA1812")]
 internal sealed class RepackCommand : CancellableAsyncCommand<RepackCommand.RepackCommandSettings>
 {
-    public sealed class RepackCommandSettings : CommandSettings
+    internal sealed class RepackCommandSettings : CommandSettings
     {
         [CommandArgument(0, "<input>")]
         [Description("Input file")]
