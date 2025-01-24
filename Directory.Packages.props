@@ -25,7 +25,7 @@
         <PackageVersion Include="Microsoft.Windows.CsWin32"
                         Version="0.3.162" />
         <PackageVersion Include="protobuf-net"
-                        Version="3.2.45" />
+                        Version="3.2.46" />
         <PackageVersion Include="protobuf-net.BuildTools"
                         Version="3.2.33" />
         <PackageVersion Include="Spectre.Console.Cli"
