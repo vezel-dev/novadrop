@@ -27,7 +27,7 @@
         <PackageVersion Include="protobuf-net"
                         Version="3.2.46" />
         <PackageVersion Include="protobuf-net.BuildTools"
-                        Version="3.2.46" />
+                        Version="3.2.52" />
         <PackageVersion Include="Spectre.Console.Cli"
                         Version="0.50.0" />
     </ItemGroup>
