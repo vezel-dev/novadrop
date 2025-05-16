@@ -10,7 +10,7 @@
         <GlobalPackageReference Include="Microsoft.Build.CopyOnWrite"
                                 Version="1.0.334" />
         <GlobalPackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers"
-                                Version="3.3.4" />
+                                Version="4.14.0" />
         <GlobalPackageReference Include="Microsoft.VisualStudio.Threading.Analyzers"
                                 Version="17.14.15" />
         <GlobalPackageReference Include="Nerdbank.GitVersioning"
