@@ -41,22 +41,13 @@
             </PropertyGroup>
 
             <ItemGroup>
-                <None Include="$(MSBuildThisFileDirectory)PACKAGE.md; $(MSBuildThisFileDirectory)novadrop.png"
-                      Pack="true"
-                      PackagePath=""
-                      Visible="false" />
-                <None Include="$(MSBuildProjectName).targets"
-                      Pack="true"
-                      PackagePath="buildTransitive/$(PackageId).targets"
-                      Condition="'$(OutputType)' == 'Library' and Exists('$(MSBuildProjectName).targets')" />
+                <None Include="$(MSBuildThisFileDirectory)PACKAGE.md; $(MSBuildThisFileDirectory)novadrop.png" Pack="true" PackagePath="" Visible="false" />
+                <None Include="$(MSBuildProjectName).targets" Pack="true" PackagePath="buildTransitive/$(PackageId).targets" Condition="'$(OutputType)' == 'Library' and Exists('$(MSBuildProjectName).targets')" />
             </ItemGroup>
         </When>
     </Choose>
 
-    <Target Name="_SetReleaseNotes"
-            DependsOnTargets="GetBuildVersion"
-            BeforeTargets="GenerateNuspec"
-            Condition="'$(IsPackable)' == 'true' and '$(PublicRelease)' == 'true'">
+    <Target Name="_SetReleaseNotes" DependsOnTargets="GetBuildVersion" BeforeTargets="GenerateNuspec" Condition="'$(IsPackable)' == 'true' and '$(PublicRelease)' == 'true'">
         <PropertyGroup>
             <PackageReleaseNotes>https://github.com/vezel-dev/novadrop/releases/tag/v$(Version)</PackageReleaseNotes>
         </PropertyGroup>
@@ -67,9 +58,7 @@
     This ensures that people will not have to fiddle around with removing these
     manually when iterating on changes locally.
     -->
-    <Target Name="_ClearPackageCache"
-            AfterTargets="Clean; Pack"
-            Condition="'$(IsPackable)' == 'true'">
+    <Target Name="_ClearPackageCache" AfterTargets="Clean; Pack" Condition="'$(IsPackable)' == 'true'">
         <ItemGroup>
             <_CachedFiles Include="$(NuGetPackageRoot)/$(PackageId.ToLowerInvariant())/**" />
         </ItemGroup>
