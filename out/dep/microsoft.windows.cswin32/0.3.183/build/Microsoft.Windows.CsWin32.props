@@ -1,0 +1,26 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="NativeMethods.json" />
+    <None Remove="NativeMethods.txt" />
+    <AdditionalFiles Include="NativeMethods.json" Condition="Exists('NativeMethods.json')" />
+    <AdditionalFiles Include="NativeMethods.txt" Condition="Exists('NativeMethods.txt')" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Provide the path to the winmds used as input into the analyzer. -->
+    <CompilerVisibleProperty Include="CsWin32InputMetadataPaths" />
+    <CompilerVisibleProperty Include="CsWin32InputDocPaths" />
+  </ItemGroup>
+
+  <Target Name="AssembleCsWin32InputPaths" BeforeTargets="GenerateMSBuildEditorConfigFileCore">
+    <!-- Roslyn only allows source generators to see msbuild properties, to lift msbuild items into semicolon-delimited properties. -->
+    <PropertyGroup>
+      <CsWin32InputMetadataPaths>@(ProjectionMetadataWinmd-&gt;'%(FullPath)','|')</CsWin32InputMetadataPaths>
+      <CsWin32InputDocPaths>@(ProjectionDocs-&gt;'%(FullPath)','|')</CsWin32InputDocPaths>
+    </PropertyGroup>
+  </Target>
+</Project>
