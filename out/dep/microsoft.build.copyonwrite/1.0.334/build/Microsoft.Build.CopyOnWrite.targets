@@ -1,0 +1,3 @@
+﻿<Project>
+	<UsingTask TaskName="Copy" AssemblyFile="$(MSBuildThisFileDirectory)netstandard2.0\Microsoft.Build.CopyOnWrite.dll" Condition=" '$(DisableCopyOnWrite)' != 'true' AND '$(DisableCopyOnWrite)' != '1' " />
+</Project>

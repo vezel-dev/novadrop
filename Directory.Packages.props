@@ -5,30 +5,19 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <GlobalPackageReference Include="DotNet.ReproducibleBuilds"
-                                Version="1.2.25" />
-        <GlobalPackageReference Include="Microsoft.Build.CopyOnWrite"
-                                Version="1.0.334" />
-        <GlobalPackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers"
-                                Version="4.14.0" />
-        <GlobalPackageReference Include="Microsoft.VisualStudio.Threading.Analyzers"
-                                Version="17.14.15" />
-        <GlobalPackageReference Include="Nerdbank.GitVersioning"
-                                Version="3.7.115" />
-        <GlobalPackageReference Include="StyleCop.Analyzers"
-                                Version="1.2.0-beta.556" />
+        <GlobalPackageReference Include="DotNet.ReproducibleBuilds" Version="1.2.25" />
+        <GlobalPackageReference Include="Microsoft.Build.CopyOnWrite" Version="1.0.334" />
+        <GlobalPackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" Version="4.14.0" />
+        <GlobalPackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.14.15" />
+        <GlobalPackageReference Include="Nerdbank.GitVersioning" Version="3.7.115" />
+        <GlobalPackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageVersion Include="Microsoft.Experimental.Collections"
-                        Version="1.0.6-e190117-3" />
-        <PackageVersion Include="Microsoft.Windows.CsWin32"
-                        Version="0.3.183" />
-        <PackageVersion Include="protobuf-net"
-                        Version="3.2.52" />
-        <PackageVersion Include="protobuf-net.BuildTools"
-                        Version="3.2.52" />
-        <PackageVersion Include="Spectre.Console.Cli"
-                        Version="0.50.0" />
+        <PackageVersion Include="Microsoft.Experimental.Collections" Version="1.0.6-e190117-3" />
+        <PackageVersion Include="Microsoft.Windows.CsWin32" Version="0.3.183" />
+        <PackageVersion Include="protobuf-net" Version="3.2.56" />
+        <PackageVersion Include="protobuf-net.BuildTools" Version="3.2.52" />
+        <PackageVersion Include="Spectre.Console.Cli" Version="0.50.0" />
     </ItemGroup>
 </Project>

@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" InitialTargets="NBGV_SetDefaults">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+
+    <VersionDependsOn>
+      GetNuPkgVersion;
+      $(VersionDependsOn)
+    </VersionDependsOn>
+
+    <CleanDependsOn>
+      GetBuildVersion;
+      $(CleanDependsOn)
+    </CleanDependsOn>
+
+    <GenerateNuspecDependsOn>
+      GetBuildVersion;
+      $(GenerateNuspecDependsOn)
+    </GenerateNuspecDependsOn>
+
+    <GetPackageVersionDependsOn>
+      GetBuildVersion;
+      $(GetPackageVersionDependsOn)
+    </GetPackageVersionDependsOn>
+
+    <!-- Suppress version attribute generation in Microsoft.NET.Sdk projects to avoid build failures
+         when two sets of attributes are emitted. -->
+    <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+  </PropertyGroup>
+
+  <Import Project="Nerdbank.GitVersioning.Common.targets" />
+
+  <UsingTask AssemblyFile="$(NerdbankGitVersioningTasksPath)Nerdbank.GitVersioning.Tasks.dll" TaskName="Nerdbank.GitVersioning.Tasks.AssemblyVersionInfo" />
+  <UsingTask AssemblyFile="$(NerdbankGitVersioningTasksPath)Nerdbank.GitVersioning.Tasks.dll" TaskName="Nerdbank.GitVersioning.Tasks.NativeVersionInfo" />
+  <UsingTask AssemblyFile="$(NerdbankGitVersioningTasksPath)Nerdbank.GitVersioning.Tasks.dll" TaskName="Nerdbank.GitVersioning.Tasks.SetCloudBuildVariables" />
+  <UsingTask AssemblyFile="$(NerdbankGitVersioningTasksPath)Nerdbank.GitVersioning.Tasks.dll" TaskName="Nerdbank.GitVersioning.Tasks.CompareFiles" />
+
+  <Target Name="NBGV_SetDefaults">
+    <!-- Workarounds for https://github.com/dotnet/Nerdbank.GitVersioning/issues/404 -->
+    <PropertyGroup>
+      <!-- $(TargetExt) isn't set at evaluation time for us when built in wpftmp.csproj with manual imports -->
+      <!-- Suppress assembly version info generation if not obviously compiling an assembly. -->
+      <GenerateAssemblyVersionInfo Condition=" '$(GenerateAssemblyVersionInfo)' == '' and '$(TargetExt)' != '.dll' and '$(TargetExt)' != '.exe' ">false</GenerateAssemblyVersionInfo>
+      <GenerateAssemblyVersionInfo Condition=" '$(GenerateAssemblyVersionInfo)' == '' and '$(NBGV_CacheMode)' == 'VersionGenerationTarget' ">false</GenerateAssemblyVersionInfo>
+
+      <!--
+      Suppress assembly version info generation for unsupported programming languages.
+
+      Useful references:
+
+      * https://github.com/dotnet/arcade/blob/240c3371d337e159b5150e06bb048bfa34835271/src/Microsoft.DotNet.Arcade.Sdk/tools/ProjectDefaults.props#L57-L62
+      * https://github.com/dotnet/fsharp/blob/c980a10854168bec671e89f89d7a2959aac83ead/src/FSharp.Build/Microsoft.FSharp.Targets#L43
+      * https://github.com/dotnet/fsharp/blob/c980a10854168bec671e89f89d7a2959aac83ead/src/FSharp.Build/Microsoft.FSharp.NetSdk.props#L38
+      * https://github.com/dotnet/msbuild/blob/ceb160a675bf52a84109d68e3848aaf71fe6677a/src/Tasks/Microsoft.CSharp.CurrentVersion.targets#L38
+      * https://github.com/dotnet/msbuild/blob/ceb160a675bf52a84109d68e3848aaf71fe6677a/src/Tasks/Microsoft.VisualBasic.CurrentVersion.targets#L38
+      * https://github.com/dotnet/project-system/blob/048d517592310e6ef215033ebfdb6c6b2dff2bba/eng/imports/LanguageSettings.props#L4-L11
+      * https://github.com/dotnet/runtime/blob/ce3e77368c09fd9e02344a20e36a72ec892e10ea/src/libraries/System.CodeDom/src/System/CodeDom/Compiler/CodeDomProvider.cs#L20-L35
+      -->
+      <_NBGV_LanguageMode Condition=" '$(Language)' == 'c++' ">Native</_NBGV_LanguageMode>
+      <_NBGV_LanguageMode Condition=" '$(Language)' == 'c#' ">Managed</_NBGV_LanguageMode>
+      <_NBGV_LanguageMode Condition=" '$(Language)' == 'cs' ">Managed</_NBGV_LanguageMode>
+      <_NBGV_LanguageMode Condition=" '$(Language)' == 'csharp' ">Managed</_NBGV_LanguageMode>
+      <_NBGV_LanguageMode Condition=" '$(Language)' == 'vb' ">Managed</_NBGV_LanguageMode>
+      <_NBGV_LanguageMode Condition=" '$(Language)' == 'visualbasic' ">Managed</_NBGV_LanguageMode>
+      <_NBGV_LanguageMode Condition=" '$(Language)' == 'visual basic' ">Managed</_NBGV_LanguageMode>
+      <_NBGV_LanguageMode Condition=" '$(Language)' == 'f#' ">Managed</_NBGV_LanguageMode>
+      <_NBGV_LanguageMode Condition=" '$(Language)' == 'fs' ">Managed</_NBGV_LanguageMode>
+      <_NBGV_LanguageMode Condition=" '$(Language)' == 'fsharp' ">Managed</_NBGV_LanguageMode>
+
+      <GenerateAssemblyVersionInfo Condition=" '$(GenerateAssemblyVersionInfo)' == '' and '$(_NBGV_LanguageMode)' == '' ">false</GenerateAssemblyVersionInfo>
+
+      <!-- Workaround the property stomping that msbuild does (see https://github.com/microsoft/msbuild/pull/4922) with manual imports. -->
+      <PrepareForBuildDependsOn>
+        GenerateNativeNBGVVersionInfo;
+        $(PrepareForBuildDependsOn);
+      </PrepareForBuildDependsOn>
+
+      <PrepareResourcesDependsOn>
+        GenerateAssemblyNBGVVersionInfo;
+        $(PrepareResourcesDependsOn)
+      </PrepareResourcesDependsOn>
+
+      <CoreCompileDependsOn>
+        GenerateAssemblyNBGVVersionInfo;
+        $(CoreCompileDependsOn)
+      </CoreCompileDependsOn>
+
+    </PropertyGroup>
+  </Target>
+
+  <PropertyGroup>
+    <!-- Consider building a tag to be more precise than the branch we're building. -->
+    <_NBGV_BuildingRef>$(_NBGV_BuildingTag)</_NBGV_BuildingRef>
+    <_NBGV_BuildingRef Condition=" '$(_NBGV_BuildingRef)' == '' ">$(_NBGV_BuildingBranch)</_NBGV_BuildingRef>
+
+    <GitVersionBaseDirectory Condition=" '$(GitVersionBaseDirectory)' == '' ">$(MSBuildProjectDirectory)</GitVersionBaseDirectory>
+  </PropertyGroup>
+
+  <Target Name="GetBuildVersion" Returns="$(BuildVersion)" DependsOnTargets="InvokeGetBuildVersionTask">
+    <!-- Convert each task item into a bona fide MSBuild property. -->
+    <CreateProperty Value="%(NBGV_PropertyItems.Value)" Condition=" !%(NBGV_PropertyItems.HonorPresetValue) ">
+      <Output TaskParameter="Value" PropertyName="%(NBGV_PropertyItems.Identity)" />
+    </CreateProperty>
+
+    <!-- Set those properties that require special care to not overwrite prior values. -->
+    <PropertyGroup>
+      <CloudBuildNumber Condition=" '$(CloudBuildNumber)' == '' and %(NBGV_PropertyItems.Identity) == 'CloudBuildNumber' ">%(Value)</CloudBuildNumber>
+    </PropertyGroup>
+  </Target>
+
+  <Import Project="InProjectVersionComputation.targets" Condition=" '$(NBGV_CacheMode)' != 'MSBuildTargetCaching' " />
+  <Import Project="MSBuildTargetCaching.targets" Condition=" '$(NBGV_CacheMode)' == 'MSBuildTargetCaching' " />
+
+  <Target Name="SetCloudBuildVersionVars" DependsOnTargets="GetBuildVersion" AfterTargets="GetBuildVersion" Condition=" '@(CloudBuildVersionVars)' != '' ">
+    <Nerdbank.GitVersioning.Tasks.SetCloudBuildVariables CloudBuildVersionVars="@(CloudBuildVersionVars)">
+      <Output TaskParameter="MSBuildPropertyUpdates" ItemName="_MSBuildPropertyUpdates_Vars" />
+    </Nerdbank.GitVersioning.Tasks.SetCloudBuildVariables>
+    <CreateProperty Value="%(_MSBuildPropertyUpdates_Vars.Value)" Condition=" '@(_MSBuildPropertyUpdates_Vars)' != '' ">
+      <Output TaskParameter="Value" PropertyName="%(_MSBuildPropertyUpdates_Vars.Identity)" />
+    </CreateProperty>
+  </Target>
+
+  <Target Name="SetCloudBuildNumberWithVersion" DependsOnTargets="GetBuildVersion" AfterTargets="GetBuildVersion" Condition=" '$(CloudBuildNumber)' != '' ">
+    <Nerdbank.GitVersioning.Tasks.SetCloudBuildVariables CloudBuildNumber="$(CloudBuildNumber)">
+      <Output TaskParameter="MSBuildPropertyUpdates" ItemName="_MSBuildPropertyUpdates_BuildNumber" />
+    </Nerdbank.GitVersioning.Tasks.SetCloudBuildVariables>
+    <CreateProperty Value="%(_MSBuildPropertyUpdates_BuildNumber.Value)" Condition=" '@(_MSBuildPropertyUpdates_BuildNumber)' != '' ">
+      <Output TaskParameter="Value" PropertyName="%(_MSBuildPropertyUpdates_BuildNumber.Identity)" />
+    </CreateProperty>
+  </Target>
+
+  <Target Name="GetNuGetPackageVersion" DependsOnTargets="GetBuildVersion" Returns="$(NuGetPackageVersion)" />
+
+  <Target Name="GenerateAssemblyNBGVVersionInfo" DependsOnTargets="GetBuildVersion" Condition=" '$(_NBGV_LanguageMode)' == 'Managed' and '$(GenerateAssemblyVersionInfo)' != 'false' ">
+    <PropertyGroup>
+      <VersionSourceFile>$([MSBuild]::NormalizePath('$(IntermediateOutputPath)', '$(AssemblyName).Version$(DefaultLanguageSourceExtension)'))</VersionSourceFile>
+      <NewVersionSourceFile>$(VersionSourceFile).new</NewVersionSourceFile>
+      <!-- Workaround WPF inner build RootNamespace changing: https://github.com/dotnet/Nerdbank.GitVersioning/issues/175 -->
+      <NBGV_RootNamespace>$(RootNamespace)</NBGV_RootNamespace>
+      <NBGV_RootNamespace Condition="$(RootNamespace.EndsWith('_wpftmp')) and '$(_TargetAssemblyProjectName)'!=''">$(_TargetAssemblyProjectName)</NBGV_RootNamespace>
+    </PropertyGroup>
+    <ItemGroup>
+      <AdditionalThisAssemblyFields Include="NuGetPackageVersion" String="$(NuGetPackageVersion)" Condition="'$(NBGV_ThisAssemblyIncludesPackageVersion)' == 'true'" />
+    </ItemGroup>
+    <MakeDir Directories="$(IntermediatePath)" />
+    <Nerdbank.GitVersioning.Tasks.AssemblyVersionInfo OutputFile="$(NewVersionSourceFile)" CodeLanguage="$(Language)" AssemblyVersion="$(AssemblyVersion)" AssemblyFileVersion="$(AssemblyFileVersion)" AssemblyInformationalVersion="$(AssemblyInformationalVersion)" AssemblyName="$(AssemblyName)" RootNamespace="$(NBGV_RootNamespace)" ThisAssemblyNamespace="$(NBGV_ThisAssemblyNamespace)" AssemblyOriginatorKeyFile="$(AssemblyOriginatorKeyFile)" AssemblyTitle="$(AssemblyTitle)" AssemblyProduct="$(AssemblyProduct)" AssemblyCopyright="$(AssemblyCopyright)" AssemblyCompany="$(AssemblyCompany)" AssemblyConfiguration="$(Configuration)" PublicRelease="$(PublicRelease)" PrereleaseVersion="$(PrereleaseVersion)" GitCommitId="$(GitCommitId)" GitCommitDateTicks="$(GitCommitDateTicks)" GitCommitAuthorDateTicks="$(GitCommitAuthorDateTicks)" EmitNonVersionCustomAttributes="$(NBGV_EmitNonVersionCustomAttributes)" EmitThisAssemblyClass="$(NBGV_EmitThisAssemblyClass)" AdditionalThisAssemblyFields="@(AdditionalThisAssemblyFields)" />
+    <!-- Avoid applying the newly generated AssemblyVersionInfo.cs file to the build
+         unless it has changed in order to allow for incremental building. -->
+    <Nerdbank.GitVersioning.Tasks.CompareFiles OriginalItems="$(VersionSourceFile)" NewItems="$(NewVersionSourceFile)">
+      <Output TaskParameter="AreChanged" PropertyName="AssemblyVersionInfoChanged" />
+    </Nerdbank.GitVersioning.Tasks.CompareFiles>
+    <Copy Condition=" '$(AssemblyVersionInfoChanged)' == 'true' " SourceFiles="$(NewVersionSourceFile)" DestinationFiles="$(VersionSourceFile)" />
+    <ItemGroup>
+      <!-- prepend the source file so we don't break F# console apps that have a "special" last source file -->
+      <_CompileWithVersionFile Include="$(VersionSourceFile);@(Compile)" />
+      <Compile Remove="@(Compile)" />
+      <Compile Include="@(_CompileWithVersionFile)" />
+      <_CompileWithVersionFile Remove="@(_CompileWithVersionFile)" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="GenerateNativeNBGVVersionInfo" DependsOnTargets="GetBuildVersion" Condition=" '$(_NBGV_LanguageMode)' == 'Native' and '$(GenerateAssemblyVersionInfo)' != 'false' ">
+    <PropertyGroup>
+      <VersionSourceFile>$([MSBuild]::NormalizePath('$(IntermediateOutputPath)', '$(AssemblyName).Version.rc'))</VersionSourceFile>
+      <NewVersionSourceFile>$(VersionSourceFile).new</NewVersionSourceFile>
+    </PropertyGroup>
+    <MakeDir Directories="$(IntermediatePath)" />
+    <Nerdbank.GitVersioning.Tasks.NativeVersionInfo OutputFile="$(NewVersionSourceFile)" CodeLanguage="$(Language)" ConfigurationType="$(ConfigurationType)" AssemblyName="$(AssemblyName)" AssemblyVersion="$(AssemblyVersion)" AssemblyFileVersion="$(AssemblyFileVersion)" AssemblyInformationalVersion="$(AssemblyInformationalVersion)" AssemblyTitle="$(AssemblyTitle)" AssemblyProduct="$(AssemblyProduct)" AssemblyCopyright="$(AssemblyCopyright)" AssemblyCompany="$(AssemblyCompany)" AssemblyLanguage="$(AssemblyLanguage)" AssemblyCodepage="$(AssemblyCodepage)" TargetFileName="$(TargetFileName)" UseAssemblyVersionInNativeVersion="$(NBGV_UseAssemblyVersionInNativeVersion)" />
+    <!-- Avoid applying the newly generated Version.rc file to the build
+         unless it has changed in order to allow for incremental building. -->
+    <Nerdbank.GitVersioning.Tasks.CompareFiles OriginalItems="$(VersionSourceFile)" NewItems="$(NewVersionSourceFile)">
+      <Output TaskParameter="AreChanged" PropertyName="_NativeVersionInfoChanged" />
+    </Nerdbank.GitVersioning.Tasks.CompareFiles>
+    <Copy Condition=" '$(_NativeVersionInfoChanged)' == 'true' " SourceFiles="$(NewVersionSourceFile)" DestinationFiles="$(VersionSourceFile)" />
+    <ItemGroup>
+      <ResourceCompile Include="$(VersionSourceFile)" />
+    </ItemGroup>
+  </Target>
+
+  <!-- Support for pattern found in users of Tvl.NuGet.BuildTasks. -->
+  <Target Name="SupplyNuGetManifestVersion" DependsOnTargets="GetBuildVersion" BeforeTargets="EnsureNuGetManifestMetadata">
+    <ItemGroup>
+      <NuGetManifest>
+        <Version>$(NuGetPackageVersion)</Version>
+      </NuGetManifest>
+    </ItemGroup>
+  </Target>
+
+  <!-- Support for NuProj projects. -->
+  <Target Name="GetNuPkgVersion" Condition=" '$(MSBuildProjectExtension)' == '.nuproj' " DependsOnTargets="GetBuildVersion" Returns="$(NuGetPackageVersion)">
+    <PropertyGroup>
+      <Version>$(NuGetPackageVersion)</Version>
+      <NuSpecProperties>$(NuSpecProperties);$(NuGetProperties);GitCommitIdShort=$(GitCommitIdShort)</NuSpecProperties>
+    </PropertyGroup>
+  </Target>
+
+  <!-- Support for ASP.NET Core 2.1 Razor view assemblies -->
+  <Target Name="AddVersionFile" Condition="'@(RazorGenerate-&gt;Count())' != '0'" BeforeTargets="PrepareForRazorCompile" DependsOnTargets="GenerateAssemblyNBGVVersionInfo">
+    <ItemGroup>
+      <RazorCompile Include="$(VersionSourceFile)" />
+    </ItemGroup>
+  </Target>
+
+  <!-- Support for Maui projects -->
+
+  <Target Name="NBGV_SetVersionForMauiAndroid" Condition="'$(NBGV_SetMauiVersionProperties)'!='false' and '$(TargetPlatformIdentifier)' == 'android'" BeforeTargets="_GetAndroidPackageName" DependsOnTargets="GetBuildVersion">
+    <!-- Android requirement: ApplicationVersion must be a positive integer (used as an internal version number)
+          To accommodate this, we do our best to fit the first three version components into a single integer that increases with each release.
+          We'll bit-shift the major version to the most significant byte of a 4-byte integer.
+          We'll bit-shift the minor version to the next most significant byte.
+          We'll use the least 2 significant bytes for the build number.
+          The major version must not exceed 124 to guarantee that the overall integer never exceeds 2100000000 even with the other numbers added.
+          Other components are also limited since they must fit within the 8 or 16 bits allowed for them.
+          Learn more from https://developer.android.com/studio/publish/versioning. -->
+    <Error Condition="$([System.Version]::Parse('$(BuildVersion)').Major) &gt; 124" Text="Major version must not exceed 124 per Android versioning rules." />
+    <Error Condition="$([System.Version]::Parse('$(BuildVersion)').Minor) &gt; 255" Text="Minor version must not exceed 256 per Android versioning rules." />
+    <Error Condition="$(BuildNumber) &gt; 65535" Text="Build number must not exceed 65535 per Android versioning rules." />
+    <PropertyGroup>
+      <_NBGV_Major_Shifted>$([MSBuild]::Multiply($([System.Version]::Parse('$(BuildVersion)').Major), 16777216))</_NBGV_Major_Shifted>
+      <_NBGV_Minor_Shifted>$([MSBuild]::Multiply($([System.Version]::Parse('$(BuildVersion)').Minor), 65536))</_NBGV_Minor_Shifted>
+
+      <ApplicationVersion>$([MSBuild]::Add($([MSBuild]::Add($(_NBGV_Major_Shifted), $(_NBGV_Minor_Shifted))), $(BuildNumber)))</ApplicationVersion>
+      <ApplicationDisplayVersion>$(Version)</ApplicationDisplayVersion>
+    </PropertyGroup>
+  </Target>
+
+  <Target Name="NBGV_SetVersionForMauiIOS" Condition="'$(NBGV_SetMauiVersionProperties)'!='false' and ('$(TargetPlatformIdentifier)' == 'ios' or '$(TargetPlatformIdentifier)' == 'maccatalyst')" BeforeTargets="_CompileAppManifest" DependsOnTargets="GetBuildVersion">
+    <PropertyGroup>
+      <!-- iOS requirement: ApplicationVersion must be a three part version number -->
+      <ApplicationVersion>$(BuildVersionSimple)</ApplicationVersion>
+      <!-- iOS requirement: ApplicationDisplayVersion must be a three part version number -->
+      <ApplicationDisplayVersion>$(BuildVersionSimple)</ApplicationDisplayVersion>
+    </PropertyGroup>
+  </Target>
+
+  <Target Name="NBGV_SetVersionForMauiWindows" Condition="'$(NBGV_SetMauiVersionProperties)'!='false' and '$(TargetPlatformIdentifier)' == 'windows'" BeforeTargets="MauiGeneratePackageAppxManifest" DependsOnTargets="GetBuildVersion">
+    <PropertyGroup>
+      <!-- Windows requirement: ApplicationVersion must be blank when ApplicationDisplayVersion is a four part version number -->
+      <ApplicationVersion></ApplicationVersion>
+      <!-- Windows requirement: ApplicationDisplayVersion must be a four part version number -->
+      <ApplicationDisplayVersion>$(BuildVersion)</ApplicationDisplayVersion>
+    </PropertyGroup>
+  </Target>
+
+  <!-- Workaround till https://github.com/NuGet/NuGet.Client/issues/1064 is merged and used. -->
+  <Target Name="_NBGV_CalculateNuSpecVersionHelper" BeforeTargets="GenerateNuspec" DependsOnTargets="GetBuildVersion" />
+</Project>
