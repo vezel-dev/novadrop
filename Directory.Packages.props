@@ -14,7 +14,7 @@
         <GlobalPackageReference Include="Microsoft.VisualStudio.Threading.Analyzers"
                                 Version="17.14.15" />
         <GlobalPackageReference Include="Nerdbank.GitVersioning"
-                                Version="3.8.118" />
+                                Version="3.9.50" />
         <GlobalPackageReference Include="StyleCop.Analyzers"
                                 Version="1.2.0-beta.556" />
     </ItemGroup>
