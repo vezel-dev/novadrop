@@ -71,7 +71,6 @@ public readonly struct DataCenterValue :
         }
     }
 
-    [SuppressMessage("", "IDE0032")]
     internal int UnsafeAsInt32 => _primitiveValue;
 
     internal float UnsafeAsSingle => Unsafe.BitCast<int, float>(_primitiveValue);
@@ -80,6 +79,7 @@ public readonly struct DataCenterValue :
 
     internal bool UnsafeAsBoolean => Unsafe.BitCast<byte, bool>((byte)_primitiveValue);
 
+    [SuppressMessage("", "IDE0032")]
     private readonly string? _stringValue;
 
     [SuppressMessage("", "IDE0032")]
