@@ -26,4 +26,17 @@ app.Configure(static cfg =>
         .WithDescription("Verify the format integrity of a resource container file.");
 });
 
-return await app.RunAsync(args);
+using var cts = new CancellationTokenSource();
+
+void HandleSignal(PosixSignalContext context)
+{
+    context.Cancel = true;
+
+    cts.Cancel();
+}
+
+using var sigTerm = PosixSignalRegistration.Create(PosixSignal.SIGTERM, HandleSignal);
+using var sigQuit = PosixSignalRegistration.Create(PosixSignal.SIGQUIT, HandleSignal);
+using var sigInt = PosixSignalRegistration.Create(PosixSignal.SIGINT, HandleSignal);
+
+return await app.RunAsync(args, cts.Token);
